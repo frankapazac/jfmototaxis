@@ -33,7 +33,8 @@
 		height: 100px;
 	}
 	#divContent{
-		height: 500px;
+		min-height:500px;
+		height: auto;
 	}
 	#divFooter{
 		height: 60px;
