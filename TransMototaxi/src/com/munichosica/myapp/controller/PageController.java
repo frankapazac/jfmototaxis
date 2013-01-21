@@ -3,22 +3,20 @@ package com.munichosica.myapp.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
-import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.dto.Usuempr;
-import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
-import com.munichosica.myapp.exceptions.MotUbigeoDaoException;
+import com.munichosica.myapp.exceptions.MotParaderoDaoException;
+import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
 import com.munichosica.myapp.util.UserSecurity;
@@ -93,7 +91,7 @@ public class PageController {
 	}
 
 	@RequestMapping(value="Paraderos.htm",method=RequestMethod.GET)
-	public String paraderos(HttpServletRequest request){
+	public String paraderos(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Paraderos.htm");
 		HttpSession session=request.getSession(true);
 		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
@@ -101,6 +99,13 @@ public class PageController {
 			System.out.println("INICIO");
 			usuempr=new UserSecurity().getUser();
 			session.setAttribute("USUARIO", usuempr);
+		}
+		try {
+			List<MotParadero> lista=MotParaderoDaoFactory.create().findZonaByEmpresa(
+					usuempr.getEmpresa().getEmpcodigoD());
+			model.addAttribute("paraderos",lista);
+		} catch (MotParaderoDaoException e) {
+			logger.error(e.getMessage());
 		}
 		return "tilesParaderos";
 	}
