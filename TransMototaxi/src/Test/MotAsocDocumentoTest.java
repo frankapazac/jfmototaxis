@@ -28,7 +28,7 @@ public class MotAsocDocumentoTest {
 		}
 	}
 	
-	public void holafrank(){
-		System.out.println("Hola cuñao");
+	public void holafrankpapaza(){
+		System.out.println("Hola frank apaza");
 	}
 }
