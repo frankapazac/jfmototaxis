@@ -27,4 +27,8 @@ public class MotAsocDocumentoTest {
 			e.printStackTrace();
 		}
 	}
+	
+	public void holaErik(){
+		System.out.println("Hola cuñao");
+	}
 }
