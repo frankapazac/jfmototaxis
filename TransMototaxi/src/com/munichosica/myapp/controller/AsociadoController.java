@@ -53,7 +53,7 @@ public class AsociadoController {
 	}
 	
 	@RequestMapping(value="Procesar.htm",method=RequestMethod.POST)
-	public String procesar(HttpServletRequest request, MotEmprAsociado asociado,Model model){
+	public @ResponseBody MotEmprAsociado procesar(HttpServletRequest request, MotEmprAsociado asociado,Model model){
 		logger.info("Ingreso a Asociados/Procesar.htm");
 		try {
 			HttpSession session=request.getSession(true);
@@ -68,20 +68,20 @@ public class AsociadoController {
 			UTFEncodingUtil.decodeObjectUTF(asociado.getPersona());
 			MotEmprAsociadoDaoFactory.create().procesar(asociado);
 			logger.info("MotEmprAsociadoDaoFactory.create().procesar(asociado); Complete codigo: "+asociado.getAsocodigoD());
-
-			if(documentos.getList().size()>0){
-				for(MotAsocDocumento docum:documentos.getList()){
-					docum.setAsociado(asociado);
-					MotAdjuntarArchivoDaoFactory.create().insert(docum.getArchivo());
-					MotAsocDocumentoDaoFactory.create().insert(docum);
-					logger.info("MotAsocDocumentoDaoFactory.create().insert(docum); Complete codigo: "+docum.getAdocodigoD());
+			if(documentos!=null){
+				if(documentos.getList()!=null && documentos.getList().size()>0){
+					for(MotAsocDocumento docum:documentos.getList()){
+						docum.setAsociado(asociado);
+						MotAdjuntarArchivoDaoFactory.create().insert(docum.getArchivo());
+						MotAsocDocumentoDaoFactory.create().insert(docum);
+						logger.info("MotAsocDocumentoDaoFactory.create().insert(docum); Complete codigo: "+docum.getAdocodigoD());
+					}
 				}
 			}
 		} catch (MotEmprAsociadoDaoException | MotAdjuntarArchivoDaoException | MotAsocDocumentoDaoException e) {
 			logger.error(e.getMessage());
-			return "Error";
 		}
-		return "Success";
+		return asociado;
 	}
 	
 	@RequestMapping(value="Obtener.htm", method=RequestMethod.GET)
