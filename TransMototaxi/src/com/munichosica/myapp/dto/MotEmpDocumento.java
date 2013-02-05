@@ -11,6 +11,12 @@ public class MotEmpDocumento {
 	protected MotTipoDocumento tipoDocumento;
 	protected MotAdjuntarArchivo adjuntarArchivo;
 	
+	public MotEmpDocumento() {
+		empresa=new MotEmpresa();
+		tipoDocumento=new MotTipoDocumento();
+		adjuntarArchivo=new MotAdjuntarArchivo();
+	}
+	
 	public Long getEdocodigoD() {
 		return edocodigoD;
 	}
