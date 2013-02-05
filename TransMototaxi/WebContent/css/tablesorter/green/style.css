@@ -1,23 +1,24 @@
 table.tablesorter {
 	font-size: 12px;
-	background-color: #4D4D4D;
-	width: 1024px;
+	background-color: #CDCDCD;
+	width: 90%;
+	/*width: 1024px;*/
 	border: 1px solid #000;
 }
 table.tablesorter th {
 	text-align: left;
 	padding: 5px;
-	background-color: #6E6E6E;
+	background-color: #CDCDCD;
 }
 table.tablesorter td {
-	color: #FFF;
+	color: #3D3D3D;
 	padding: 5px;
 }
 table.tablesorter .even {
-	background-color: #3D3D3D;
+	background-color: #C0EDB6;
 }
 table.tablesorter .odd {
-	background-color: #6E6E6E;
+	background-color: white;
 }
 table.tablesorter .header {
 	background-image: url(bg.png);

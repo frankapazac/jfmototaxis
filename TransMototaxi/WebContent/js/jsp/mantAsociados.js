@@ -76,17 +76,20 @@ $(document).ready(function(){
 				'persona.perubidistV':encodeURIComponent($("#sltDistrito").val()),
 				'persona.perubprovV':encodeURIComponent($("#sltProvincia").val()),
 			},
-		    datatype:'html',
+		    datatype:'json',
 	        type: "POST", 
 	        url: "Asociados/Procesar.htm", 
 	        success: function(data){
-	        	mensaje(data);
+	        	$("#txtCodigoAsociado").val(data.asocodigoD);
+	        	$("#txtCodigoPersona").val(data.persona.percodigoD);
+	        	txtHtml="<p>Operación realizada correctamente</p>";
+	        	mensaje(txtHtml);
 	        }/*,error: function(jqXHR, textStatus, errorThrown){
 	        	mensajeError();
 	        }*/
 		});
-		$("#divFormulario").dialog("close");
-		buscar("PER.PERDNI_V",$("#txtDni").val());
+		//$("#divFormulario").dialog("close");
+		buscar("ASO.ASOCODIGO_D",$("#txtCodigoAsociado").val());
 	});
     
 	//FUNCIONES    
@@ -122,7 +125,7 @@ $(document).ready(function(){
 			+"<th class='header'>PATERNO</th>"
 			+"<th class='header'>MATERNO</th>"
 			+"<th class='header'>NACIMIENTO</th>"
-			+"<th class='header'>TF. FIJO</th>"
+			+"<th class='header'>FIJO</th>"
 			+"<th class='header'>CORREO</th>"
 			+"<th class='header'>ESTADO</th>"
 			+"<th class='header'>MODIFICAR</th>"
@@ -135,7 +138,7 @@ $(document).ready(function(){
 			+"<th>PATERNO</th>"
 			+"<th>MATERNO</th>"
 			+"<th>NACIMIENTO</th>"
-			+"<th>TF. FIJO</th>"
+			+"<th>FIJO</th>"
 			+"<th>CORREO</th>"
 			+"<th>ESTADO</th>"
 			+"<th>MODIFICAR</th>"
@@ -238,7 +241,12 @@ $(document).ready(function(){
         	$("#txtTelefono").val("");
         	$("#txtMovistar").val("");
         	$("#txtClaro").val("");
-        	$("#txtNextel").val("");	        		
+        	$("#txtNextel").val("");
+        	$("input[name='txtNumDocumento']").val("");
+        	$("input[name='txtFechaEmision']").val("");
+        	$("input[name='txtFechaCaducidad']").val("");
+        	$("input[name='fileDocumento']").val("");
+        	$("#btnVehiculoProcesar").val("Agregar");
     	}
     	$("#divFormulario").show();
     	//$("#divFormulario").dialog("open");

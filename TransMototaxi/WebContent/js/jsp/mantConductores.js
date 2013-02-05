@@ -2,15 +2,29 @@ $(document).ready(function(){
 	$("#divMensaje").hide();
 	$("#divFormulario").hide();
 	$("#divFormularioCese").hide();
-
+	$("#divAsignarMototaxi").hide();
 	
 	var codigoConductor=0;
 	var conductores=[];//Todo los conductores
 	var codigoUndConductor=0;
 	var UndConductor=[];
 	
+	$("#txtFechaCese").datepicker({dateFormat:"dd/mm/yy"});
 	buscar("ECO.EMPCODIGO_D", "");
+
+	$("#btnCancelarFormulario").click(function(){
+		$("#divFormulario").dialog("close");
+	});
 	
+	$("#btnAsignar").click(function(){
+		$("#divAsignarMototaxi").show();
+		$("#divAsignarMototaxi").dialog({
+    		title:"Asignar mototaxi",
+    		width:1100,
+    		height: 500,
+    		modal: true
+		});
+	});
 
 	$("#btnBuscar").click(function(){
     	buscar($("#sltCriterio").val(),$("#txtTexto").val());
@@ -21,7 +35,7 @@ $(document).ready(function(){
     		alert("Seleccione un conductor");
     		return;
     	}
-    	buscarMototaxis($("#sltCriterio2").val(),$("#txtTextoAsignado").val(),codigoConductor);
+    	buscarMototaxis($("#sltCriterioAsignado").val(),$("#txtTextoAsignado").val(),codigoConductor);
     });
 	
     $("#btnNuevo").click(function(){
@@ -37,6 +51,9 @@ $(document).ready(function(){
     		alert("Seleccione conductor");
     		return;
     	}
+
+    	$("#tblListaMototaxis").empty();
+    	$("#tblListaMotosParaAsignar").empty();
     	
     	var miConductor=[];//JSON que conductor
 		for(var x=0;x<conductores.length;x++){
@@ -51,13 +68,17 @@ $(document).ready(function(){
 		$("#divFormulario").dialog({
     		title:"Conductores Mototaxis",
     		width:1100,
-    		height: 400,
+    		height: 600,
     		modal: true
 		});
     });
     
     $("#btnCese").click(function(){
-    
+    	if(codigoUndConductor<1){
+    		alert("Seleccione un propietario para cesar");
+    		return;
+    	}
+    	
     	var miUnidConductor=[];
 		for(var x=0;x<UndConductor.length;x++){
 			if(UndConductor[x].ucocodigoD==codigoUndConductor){
@@ -79,7 +100,12 @@ $(document).ready(function(){
     	});
     });
     
-           
+    function paginacionMotosAsignadas(){
+		$("#tblListaMotosAsignadas")
+        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
+        .tablesorterPager({container: $("#pagerMotosAsignadas")}); 	
+	}
+    
     function paginacion(){
 		$("#tblLista")
         .tablesorter({widthFixed: true, widgets: ['zebra']}) 
@@ -135,7 +161,7 @@ $(document).ready(function(){
 			"<td>"+(x+1)+"</td>"+
 			"<td>"+data[x].conductor.persona.pernombresV+" "+
 			data[x].conductor.persona.perpaternoV+" "+
-			data[x].conductor.persona.permaternoV+" "+
+			data[x].conductor.persona.permaternoV+"</td>"+
 			"<td>"+data[x].conductor.persona.perdniV+"</td>"+
 			"<td>"+data[x].motosasignadasI+"</td>"+
 			"<td>"+data[x].ecofechainicioF+"</td>"+
@@ -162,7 +188,6 @@ $(document).ready(function(){
             type: "POST", 
             url: "Conductores/ListarMotosAsignadas.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	UndConductor=data;
             	llenarTablaMotodAsignadas(data);
             },error: function(jqXHR, textStatus, errorThrown){
@@ -188,8 +213,8 @@ $(document).ready(function(){
 			+"<th class='header'>Modelo</th>"
 			+"<th class='header'>Año</th>"
 			+"<th class='header'>Color</th>"
-			+"<th class='header'>Fec. Inicio</th>"
-			+"<th class='header'>Fec. Cese</th>"
+			+"<th class='header'>Inicio</th>"
+			+"<th class='header'>Cese</th>"
 			+"</thead>"
 			+"<tfoot>"
 			+"<th>N°</th>"
@@ -200,28 +225,31 @@ $(document).ready(function(){
 			+"<th>Modelo</th>"
 			+"<th>Año</th>"
 			+"<th>Color</th>"
-			+"<th>Fec. Inicio</th>"
-			+"<th>Fec. Cese</th>"
+			+"<th>Inicio</th>"
+			+"<th>Cese</th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
 			$("#tblListaMotosAsignadas").append(txtHtml);
     	for(var x=0;x<data.length;x++){
     		// txtHtml="<tr id='cond_"+data[x].conductor.concodigoD+"' class='trConductor'>"+
-    		txtHtml="<tr id='condUndConductor_"+data[x].ucocodigoD+"' class='trcodUndConductor'>"+
+    		var classe="even";
+    		if(x%2==0) classe="odd";
+    		txtHtml="<tr id='condUndConductor_"+data[x].ucocodigoD+"' class='trcodUndConductor "+classe+"'>"+
 			"<td>"+(x+1)+"</td>"+
 			"<td>"+data[x].conductor.persona.pernombresV+" "+data[x].conductor.persona.perpaternoV+" "+data[x].conductor.persona.permaternoV+"</td>"+
 			"<td>"+data[x].conductor.persona.perdniV+"</td>"+
-			"<td>"+data[x].propietariomoto.mototaxi.uneplacanro_V+"</td>"+
-			"<td>"+data[x].propietariomoto.mototaxi.unemarca_V+"</td>"+
-			"<td>"+data[x].propietariomoto.mototaxi.modelo.modnombre_V+"</td>"+
-			"<td>"+data[x].propietariomoto.mototaxi.uneanno_C+"</td>"+
-			"<td>"+data[x].propietariomoto.mototaxi.unecolor_V+"</td>"+
+			"<td>"+data[x].propietariomoto.unidadempresa.uneplacanroV+"</td>"+
+			"<td>"+data[x].propietariomoto.unidadempresa.marca.marnombreV+"</td>"+
+			"<td>"+data[x].propietariomoto.unidadempresa.modelo.modnombre_V+"</td>"+
+			"<td>"+data[x].propietariomoto.unidadempresa.uneannoC+"</td>"+
+			"<td>"+data[x].propietariomoto.unidadempresa.unecolorV+"</td>"+
 			"<td>"+data[x].ucofechainicioF+"</td>"+
 			"<td>"+data[x].ucofechacese+"</td>"+
 			"</tr>";
     		$("#tblListaMotosAsignadas tbody").append(txtHtml);
     	}
     	$(".trcodUndConductor").click(obtenerCodigoUnidadConductor);//nombre función
+    	paginacionMotosAsignadas();
     	//paginacion();
     	
     	/*$("#txttal").click(function(){
@@ -243,8 +271,8 @@ $(document).ready(function(){
 	
 	
     $("#btnGuardarCese").click(function(){
-    	alert($("#txtOcultoCodigoUndConductor").val()+" ; "+$("#txtFechaCese").val()+" ; "+
-    			$("#txtObservacion").val());
+    	/*alert($("#txtOcultoCodigoUndConductor").val()+" ; "+$("#txtFechaCese").val()+" ; "+
+    			$("#txtObservacion").val());*/
     	$.ajax({
     		data:{
     			ucocodigoD:$("#txtOcultoCodigoUndConductor").val(),
@@ -254,12 +282,28 @@ $(document).ready(function(){
     		datatype:'html',
     		type:"POST",
     		url: "Conductores/CesarConductor.htm",
-    		success: function(data){    			
+    		success: function(data){    	
+    			mensaje(data);
     		},error: function(jqXHR, textStatus, errorThrown){
     			mensajeError();
     		}
     	});
     	//buscar("PAR.PARCODIGO_I",$("#txtCodigo").val());
     	//$("#divFormulario").dialog("close");
+    	$("#divFormularioCese").dialog("close");
+    	buscarMototaxis($("#sltCriterioAsignado").val(),$("#txtTextoAsignado").val(),codigoConductor);
     }); 
+    
+
+    function mensaje(data){
+    	$("#divMensaje").empty();
+    	$("#divMensaje").append(data);
+    	$("#divMensaje").show();
+    	var top=(screen.height-200)+'px';
+    	var left=(screen.width-400)+'px';
+    	$("#divMensaje").css({'position':'absolute','top':top,'left':left});
+    	setTimeout(function() {
+			$("#divMensaje").hide();
+		}, 1500 );
+    }
 });

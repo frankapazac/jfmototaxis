@@ -45,12 +45,12 @@ $(document).ready(function(){
     		type:"POST",
     		url: "Paradero/Agregar.htm",
     		success: function(data){  
-    			
+    			//FALTA PONER MENSAJE
     		},error: function(jqXHR, textStatus, errorThrown){
     			mensajeError();
     		}
     	});
-    	buscar("EPA.EPACODIGO_I","");
+    	buscar($("#sltCriterio").val(),$("#txtTexto").val());
     	$("#divFormulario").dialog("close");
     });    
     

@@ -11,16 +11,16 @@
 	    border-radius: 6px;
 	}
 	.horizontal-nav ul {
-	    background: #128F9A;
+	    background: #608A12;
 	    float: left;
 	    text-align: center;
 	    border-radius: 6px;
-	    border: 1px solid #0e7079;
+	    border: 1px solid #577b15;
 	    margin: 0px;
 	}
 	.horizontal-nav ul li {
 	    float: left;
-	    border-left: 1px solid #0e7079;
+	    border-left: 1px solid #577b15;
 	}
 	.horizontal-nav ul li:first-child {
 	    border-left: 0 none;
@@ -36,7 +36,8 @@
 	    border-left: 0 none;
 	}
 	.horizontal-nav ul li a:hover {
-	    background: #12808a;
+	    background: #f0f0f0;
+	    color: #608A12;
 	}
 	.horizontal-nav ul li:first-child a {
 	    border-top-left-radius: 6px;
@@ -56,7 +57,5 @@
         <li><a href="Paraderos.htm">PARADEROS</a></li>
 	    <li><a href="Documentacion.htm">DOCUMENTACION</a></li>
 	    <li><a href="Configuracion.htm">CONFIGURACION</a></li>
-	    <li><a href="#"></a></li>
-	    <li><a href="#"></a></li>
     </ul>
 </nav>
