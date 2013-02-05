@@ -20,7 +20,7 @@ import com.munichosica.myapp.dto.MotPersona;
 import com.munichosica.myapp.exceptions.MotEmprAsociadoDaoException;
 
 public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
-
+	
 	protected static final Logger logger = Logger.getLogger( MotEmprAsociadoDaoImpl.class );
 
 	@Override
@@ -161,7 +161,7 @@ public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 		List<MotEmprAsociado> list=new ArrayList<MotEmprAsociado>();
 		try {
 			conn = ResourceManager.getConnection();
-			stmt = conn.prepareCall( "{call SP_MOT_GET_ASOCIADOSPORCRITERIO;1(?, ?, ?)}" );
+			stmt = conn.prepareCall( "{call SP_MOT_GET_ASOCIADOSPORCRITERIOANDEMPR;1(?, ?, ?)}" );
 			stmt.setString(1, criterio);
 			stmt.setString(2, texto);
 			stmt.setLong(3, empcodigoD);
@@ -210,6 +210,64 @@ public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 		}
 		return list;
 	}
-	
+
+	@Override
+	public List<MotEmprAsociado> findByCriterio(String criterio, String texto)
+			throws MotEmprAsociadoDaoException {
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<MotEmprAsociado> list=new ArrayList<MotEmprAsociado>();
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall( "{call SP_MOT_GET_ASOCIADOSPORCRITERIO;1(?, ?)}" );
+			stmt.setString(1, criterio);
+			stmt.setString(2, texto);
+			
+			boolean results=stmt.execute();
+            if(results){
+                rs=stmt.getResultSet();
+                MotEmprAsociado asociado=null;
+                MotPersona persona=null;
+                while(rs.next()){
+                	persona=new MotPersona();
+                	persona.setPercodigoD(rs.getLong("CODIGO"));
+                	persona.setPerdniV(rs.getString("DNI"));
+                	persona.setPernombresV(rs.getString("NOMBRES"));
+                	persona.setPerpaternoV(rs.getString("PATERNO"));
+                	persona.setPermaternoV(rs.getString("MATERNO"));
+                	persona.setPernacimientoF(rs.getString("NACIMIENTO"));
+                	persona.setPerestadocivilC(rs.getString("ESTADOCIVIL"));
+                	persona.setPermovilclaV(rs.getString("MOVILCLA"));
+                	persona.setPermovilmovV(rs.getString("MOVILMOV"));
+                	persona.setPermovilnexV(rs.getString("MOVILNEX"));
+                	persona.setPerteleffijoV(rs.getString("TELEFFIJO"));
+                	persona.setPeremailV(rs.getString("EMAIL"));
+                	persona.setPerdomicilioV(rs.getString("DOMICILIO"));
+                	persona.setPerubidistV(rs.getString("DISTRITO"));
+                	persona.setPerubprovV(rs.getString("PROVINCIA"));
+                	persona.setPerubdptoV(rs.getString("DEPARTAMENTO"));
+                	asociado=new MotEmprAsociado();
+                	asociado.setAsocodigoD(rs.getLong("CODIGO"));
+                	asociado.setAsorazonsocialV(rs.getString("RAZONSOCIAL"));
+                	asociado.setAsorucV(rs.getString("RUC"));
+                	asociado.setAsoestadoC(rs.getString("ESTADO"));
+                	asociado.setPersona(persona);
+                	list.add(asociado);
+                }
+            }
+		}
+		catch (Exception ex) {
+			logger.error( "Exception: " + ex.getMessage(), ex );
+			throw new MotEmprAsociadoDaoException( "Exception: " + ex.getMessage(), ex );
+		}
+		finally {
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
 
 }
