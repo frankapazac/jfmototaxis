@@ -33,6 +33,9 @@
 		margin: 10px;
 		float: right;
 	}
+	.flArchivo{
+		width: 250px;
+	}
 </style>
 </head>
 <body>
@@ -113,7 +116,7 @@
 				  				</td>
 				  				<td><c:out value="${foto.mtdnombreV}"/></td>
 				  				<td>
-				  					<input type="file" name="flFoto"/>
+				  					<input type="file" name="flFoto" class="flArchivo"/>
 				  					<input type="submit" value="Enviar"/>
 				  				</td>
 				  			</tr>
