@@ -10,8 +10,16 @@
 	<link href="css/tablesorter/green/style.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="js/tablesorter/jquery-latest.js"></script>
-<title><tiles:insertAttribute name="title" ignore="true"/></title>
+	<title><tiles:insertAttribute name="title" ignore="true"/></title>
 <style type="text/css">
+	body{
+		font-family: Arial, sans-serif;
+		background-color: #f0f0f0;
+	}
+	h1{
+		color: #608A12;
+		margin: 20px 0px 10px 0px;
+	}
 	h2{
 		font-size: 1.5em;
 		font-weight: bold;
@@ -22,19 +30,23 @@
 		text-decoration: none;
 	}
 	#divPrincipal{
+		margin: 2px;
 		border: 1px solid #000000;
 		width:1200px;
+		background-color: white;
 	}
 	#divHeader,#divContent,#divFooter {
-		border: 1px solid #000000;
-		width:100%;
+		/*border: 1px solid #000000;*/
+		/*width:100%;*/
 	}
 	#divHeader{
 		height: 100px;
 	}
 	#divContent{
+		margin: 20px;
 		min-height:500px;
 		height: auto;
+		margin: 0px 20px 20px 20px;
 	}
 	#divFooter{
 		height: 60px;
@@ -49,7 +61,7 @@
 	<div align="center">
 		<div id="divPrincipal">
 		  	<div id="divHeader" align="center">
-				<tiles:insertAttribute name="header"/>
+				<img src=""/><tiles:insertAttribute name="header"/>
 			</div>
 		  
 		  	<div id="divMenu">
@@ -57,7 +69,7 @@
 			</div>
 		  
 		  	<div id="divContent">
-		    	<div id="divBody">
+		    	<div id="divBody" align="center">
 					<tiles:insertAttribute name="body"/>
 				</div>
 		  	</div>

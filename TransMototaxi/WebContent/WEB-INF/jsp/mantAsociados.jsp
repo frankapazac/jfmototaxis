@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="js/jsp/mantAsociados.js"></script>
+	<script type="text/javascript" src="js/jsp/mantAsocMototaxis.js"></script>
 	<style type="text/css">
 		.fileDocumento{
 			width: 300px;
@@ -25,6 +26,19 @@
 		}
 		.txtFechaEmision, .txtFechaCaducidad{
 			width: 100px
+		}
+		#divRegistrarMoto{
+			width:1000px;
+			min-height:600px;
+			height: auto;
+		}
+		#divMotos{
+			width:300px;
+			float:left;
+		}
+		#divVehiculo{
+			width:680px;
+			float:right;
 		}
 	</style>
 <title>Insert title here</title>
@@ -162,7 +176,7 @@
 					<legend>ADJUNTAR DOCUMENTOS</legend>
 					<table id="tblDocumentos">
 						<tr>
-							<td colspan="2">N°</td>
+							<td>N°</td>
 							<td>Adjuntar</td>
 							<td>N° Documento</td>
 							<td>Fec. Emision</td>
@@ -181,7 +195,7 @@
 									<td><input type="text" name="txtNumDocumento" id="txtNumDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="txtNumeroDocumento"/></td>
 									<td><input type="text" name="txtFechaEmision" id="txtFechaEmision_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaEmision dtFecha"/></td>
 									<td><input type="text" name="txtFechaCaducidad" id="txtFechaCaducidad_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha"/></td>
-									<td colspan="2">
+									<td>
 										<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formDocumento">
 											<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="fileDocumento"/>
 											<input type="submit" value="Enviar"/>
@@ -194,9 +208,199 @@
 				</fieldset>
 				<input type="button" value="Guardar" id="btnProcesar" class="ui-button"/>
 				<input type="button" value="Cancelar" id="btnCancelar" class="ui-button"/>
-
+				<input type="button" value="Siguiente" id="btnSiguiente" class="ui-button"/>
 		  	</div>
 			<div id="tabs2">
+				<div id="divRegistrarMoto">
+					<div id="divMotos">
+				    	<fieldset>
+				        	<legend>Motos</legend>
+				        	<table id="tblMotos" align="center" class="tablesorter" style="width: 280px;"></table>
+				        </fieldset>
+				        <div>
+				        	<input type="button" value="Nuevo" id="btnMotoNuevo"/>
+				        	<input type="button" value="Editar" id="btnMotoEditar"/>
+				        </div>
+				    </div>
+				    <div id="divVehiculo">
+				    	<input type="hidden" id="txtCodigoVehiculo" value="0"/>
+				    	<input type="hidden" id="txtCodigoEmpadronamiento" value="0"/>
+				    	<fieldset>
+				    		<legend>EMPADRONAMIENTO</legend>
+				    		<table>
+				    			<tr>
+				    				<td>Fecha de Inicio</td>
+				    				<td><input type="text" id="txtEmpadFechaInicio" class="dtFecha"></td>
+				    				<td>Fecha de Cese</td>
+				    				<td><input type="text" id="txtEmpadFechaCese" class="dtFecha"></td>
+				    			</tr>
+				    		</table>
+				    	</fieldset>
+				    	<fieldset>
+				        	<legend>DATOS VEHICULO</legend>
+				            <table>
+				            	<tr>
+				                	<td>N° Placa</td>
+				                	<td><input type="text" id="txtNroPlaca"/></td>
+				                	<td>Carroceria</td>
+				                	<td><select id="sltCarroceria">
+				                    		<option value="">Seleccione</option>
+				                    		<option value="T">TRIMOVIL DE PASAJEROS</option>
+				                    	</select>
+				                    </td>
+				                </tr>
+				            	<tr>
+				                	<td>Of. Registral</td>
+				                	<td><select id="sltOfRegistral">
+				                    		<option value="">Seleccione</option>
+				                    		<c:forEach var="oficina" items="${oficinas}">
+				                    			<option value="${oficina.oficodigoI}"><c:out value="${oficina.ofinombreV}"/></option>
+				                    		</c:forEach>
+				                    	</select>
+									</td>
+				                	<td>N° Serie/Chasis</td>
+				                	<td><input type="text" id="txtNroSerieChasis"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>N° Padrón</td>
+				                	<td><input type="text" id="txtNroPadron"/></td>
+				                	<td>N° Motor</td>
+				                	<td><input type="text" id="txtNroMotor"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Part. Registral</td>
+				                	<td><input type="text" id="txtPartRegistral"/></td>
+				                	<td>N° NIV</td>
+				                	<td><input type="text" id="txtNroNiv"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Titulo</td>
+				                	<td><input type="text" id="txtTitulo"/></td>
+				                	<td>Ruedas</td>
+				                	<td><input type="text" id="txtRuedas"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Clase</td>
+				                	<td><input type="text" id="txtClase"/></td>
+				                	<td>N° Asientos</td>
+				                	<td><input type="text" id="txtNroAsientos"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Marca</td>
+				                	<td><select id="sltMarca">
+				                    		<option value="">Seleccione</option>
+				                    		<c:forEach var="marca" items="${marcas}">
+				                    			<option value="${marca.marcodigoI}"><c:out value="${marca.marnombreV }"/></option>
+				                    		</c:forEach>
+				                    	</select></td>
+				                	<td>N° Pasajeros</td>
+				                	<td><input type="text" id="txtNroPasajeros"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Modelo</td>
+				                	<td><select id="sltModelo">
+				                    		<option value="">Seleccione</option>
+				                    		<c:forEach var="modelo" items="${modelos}">
+				                    			<option value="${modelo.modcodigo_D }"><c:out value="${modelo.modnombre_V }" /></option>
+				                    		</c:forEach>
+				                    	</select></td>
+				                	<td>Carga Util</td>
+				                	<td><input type="text" id="txtCargaUtil"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Año</td>
+				                	<td><input type="text" id="txtAno"/></td>
+				                	<td>Longitud</td>
+				                	<td><input type="text" id="txtLongitud"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Color</td>
+				                	<td><input type="text" id="txtColor"/></td>
+				                	<td>Ancho</td>
+				                	<td><input type="text" id="txtAncho"/></td>
+				                </tr>
+				            	<tr>
+				                	<td>Combustible</td>
+				                	<td><select id="sltCombustible">
+				                    		<option value="">Seleccione</option>
+				                    		<option value="P">PETROLEO</option>
+				                    		<option value="G">GASOLINA</option>
+				                    	</select></td>
+				                	<td>Alto</td>
+				                	<td><input type="text" id="txtAlto"/></td>
+				                </tr>
+				            </table>
+				        </fieldset>
+				    </div>
+					<div id="divVehiculoArchivos">
+						<fieldset>
+				        	<legend>ADJUNTAR DOCUMENTOS</legend>
+				        	<table id="tblDocumentos">
+								<tr>
+									<td>N°</td>
+									<td>Adjuntar</td>
+									<td>N° Documento</td>
+									<td>Fec. Emision</td>
+									<td>Fec. Caducidad</td>
+									<td>Porcentaje: <input type="text" id="txtCargandoUnidad" size="4"/>%</td>
+								</tr>
+					            <c:forEach var="docunidad" items="${documentosUnidad}" varStatus="status">
+									<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formDocumentoUnidad">
+										<tr>
+											<td>
+												<c:out value="${status.count}"/>
+												<input type="hidden" name="txtCodDocumento" value="<c:out value="${docunidad.mtdcodigoI}"/>"/>
+												<input type="hidden" name="txtCodArchivo" id="documentoUnd_<c:out value="${docunidad.mtdcodigoI}"/>" value="0"/>
+											</td>
+											<td><c:out value="${docunidad.mtdnombreV}"/></td>
+											<td><input type="text" name="txtNumDocumento" id="txtUndNumDocumento_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtNumeroDocumento txtVehNumDocumento"/></td>
+											<td><input type="text" name="txtFechaEmision" id="txtUndFechaEmision_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtFechaEmision dtFecha txtVehFecEmision"/></td>
+											<td><input type="text" name="txtFechaCaducidad" id="txtUndFechaCaducidad_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha txtVehFecCaducidad"/></td>
+											<td>
+												<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formDocumento">
+													<input type="file" name="fileDocumento" id="fileUndDocumento_<c:out value="${docunidad.mtdcodigoI}"/>" class="fileDocumento"/>
+													<input type="submit" value="Enviar"/>
+												</form>
+											</td>
+										</tr>
+									</form:form>
+								</c:forEach>
+							</table>
+				        </fieldset>
+				    	<fieldset>
+				        	<legend>ADJUNTAR FOTOS</legend>
+				            <table id="tblDocumentos">
+								<tr>
+									<td>N°</td>
+									<td>Adjuntar</td>
+									<td>Porcentaje: <input type="text" id="txtCargandoFotos" size="4"/>%</td>
+								</tr>
+					            <c:forEach var="docunidadfoto" items="${documentosUnidadFotos}" varStatus="status">
+									<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formDocumentoFoto">
+										<tr>
+											<td>
+												<c:out value="${status.count}"/>
+												<input type="hidden" name="txtCodDocumento" value="<c:out value="${docunidadfoto.mtdcodigoI}"/>"/>
+												<input type="hidden" name="txtCodArchivo" id="documento_<c:out value="${docunidadfoto.mtdcodigoI}"/>" value="0"/>
+											</td>
+											<td><c:out value="${docunidadfoto.mtdnombreV}"/></td>
+											<td>
+												<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formDocumento">
+													<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${docunidadfoto.mtdcodigoI}"/>" class="fileDocumento"/>
+													<input type="submit" value="Enviar"/>
+												</form>
+											</td>
+										</tr>
+									</form:form>
+								</c:forEach>
+							</table>
+				        </fieldset>
+				        <div>
+				        	<input type="button" value="Agregar" id="btnVehiculoProcesar"/>
+				        	<input type="button" value="Cancelar" id="btnVehiculoCancelar"/>
+				        </div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

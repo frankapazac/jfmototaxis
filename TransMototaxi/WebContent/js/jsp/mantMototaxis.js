@@ -2,7 +2,6 @@ $(document).ready(function(){
 	$("#divMensaje").hide();
 	$("#divFormulario").hide();
 	
-	
 	buscar("EMP.EMPCODIGO_D", "");
 	
 	$("#btnBuscar").click(function(){
@@ -44,26 +43,26 @@ $(document).ready(function(){
     		+"<th class='header'>N°</th>"
 			+"<th class='header'>Nombres</th>"
 			+"<th class='header'>DNI</th>"
-			+"<th class='header'>N° Placa</th>"
+			+"<th class='header'>Placa</th>"
 			+"<th class='header'>Marca</th>"
 			+"<th class='header'>Modelo</th>"
 			+"<th class='header'>Año</th>"
 			+"<th class='header'>Color</th>"
-			+"<th class='header'>Fec. Registro</th>"
-			+"<th class='header'>Fec. Cese</th>"
+			+"<th class='header'>Registro</th>"
+			+"<th class='header'>Cese</th>"
 			+"<th class='header'>Mensajes</th>"
 			+"</thead>"
 			+"<tfoot>"
     		+"<th>N°</th>"
 			+"<th>Nombres</th>"
 			+"<th>DNI</th>"
-			+"<th>N° Placa</th>"
+			+"<th>Placa</th>"
 			+"<th>Marca</th>"
 			+"<th>Modelo</th>"
 			+"<th>Año</th>"
 			+"<th>Color</th>"
-			+"<th>Fec. Registro</th>"
-			+"<th>Fec. Cese</th>"
+			+"<th>Registro</th>"
+			+"<th>Cese</th>"
 			+"<th>Mensajes</th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
@@ -75,17 +74,22 @@ $(document).ready(function(){
 			+" "+data[x].asociado.persona.perpaternoV
 			+" "+data[x].asociado.persona.permaternoV+"</td>"+
 			"<td>"+data[x].asociado.persona.perdniV+"</td>"+
-			"<td>"+data[x].mototaxi.uneplacanro_V+"</td>"+
-			"<td>"+data[x].mototaxi.unemarca_V+"</td>"+
-			"<td>"+data[x].mototaxi.modelo.modnombre_V+"</td>"+
-			"<td>"+data[x].mototaxi.uneanno_C+"</td>"+
-			"<td>"+data[x].mototaxi.unecolor_V+"</td>"+
-			"<td>"+data[x].empfechainicio_F+"</td>"+
-			"<td>"+data[x].empfechaceses_F+"</td>"+
+			"<td>"+data[x].unidadEmpresa.uneplacanroV+"</td>"+
+			"<td>"+data[x].unidadEmpresa.marca.marnombreV+"</td>"+
+			"<td>"+data[x].unidadEmpresa.modelo.modnombre_V+"</td>"+
+			"<td>"+data[x].unidadEmpresa.uneannoC+"</td>"+
+			"<td>"+data[x].unidadEmpresa.unecolorV+"</td>"+
+			"<td>"+data[x].empfechainicioF+"</td>"+
+			"<td>"+data[x].empfechaceseF+"</td>"+
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
+    	paginacion();
     }
 
-    
+	function paginacion(){
+		$("#tblLista")//.tablesorter(); 
+        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
+        .tablesorterPager({container: $("#pager")}); 	
+	}
 });

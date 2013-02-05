@@ -1,6 +1,6 @@
 table.tablesorter {
 	font-size: 12px;
-	background-color: #4D4D4D;
+	background-color: #577b15;
 	width: 1024px;
 	border: 1px solid #000;
 }
@@ -14,10 +14,10 @@ table.tablesorter td {
 	padding: 5px;
 }
 table.tablesorter .even {
-	background-color: #3D3D3D;
+	background-color: #608A12;
 }
 table.tablesorter .odd {
-	background-color: #6E6E6E;
+	background-color: #f0f0f0;
 }
 table.tablesorter .header {
 	background-image: url(bg.png);
