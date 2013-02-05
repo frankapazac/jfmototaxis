@@ -11,11 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.munichosica.myapp.dto.MotEmpRepresentante;
+import com.munichosica.myapp.dto.MotEmpresa;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
 import com.munichosica.myapp.dto.Usuempr;
+import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
+import com.munichosica.myapp.exceptions.MotEmpresaDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
+import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
+import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
+import com.munichosica.myapp.factory.MotEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
@@ -124,7 +131,7 @@ public class PageController {
 	}
 
 	@RequestMapping(value="Configuracion.htm",method=RequestMethod.GET)
-	public String configuracion(HttpServletRequest request){
+	public String configuracion(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Configuracion.htm");
 		HttpSession session=request.getSession(true);
 		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
@@ -132,6 +139,16 @@ public class PageController {
 			System.out.println("INICIO");
 			usuempr=new UserSecurity().getUser();
 			session.setAttribute("USUARIO", usuempr);
+		}
+		try {
+			MotEmpRepresentante emprepresentante=null;
+			emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(usuempr.getEmpresa().getEmpcodigoD());
+			List<MotTipoDocumento> fotos = MotTipoDocumentoDaoFactory.create().findByTable("EMP");
+			model.addAttribute("emprepresentante", emprepresentante);//para enviar datos a esta pagina
+			model.addAttribute("fotos", fotos);
+		} catch (MotEmpRepresentanteDaoException | MotTipoDocumentoDaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return "tilesConfiguracion";
 	}

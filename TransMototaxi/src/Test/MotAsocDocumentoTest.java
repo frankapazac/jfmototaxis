@@ -28,12 +28,4 @@ public class MotAsocDocumentoTest {
 		}
 	}
 	
-	public void holafrankpapaza(){
-		System.out.println("Hola frank apaza");
-	}
-	
-	public void prueba(){
-		System.out.println(1);
-		
-	}
 }
