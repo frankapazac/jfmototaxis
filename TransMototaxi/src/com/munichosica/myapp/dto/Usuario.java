@@ -1,6 +1,5 @@
 package com.munichosica.myapp.dto;
 
-
 public class Usuario {
 	private Integer usucodigoI;
 	private String usuusuarioV;
@@ -8,6 +7,11 @@ public class Usuario {
 	private String pass;
 	private String newPass;
 	private MotEmpresa empresa;
+	
+	public Usuario() {
+		empresa=new MotEmpresa();
+	}
+	
 	public String getPass() {
 		return pass;
 	}
