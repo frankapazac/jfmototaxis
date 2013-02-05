@@ -2,7 +2,10 @@ package com.munichosica.myapp.dto;
 
 import java.util.List;
 
-
+/**
+ * @author FAPAZA
+ *
+ */
 public class MotEmprAsociado {
 	protected Long asocodigoD;
 	protected MotPersona persona;
@@ -10,6 +13,10 @@ public class MotEmprAsociado {
 	protected String asorazonsocialV;
 	protected MotEmpresa empresa;
 	protected String asoestadoC;
+	
+	public MotEmprAsociado() {
+		persona=new MotPersona();
+	}
 	
 	public void setEmpresa(MotEmpresa empresa) {
 		this.empresa = empresa;

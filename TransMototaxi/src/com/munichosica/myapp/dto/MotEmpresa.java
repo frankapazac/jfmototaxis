@@ -25,6 +25,12 @@ public class MotEmpresa {
 	protected MotUbigeo departamento;
 	protected MotUbigeo provincia;
 	
+	public MotEmpresa() {
+		distrito=new MotUbigeo();
+		departamento=new MotUbigeo();
+		provincia=new MotUbigeo();
+	}
+	
 	public String getEmpcelularmovV() {
 		return empcelularmovV;
 	}

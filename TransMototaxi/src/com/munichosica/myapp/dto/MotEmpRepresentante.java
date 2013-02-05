@@ -11,6 +11,11 @@ public class MotEmpRepresentante {
 	protected String repfechaceseF;
 	protected String repobservaciones;
 	
+	public MotEmpRepresentante() {
+		empProp=new MotEmpProp();
+		empresa=new MotEmpresa();
+	}
+	
 	public Long getRepcodigoI() {
 		return repcodigoI;
 	}

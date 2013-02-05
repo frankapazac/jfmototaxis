@@ -6,6 +6,10 @@ public class MotEmpPropietario {
 	protected Long percodigoD;
 	protected MotPersona persona;
 	
+	public MotEmpPropietario() {
+		persona=new MotPersona();
+	}
+	
 	public Long getProcodigoD() {
 		return procodigoD;
 	}
