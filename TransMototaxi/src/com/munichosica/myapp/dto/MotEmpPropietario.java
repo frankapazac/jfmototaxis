@@ -1,7 +1,6 @@
 package com.munichosica.myapp.dto;
 
 public class MotEmpPropietario {
-
 	protected Long procodigoD;
 	protected Long percodigoD;
 	protected MotPersona persona;
@@ -28,5 +27,4 @@ public class MotEmpPropietario {
 	public void setPersona(MotPersona persona) {
 		this.persona = persona;
 	}
-	
 }

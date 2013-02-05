@@ -1,12 +1,13 @@
 package com.munichosica.myapp.dto;
 
 public class MotConductor {
-
-	
 	protected Long concodigoD;
 	protected Long percodigoD;
 	protected MotPersona persona;
 	
+	public MotConductor() {
+		persona=new MotPersona();
+	}
 	
 	public Long getConcodigoD() {
 		return concodigoD;
@@ -26,7 +27,4 @@ public class MotConductor {
 	public void setPersona(MotPersona persona) {
 		this.persona = persona;
 	}
-
-	
-	
 }

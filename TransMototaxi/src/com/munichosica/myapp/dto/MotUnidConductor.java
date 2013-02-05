@@ -1,8 +1,6 @@
 package com.munichosica.myapp.dto;
 
 public class MotUnidConductor {
-	
-	
 	protected Long ucocodigoD;
 	protected Long pmocodigoD;
 	protected Long condcodigoD;
@@ -14,6 +12,10 @@ public class MotUnidConductor {
 	protected MotPropUnidadEmpresa propietariomoto;
 	protected MotConductor conductor;
 	
+	public MotUnidConductor() {
+		propietariomoto=new MotPropUnidadEmpresa();
+		conductor=new MotConductor();
+	}
 
 	public Long getUcocodigoD() {
 		return ucocodigoD;
@@ -69,6 +71,4 @@ public class MotUnidConductor {
 	public void setConductor(MotConductor conductor) {
 		this.conductor = conductor;
 	}
-
-
 }

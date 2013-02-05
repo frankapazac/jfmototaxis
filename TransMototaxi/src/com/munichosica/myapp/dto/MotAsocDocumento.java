@@ -5,6 +5,13 @@ public class MotAsocDocumento {
 	protected MotEmprAsociado asociado;
 	protected MotTipoDocumento tipoDocumento;
 	protected MotAdjuntarArchivo archivo;
+	
+	public MotAsocDocumento() {
+		asociado=new MotEmprAsociado();
+		tipoDocumento=new MotTipoDocumento();
+		archivo=new MotAdjuntarArchivo();
+	}
+	
 	public Long getAdocodigoD() {
 		return adocodigoD;
 	}
@@ -29,5 +36,4 @@ public class MotAsocDocumento {
 	public void setArchivo(MotAdjuntarArchivo archivo) {
 		this.archivo = archivo;
 	}
-	
 }

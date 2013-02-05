@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,33 @@ import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
 
 public class MotEmpadronamientoDaoImpl implements MotEmpadronamientoDao {
 
-	protected static final Logger logger = Logger.getLogger(MotEmpadronamientoDaoImpl.class);
+protected static final Logger logger = Logger.getLogger(MotEmpadronamientoDaoImpl.class);
 	
 	@Override
-	public void insert(MotEmpadronamiento dto)
-			throws MotEmpadronamientoDaoException {	
+	public void insert(MotEmpadronamiento dto) throws MotEmpadronamientoDaoException{
+		Connection conn=null;
+		CallableStatement stmt=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_INS_EMPADRONAMIENTO;1(?,?,?,?,?,?)}");
+			stmt.registerOutParameter(1, Types.DECIMAL);
+			stmt.setLong(1, dto.getEpocodigoD());
+			stmt.setLong(2,dto.getEmpresa().getEmpcodigoD());
+			stmt.setLong(3, dto.getUnidadEmpresa().getUnecodigoD());
+			stmt.setString(4, dto.getEmpfechainicioF());
+			stmt.setString(5, dto.getEmpfechaceseF());
+			stmt.setString(6, dto.getEmpobservacionesV());
+			stmt.execute();
+			Long codigo=stmt.getLong(1);
+			if(codigo!=null){
+				dto.setEpocodigoD(codigo);
+			}
+		} catch (SQLException e) {
+			throw new MotEmpadronamientoDaoException(e.getMessage() ,e);
+		} finally{
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
 	}
 
 	@Override
@@ -69,39 +92,21 @@ public class MotEmpadronamientoDaoImpl implements MotEmpadronamientoDao {
 				
 				rs=stmt.getResultSet();
 				MotEmpadronamiento empadronamiento = null;
-				MotEmprAsociado asociado = null;
-				MotUnidadEmpresa mototaxi = null;
-				MotPersona persona = null;
-				MotModelo modelo = null;
-
-				
 				while(rs.next()){
-					
-					persona = new MotPersona();
-					persona.setPernombresV(rs.getString("Nombres"));
-					persona.setPerpaternoV(rs.getString("Paterno"));
-					persona.setPermaternoV(rs.getString("Materno"));
-					persona.setPerdniV(rs.getString("DNI"));
-					asociado = new MotEmprAsociado();
-					asociado.setPersona(persona);
-					
-					mototaxi = new MotUnidadEmpresa();
-					mototaxi.setUnecodigo_D(rs.getBigDecimal("Código"));
-					mototaxi.setUneplacanro_V(rs.getString("N° Placa"));
-					mototaxi.setUnemarca_V(rs.getString("Marca"));
-					mototaxi.setUneanno_C(rs.getString("Año"));
-					mototaxi.setUnecolor_V(rs.getString("Color"));
-					
-					modelo = new MotModelo();//aqui jalamos el nombre modelo de la tabla modelo
-					modelo.setModnombre_V(rs.getString("Modelo"));
-					mototaxi.setModelo(modelo);
-					
-					empadronamiento= new MotEmpadronamiento();
-					empadronamiento.setEmpfechaceses_F(rs.getString("Fecha Cese"));
-					empadronamiento.setEmpfechainicio_F(rs.getString("Fecha Inicio"));
-					
-					empadronamiento.setAsociado(asociado);
-					empadronamiento.setMototaxi(mototaxi);
+					empadronamiento=new MotEmpadronamiento();
+					empadronamiento.getAsociado().getPersona().setPernombresV(rs.getString("Nombres"));
+					empadronamiento.getAsociado().getPersona().setPerpaternoV(rs.getString("Paterno"));
+					empadronamiento.getAsociado().getPersona().setPermaternoV(rs.getString("Materno"));
+					empadronamiento.getAsociado().getPersona().setPerdniV(rs.getString("DNI"));
+					empadronamiento.getAsociado().getPersona().setPernombresV(rs.getString("Nombres"));
+					empadronamiento.getUnidadEmpresa().setUnecodigoD(rs.getLong("Código"));
+					empadronamiento.getUnidadEmpresa().setUneplacanroV(rs.getString("N° Placa"));
+					empadronamiento.getUnidadEmpresa().setUneannoC(rs.getString("Año"));
+					empadronamiento.getUnidadEmpresa().setUnecolorV(rs.getString("Color"));
+					empadronamiento.getUnidadEmpresa().getMarca().setMarnombreV(rs.getString("Marca"));
+					empadronamiento.getUnidadEmpresa().getModelo().setModnombre_V(rs.getString("Modelo"));
+					empadronamiento.setEmpfechaceseF(rs.getString("Fecha Cese"));
+					empadronamiento.setEmpfechainicioF(rs.getString("Fecha Inicio"));
 					list.add(empadronamiento);
 				}
 			}
@@ -117,7 +122,35 @@ public class MotEmpadronamientoDaoImpl implements MotEmpadronamientoDao {
 	
 		return list;
 	}
-	
-	
-	
+
+	@Override
+	public MotEmpadronamiento findByUnidad(Long codigo)
+			throws MotEmpadronamientoDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotEmpadronamiento dto=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_EMPADRONAMIENTOBYUNIDAD;1(?)}");
+			stmt.setLong(1, codigo);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					dto=new MotEmpadronamiento();
+					dto.setEpocodigoD(rs.getLong("CODIGO"));
+					dto.setEmpfechainicioF(rs.getString("INICIO"));
+					dto.setEmpfechaceseF(rs.getString("CESE"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotEmpadronamientoDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return dto;
+	}
 }

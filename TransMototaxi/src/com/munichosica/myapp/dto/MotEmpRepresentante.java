@@ -1,8 +1,6 @@
 package com.munichosica.myapp.dto;
 
 public class MotEmpRepresentante {
-
-	
 	protected Long repcodigoI;
 	protected MotEmpProp empProp;
 	protected MotEmpresa empresa;

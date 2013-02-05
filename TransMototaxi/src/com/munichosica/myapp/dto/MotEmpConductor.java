@@ -1,7 +1,6 @@
 package com.munichosica.myapp.dto;
 
 public class MotEmpConductor {
-	
 	protected Long concodigoD;
 	protected Long empcodigoD;
 	protected Long ecocodigoD;
@@ -11,6 +10,11 @@ public class MotEmpConductor {
 		
 	protected MotConductor conductor;
 	protected MotEmpresa empresa;
+	
+	public MotEmpConductor() {
+		conductor=new MotConductor();
+		empresa=new MotEmpresa();
+	}
 	
 	public Long getConcodigoD() {
 		return concodigoD;
@@ -60,6 +64,4 @@ public class MotEmpConductor {
 	public void setEmpresa(MotEmpresa empresa) {
 		this.empresa = empresa;
 	}
-
-	
 }

@@ -7,7 +7,9 @@ public class MotParadero {
 	protected MotZona zona;
 	protected String parestadoC;
 	
-	
+	public MotParadero() {
+		zona=new MotZona();
+	}
 	
 	public Integer getParcodigoI() {
 		return parcodigoI;
@@ -39,6 +41,4 @@ public class MotParadero {
 	public void setParestadoC(String parestadoC) {
 		this.parestadoC = parestadoC;
 	}
-	
-	
 }
