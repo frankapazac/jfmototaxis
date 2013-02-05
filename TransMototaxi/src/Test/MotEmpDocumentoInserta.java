@@ -1,6 +1,5 @@
 package Test;
 
-import com.lowagie.text.Document;
 import com.munichosica.myapp.dto.MotEmpDocumento;
 import com.munichosica.myapp.exceptions.MotEmpDocumentoDaoException;
 import com.munichosica.myapp.factory.MotEmpDocumentoDaoFactory;

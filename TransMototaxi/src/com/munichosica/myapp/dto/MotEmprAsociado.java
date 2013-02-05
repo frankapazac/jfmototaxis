@@ -54,5 +54,4 @@ public class MotEmprAsociado {
 	public void setAsoestadoC(String asoestadoC) {
 		this.asoestadoC = asoestadoC;
 	}
-	
 }

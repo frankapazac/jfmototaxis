@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.munichosica.myapp.dto.MotEmpRepresentante;
-import com.munichosica.myapp.dto.MotMarca;
 import com.munichosica.myapp.dto.MotModelo;
-import com.munichosica.myapp.dto.MotOficinaRegistral;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
@@ -23,9 +21,6 @@ import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
 import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
-import com.munichosica.myapp.factory.MotMarcaDaoFactory;
-import com.munichosica.myapp.factory.MotModeloDaoFactory;
-import com.munichosica.myapp.factory.MotOficinaRegistralDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
@@ -64,25 +59,25 @@ public class PageController {
 		List<MotUbigeo> departamentos=null;
 		List<MotTipoDocumento> documentos=null;
 		List<MotModelo> modelos=null;
-		List<MotMarca> marcas=null;
+		/*List<MotMarca> marcas=null;
 		List<MotOficinaRegistral> oficinas=null;
-		List<MotTipoDocumento> documentosUnidad=null;
+		*/List<MotTipoDocumento> documentosUnidad=null;
 		List<MotTipoDocumento> documentosUnidadFotos=null;
 		try {
 			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
 			documentos=MotTipoDocumentoDaoFactory.create().findByTable("ADO");
 			documentosUnidad=MotTipoDocumentoDaoFactory.create().findByTable("UDO");
 			documentosUnidadFotos=MotTipoDocumentoDaoFactory.create().findByTable("UDF");
-			modelos=MotModeloDaoFactory.create().findAll();
+			/*modelos=MotModeloDaoFactory.create().findAll();
 			marcas=MotMarcaDaoFactory.create().findAll();
 			oficinas=MotOficinaRegistralDaoFactory.create().findAll();
-			model.addAttribute("departamentos", departamentos);
+			*/model.addAttribute("departamentos", departamentos);
 			model.addAttribute("documentos", documentos);
 			model.addAttribute("documentosUnidad", documentosUnidad);
 			model.addAttribute("documentosUnidadFotos", documentosUnidadFotos);
 			model.addAttribute("modelos",modelos);
-			model.addAttribute("marcas",marcas);
-			model.addAttribute("oficinas", oficinas);
+			//model.addAttribute("marcas",marcas);
+			//model.addAttribute("oficinas", oficinas);
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}

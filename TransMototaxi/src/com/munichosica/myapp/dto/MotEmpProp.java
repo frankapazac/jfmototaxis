@@ -1,7 +1,6 @@
 package com.munichosica.myapp.dto;
 
 public class MotEmpProp {
-
 	protected Long eprcodigoD;
 	protected MotEmpPropietario empPropietario;
 	protected MotEmpresa empresa;
@@ -71,5 +70,4 @@ public class MotEmpProp {
 	public void setEprobservacionesV(String eprobservacionesV) {
 		this.eprobservacionesV = eprobservacionesV;
 	}
-	
 }

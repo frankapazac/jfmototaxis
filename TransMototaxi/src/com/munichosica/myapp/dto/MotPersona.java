@@ -144,6 +144,4 @@ public class MotPersona {
 	public void setPerubprovV(String perubprovV) {
 		this.perubprovV = perubprovV;
 	}
-	
-	
 }

@@ -1,74 +1,79 @@
 package com.munichosica.myapp.dto;
 
-import java.math.BigDecimal;
-
 public class MotEmpadronamiento {
-
-	protected BigDecimal epocodigo_D;
-	protected BigDecimal empcodigo_D;
-	protected BigDecimal unecodigo_D;
-	protected String empfechainicio_F;
-	protected String empfechaceses_F;
-	protected String empvigencia_C;
-	protected String empobservaciones_V;
+	protected Long epocodigoD;
+	protected MotEmpresa empresa;
+	protected MotUnidadEmpresa unidadEmpresa;
+	protected String empfechainicioF;
+	protected String empfechaceseF;
+	protected String empvigenciaC;
+	protected String empobservacionesV;
+	protected String empestadoC;
 	
 	protected MotEmprAsociado asociado;
-	protected MotUnidadEmpresa mototaxi;
+	
+	public MotEmpadronamiento() {
+		empresa=new MotEmpresa();
+		unidadEmpresa=new MotUnidadEmpresa();
+		
+		asociado=new MotEmprAsociado();
+	}
 	
 	public MotEmprAsociado getAsociado() {
 		return asociado;
 	}
+
 	public void setAsociado(MotEmprAsociado asociado) {
 		this.asociado = asociado;
 	}
-	public MotUnidadEmpresa getMototaxi() {
-		return mototaxi;
+
+	public String getEmpestadoC() {
+		return empestadoC;
 	}
-	public void setMototaxi(MotUnidadEmpresa mototaxi) {
-		this.mototaxi = mototaxi;
+	public void setEmpestadoC(String empestadoC) {
+		this.empestadoC = empestadoC;
 	}
-	public BigDecimal getEpocodigo_D() {
-		return epocodigo_D;
+	public Long getEpocodigoD() {
+		return epocodigoD;
 	}
-	public void setEpocodigo_D(BigDecimal epocodigo_D) {
-		this.epocodigo_D = epocodigo_D;
+	public void setEpocodigoD(Long epocodigoD) {
+		this.epocodigoD = epocodigoD;
 	}
-	public BigDecimal getEmpcodigo_D() {
-		return empcodigo_D;
+	public MotEmpresa getEmpresa() {
+		return empresa;
 	}
-	public void setEmpcodigo_D(BigDecimal empcodigo_D) {
-		this.empcodigo_D = empcodigo_D;
+	public void setEmpresa(MotEmpresa empresa) {
+		this.empresa = empresa;
 	}
-	public BigDecimal getUnecodigo_D() {
-		return unecodigo_D;
+	public MotUnidadEmpresa getUnidadEmpresa() {
+		return unidadEmpresa;
 	}
-	public void setUnecodigo_D(BigDecimal unecodigo_D) {
-		this.unecodigo_D = unecodigo_D;
+	public void setUnidadEmpresa(MotUnidadEmpresa unidadEmpresa) {
+		this.unidadEmpresa = unidadEmpresa;
 	}
-	public String getEmpvigencia_C() {
-		return empvigencia_C;
+	public String getEmpfechainicioF() {
+		return empfechainicioF;
 	}
-	public void setEmpvigencia_C(String empvigencia_C) {
-		this.empvigencia_C = empvigencia_C;
+	public void setEmpfechainicioF(String empfechainicioF) {
+		this.empfechainicioF = empfechainicioF;
 	}
-	public String getEmpobservaciones_V() {
-		return empobservaciones_V;
+	public String getEmpfechaceseF() {
+		return empfechaceseF;
 	}
-	public void setEmpobservaciones_V(String empobservaciones_V) {
-		this.empobservaciones_V = empobservaciones_V;
+	public void setEmpfechaceseF(String empfechaceseF) {
+		this.empfechaceseF = empfechaceseF;
 	}
-	
-	public String getEmpfechainicio_F() {
-		return empfechainicio_F;
+	public String getEmpvigenciaC() {
+		return empvigenciaC;
 	}
-	public void setEmpfechainicio_F(String empfechainicio_F) {
-		this.empfechainicio_F = empfechainicio_F;
+	public void setEmpvigenciaC(String empvigenciaC) {
+		this.empvigenciaC = empvigenciaC;
 	}
-	public String getEmpfechaceses_F() {
-		return empfechaceses_F;
+	public String getEmpobservacionesV() {
+		return empobservacionesV;
 	}
-	public void setEmpfechaceses_F(String empfechaceses_F) {
-		this.empfechaceses_F = empfechaceses_F;
+	public void setEmpobservacionesV(String empobservacionesV) {
+		this.empobservacionesV = empobservacionesV;
 	}
 	
 }

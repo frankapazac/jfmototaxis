@@ -1,7 +1,6 @@
 package com.munichosica.myapp.dto;
 
 public class MotEmpDocumento {
-	
 	protected Long edocodigoD;
 	protected Long adjcodigoD;
 	protected Integer mtdcodigoI;

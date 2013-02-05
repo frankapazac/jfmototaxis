@@ -6,6 +6,11 @@ public class MotEmpParadero {
 	protected MotParadero paradero;
 	protected MotEmpresa empresa;
 	
+	public MotEmpParadero() {
+		paradero=new MotParadero();
+		empresa=new MotEmpresa();
+	}
+	
 	public Long getEpacodigo_I() {
 		return epacodigo_I;
 	}
@@ -24,5 +29,4 @@ public class MotEmpParadero {
 	public void setEmpresa(MotEmpresa empresa) {
 		this.empresa = empresa;
 	}
-	
 }

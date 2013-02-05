@@ -22,5 +22,4 @@ public class MotTipoDocumento {
 	public void setMtdtablaC(String mtdtablaC) {
 		this.mtdtablaC = mtdtablaC;
 	}
-	
 }
