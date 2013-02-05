@@ -11,7 +11,12 @@ public class MotEmpProp {
 	protected byte[] eprdocumentoB;
 	protected String extension;
 	protected String eprobservacionesV;
-		
+	
+	public MotEmpProp() {
+		empPropietario=new MotEmpPropietario();
+		empresa=new MotEmpresa();
+	}
+	
 	public Long getEprcodigoD() {
 		return eprcodigoD;
 	}
