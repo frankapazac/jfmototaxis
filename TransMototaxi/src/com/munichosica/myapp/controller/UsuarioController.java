@@ -4,11 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.munichosica.myapp.dto.Usuario;
-import com.munichosica.myapp.exceptions.UsuarioDaoException;
-import com.munichosica.myapp.factory.UsuarioDaoFactory;
 
 @Controller
 @RequestMapping("/")
@@ -41,17 +38,4 @@ public class UsuarioController{
 	public String error403(Model model){
 		return "403";
 	}
-	
-	@RequestMapping(value="Actualizar.htm",method=RequestMethod.POST)
-	public String cambiarPass(Usuario usuario){
-		//System.out.println(usuario.getUsuusuarioV());
-		try {
-			UsuarioDaoFactory.create().update(usuario);
-		} catch (UsuarioDaoException e) {
-			e.printStackTrace();
-		}
-			
-		return "Success";
-	}
-	
 }
