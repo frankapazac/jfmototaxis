@@ -15,12 +15,41 @@ public class MotEmpresa {
 	protected String empcelularnexV;
 	protected String empmailV;
 	protected String emppagwebV;
-	protected String empdistritoV;
 	protected Date empfechainioperacionF;
 	protected Date empfechaceseoperacionF;
 	protected String empresolucionV;
 	protected Integer empunidadesautorizadasI;
 	protected String empescriturapublicaV;
+	
+	protected MotUbigeo distrito;
+	protected MotUbigeo departamento;
+	protected MotUbigeo provincia;
+	
+	public String getEmpcelularmovV() {
+		return empcelularmovV;
+	}
+	public void setEmpcelularmovV(String empcelularmovV) {
+		this.empcelularmovV = empcelularmovV;
+	}
+	public MotUbigeo getDistrito() {
+		return distrito;
+	}
+	public void setDistrito(MotUbigeo distrito) {
+		this.distrito = distrito;
+	}
+	public MotUbigeo getDepartamento() {
+		return departamento;
+	}
+	public void setDepartamento(MotUbigeo departamento) {
+		this.departamento = departamento;
+	}
+	public MotUbigeo getProvincia() {
+		return provincia;
+	}
+	public void setProvincia(MotUbigeo provincia) {
+		this.provincia = provincia;
+	}
+
 	public Long getEmpcodigoD() {
 		return empcodigoD;
 	}
@@ -63,12 +92,6 @@ public class MotEmpresa {
 	public void setEmptelefono2V(String emptelefono2v) {
 		emptelefono2V = emptelefono2v;
 	}
-	public String getEmpcelularmovV() {
-		return empcelularmovV;
-	}
-	public void setEmpcelularmovV(String empcelularmovV) {
-		this.empcelularmovV = empcelularmovV;
-	}
 	public String getEmpcelularclaV() {
 		return empcelularclaV;
 	}
@@ -92,12 +115,6 @@ public class MotEmpresa {
 	}
 	public void setEmppagwebV(String emppagwebV) {
 		this.emppagwebV = emppagwebV;
-	}
-	public String getEmpdistritoV() {
-		return empdistritoV;
-	}
-	public void setEmpdistritoV(String empdistritoV) {
-		this.empdistritoV = empdistritoV;
 	}
 	public Date getEmpfechainioperacionF() {
 		return empfechainioperacionF;

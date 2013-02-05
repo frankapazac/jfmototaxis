@@ -134,7 +134,6 @@ public class MotParaderoDaoImpl implements MotParaderoDao {
 		Connection conn = null;
 		CallableStatement stmt = null;
 		ResultSet rs = null;
-		
 		MotParadero paradero= new MotParadero();
 		
 		try {

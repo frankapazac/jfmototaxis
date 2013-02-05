@@ -2,10 +2,7 @@ package com.munichosica.myapp.dto;
 
 import java.util.List;
 
-/**
- * @author FAPAZA
- *
- */
+
 public class MotEmprAsociado {
 	protected Long asocodigoD;
 	protected MotPersona persona;

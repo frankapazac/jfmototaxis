@@ -1,19 +1,26 @@
 package com.munichosica.myapp.dto;
 
-import org.springframework.context.annotation.Scope;
 
 public class Usuario {
-	private int usucodigoI;
+	private Integer usucodigoI;
 	private String usuusuarioV;
 	private String usurolV;
+	private String pass;
+	private String newPass;
 	private MotEmpresa empresa;
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getNewPass() {
+		return newPass;
+	}
+	public void setNewPass(String newPass) {
+		this.newPass = newPass;
+	}
 	
-	public int getUsucodigoI() {
-		return usucodigoI;
-	}
-	public void setUsucodigoI(int usucodigoI) {
-		this.usucodigoI = usucodigoI;
-	}
 	public String getUsuusuarioV() {
 		return usuusuarioV;
 	}
@@ -31,6 +38,12 @@ public class Usuario {
 	}
 	public void setEmpresa(MotEmpresa empresa) {
 		this.empresa = empresa;
+	}
+	public Integer getUsucodigoI() {
+		return usucodigoI;
+	}
+	public void setUsucodigoI(Integer usucodigoI) {
+		this.usucodigoI = usucodigoI;
 	}
 	
 }
