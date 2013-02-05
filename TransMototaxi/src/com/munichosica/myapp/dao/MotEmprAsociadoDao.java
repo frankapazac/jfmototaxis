@@ -10,4 +10,5 @@ public interface MotEmprAsociadoDao {
 	public void delete(Long codigo) throws MotEmprAsociadoDaoException;
 	public MotEmprAsociado findByPrimaryKey(Long codigo) throws MotEmprAsociadoDaoException;
 	public List<MotEmprAsociado> findByCriterio(String criterio, String texto, Long empcodigoD) throws MotEmprAsociadoDaoException;
+	public List<MotEmprAsociado> findByCriterio(String criterio, String texto) throws MotEmprAsociadoDaoException;
 }
