@@ -13,6 +13,6 @@ public interface MotModeloDao {
 	public void delete(MotModelo dto) throws MotModeloDaoException;
 	public MotModelo findByPrimaryKey(int codigo) throws MotModeloDaoException;
 	public List<MotModelo> findByCriterio(String criterio,String texto, Long modcodigo_I)throws MotParaderoDaoException;
-
+	public List<MotModelo> findAll() throws MotModeloDaoException;	
 	
 }
