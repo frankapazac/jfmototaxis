@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
 <script type="text/javascript">
@@ -47,15 +48,26 @@
 	    border-top-right-radius: 6px;
 	    border-bottom-right-radius: 6px;
 	}
+	.lnkSalir{
+		background-color: red;
+	}
+	.lnkSalir:HOVER {
+		background: #f0f0f0;
+	    color: red !important;
+	}
 </style>
 <nav class="horizontal-nav full-width horizontalNav-notprocessed">
 	<ul>
-        <li><a href="Inicio.htm">INICIO</a></li>
+		<c:forEach var="pagina" items="${paginas}">
+			<li><a href="<c:out value="${pagina.pagurlV}"/>"><c:out value="${pagina.pagnombreV}"/></a></li>
+		</c:forEach>
+		<li><a href="<c:url value="j_spring_security_logout"/>" class="lnkSalir" >SALIR</a></li>
+        <!-- li><a href="Inicio.htm">INICIO</a></li>
         <li><a href="Asociados.htm">ASOCIADOS</a></li>
         <li><a href="Conductores.htm">CONDUCTORES</a></li>
         <li><a href="Mototaxis.htm">MOTOTAXIS</a></li>
         <li><a href="Paraderos.htm">PARADEROS</a></li>
 	    <li><a href="Documentacion.htm">DOCUMENTACION</a></li>
-	    <li><a href="Configuracion.htm">CONFIGURACION</a></li>
+	    <li><a href="Configuracion.htm">CONFIGURACION</a></li> -->
     </ul>
 </nav>

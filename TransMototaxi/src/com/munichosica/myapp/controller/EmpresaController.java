@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotEmpDocumento;
 import com.munichosica.myapp.dto.MotEmpresa;
-import com.munichosica.myapp.dto.Usuempr;
+import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpParaderoDaoException;
@@ -53,14 +53,14 @@ public class EmpresaController{
 		try {
 			HttpSession session=request.getSession(true);
 			EmpresaDocumentoSession documentoSession=(EmpresaDocumentoSession) session.getAttribute("DOCUMENTOS_EMPRESA");
-			Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
+			Rol rol=(Rol) session.getAttribute("ROL");
 			logger.info("Ingreso a Configuracion/Actualizar.htm");
 			MotEmpresaDaoFactory.create().update(empresa);
 			logger.info("MotEmpresaDaoFactory.create().update(empresa); Completed codigo: "+empresa.getEmpcodigoD());
 			if(documentoSession!=null){
 				if(documentoSession.getList()!=null&&documentoSession.getList().size()>0){
 					for(MotEmpDocumento documento: documentoSession.getList()){
-						documento.setEmpresa(usuempr.getEmpresa());
+						documento.setEmpresa(rol.getUsuario().getEmpresa());
 						MotAdjuntarArchivoDaoFactory.create().insert(documento.getAdjuntarArchivo());
 						MotEmpDocumentoDaoFactory.create().insert(documento);
 					}

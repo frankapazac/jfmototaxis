@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotEmpadronamiento;
-import com.munichosica.myapp.dto.Usuempr;
+import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
@@ -31,10 +31,11 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 				@RequestParam("texto") String texto, HttpServletRequest request){
 		logger.info("Ingreso a Mototaxi/Listar.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
+		Rol rol=(Rol) session.getAttribute("ROL");
 		List<MotEmpadronamiento> list=null;
 		try {
-			list=MotEmpadronamientoDaoFactory.create().findByCriterio(criterio, texto,usuempr.getEmpresa().getEmpcodigoD());
+			list=MotEmpadronamientoDaoFactory.create().findByCriterio(criterio, texto,
+					rol.getUsuario().getEmpresa().getEmpcodigoD());
 			logger.info("MotParaderoDaoFactory.create().findByCriterio(criterio, texto,(long) 1);Completed");
 		} catch (MotEmpadronamientoDaoException e) {
 			logger.error(e.getMessage());

@@ -8,11 +8,12 @@
 	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	
 	<http auto-config="true">
-		<intercept-url pattern="/Panel.htm" access="ROLE_USER,ROLE_ADMIN"/>
-		<intercept-url pattern="/Asociados/Procesar.htm" access="ROLE_USER,ROLE_ADMIN"/>
+		<!-- intercept-url pattern="/Panel.htm" access="ROLE_USER,ROLE_ADMIN"/-->
+		<intercept-url pattern="/Inicio.htm" access="ROLE_ADMIN_EMPR,ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Asociados/Procesar.htm" access="ROLE_USER_EMPR,ROLE_ADMIN_EMPR"/>
 		
 		
-		<form-login login-page="/Ingresar.htm" default-target-url="/Panel.htm"
+		<form-login login-page="/Ingresar.htm" default-target-url="/Inicio.htm"
 		authentication-failure-url="/FalloLogin.htm"/>
 		<logout logout-success-url="/Salir.htm"/>
 		<access-denied-handler error-page="/403.htm"/>
