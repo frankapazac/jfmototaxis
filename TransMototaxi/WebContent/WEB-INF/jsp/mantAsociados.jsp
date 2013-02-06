@@ -30,15 +30,19 @@
 		#divRegistrarMoto{
 			width:1000px;
 			min-height:600px;
-			height: auto;
+			height: 850px;
 		}
 		#divMotos{
-			width:300px;
+			width:30%;
 			float:left;
 		}
 		#divVehiculo{
-			width:680px;
+			width:68%;
 			float:right;
+		}
+		#divVehiculoArchivos{
+			float: left;
+			width: 100%;
 		}
 	</style>
 <title>Insert title here</title>
