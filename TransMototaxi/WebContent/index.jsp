@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:redirect url="/Panel.htm"></c:redirect>
+<c:redirect url="/Ingresar.htm"></c:redirect>
 </body>
 </html>

@@ -18,7 +18,7 @@ import com.munichosica.myapp.dto.MotOficinaRegistral;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
-import com.munichosica.myapp.dto.Usuempr;
+import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
@@ -38,15 +38,17 @@ public class PageController {
 	Logger logger=Logger.getLogger(PageController.class);
 	
 	@RequestMapping(value="Inicio.htm",method=RequestMethod.GET)
-	public String inicio(HttpServletRequest request){
+	public String inicio(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Inicio.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
-		if(usuempr==null){
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
 			System.out.println("INICIO");
-			usuempr=new UserSecurity().getUser();
-			session.setAttribute("USUARIO", usuempr);
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
 		}
+		model.addAttribute("usuario",rol.getUsuario());
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesBienvenido";
 	}
 
@@ -54,11 +56,11 @@ public class PageController {
 	public String asociados(HttpServletRequest request, Model model){
 		logger.info("Ingreso a Asociados.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
-		if(usuempr==null){
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
 			System.out.println("INICIO");
-			usuempr=new UserSecurity().getUser();
-			session.setAttribute("USUARIO", usuempr);
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
 		}
 		
 		List<MotUbigeo> departamentos=null;
@@ -86,32 +88,35 @@ public class PageController {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesAsociados";
 	}
 
 	@RequestMapping(value="Conductores.htm",method=RequestMethod.GET)
-	public String conductores(HttpServletRequest request){
+	public String conductores(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Conductores.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
-		if(usuempr==null){
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
 			System.out.println("INICIO");
-			usuempr=new UserSecurity().getUser();
-			session.setAttribute("USUARIO", usuempr);
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
 		}
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesConductores";
 	}
 
 	@RequestMapping(value="Mototaxis.htm",method=RequestMethod.GET)
-	public String mototaxis(HttpServletRequest request){
+	public String mototaxis(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Mototaxis.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
-		if(usuempr==null){
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
 			System.out.println("INICIO");
-			usuempr=new UserSecurity().getUser();
-			session.setAttribute("USUARIO", usuempr);
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
 		}
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesMototaxis";
 	}
 
@@ -119,32 +124,34 @@ public class PageController {
 	public String paraderos(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Paraderos.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
-		if(usuempr==null){
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
 			System.out.println("INICIO");
-			usuempr=new UserSecurity().getUser();
-			session.setAttribute("USUARIO", usuempr);
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
 		}
 		try {
 			List<MotParadero> lista=MotParaderoDaoFactory.create().findZonaByEmpresa(
-					usuempr.getEmpresa().getEmpcodigoD());
+					rol.getUsuario().getEmpresa().getEmpcodigoD());
 			model.addAttribute("paraderos",lista);
 		} catch (MotParaderoDaoException e) {
 			logger.error(e.getMessage());
 		}
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesParaderos";
 	}
 
 	@RequestMapping(value="Documentacion.htm",method=RequestMethod.GET)
-	public String documentacion(HttpServletRequest request){
+	public String documentacion(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Documentacion.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
-		if(usuempr==null){
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
 			System.out.println("INICIO");
-			usuempr=new UserSecurity().getUser();
-			session.setAttribute("USUARIO", usuempr);
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
 		}
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesDocumentacion";
 	}
 
@@ -152,15 +159,16 @@ public class PageController {
 	public String configuracion(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Configuracion.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
-		if(usuempr==null){
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
 			System.out.println("INICIO");
-			usuempr=new UserSecurity().getUser();
-			session.setAttribute("USUARIO", usuempr);
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
 		}
 		try {
 			MotEmpRepresentante emprepresentante=null;
-			emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(usuempr.getEmpresa().getEmpcodigoD());
+			emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(
+					rol.getUsuario().getEmpresa().getEmpcodigoD());
 			List<MotTipoDocumento> fotos = MotTipoDocumentoDaoFactory.create().findByTable("EMP");
 			model.addAttribute("emprepresentante", emprepresentante);//para enviar datos a esta pagina
 			model.addAttribute("fotos", fotos);
@@ -168,6 +176,7 @@ public class PageController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesConfiguracion";
 	}
 }

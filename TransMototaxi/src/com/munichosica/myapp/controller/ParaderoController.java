@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.munichosica.myapp.dto.MotEmpParadero;
 import com.munichosica.myapp.dto.MotEmpresa;
 import com.munichosica.myapp.dto.MotParadero;
-import com.munichosica.myapp.dto.Usuempr;
+import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotEmpParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.factory.MotEmpParaderoDaoFactory;
@@ -35,9 +35,9 @@ public class ParaderoController {
 			List<MotParadero> list=null;
 			try {
 				HttpSession session=request.getSession(true);
-				Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
+				Rol rol=(Rol) session.getAttribute("ROL");
 				list=MotParaderoDaoFactory.create().findByCriterio(criterio, texto,
-						usuempr.getEmpresa().getEmpcodigoD());
+						rol.getUsuario().getEmpresa().getEmpcodigoD());
 				logger.info("MotParaderoDaoFactory.create().findByCriterio(criterio, texto,(long) 1);Completed");
 			} catch (MotParaderoDaoException e) {
 				logger.error(e.getMessage());
@@ -63,10 +63,10 @@ public class ParaderoController {
 		public String agregar(HttpServletRequest request,MotEmpParadero paradero){
 			try {
 				HttpSession session=request.getSession(true);
-				Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
+				Rol rol=(Rol) session.getAttribute("ROL");
 				logger.info("Ingreso a Paraderos/Agregar.htm");
 				MotEmpresa empresa=new MotEmpresa();
-				empresa.setEmpcodigoD(usuempr.getEmpresa().getEmpcodigoD());//cambiar
+				empresa.setEmpcodigoD(rol.getUsuario().getEmpresa().getEmpcodigoD());//cambiar
 				paradero.setEmpresa(empresa);
 				MotEmpParaderoDaoFactory.create().insert(paradero);
 				logger.info("MotEmpParaderoDaoFactory.create().insert(paradero); Complete");

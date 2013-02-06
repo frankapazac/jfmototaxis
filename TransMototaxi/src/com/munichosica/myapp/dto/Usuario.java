@@ -11,7 +11,13 @@ public class Usuario {
 	public Usuario() {
 		empresa=new MotEmpresa();
 	}
-	
+
+	public MotEmpresa getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(MotEmpresa empresa) {
+		this.empresa = empresa;
+	}
 	public String getPass() {
 		return pass;
 	}
@@ -36,12 +42,6 @@ public class Usuario {
 	}
 	public void setUsurolV(String usurolV) {
 		this.usurolV = usurolV;
-	}
-	public MotEmpresa getEmpresa() {
-		return empresa;
-	}
-	public void setEmpresa(MotEmpresa empresa) {
-		this.empresa = empresa;
 	}
 	public Integer getUsucodigoI() {
 		return usucodigoI;

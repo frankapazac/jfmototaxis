@@ -1,10 +1,15 @@
 package com.munichosica.myapp.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.dto.Usuario;
 
 @Controller
@@ -24,7 +29,10 @@ public class UsuarioController{
 	}
 
 	@RequestMapping(value="Salir.htm", method=RequestMethod.GET)
-	public String salir(Model model){
+	public String salir(HttpServletRequest request,Model model){
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol!=null) rol=null;
 		return "login";	
 	}
 	

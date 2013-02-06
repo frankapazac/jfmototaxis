@@ -19,7 +19,7 @@ import com.munichosica.myapp.dto.MotAdjuntarArchivo;
 import com.munichosica.myapp.dto.MotAsocDocumento;
 import com.munichosica.myapp.dto.MotEmprAsociado;
 import com.munichosica.myapp.dto.MotTipoDocumento;
-import com.munichosica.myapp.dto.Usuempr;
+import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotAsocDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotEmprAsociadoDaoException;
@@ -40,11 +40,11 @@ public class AsociadoController {
 			@RequestParam("criterio") String criterio, @RequestParam("texto") String texto){
 		logger.info("Ingreso a Asociados/Listar.htm");
 		HttpSession session=request.getSession(true);
-		Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
+		Rol rol=(Rol) session.getAttribute("ROL");
 		List<MotEmprAsociado> list=null;
 		try {
 			list=MotEmprAsociadoDaoFactory.create().findByCriterio(criterio, 
-					texto, usuempr.getEmpresa().getEmpcodigoD());
+					texto, rol.getUsuario().getEmpresa().getEmpcodigoD());
 			logger.info("MotEmprAsociadoDaoFactory.create().findByCriterio(criterio, texto, codigo); Complete");
 		} catch (MotEmprAsociadoDaoException e) {
 			logger.error(e.getMessage());
@@ -57,13 +57,13 @@ public class AsociadoController {
 		logger.info("Ingreso a Asociados/Procesar.htm");
 		try {
 			HttpSession session=request.getSession(true);
-			Usuempr usuempr=(Usuempr) session.getAttribute("USUARIO");
+			Rol rol=(Rol) session.getAttribute("ROL");
 			DocumentoSession documentos=(DocumentoSession) session.getAttribute("DOCUMENTOS");
 			/*if(documentos==null||documentos.getList().size()<3){
 				throw new MotEmprAsociadoDaoException("Aun no se agregaron documentos");
 			}*/
 			
-			asociado.setEmpresa(usuempr.getEmpresa());
+			asociado.setEmpresa(rol.getUsuario().getEmpresa());
 			UTFEncodingUtil.decodeObjectUTF(asociado);
 			UTFEncodingUtil.decodeObjectUTF(asociado.getPersona());
 			MotEmprAsociadoDaoFactory.create().procesar(asociado);

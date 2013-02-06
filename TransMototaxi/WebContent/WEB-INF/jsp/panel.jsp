@@ -9,6 +9,6 @@
 </head>
 <body>
 	<c:set var="user" value="${USUARIO}"></c:set>
-	<h1>Bienvenido <c:out value="${user.usuario.usuusuarioV}"/></h1>
+	<h1>Bienvenido <c:out value="${usuario.usuusuarioV}"/></h1>
 </body>
 </html>
