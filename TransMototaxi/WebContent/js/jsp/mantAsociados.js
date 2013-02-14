@@ -157,8 +157,8 @@ $(document).ready(function(){
 			"<td>"+data[x].persona.perteleffijoV+"</td>"+
 			"<td>"+data[x].persona.peremailV+"</td>"+
 			"<td>"+data[x].asoestadoC+"</td>"+
-			"<td><img alt='Modificar' class='btnModificar' id='mod"+data[x].persona.percodigoD+"' src='images/edit.png'></td>"+
-			"<td><img alt='Eliminar' class='btnEliminar' id='del"+data[x].persona.percodigoD+"' src='images/delete.png'></td>"+
+			"<td><img alt='Modificar' class='btnModificar' id='mod"+data[x].asocodigoD+"' src='images/edit.png'></td>"+
+			"<td><img alt='Eliminar' class='btnEliminar' id='del"+data[x].asocodigoD+"' src='images/delete.png'></td>"+
     				"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
@@ -189,6 +189,8 @@ $(document).ready(function(){
     function llenarFormulario(data){
     	if(data!=""){
     		//alert(JSON.stringify(data));
+    		$("#imgFotoAsociado").attr("src","temp/"+data.asociado.foto.adjnombreV);
+    		$(".fileFotoAsociado").val("");
     		$("#txtCodigoAsociado").val(data.asociado.asocodigoD);
     		$("#txtCodigoPersona").val(data.asociado.persona.percodigoD);
         	$("#txtNombres").val(data.asociado.persona.pernombresV);
@@ -342,6 +344,37 @@ $(document).ready(function(){
 			}
 		});
     }
+    
+    //FOTO
+    $(".formFotoAsociado").submit(function(){
+    	var options={
+                //scriptCharset:"utf-8",
+                //contentType:"application/json; charset=utf-8",
+    			type: "POST", 
+                url:'Asociados/Foto.htm',
+                dataType:'html',
+                beforeSubmit:function(){
+                    //$("#progressbar").show();
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                	$("#txtCargando").empty();
+                	$("#txtCargando").val(percentComplete);
+                	//$("#progressbar").empty();
+                    //$("#progressbar").progressbar({
+                    //        value: percentComplete
+                    //});
+                },
+                success: function(responseText, statusText) {      
+                	//$("#divContenedorTab2").empty();
+                    //$("#divContenedorTab2").append(responseText);
+                } ,
+                error:function(){
+                    //alert("ERROR DE ENVIO");
+                }
+            };
+            $(this).ajaxSubmit(options);
+            return false;
+    });
     
     //DOCUMENTO
     $(".formDocumento").submit(function(){

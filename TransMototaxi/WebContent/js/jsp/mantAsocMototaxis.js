@@ -192,8 +192,8 @@ $(document).ready(function(){
 	
 	function llenarDatosMototaxi(data){
 		//alert(JSON.stringify(data));
-		if(data!=""){
-			$("#txtCodigoVehiculo").val(data.unidadEmpresa.unecodigoD);
+		if(data!=""){			
+    		$("#txtCodigoVehiculo").val(data.unidadEmpresa.unecodigoD);
 			$("#txtCodigoEmpadronamiento").val(data.empadronamiento.epocodigoD);
 			$("#txtEmpadFechaInicio").val(data.empadronamiento.empfechainicioF);
 			$("#txtEmpadFechaCese").val(data.empadronamiento.empfechaceseF);
@@ -224,6 +224,9 @@ $(document).ready(function(){
         		$("#txtUndNumDocumento_"+data.documentos[x].tipoDocumento.mtdcodigoI).val(data.documentos[x].adjuntarArchivo.adjnumeroV);
         		$("#txtUndFechaEmision_"+data.documentos[x].tipoDocumento.mtdcodigoI).val(data.documentos[x].adjuntarArchivo.adjfechaemisionF);
         		$("#txtUndFechaCaducidad_"+data.documentos[x].tipoDocumento.mtdcodigoI).val(data.documentos[x].adjuntarArchivo.adjfechacaducidadF);
+			}
+			for(var f=0;f<data.fotos.length;f++){
+	    		$("#imgFotoVehiculo_"+data.fotos[f].tipoDocumento.mtdcodigoI).attr("src","temp/"+data.fotos[f].adjuntarArchivo.adjnombreV);	
 			}
 			$("#btnVehiculoProcesar").val("Modificar");
 		}else{
