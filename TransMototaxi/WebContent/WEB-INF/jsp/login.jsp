@@ -15,11 +15,11 @@
 			<table>
 				<tr>
 					<td>USUARIO</td>
-					<td><input type="text" name="j_username" value="FRANK"/></td>
+					<td><input type="text" name="j_username" value="ERIK"/></td>
 				</tr>
 				<tr>
 					<td>CLAVE</td>
-					<td><input type="password" name="j_password" value="123"/></td>
+					<td><input type="password" name="j_password" value="321"/></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
