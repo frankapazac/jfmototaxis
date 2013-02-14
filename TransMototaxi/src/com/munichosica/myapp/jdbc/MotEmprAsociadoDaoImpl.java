@@ -18,6 +18,7 @@ import com.munichosica.myapp.dao.MotEmprAsociadoDao;
 import com.munichosica.myapp.dto.MotEmprAsociado;
 import com.munichosica.myapp.dto.MotPersona;
 import com.munichosica.myapp.exceptions.MotEmprAsociadoDaoException;
+import com.munichosica.myapp.util.FileUtil;
 
 public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 	
@@ -114,28 +115,28 @@ public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 					asociado.setAsocodigoD(rs.getLong("ASOCODIGO"));
 					asociado.setAsorazonsocialV(rs.getString("RAZONSOCIAL"));
 					asociado.setAsorucV(rs.getString("RUC"));
-					persona=new MotPersona();
-					persona.setPercodigoD(rs.getLong("PERCODIGO"));
-					persona.setPerdniV(rs.getString("DNI"));
-					persona.setPernombresV(rs.getString("NOMBRES"));
-					persona.setPerpaternoV(rs.getString("PATERNO"));
-					persona.setPermaternoV(rs.getString("MATERNO"));
-					persona.setPernacimientoF(rs.getString("NACIMIENTO"));
-					persona.setPerestadocivilC(rs.getString("ESTADOCIVIL"));
-					persona.setPermovilclaV(rs.getString("CLARO"));
-					persona.setPermovilmovV(rs.getString("MOVISTAR"));
-					persona.setPermovilnexV(rs.getString("NEXTEL"));
-					persona.setPerteleffijoV(rs.getString("FIJO"));
-					persona.setPeremailV(rs.getString("EMAIL"));
-					persona.setPerdomicilioV(rs.getString("DOMICILIO"));
-					persona.setPerubdptoV(rs.getString("DEPARTAMENTO"));
-					persona.setPerubdptonombreV(rs.getString("DEPARTAMENTONOMBRE"));
-					persona.setPerubprovV(rs.getString("PROVINCIA"));
-					persona.setPerubprovnombreV(rs.getString("PROVINCIANOMBRE"));
-					persona.setPerubidistV(rs.getString("DISTRITO"));
-					persona.setPerubidistnombreV(rs.getString("DISTRITONOMBRE"));
-					persona.setPersexoC(rs.getString("SEXO"));
-					asociado.setPersona(persona);
+					asociado.getPersona().setPercodigoD(rs.getLong("PERCODIGO"));
+					asociado.getPersona().setPerdniV(rs.getString("DNI"));
+					asociado.getPersona().setPernombresV(rs.getString("NOMBRES"));
+					asociado.getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					asociado.getPersona().setPermaternoV(rs.getString("MATERNO"));
+					asociado.getPersona().setPernacimientoF(rs.getString("NACIMIENTO"));
+					asociado.getPersona().setPerestadocivilC(rs.getString("ESTADOCIVIL"));
+					asociado.getPersona().setPermovilclaV(rs.getString("CLARO"));
+					asociado.getPersona().setPermovilmovV(rs.getString("MOVISTAR"));
+					asociado.getPersona().setPermovilnexV(rs.getString("NEXTEL"));
+					asociado.getPersona().setPerteleffijoV(rs.getString("FIJO"));
+					asociado.getPersona().setPeremailV(rs.getString("EMAIL"));
+					asociado.getPersona().setPerdomicilioV(rs.getString("DOMICILIO"));
+					asociado.getPersona().setPerubdptoV(rs.getString("DEPARTAMENTO"));
+					asociado.getPersona().setPerubdptonombreV(rs.getString("DEPARTAMENTONOMBRE"));
+					asociado.getPersona().setPerubprovV(rs.getString("PROVINCIA"));
+					asociado.getPersona().setPerubprovnombreV(rs.getString("PROVINCIANOMBRE"));
+					asociado.getPersona().setPerubidistV(rs.getString("DISTRITO"));
+					asociado.getPersona().setPerubidistnombreV(rs.getString("DISTRITONOMBRE"));
+					asociado.getPersona().setPersexoC(rs.getString("SEXO"));
+					asociado.getFoto().setAdjnombreV(rs.getString("ARCHIVONOMBRE"));
+					asociado.getFoto().setAdjarchivoB(rs.getBytes("ARCHIVO")!=null?FileUtil.deCompress(rs.getBytes("ARCHIVO")):null);
 				}
 			}
 		}

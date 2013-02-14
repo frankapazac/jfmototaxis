@@ -1,5 +1,7 @@
 package com.munichosica.myapp.jdbc;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,11 +9,12 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 import com.munichosica.myapp.dao.MotUnidDocumentoDao;
 import com.munichosica.myapp.dto.MotUnidDocumento;
-import com.munichosica.myapp.exceptions.MotAsocDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
+import com.munichosica.myapp.util.FileUtil;
 
 public class MotUnidDocumentoDaoImpl implements MotUnidDocumentoDao{
 
@@ -60,6 +63,7 @@ public class MotUnidDocumentoDaoImpl implements MotUnidDocumentoDao{
 				while(rs.next()){
 					documento=new MotUnidDocumento();
 					documento.getTipoDocumento().setMtdcodigoI(rs.getInt("TDOCODIGO"));
+					documento.getTipoDocumento().setMtdnombreV(rs.getString("TDPNOMBRE"));
 					documento.setPtdcodigoD(rs.getLong("UDOCODIGO"));
 					documento.getAdjuntarArchivo().setAdjcodigoD(rs.getLong("ADJCODIGO"));
 					documento.getAdjuntarArchivo().setAdjnombreV(rs.getString("NOMBRE"));
@@ -70,6 +74,46 @@ public class MotUnidDocumentoDaoImpl implements MotUnidDocumentoDao{
 				}
 			}
 		} catch (SQLException e) {
+			throw new MotUnidDocumentoDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
+
+	@Override
+	public List<MotUnidDocumento> findFotosByIdUnidad(Long codigo)
+			throws MotUnidDocumentoDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotUnidDocumento> list=null;
+		try {
+			list=new ArrayList<MotUnidDocumento>();
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_UNIDADFOTOS;1(?)}");
+			stmt.setLong(1, codigo);
+			boolean results=stmt.execute();
+			if(results){
+				MotUnidDocumento documento=null;
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					documento=new MotUnidDocumento();
+					documento.getTipoDocumento().setMtdcodigoI(rs.getInt("TDOCODIGO"));
+					documento.getTipoDocumento().setMtdnombreV(rs.getString("TDPNOMBRE"));
+					documento.setPtdcodigoD(rs.getLong("UDOCODIGO"));
+					documento.getAdjuntarArchivo().setAdjcodigoD(rs.getLong("ADJCODIGO"));
+					documento.getAdjuntarArchivo().setAdjnombreV(rs.getString("NOMBRE"));
+					documento.getAdjuntarArchivo().setAdjarchivoB(rs.getBytes("ADJARCHIVO")!=null?FileUtil.deCompress(rs.getBytes("ADJARCHIVO")):null);
+					documento.getAdjuntarArchivo().setAdjfechaemisionF(rs.getString("EMISION"));
+					documento.getAdjuntarArchivo().setAdjfechacaducidadF(rs.getString("CADUCIDAD"));
+					documento.getAdjuntarArchivo().setAdjnumeroV(rs.getString("NUMERO"));
+					list.add(documento);
+				}
+			}
+		} catch (Exception e) {
 			throw new MotUnidDocumentoDaoException(e.getMessage(), e);
 		} finally{
 			ResourceManager.close(rs);

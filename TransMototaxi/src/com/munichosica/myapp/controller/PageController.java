@@ -179,4 +179,29 @@ public class PageController {
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesConfiguracion";
 	}
+	
+	@RequestMapping(value="Inspectores.htm", method=RequestMethod.GET)
+	public String inspectores(HttpServletRequest request, Model model){
+		logger.info("Ingreso a Inspectores.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		
+		List<MotUbigeo> departamentos=null;
+		List<MotTipoDocumento> documentos=null;
+		try {
+			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
+			documentos=MotTipoDocumentoDaoFactory.create().findByTable("INS");
+			model.addAttribute("departamentos", departamentos);
+			model.addAttribute("documentos", documentos);
+		} catch (Exception ex) {
+			logger.error(ex.getMessage());
+		}
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesInspectores";
+	}
 }

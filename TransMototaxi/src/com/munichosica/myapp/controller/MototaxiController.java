@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.munichosica.myapp.dto.MotAdjuntarArchivo;
 import com.munichosica.myapp.dto.MotEmpadronamiento;
+import com.munichosica.myapp.dto.MotUnidDocumento;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
@@ -20,6 +22,7 @@ import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.factory.MotEmpadronamientoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
+import com.munichosica.myapp.util.FileUtil;
 
 @Controller
 @RequestMapping("/Mototaxi")
@@ -61,6 +64,12 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 			mototaxi=new MototaxiUtil();
 			mototaxi.setUnidadEmpresa(MotUnidadEmpresaDaoFactory.create().findByPrimaryKey(codigo));
 			mototaxi.setDocumentos(MotUnidDocumentoDaoFactory.create().findDocumentosByIdUnidad(codigo));
+			mototaxi.setFotos(MotUnidDocumentoDaoFactory.create().findFotosByIdUnidad(codigo));
+			for(MotUnidDocumento unidDoc:mototaxi.getFotos()){
+				String nombreArchivo=FileUtil.createTempFile(request, 
+						unidDoc.getAdjuntarArchivo().getAdjnombreV(), unidDoc.getAdjuntarArchivo().getAdjarchivoB());
+				unidDoc.getAdjuntarArchivo().setAdjnombreV(nombreArchivo);
+			}
 			mototaxi.setEmpadronamiento(MotEmpadronamientoDaoFactory.create().findByUnidad(codigo));
 		} catch (MotUnidadEmpresaDaoException | MotUnidDocumentoDaoException | MotEmpadronamientoDaoException e) {
 			logger.info(e.getMessage());

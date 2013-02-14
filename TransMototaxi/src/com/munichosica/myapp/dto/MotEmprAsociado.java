@@ -13,11 +13,18 @@ public class MotEmprAsociado {
 	protected String asorazonsocialV;
 	protected MotEmpresa empresa;
 	protected String asoestadoC;
+	protected MotAdjuntarArchivo foto;
 	
 	public MotEmprAsociado() {
 		persona=new MotPersona();
+		foto=new MotAdjuntarArchivo();
 	}
-	
+	public void setFoto(MotAdjuntarArchivo foto) {
+		this.foto = foto;
+	}
+	public MotAdjuntarArchivo getFoto() {
+		return foto;
+	}
 	public void setEmpresa(MotEmpresa empresa) {
 		this.empresa = empresa;
 	}
