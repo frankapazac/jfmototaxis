@@ -11,12 +11,20 @@ public class MototaxiUtil {
 	protected MotEmpadronamiento empadronamiento;
 	protected MotUnidadEmpresa unidadEmpresa;
 	protected List<MotUnidDocumento> documentos;
+	protected List<MotUnidDocumento> fotos;
 	
 	public MototaxiUtil() {
 		unidadEmpresa=new MotUnidadEmpresa();
 		documentos=new ArrayList<MotUnidDocumento>();
+		fotos=new ArrayList<MotUnidDocumento>();
 	}
 
+	public void setFotos(List<MotUnidDocumento> fotos) {
+		this.fotos = fotos;
+	}
+	public List<MotUnidDocumento> getFotos() {
+		return fotos;
+	}
 	public MotUnidadEmpresa getUnidadEmpresa() {
 		return unidadEmpresa;
 	}

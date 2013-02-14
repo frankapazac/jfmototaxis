@@ -9,7 +9,6 @@ import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,12 +52,13 @@ public class AsociadoController {
 	}
 	
 	@RequestMapping(value="Procesar.htm",method=RequestMethod.POST)
-	public @ResponseBody MotEmprAsociado procesar(HttpServletRequest request, MotEmprAsociado asociado,Model model){
+	public @ResponseBody MotEmprAsociado procesar(HttpServletRequest request, MotEmprAsociado asociado){
 		logger.info("Ingreso a Asociados/Procesar.htm");
 		try {
 			HttpSession session=request.getSession(true);
 			Rol rol=(Rol) session.getAttribute("ROL");
 			DocumentoSession documentos=(DocumentoSession) session.getAttribute("DOCUMENTOS");
+			DocumentoSession foto=(DocumentoSession) session.getAttribute("FOTO");
 			/*if(documentos==null||documentos.getList().size()<3){
 				throw new MotEmprAsociadoDaoException("Aun no se agregaron documentos");
 			}*/
@@ -78,6 +78,16 @@ public class AsociadoController {
 					}
 				}
 			}
+			if(foto!=null){
+				if(foto.getList()!=null && foto.getList().size()>0){
+					for(MotAsocDocumento docum:foto.getList()){
+						docum.setAsociado(asociado);
+						MotAdjuntarArchivoDaoFactory.create().insert(docum.getArchivo());
+						MotAsocDocumentoDaoFactory.create().insert(docum);
+						logger.info("MotAsocDocumentoDaoFactory.create().insert(docum); Complete codigo: "+docum.getAdocodigoD());
+					}
+				}
+			}
 		} catch (MotEmprAsociadoDaoException | MotAdjuntarArchivoDaoException | MotAsocDocumentoDaoException e) {
 			logger.error(e.getMessage());
 		}
@@ -90,11 +100,15 @@ public class AsociadoController {
 		logger.info("Ingreso a Asociados/Obtener.htm");
 		HttpSession session=request.getSession(true);
 		DocumentoSession documentos=(DocumentoSession) session.getAttribute("DOCUMENTOS");
+		DocumentoSession foto=(DocumentoSession) session.getAttribute("FOTO");
 		if(documentos!=null){
 			documentos.getList().clear();
 			logger.info("documentos.getList().clear(); Session DOCUMENTOS limpiada completamente.");
 		}
-		
+		if(foto!=null){
+			foto.getList().clear();
+			logger.info("documentos.getList().clear(); Session FOTO limpiada completamente.");
+		}
 		AsociadoUtil asociadoUtil=null;
 		try {
 			asociadoUtil=new AsociadoUtil();
@@ -103,6 +117,11 @@ public class AsociadoController {
 			asociadoUtil.setAsociado(asociado);
 			asociadoUtil.setListDocumentos(listDocumentos);
 			logger.info("MotEmprAsociadoDaoFactory.create().findByPrimaryKey(codigo); Complete");
+			String nombreArchivo=null;
+			if(asociado.getFoto().getAdjarchivoB()!=null){
+				nombreArchivo=FileUtil.createTempFile(request, asociado.getFoto().getAdjnombreV(),asociado.getFoto().getAdjarchivoB());
+				asociado.getFoto().setAdjnombreV(nombreArchivo);
+			}
 		} catch (MotEmprAsociadoDaoException | MotAsocDocumentoDaoException e) {
 			logger.error(e.getMessage());
 		}
@@ -118,6 +137,39 @@ public class AsociadoController {
 		} catch (MotEmprAsociadoDaoException e) {
 			logger.error(e.getMessage());
 		}
+		return "Success";
+	}
+	
+	@RequestMapping(value="Foto.htm", method=RequestMethod.POST, headers="content-type=multipart/form-data")
+	public String agregarFoto(HttpServletRequest request){
+		logger.info("Ingreso a Asociados/Foto.htm");
+		HttpSession session=request.getSession(true);
+		DocumentoSession documentos=(DocumentoSession) session.getAttribute("FOTO");
+		if(documentos==null){
+			documentos=new DocumentoSession();
+			session.setAttribute("FOTO", documentos);
+			logger.info("Se creo session.setAttribute('DOCUMENTOS', documentos);");
+		}
+		try {
+			for(Part part:request.getParts()){
+				MotAsocDocumento documento=new MotAsocDocumento();
+				InputStream inputStream=request.getPart(part.getName()).getInputStream();
+				int i=inputStream.available();
+				byte[] bs=new byte[i];
+				inputStream.read(bs);
+				if(part.getName().equals("fileFotoAsociado")){
+					String filename=FileUtil.getFilename(part);
+					documento.getArchivo().setAdjcodigoD(0L);
+					documento.getArchivo().setAdjnombreV(filename);
+					documento.getArchivo().setAdjarchivoB(FileUtil.compress(bs));
+					documento.getArchivo().setAdjextensionV(FileUtil.getExtension(filename));
+				}
+				documento.getTipoDocumento().setMtdcodigoI(16);
+				documentos.add(documento);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		} 
 		return "Success";
 	}
 	
