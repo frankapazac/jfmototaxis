@@ -4,8 +4,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import com.munichosica.myapp.dao.MotEmpConductorDao;
 import com.munichosica.myapp.dto.MotConductor;
@@ -14,10 +17,57 @@ import com.munichosica.myapp.dto.MotPersona;
 import com.munichosica.myapp.exceptions.MotEmpConductorDaoException;
 
 public class MotEmpConductorDaoImpl implements MotEmpConductorDao  {
-
+	
+	protected static final Logger logger = Logger.getLogger( MotEmprAsociadoDaoImpl.class );
+	
 	@Override
-	public void insert(MotEmpConductor dto)
-			throws MotEmpConductorDaoException {		
+	public void procesar(MotEmpConductor dto)throws MotEmpConductorDaoException {	
+		
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{call SP_MOT_INS_PERSONA_CONDUCTOR;1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			stmt.registerOutParameter(1,Types.DECIMAL);
+			stmt.setLong(1, dto.getConductor().getConcodigoD());
+			stmt.setLong(2, dto.getConductor().getPersona().getPercodigoD());
+			stmt.setString(3, dto.getConductor().getPersona().getPerdniV());
+			stmt.setString(4, dto.getConductor().getPersona().getPernombresV());
+			stmt.setString(5, dto.getConductor().getPersona().getPerpaternoV());
+			stmt.setString(6, dto.getConductor().getPersona().getPermaternoV());
+			stmt.setString(7, dto.getConductor().getPersona().getPernacimientoF());
+			stmt.setString(8, dto.getConductor().getPersona().getPerestadocivilC());
+			stmt.setString(9, dto.getConductor().getPersona().getPermovilclaV());
+			stmt.setString(10, dto.getConductor().getPersona().getPermovilmovV());
+			stmt.setString(11, dto.getConductor().getPersona().getPermovilnexV());
+			stmt.setString(12, dto.getConductor().getPersona().getPerteleffijoV());
+			stmt.setString(13, dto.getConductor().getPersona().getPeremailV());
+			stmt.setString(14, dto.getConductor().getPersona().getPerdomicilioV());
+			stmt.setString(15, dto.getConductor().getPersona().getPerubidistV());
+			stmt.setString(16, dto.getConductor().getPersona().getPerubdptoV());
+			stmt.setString(17, dto.getConductor().getPersona().getPerubprovV());
+			stmt.setString(18, dto.getConductor().getPersona().getPersexoC());
+			stmt.setLong(19, dto.getEmpresa().getEmpcodigoD());
+			stmt.setString(20, dto.getEcofechainicioF());
+			stmt.execute();
+			
+			Long codigo= stmt.getLong(1);
+			if(codigo != null){
+				dto.getConductor().setConcodigoD(codigo);
+			}
+					
+		} catch (Exception ex) {
+			logger.error( "Exception: " + ex.getMessage(), ex);
+			throw new MotEmpConductorDaoException( "Exception: " + ex.getMessage(), ex);
+		}
+		finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		
 	}
 
 	@Override
