@@ -3,6 +3,7 @@ package com.munichosica.myapp.jdbc;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,10 @@ public class MotOperFiscalizadorDaoImpl implements MotOperFiscalizadorDao  {
 					operativoFiscalizador = new MotOperFiscalizador();
 					operativoFiscalizador.getOperativo().setOpecodigoD(rs.getLong("CodOperativo"));
 					operativoFiscalizador.getOperativo().setOpetituloV(rs.getString("Nombre Operativo"));
+					operativoFiscalizador.getOperativo().setOpedescripcionV(rs.getString("Descripcion"));
 					operativoFiscalizador.getOperativo().getZona().setZonnombre_V(rs.getString("Zona"));
 					operativoFiscalizador.getOperativo().setOpelugarV(rs.getString("Lugar"));
+					operativoFiscalizador.getOperativo().setOpereferencia(rs.getString("Lugar Referencia"));
 					operativoFiscalizador.getOperativo().setOpefecha(rs.getString("Fecha"));
 					operativoFiscalizador.getOperativo().setOpehora(rs.getString("Hora"));
 					operativoFiscalizador.getOperativo().getInspector().getPersona().setPernombresV(rs.getString("Nombre"));
@@ -69,14 +72,8 @@ public class MotOperFiscalizadorDaoImpl implements MotOperFiscalizadorDao  {
 		return null;
 	}
 
+
 	@Override
-	public void insert(MotOperFiscalizador dto)
-			throws MotOperFiscalizadorDaoException {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	/*@Override
 	public void insert(MotOperFiscalizador dto) throws MotOperFiscalizadorDaoException{
 		
 		Connection conn = null;
@@ -100,6 +97,6 @@ public class MotOperFiscalizadorDaoImpl implements MotOperFiscalizadorDao  {
 			ResourceManager.close(rs);
 		}
 	
-	}*/
+	}
 
 }
