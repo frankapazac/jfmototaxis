@@ -35,6 +35,7 @@ import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
 import com.munichosica.myapp.factory.MotCondDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotEmpConductorDaoFactory;
 import com.munichosica.myapp.factory.MotEmprAsociadoDaoFactory;
+import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotOperativoDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
@@ -45,6 +46,20 @@ import com.munichosica.myapp.util.UTFEncodingUtil;
 public class OperativoController {
 
 	protected static final Logger logger = Logger.getLogger( OperativoController.class );
+	
+	@RequestMapping(value="ListaInspectoresNotIn.htm",method=RequestMethod.POST)
+	public @ResponseBody List<MotInspector> listarInspectoresNotIn(HttpServletRequest request,@RequestParam("codigo") int codigo){
+		logger.info("Ingreso a Operativos/ListaInspectoresNotIn.htm");
+		HttpSession session=request.getSession(true);
+		List<MotInspector> listarInspectoresNotIn = null;
+		try {
+			listarInspectoresNotIn = MotInspectorDaoFactory.create().findByNotInCodInspector(codigo);
+			logger.info("MotInspectorDaoImpl.create().findByNotInCodInspector(codigo); Complete");
+		} catch (MotInspectorDaoException e) {
+			e.printStackTrace();
+		}
+		return listarInspectoresNotIn;
+	}
 	
 	@RequestMapping(value="Listar.htm", method=RequestMethod.POST)
 	public @ResponseBody List<MotOperFiscalizador> listar(HttpServletRequest request,
@@ -62,18 +77,25 @@ public class OperativoController {
 		return list;
 	}
 	
+	/*
 	@RequestMapping(value="ListaInspectores.htm",method=RequestMethod.POST)
-	public @ResponseBody String listaOperativos(@RequestBody MotInspectorList inspectores){
+	public @ResponseBody String listaOperativos(@RequestBody MotInspectorList inspectorList){
 		System.out.println("ENTRO A ListaInspectores.htm");
-		for(MotInspector inspector:inspectores){
+		System.out.println(inspectorList.getOperativo().getOpetituloV());
+		for(MotInspector inspector:inspectorList.getInspectores()){
 			System.out.println("*  "+inspector.getInscodigoI());
 		}
 		return "EXITOSO";
-	}
+	}*/
 	
+	/*
+	 	public @ResponseBody List<MotOperFiscalizador> listar(HttpServletRequest request,
+			@RequestParam("criterio") String criterio, @RequestParam("texto") String texto)
+	 * */
+
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
-	public @ResponseBody MotOperativo procesar 
-	(HttpServletRequest request , MotOperativo operativo,Model model){
+	public @ResponseBody String procesar 
+	(HttpServletRequest request , @RequestBody MotInspectorList inspectorList){
 		
 		logger.info("Ingreso a GuardarOperativo/Procesar.htm");
 		
@@ -81,12 +103,20 @@ public class OperativoController {
 		Rol rol = (Rol) session.getAttribute("ROL");
 		
 		try {
-			MotOperativoDaoFactory.create().insert(operativo);
-		} catch (MotOperativoDaoException e) {
+			MotOperativoDaoFactory.create().insert(inspectorList.getOperativo());
+			for(MotInspector inspector:inspectorList.getInspectores()){
+				MotOperFiscalizador operFiscalizador=new MotOperFiscalizador();
+				operFiscalizador.setOperativo(inspectorList.getOperativo());
+				operFiscalizador.setFiscalizador(inspector);
+				MotOperFiscalizadorDaoFactory.create().insert(operFiscalizador);
+			}
+			
+			
+		} catch (MotOperativoDaoException | MotOperFiscalizadorDaoException e) {
 			logger.error(e.getMessage());
 		}
 			
-		return operativo;
+		return "Success";
 	}
 	
 	
