@@ -10,25 +10,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotEmpRepresentante;
+import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotMarca;
 import com.munichosica.myapp.dto.MotModelo;
 import com.munichosica.myapp.dto.MotOficinaRegistral;
+import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
+import com.munichosica.myapp.dto.MotZona;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
+import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
+import com.munichosica.myapp.exceptions.MotUbigeoDaoException;
+import com.munichosica.myapp.exceptions.MotZonaDaoException;
 import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
+import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotMarcaDaoFactory;
 import com.munichosica.myapp.factory.MotModeloDaoFactory;
 import com.munichosica.myapp.factory.MotOficinaRegistralDaoFactory;
+import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
+import com.munichosica.myapp.factory.MotZonaDaoFactory;
 import com.munichosica.myapp.util.UserSecurity;
 
 @Controller
@@ -103,6 +113,17 @@ public class PageController {
 			session.setAttribute("ROL", rol);
 		}
 		model.addAttribute("paginas",rol.getPaginas());
+		/*para el mantenimiendo de conductores*/
+		List<MotUbigeo> departamentos=null;
+		List<MotTipoDocumento> documentos=null;
+		try {
+			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
+			documentos=MotTipoDocumentoDaoFactory.create().findByTable("CON");
+			model.addAttribute("departamentos", departamentos);
+			model.addAttribute("documentos", documentos);
+		} catch (MotUbigeoDaoException | MotTipoDocumentoDaoException e) {
+			logger.error(e.getMessage());
+		}
 		return "tilesConductores";
 	}
 
@@ -204,4 +225,28 @@ public class PageController {
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesInspectores";
 	}
+	
+	@RequestMapping(value="Operativos.htm",method=RequestMethod.GET)
+	public String operativos(HttpServletRequest request,Model model){
+		logger.info("Ingreso a Operativos.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		try {
+			List<MotInspector> inspectores= MotInspectorDaoFactory.create().findAll();
+			model.addAttribute("inspectores", inspectores);
+			List<MotZona> zona = MotZonaDaoFactory.create().findAll();
+			model.addAttribute("zona", zona);
+		} catch (MotInspectorDaoException | MotZonaDaoException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesOperativos";
+	}
 }
+
+
