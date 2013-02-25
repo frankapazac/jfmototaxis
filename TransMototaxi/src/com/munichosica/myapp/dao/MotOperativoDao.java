@@ -11,5 +11,7 @@ import com.munichosica.myapp.exceptions.MotOperativoDaoException;
 public interface MotOperativoDao {
 
 	public void insert(MotOperativo dto) throws MotOperativoDaoException;
+	public void delete (MotOperativo dto) throws MotOperativoDaoException;
 	public MotOperativo findByIdOperativo(Long codigo)throws MotOperativoDaoException;
+	
 }
