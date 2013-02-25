@@ -52,7 +52,7 @@ $(document).ready(function(){
     		return;
     	}
 
-    	$("#tblListaMototaxis").empty();
+    	$("#tbllistaMototaxis").empty();
     	$("#tblListaMotosParaAsignar").empty();
     	
     	var miConductor=[];//JSON que conductor
@@ -145,6 +145,8 @@ $(document).ready(function(){
 			+"<th class='header'>N° Motos Asignadas</th>"
 			+"<th class='header'>Fec. Inicio</th>"
 			+"<th class='header'>Fec. Cese</th>"
+			+"<th class='header'>Modificar</th>"
+			+"<th class='header'>Eliminar</th>"
 			+"</thead>"
 			+"<tfoot>"
     		+"<th>N°</th>"
@@ -153,6 +155,8 @@ $(document).ready(function(){
 			+"<th>N° Motos Asignadas</th>"
 			+"<th>Fec. Inicio</th>"
 			+"<th>Fec. Cese</th>"
+			+"<th>Modificar</th>"
+			+"<th>Eliminar</th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
 			$("#tblLista").append(txtHtml);
@@ -166,11 +170,33 @@ $(document).ready(function(){
 			"<td>"+data[x].motosasignadasI+"</td>"+
 			"<td>"+data[x].ecofechainicioF+"</td>"+
 			"<td>"+data[x].ecofechaceseF+"</td>"+
+			"<td><img alt='Modificar' class='btnModificar' id='mod"+data[x].conductor.concodigoD+"' src='images/edit.png'></td>"+
+			"<td><img alt='Eliminar' class='btnEliminar' id='del"+data[x].conductor.concodigoD+"' src='images/delete.png'></td>"+
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
-    	$(".trConductor").click(obtenerCodigoConductor);
     	paginacion();
+    	$(".trConductor").click(obtenerCodigoConductor);
+    	$(".btnModificar").click(modificar);
+    	$(".btnEliminar").click(eliminar);
+    	
+    }
+	
+    function modificar(){
+    	$.ajax({ 
+    		data:{
+    			codigo:$(this).attr("id").replace("mod","")
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "Conductores/Obtener.htm", 
+            success: function(data){
+            	//alert(JSON.stringify(data));
+            	llenarFormulario(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	mensajeError();
+            }
+    	});
     }
 	
 	function obtenerCodigoConductor(){
@@ -306,4 +332,259 @@ $(document).ready(function(){
 			$("#divMensaje").hide();
 		}, 1500 );
     }
+    
+    /*mantenimiento conductor*/
+    
+    $("#divNuevoCond").hide();
+    
+    $("#btnNuevoConductor").click(function(){
+    	llenarFormulario("");
+    });
+    
+    $("#btnModificar").click(function(){
+    	llenarFormulario("");
+    });
+    
+    function llenarFormulario(data){
+    	if(data!=""){	
+    		$("#txtCodigoConductor").val(data.conductor.concodigoD);
+    		$("#txtCodigoPersona").val(data.conductor.persona.percodigoD);
+        	$("#txtNombres").val(data.conductor.persona.pernombresV);
+        	//alert(JSON.stringify(data.conductor.persona.pernombresV));
+        	$("#txtPaterno").val(data.conductor.persona.perpaternoV);
+        	$("#txtMaterno").val(data.conductor.persona.permaternoV);
+        	$("#txtDni").val(data.conductor.persona.perdniV);
+        	$("#sltEstadoCivil").val(data.conductor.persona.perestadocivilC);
+        	$("#sltSexo").val(data.conductor.persona.persexoC);
+        	$("#dtNacimiento").val(data.conductor.persona.pernacimientoF);
+        	$("#txtDireccion").val(data.conductor.persona.perdomicilioV);
+        	$("#sltDepartamentos").val(data.conductor.persona.perubdptoV);
+        	$("#sltProvincia").empty();
+        	$("#sltProvincia").append("<option value='"+data.conductor.persona.perubprovV+"'>"+data.conductor.persona.perubprovnombreV+"</option>");
+        	$("#sltDistrito").empty();
+        	$("#sltDistrito").append("<option value='"+data.conductor.persona.perubidistV+"'>"+data.conductor.persona.perubidistnombreV+"</option>");
+        	$("#txtCorreo").val(data.conductor.persona.peremailV);
+        	$("#txtTelefono").val(data.conductor.persona.perteleffijoV);
+        	$("#txtMovistar").val(data.conductor.persona.permovilmovV);
+        	$("#txtClaro").val(data.conductor.persona.permovilclaV);
+        	$("#txtNextel").val(data.conductor.persona.permovilnexV);
+        	$("#txtNextel").val(data.conductor.persona.permovilnexV);
+        	//alert(JSON.stringify(data.empresaConductor.ecofechainicioF));
+        	$("#txtFechaInicio").val(data.empresaConductor.ecofechainicioF);
+        	
+        	//alert("LENGTH: "+data.conductor.documentos.length);
+            for(var x=0;x<data.conductor.documentos.length;x++){
+        		$("#documento_"+data.conductor.documentos[x].tipoDocumento.mtdcodigoI).val(data.conductor.documentos[x].adjuntarArchivo.adjcodigoD);
+        		$("#txtNumDocumento_"+data.conductor.documentos[x].tipoDocumento.mtdcodigoI).val(data.conductor.documentos[x].adjuntarArchivo.adjnumeroV);
+        		$("#txtFechaEmision_"+data.conductor.documentos[x].tipoDocumento.mtdcodigoI).val(data.conductor.documentos[x].adjuntarArchivo.adjfechaemisionF);
+        		$("#txtFechaCaducidad_"+data.conductor.documentos[x].tipoDocumento.mtdcodigoI).val(data.conductor.documentos[x].adjuntarArchivo.adjfechacaducidadF);
+        		//$("#fileDocumento_"+data.listDocumentos[x].tipoDocumento.mtdcodigoI).val(data.listDocumentos[x].archivo.adjnombreV);	
+        	}
+    	}else{
+    		$("#txtCodigoAsociado").val(0);
+    		$("#txtCodigoPersona").val(0);
+        	$("#txtNombres").val("");
+        	$("#txtPaterno").val("");
+        	$("#txtMaterno").val("");
+        	$("#txtDni").val("");
+        	$("#txtRuc").val("");
+        	$("#txtRazonSocial").val("");
+        	$("#sltEstadoCivil").val("");
+        	$("#sltSexo").val("");
+        	$("#dtNacimiento").val("");
+        	$("#txtDireccion").val("");
+        	$("#sltDepartamentos").val("");
+        	$("#sltProvincia").empty();
+        	$("#sltProvincia").append("<option value=''>Seleccione</option>");
+        	$("#sltDistrito").empty();
+        	$("#sltDistrito").append("<option value=''>Seleccione</option>");
+        	$("#txtCorreo").val("");
+        	$("#txtTelefono").val("");
+        	$("#txtMovistar").val("");
+        	$("#txtClaro").val("");
+        	$("#txtNextel").val("");
+        	$("input[name='txtNumDocumento']").val("");
+        	$("input[name='txtFechaEmision']").val("");
+        	$("input[name='txtFechaCaducidad']").val("");
+        	$("input[name='fileDocumento']").val("");
+        	$("#btnVehiculoProcesar").val("Agregar");
+    	}
+    	$("#divNuevoCond").show();
+    	$("#divNuevoCond").dialog({
+    		title:"Persona",
+    		width:1100,
+    		height: 600,
+    		modal: true
+    	});
+    }
+    /*change*/
+    $("#sltDepartamentos").change(function(){
+    	$.ajax({ 
+    		data:{
+    			idubigeo:$("#sltDepartamentos").val()
+    		},
+            datatype:'json',
+            type: "POST", 
+            url: "Ubigeo/Provincia.htm", 
+            success: function(data){
+            	llenarComboProvincia(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	mensajeError();
+            }
+    	});
+    });
+    
+    function llenarComboProvincia(data){
+    	$("#sltProvincia").empty();
+    	txtHtml="";
+    	for(var x=0;x<data.length;x++){
+    		txtHtml+="<option value='"+data[x].idubigeo+"'>"+data[x].nombubigeo+"</option>";
+    	}
+    	$("#sltProvincia").append(txtHtml);
+    }
+    
+    
+    $("#sltProvincia").click(function(){
+    	$.ajax({ 
+    		data:{
+    			idubigeo:$("#sltProvincia").val()
+    		},
+            datatype:'json',
+            type: "POST", 
+            url: "Ubigeo/Distrito.htm", 
+            success: function(data){
+            	llenarComboDistrito(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	mensajeError();
+            }
+    	});
+    });
+    
+    function llenarComboDistrito(data){
+    	$("#sltDistrito").empty();
+    	txtHtml="";
+    	for(var x=0;x<data.length;x++){
+    		txtHtml+="<option value='"+data[x].idubigeo+"'>"+data[x].nombubigeo+"</option>";
+    	}
+    	$("#sltDistrito").append(txtHtml);
+    }
+    
+    
+    $("#btnGuardarCond").click(function(){
+    	$.ajax({ 
+			data:{
+				'conductor.concodigoD':$("#txtCodigoConductor").val(),
+				'conductor.persona.percodigoD':$("#txtCodigoPersona").val(),
+				'conductor.persona.perdniV':$("#txtDni").val(),
+				'conductor.persona.perdomicilioV':encodeURIComponent($("#txtDireccion").val()),
+				'conductor.persona.peremailV':encodeURIComponent($("#txtCorreo").val()),
+				'conductor.persona.perestadocivilC':encodeURIComponent($("#sltEstadoCivil").val()),
+				'conductor.persona.permaternoV':encodeURIComponent($("#txtMaterno").val()),
+				'conductor.persona.permovilclaV':$("#txtClaro").val(),
+				'conductor.persona.permovilmovV':$("#txtMovistar").val(),
+				'conductor.persona.permovilnexV':$("#txtNextel").val(),
+				'conductor.persona.pernacimientoF':$("#dtNacimiento").val(),
+				'conductor.persona.pernombresV':encodeURIComponent($("#txtNombres").val()),
+				'conductor.persona.perpaternoV':encodeURIComponent($("#txtPaterno").val()),
+				'conductor.persona.persexoC':encodeURIComponent($("#sltSexo").val()),
+				'conductor.persona.perteleffijoV':$("#txtTelefono").val(),
+				'conductor.persona.perubdptoV':encodeURIComponent($("#sltDepartamentos").val()),
+				'conductor.persona.perubidistV':encodeURIComponent($("#sltDistrito").val()),
+				'conductor.persona.perubprovV':encodeURIComponent($("#sltProvincia").val()),
+				'ecofechainicioF':$("#txtFechaInicio").val(),
+			},
+		    datatype:'json',
+	        type: "POST", 
+	        url: "Conductores/Procesar.htm", 
+	        success: function(data){
+	        	//alert(JSON.stringify(data));
+	        	$("#txtCodigoConductor").val(data.conductor.concodigoD);
+	        	$("#txtCodigoPersona").val(data.conductor.persona.percodigoD);
+
+	        	txtHtml="<p>Operación realizada correctamente</p>";
+	        	mensaje(txtHtml);
+	        },error: function(jqXHR, textStatus, errorThrown){
+	        	mensajeError();
+	        }
+		});
+    	//$(this).dialog('close');
+    	$("#divNuevoCond").dialog("close");
+    	buscar($("#sltCriterioAsignado").val(),$("#txtTexto").val());
+    	
+    	
+		//$("#divFormulario").dialog("close");
+		//buscar("ASO.ASOCODIGO_D",$("#txtCodigoAsociado").val());
+    
+	});
+    
+    //DOCUMENTO
+    $(".formDocumento").submit(function(){
+    	var options={
+                //scriptCharset:"utf-8",
+                //contentType:"application/json; charset=utf-8",
+    			type: "POST", 
+                url:'Conductores/Documento.htm',
+                dataType:'html',
+                beforeSubmit:function(){
+                    //$("#progressbar").show();
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                	$("#txtCargando").empty();
+                	$("#txtCargando").val(percentComplete);
+                	//$("#progressbar").empty();
+                    //$("#progressbar").progressbar({
+                    //        value: percentComplete
+                    //});
+                },
+                success: function(responseText, statusText) {      
+                	//$("#divContenedorTab2").empty();
+                    //$("#divContenedorTab2").append(responseText);
+                } ,
+                error:function(){
+                    //alert("ERROR DE ENVIO");
+                }
+            };
+            $(this).ajaxSubmit(options);
+            return false;
+    });
+
+    function eliminar(){
+    	var codigo=$(this).attr("id").replace("del","");
+    	//alert(codigo);
+    	$("#divConfirmacion").remove();
+    	$("body").append("<div id='divConfirmacion'><p>¿Esta seguro que desea eliminar?</p></div>");
+    	$("#divConfirmacion").dialog({
+			title:'Eliminar',
+    		resizable: false,
+			height:180,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.5
+			},buttons: {
+				'Eliminar': function() {
+					$.ajax({ 
+		        		data:{
+		        			codigo:codigo
+		        		},
+                        datatype:'html',
+                        type: "GET", 
+                        url: "Conductores/Eliminar.htm",
+                        success: function(data){
+							mensaje(data);
+                        },error: function(jqXHR, textStatus, errorThrown){
+                        	mensajeError();
+                        }
+		        	});
+		        	buscar($("#sltCriterio").val(),$("#txtTexto").val());
+		        	$(this).dialog('close');
+				},
+				'Cancelar': function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+    }
+    
+    
 });
