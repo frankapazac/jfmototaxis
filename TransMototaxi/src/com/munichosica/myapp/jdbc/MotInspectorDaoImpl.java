@@ -172,5 +172,78 @@ public class MotInspectorDaoImpl implements MotInspectorDao{
 			ResourceManager.close(conn);
 		}
 	}
+
+	@Override
+	public List<MotInspector> findAll() throws MotInspectorDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		
+		List<MotInspector> list=new ArrayList<MotInspector>();
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_FINDALLINSPECTOR;1}");
+			
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				MotInspector inspector= null;
+				while(rs.next()){
+					inspector=new MotInspector();
+					inspector.setInscodigoI(rs.getInt("INSCODIGO"));
+					inspector.getPersona().setPernombresV(rs.getString("NOMBRES"));
+					inspector.getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					inspector.getPersona().setPermaternoV(rs.getString("MATERNO"));
+					list.add(inspector);
+				}
+			}
+		} catch (SQLException ex) {
+			throw new MotInspectorDaoException( "Exception: " + ex.getMessage(), ex );
+		}finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		
+		return list;
+	}
+	
+	
+	@Override
+	public List<MotInspector> findByNotInCodInspector(int codigo) throws MotInspectorDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		
+		List<MotInspector> list=new ArrayList<MotInspector>();
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_FINDALL_INSPECTOR_NOTIN_INSPECTOR;1(?)}");
+			stmt.setInt(1, codigo);
+			System.out.println(codigo);
+			
+			boolean results = stmt.execute();			
+			if(results){
+				rs=stmt.getResultSet();
+				MotInspector inspector= null;
+				while(rs.next()){
+					inspector=new MotInspector();
+					inspector.setInscodigoI(rs.getInt("INSCODIGO"));
+					inspector.getPersona().setPernombresV(rs.getString("NOMBRES"));
+					inspector.getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					inspector.getPersona().setPermaternoV(rs.getString("MATERNO"));
+					list.add(inspector);
+				}
+			}
+		} catch (SQLException ex) {
+			throw new MotInspectorDaoException( "Exception: " + ex.getMessage(), ex );
+		}finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		
+		return list;
+	}
 	
 }
