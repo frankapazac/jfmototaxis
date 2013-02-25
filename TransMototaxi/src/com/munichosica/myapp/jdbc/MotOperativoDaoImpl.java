@@ -42,7 +42,7 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 			stmt.setString(8, dto.getOpehora());
 			stmt.setLong(9, dto.getZona().getZoncodigo_I());
 			stmt.setLong(10, dto.getInspector().getInscodigoI());
-			System.out.println(dto.getInspector().getInscodigoI());
+			
 			stmt.execute();
 
 			Long codigo=stmt.getLong(1);
@@ -84,7 +84,7 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 					operativo.setOpetituloV(rs.getString("Nombre Operativo"));
 					operativo.setOpedescripcionV(rs.getString("Descripcion"));
 					operativo.setOpelugarV(rs.getString("Lugar"));
-					operativo.setOpelugarV(rs.getString("Referencia"));
+					operativo.setOpereferencia(rs.getString("Referencia"));
 					operativo.getZona().setZonnombre_V(rs.getString("Zona"));
 					operativo.getZona().setZoncodigo_I(rs.getLong("CodZona"));
 					operativo.setOpefecha(rs.getString("Fecha"));
@@ -109,5 +109,26 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 
 		return operativo;
 	}
-	
+
+	@Override
+	public void delete(MotOperativo dto) throws MotOperativoDaoException {
+
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{call SP_MOT_UPD_ESTADO_MOT_OPERATIVO;1 (?)}");
+			stmt.setLong(1,dto.getOpecodigoD());
+			stmt.execute();		
+								
+		} catch (SQLException e) {
+			throw new MotOperativoDaoException(e.getMessage(), e);
+		}finally{
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+			ResourceManager.close(rs);
+		}
+	}
 }
