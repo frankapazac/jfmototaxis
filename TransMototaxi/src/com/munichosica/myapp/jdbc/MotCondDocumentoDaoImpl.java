@@ -10,7 +10,10 @@ import java.util.List;
 
 import com.munichosica.myapp.dao.MotCondDocumentoDao;
 import com.munichosica.myapp.dto.MotCondDocumento;
+import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
+import com.munichosica.myapp.exceptions.MotConductorDaoException;
+import com.munichosica.myapp.exceptions.MotEmpParaderoDaoException;
 
 public class MotCondDocumentoDaoImpl implements MotCondDocumentoDao {
 	
@@ -142,4 +145,26 @@ public class MotCondDocumentoDaoImpl implements MotCondDocumentoDao {
 		return list;
 	}
 	
+	@Override
+	public void delete(MotCondDocumento dto) throws MotCondDocumentoDaoException {
+		
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{call SP_UPD_ESTADO_MOT_CONDUCTOR;1(?)}");
+			stmt.setLong(1,  dto.getConductor().getConcodigoD());
+			System.out.println(dto.getConductor().getConcodigoD());
+			stmt.execute();
+		} catch (SQLException e) {
+			throw new MotCondDocumentoDaoException(e.getMessage(),e);
+		}finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		
+	}
 }
