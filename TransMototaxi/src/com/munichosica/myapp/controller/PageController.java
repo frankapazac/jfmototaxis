@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.dto.MotEmpRepresentante;
+import com.munichosica.myapp.dto.MotInfraccion;
 import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotMarca;
 import com.munichosica.myapp.dto.MotModelo;
@@ -21,15 +23,22 @@ import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
+import com.munichosica.myapp.dto.MotUnidConductor;
+import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.MotZona;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
+import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
+import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
+import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.exceptions.MotUbigeoDaoException;
 import com.munichosica.myapp.exceptions.MotZonaDaoException;
 import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
+import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotMarcaDaoFactory;
 import com.munichosica.myapp.factory.MotModeloDaoFactory;
@@ -38,6 +47,8 @@ import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
+import com.munichosica.myapp.factory.MotUnidConductorDaoFactory;
+import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotZonaDaoFactory;
 import com.munichosica.myapp.util.UserSecurity;
 
@@ -226,6 +237,37 @@ public class PageController {
 		return "tilesInspectores";
 	}
 	
+	@RequestMapping(value="Infraccion.htm", method=RequestMethod.GET)
+	public String infraccion(HttpServletRequest request, Model model){
+		logger.info("Ingreso a Infraccion.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		try {
+			List<MotConductor> conductores=null;
+			List<MotUnidadEmpresa> placas=null;
+			List<MotInspector> inspectores=null;
+			List<MotInfraccion> infracciones=null;
+			
+			conductores = MotConductorDaoFactory.create().findAll();
+			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacas();
+			inspectores=MotInspectorDaoFactory.create().findAll();
+			infracciones=MotInfraccionDaoFactory.create().findAll();
+			model.addAttribute("conductores", conductores);
+			model.addAttribute("placas", placas);
+			model.addAttribute("inspectores", inspectores);
+			model.addAttribute("infracciones", infracciones);
+		} catch (MotConductorDaoException | MotUnidadEmpresaDaoException | MotInspectorDaoException | MotInfraccionDaoException e) {
+			logger.error(e.getMessage());
+		}
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesInfraccion";
+	}
+	
 	@RequestMapping(value="Operativos.htm",method=RequestMethod.GET)
 	public String operativos(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Operativos.htm");
@@ -248,5 +290,3 @@ public class PageController {
 		return "tilesOperativos";
 	}
 }
-
-
