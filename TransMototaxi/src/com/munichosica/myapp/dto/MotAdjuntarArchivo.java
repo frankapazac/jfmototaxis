@@ -8,7 +8,14 @@ public class MotAdjuntarArchivo {
 	protected String adjfechacaducidadF;
 	protected byte[] adjarchivoB;
 	protected String adjextensionV;
+	protected String adjestadoV;
 	
+	public String getAdjestadoV() {
+		return adjestadoV;
+	}
+	public void setAdjestadoV(String adjestadoV) {
+		this.adjestadoV = adjestadoV;
+	}
 	public Long getAdjcodigoD() {
 		return adjcodigoD;
 	}
