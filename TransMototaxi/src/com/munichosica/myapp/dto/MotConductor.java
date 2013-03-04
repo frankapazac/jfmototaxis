@@ -9,6 +9,8 @@ public class MotConductor {
 	protected MotPersona persona;
 	protected List<MotCondDocumento> documentos;
 	protected MotAdjuntarArchivo archivo;
+	protected String conestadoC;
+	protected String mensaje;
 	
 	public MotConductor() {
 		persona=new MotPersona();
@@ -16,6 +18,22 @@ public class MotConductor {
 		archivo=new MotAdjuntarArchivo();
 	}
 	
+	public String getConestadoC() {
+		return conestadoC;
+	}
+
+	public void setConestadoC(String conestadoC) {
+		this.conestadoC = conestadoC;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
 	public List<MotCondDocumento> getDocumentos() {
 		return documentos;
 	}
