@@ -6,10 +6,10 @@
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
-	<!-- bean id="personaPdf" 
+	<bean id="reportPapeleta" 
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
-		p:url="classpath:reports/reportePersonaPorNombre.jrxml"
+		p:url="classpath:reports/reportPapeleta.jrxml"
 		p:jdbcDataSource-ref="dataSource">
-	</bean -->
+	</bean>
 	
 </beans>
