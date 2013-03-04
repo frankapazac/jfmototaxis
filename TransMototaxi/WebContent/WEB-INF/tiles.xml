@@ -50,4 +50,9 @@
 		<put-attribute name="title" value="Inspectores"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/mantInspectores.jsp"/>
 	</definition>
+	
+	<definition name="tilesPapeleta" extends="base.definition">
+		<put-attribute name="title" value="Papeletas"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/papeleta.jsp"/>
+	</definition>
 </tiles-definitions>
