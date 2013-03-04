@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.munichosica.myapp.dao.MotUnidadEmpresaDao;
@@ -119,5 +120,109 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 	public List<MotUnidadEmpresa> findByCriterio(String criterio, String texto,
 			Long modcodigo_D) throws MotUnidadEmpresaDaoException {
 		return null;
+	}
+
+	@Override
+	public List<MotUnidadEmpresa> findAllPlacas()
+			throws MotUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotUnidadEmpresa> list=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_FINDALLPLACAS;1}");
+			boolean results=stmt.execute();
+			if(results){
+				list=new ArrayList<MotUnidadEmpresa>();
+				MotUnidadEmpresa unidad=null;
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					unidad=new MotUnidadEmpresa();
+					unidad.setUnecodigoD(rs.getLong("CODIGO"));
+					unidad.setUneplacanroV(rs.getString("PLACA"));
+					list.add(unidad);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidadEmpresaDaoException(e.getMessage(), e);
+		}
+		return list;
+	}
+
+	@Override
+	public MotUnidadEmpresa findByPlaca(String placa)
+			throws MotUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotUnidadEmpresa unidadEmpresa=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_UNIDEMPRESABYPLACA;1(?)}");
+			stmt.setString(1, placa);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					unidadEmpresa=new MotUnidadEmpresa();
+					unidadEmpresa.setUneplacanroV(rs.getString("PLACA"));
+					unidadEmpresa.getMarca().setMarnombreV(rs.getString("MARCA"));
+					unidadEmpresa.getModelo().setModnombre_V(rs.getString("MODELO"));
+					unidadEmpresa.setUneannoC(rs.getString("ANNO"));
+					unidadEmpresa.getArchivo().setAdjnumeroV(rs.getString("TARJPROPNUMERO"));
+					unidadEmpresa.getArchivo().setAdjfechaemisionF(rs.getString("FECHAEMISION"));
+					unidadEmpresa.getArchivo().setAdjfechacaducidadF(rs.getString("FECHACADUCIDAD"));
+					unidadEmpresa.setUnecolorV(rs.getString("COLOR"));
+					unidadEmpresa.getArchivo().setAdjestadoV(rs.getString("ESTADO"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidadEmpresaDaoException(e.getMessage(),e);
+		}
+		return unidadEmpresa;
+	}
+
+	@Override
+	public MotUnidadEmpresa findByCodigo(Long codigo)
+			throws MotUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotUnidadEmpresa unidadEmpresa=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_UNIDEMPRESABYCODIGO;1(?)}");
+			stmt.setLong(1, codigo);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					unidadEmpresa=new MotUnidadEmpresa();
+					unidadEmpresa.setUneplacanroV(rs.getString("PLACA"));
+					unidadEmpresa.getMarca().setMarnombreV(rs.getString("MARCA"));
+					unidadEmpresa.getModelo().setModnombre_V(rs.getString("MODELO"));
+					unidadEmpresa.setUneannoC(rs.getString("ANNO"));
+					unidadEmpresa.getArchivo().setAdjnumeroV(rs.getString("TARJPROPNUMERO"));
+					unidadEmpresa.getArchivo().setAdjfechaemisionF(rs.getString("FECHAEMISION"));
+					unidadEmpresa.getArchivo().setAdjfechacaducidadF(rs.getString("FECHACADUCIDAD"));
+					unidadEmpresa.setUnecolorV(rs.getString("COLOR"));
+					
+					unidadEmpresa.getAsociado().setAsorazonsocialV(rs.getString("ASORAZONSOCIAL"));
+					unidadEmpresa.getAsociado().setAsocodigoD(rs.getLong("ASOCODIGO"));
+					unidadEmpresa.getAsociado().getPersona().setPernombresV(rs.getString("ASONOMBRES"));
+					unidadEmpresa.getAsociado().getPersona().setPerpaternoV(rs.getString("ASOPATERNO"));
+					unidadEmpresa.getAsociado().getPersona().setPermaternoV(rs.getString("ASOMATERNO"));
+					unidadEmpresa.getAsociado().getPersona().setPerdniV(rs.getString("ASODNI"));
+					unidadEmpresa.getAsociado().getPersona().setPerdomicilioV(rs.getString("ASODOMICILIO"));
+					
+					unidadEmpresa.getArchivo().setAdjestadoV(rs.getString("ESTADO"));
+					unidadEmpresa.setMensaje(rs.getString("MENSAJE"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidadEmpresaDaoException(e.getMessage(),e);
+		}
+		return unidadEmpresa;
 	}
 }
