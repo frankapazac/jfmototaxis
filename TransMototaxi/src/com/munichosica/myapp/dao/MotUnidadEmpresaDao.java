@@ -14,5 +14,8 @@ public interface MotUnidadEmpresaDao {
 	public void update(MotUnidadEmpresa dto) throws MotUnidadEmpresaDaoException;
 	public void delete(MotUnidadEmpresa dto) throws MotUnidadEmpresaDaoException;
 	public MotUnidadEmpresa findByPrimaryKey(Long codigo) throws MotUnidadEmpresaDaoException;
+	public MotUnidadEmpresa findByCodigo(Long codigo) throws MotUnidadEmpresaDaoException;
 	public List<MotUnidadEmpresa> findByCriterio(String criterio,String texto, Long modcodigo_D)throws MotUnidadEmpresaDaoException;
+	public List<MotUnidadEmpresa> findAllPlacas() throws MotUnidadEmpresaDaoException;
+	public MotUnidadEmpresa findByPlaca(String placa) throws MotUnidadEmpresaDaoException;
 }
