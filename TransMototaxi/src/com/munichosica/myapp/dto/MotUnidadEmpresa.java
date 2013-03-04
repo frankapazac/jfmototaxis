@@ -27,13 +27,36 @@ public class MotUnidadEmpresa {
 	protected MotMarca marca;
 	protected String uneclaseV;
 	protected String uneestadoC;
+	protected MotAdjuntarArchivo archivo;
+	protected String mensaje;
+	protected MotEmprAsociado asociado;
 	
 	public MotUnidadEmpresa() {
 		modelo=new MotModelo();
 		oficina=new MotOficinaRegistral();
 		marca=new MotMarca();
+		archivo=new MotAdjuntarArchivo();
+		asociado=new MotEmprAsociado();
 	}
 	
+	public void setAsociado(MotEmprAsociado asociado) {
+		this.asociado = asociado;
+	}
+	public MotEmprAsociado getAsociado() {
+		return asociado;
+	}
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+	public String getMensaje() {
+		return mensaje;
+	}
+	public void setArchivo(MotAdjuntarArchivo archivo) {
+		this.archivo = archivo;
+	}
+	public MotAdjuntarArchivo getArchivo() {
+		return archivo;
+	}
 	public BigDecimal getUnelongitudD() {
 		return unelongitudD;
 	}
