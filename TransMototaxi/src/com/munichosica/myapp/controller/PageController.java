@@ -21,6 +21,7 @@ import com.munichosica.myapp.dto.MotModelo;
 import com.munichosica.myapp.dto.MotOficinaRegistral;
 import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotParadero;
+import com.munichosica.myapp.dto.MotPolicia;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
 import com.munichosica.myapp.dto.MotUnidConductor;
@@ -32,6 +33,7 @@ import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
+import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.factory.MotConductorDaoFactory;
@@ -45,6 +47,7 @@ import com.munichosica.myapp.factory.MotModeloDaoFactory;
 import com.munichosica.myapp.factory.MotOficinaRegistralDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
+import com.munichosica.myapp.factory.MotPoliciaDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidConductorDaoFactory;
@@ -237,9 +240,9 @@ public class PageController {
 		return "tilesInspectores";
 	}
 	
-	@RequestMapping(value="Infraccion.htm", method=RequestMethod.GET)
+	@RequestMapping(value="Papeletas.htm", method=RequestMethod.GET)
 	public String infraccion(HttpServletRequest request, Model model){
-		logger.info("Ingreso a Infraccion.htm");
+		logger.info("Ingreso a Papeleta.htm");
 		HttpSession session=request.getSession(true);
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
@@ -252,20 +255,25 @@ public class PageController {
 			List<MotUnidadEmpresa> placas=null;
 			List<MotInspector> inspectores=null;
 			List<MotInfraccion> infracciones=null;
+			List<MotPolicia> policias=null;
 			
 			conductores = MotConductorDaoFactory.create().findAll();
 			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacas();
 			inspectores=MotInspectorDaoFactory.create().findAll();
 			infracciones=MotInfraccionDaoFactory.create().findAll();
+			policias=MotPoliciaDaoFactory.create().findAll();
 			model.addAttribute("conductores", conductores);
 			model.addAttribute("placas", placas);
 			model.addAttribute("inspectores", inspectores);
 			model.addAttribute("infracciones", infracciones);
-		} catch (MotConductorDaoException | MotUnidadEmpresaDaoException | MotInspectorDaoException | MotInfraccionDaoException e) {
+			model.addAttribute("policias", policias);
+		} catch (MotConductorDaoException | MotUnidadEmpresaDaoException | 
+				MotInspectorDaoException | MotInfraccionDaoException | 
+				MotPoliciaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		model.addAttribute("paginas",rol.getPaginas());
-		return "tilesInfraccion";
+		return "tilesPapeleta";
 	}
 	
 	@RequestMapping(value="Operativos.htm",method=RequestMethod.GET)
