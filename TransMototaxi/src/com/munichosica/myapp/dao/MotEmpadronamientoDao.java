@@ -12,4 +12,6 @@ public interface MotEmpadronamientoDao {
 	public MotEmpadronamiento findByPrimaryKey(Long codigo) throws MotEmpadronamientoDaoException;
 	public List<MotEmpadronamiento> findByCriterio(String criterio,String texto, Long empcodigo_D)throws MotEmpadronamientoDaoException;
 	public MotEmpadronamiento findByUnidad(Long codigo) throws MotEmpadronamientoDaoException;
+	public MotEmpadronamiento findByPropietarioEmp(Long codigo)throws MotEmpadronamientoDaoException;
+	public MotEmpadronamiento findByPapeleta(Long codigo)throws MotEmpadronamientoDaoException;
 }

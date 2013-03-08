@@ -15,5 +15,5 @@ public interface MotConductorDao {
 	public List<MotConductor> findAll() throws MotConductorDaoException;
 	public MotConductor findByDNI(String dni) throws MotConductorDaoException;
 	public MotConductor findByCodigo(String codigo) throws MotConductorDaoException;
-	
+	public MotConductor findByPmoCodigo(Long pmocodigo)throws MotConductorDaoException;
 }
