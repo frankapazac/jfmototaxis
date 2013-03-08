@@ -72,7 +72,86 @@ public class MotOperFiscalizadorDaoImpl implements MotOperFiscalizadorDao  {
 		return null;
 	}
 
+	@Override
+	public MotOperFiscalizador findByDniInspector(String dni)
+			throws MotOperFiscalizadorDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotOperFiscalizador operFiscalizador=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_FINDINSPECTORBYDNI;1(?)}");
+			stmt.setString(1, dni);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					operFiscalizador=new MotOperFiscalizador();
+					operFiscalizador.getFiscalizador().setInscodigoI(rs.getInt("INSCODIGO"));
+					operFiscalizador.getFiscalizador().getPersona().setPernombresV(rs.getString("NOMBRES"));
+					operFiscalizador.getFiscalizador().getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					operFiscalizador.getFiscalizador().getPersona().setPermaternoV(rs.getString("MATERNO"));
+					operFiscalizador.getFiscalizador().getPersona().setPerdniV(rs.getString("DNI"));
+					operFiscalizador.getOperativo().setOpereferencia(rs.getString("REFERENCIA"));
+					operFiscalizador.getOperativo().setOpelugarV(rs.getString("LUGAR"));
+					operFiscalizador.getOperativo().setOpefecha(rs.getString("FECHA"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPerdniV(rs.getString("RESDNI"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPernombresV(rs.getString("RESNOMBRES"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPerpaternoV(rs.getString("RESPATERNO"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPermaternoV(rs.getString("RESMATERNO"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotOperFiscalizadorDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return operFiscalizador;
+	}
 
+	@Override
+	public MotOperFiscalizador findByCodigoInspector(int codigo)
+			throws MotOperFiscalizadorDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotOperFiscalizador operFiscalizador=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call [SP_MOT_GET_FINDINSPECTORBYCODIGO];1(?)}");
+			stmt.setInt(1, codigo);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					operFiscalizador=new MotOperFiscalizador();
+					operFiscalizador.getFiscalizador().setInscodigoI(rs.getInt("INSCODIGO"));
+					operFiscalizador.getFiscalizador().getPersona().setPernombresV(rs.getString("NOMBRES"));
+					operFiscalizador.getFiscalizador().getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					operFiscalizador.getFiscalizador().getPersona().setPermaternoV(rs.getString("MATERNO"));
+					operFiscalizador.getFiscalizador().getPersona().setPerdniV(rs.getString("DNI"));
+					operFiscalizador.getOperativo().setOpereferencia(rs.getString("REFERENCIA"));
+					operFiscalizador.getOperativo().setOpelugarV(rs.getString("LUGAR"));
+					operFiscalizador.getOperativo().setOpefecha(rs.getString("FECHA"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPerdniV(rs.getString("RESDNI"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPernombresV(rs.getString("RESNOMBRES"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPerpaternoV(rs.getString("RESPATERNO"));
+					operFiscalizador.getOperativo().getInspector().getPersona().setPermaternoV(rs.getString("RESMATERNO"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotOperFiscalizadorDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return operFiscalizador;
+	}
+	
 	@Override
 	public void insert(MotOperFiscalizador dto) throws MotOperFiscalizadorDaoException{
 		
