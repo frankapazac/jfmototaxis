@@ -171,4 +171,45 @@ protected static final Logger logger = Logger.getLogger(MotUnidConductorDaoImpl.
 			ResourceManager.close(conn);
 		}
 	}
+
+	@Override
+	public List<MotUnidConductor> findByVehiculo(Long codigo) throws MotUnidConductorDaoException {
+		
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotUnidConductor> list=null;
+		try {
+			list=new ArrayList<MotUnidConductor>();
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_CONDUCTOR_X_VEHICULO;1(?)}");
+			stmt.setLong(1, codigo);
+			
+			boolean results=stmt.execute();
+			if(results){
+				MotUnidConductor motUnidConductor=null;
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					motUnidConductor=new MotUnidConductor();
+					motUnidConductor.setUcocodigoD(rs.getLong("UCOCODIGO_D"));
+					motUnidConductor.getConductor().getPersona().setPerdniV(rs.getString("DNI"));
+					motUnidConductor.getConductor().getPersona().setPernombresV(rs.getString("NOMBRES"));
+					motUnidConductor.getConductor().getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					motUnidConductor.getConductor().getPersona().setPermaternoV(rs.getString("MATERNO"));
+					motUnidConductor.getConductor().getPersona().setPerdniV(rs.getString("DNI"));;
+					motUnidConductor.setUcofechainicioF(rs.getString("FECHA INICIO"));
+					motUnidConductor.setUcofechacese(rs.getString("FECHA CESE"));
+					motUnidConductor.setUcoestadoC(rs.getString("ESTADO"));
+					list.add(motUnidConductor);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidConductorDaoException(e.getMessage(),e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
 }
