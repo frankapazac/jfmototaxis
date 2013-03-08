@@ -110,7 +110,7 @@ public class OperativoController {
 				operFiscalizador.setFiscalizador(inspector);
 				MotOperFiscalizadorDaoFactory.create().insert(operFiscalizador);
 			}
-			
+			System.out.println("actualizo correctamente el detalle operativo fiscalizador");
 			
 		} catch (MotOperativoDaoException | MotOperFiscalizadorDaoException e) {
 			logger.error(e.getMessage());
@@ -134,6 +134,23 @@ public class OperativoController {
 		return operativo;
 	}
 	
+
+	
+	@RequestMapping(value="ObtenerInspector.htm", method=RequestMethod.GET)
+	public @ResponseBody List<MotOperFiscalizador> obtenerInspector(HttpServletRequest request,@RequestParam("codigo") int codigo){
+		logger.info("Ingreso a obtenerInspector/ObtenerInspector.htm");
+
+		//MotInspector inspector= null;
+		List<MotOperFiscalizador> listarInspectoresxOperativo = null;
+		try {
+			listarInspectoresxOperativo=MotOperFiscalizadorDaoFactory.create().findInspectorporOperativo(codigo);
+			logger.info("MotOperFiscalizadorDaoFactory.create().findInspectorporOperativo(codigo);Completed");
+		} catch (MotOperFiscalizadorDaoException e) {
+			logger.error(e.getMessage());
+		}
+		return listarInspectoresxOperativo;
+	}
+
 	@RequestMapping(value="Eliminar.htm",method=RequestMethod.GET)
 	public String eliminar(@RequestParam("codigo") Long codigo){
 		try {
@@ -146,5 +163,24 @@ public class OperativoController {
 			logger.error(e.getMessage());
 		}
 		return "Success";
-	}	
+	}
+	
+	@RequestMapping(value="ActualizarEstadoIns.htm", method=RequestMethod.POST)
+	public String actualizaEstado(Long codigo,Integer codins, String lado){
+
+		System.out.println(codigo+" "+codins+" "+lado);
+		try {
+			logger.info("actualizaEstado/ActualizarEstadoIns.htm");
+			MotOperFiscalizador operFiscalizador= new MotOperFiscalizador(); 
+			operFiscalizador.getOperativo().setOpecodigoD(codigo);
+			operFiscalizador.getFiscalizador().setInscodigoI(codins);
+			operFiscalizador.getFiscalizador().setLado(lado);
+			MotOperFiscalizadorDaoFactory.create().actualizaEstado(operFiscalizador);
+			logger.info("MotOperFiscalizadorDaoFactory.create().actualizaEstado(operFiscalizador); Complete");
+		} catch (MotOperFiscalizadorDaoException e) {
+			logger.error(e.getMessage());
+		}
+		return "Success";
+	}
+		
 }
