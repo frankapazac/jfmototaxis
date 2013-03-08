@@ -43,7 +43,7 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 					infraccion.setInfcodigoV(rs.getString("CODIGOINFV"));
 					infraccion.setInfinfraccionV(rs.getString("DESCRIPCIÓN"));
 					infraccion.setInftipoC(rs.getString("TIPO INFRACCION"));
-					infraccion.setInftipoPersonaC(rs.getString("TIPO PERSONA"));
+					infraccion.setInftipopersonaC(rs.getString("TIPO PERSONA"));
 					infraccion.setInfnrouitI(rs.getInt("N° UIT"));
 					infraccion.setInfestadoC(rs.getString("ESTADO"));
 					list.add(infraccion);
@@ -71,12 +71,12 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 		try {
 			conn = ResourceManager.getConnection();
 			stmt = conn.prepareCall("{call SP_MOT_INS_INFRACCION;1 (?,?,?,?,?,?,?)}");
-			//stmt.setLong(1, dto.getInfcodigoD());
 			stmt.registerOutParameter(1, Types.DECIMAL);
+			stmt.setLong(1, dto.getInfcodigoD());
 			stmt.setString(2,dto.getInfcodigoV());
 			stmt.setString(3,dto.getInfinfraccionV());
 			stmt.setString(4,dto.getInftipoC());
-			stmt.setString(5, dto.getInftipoPersonaC());
+			stmt.setString(5, dto.getInftipopersonaC());
 			stmt.setString(6, dto.getInfmedidasAccV());
 			stmt.setInt(7, dto.getInfnrouitI());
 			
@@ -92,7 +92,7 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 			System.out.println(dto.getInfcodigoV());
 			System.out.println(dto.getInfinfraccionV());
 			System.out.println(dto.getInftipoC());
-			System.out.println(dto.getInftipoPersonaC());
+			System.out.println(dto.getInftipopersonaC());
 			System.out.println(dto.getInfmedidasAccV());
 			System.out.println(dto.getInfnrouitI());
 								
@@ -128,7 +128,7 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 				infraccion.setInfcodigoV(rs.getString("CODIGOINFV"));
 				infraccion.setInfinfraccionV(rs.getString("DESCRIPCIÓN"));
 				infraccion.setInftipoC(rs.getString("TIPO INFRACCION").trim());
-				infraccion.setInftipoPersonaC(rs.getString("INFTITPOPERSONA_C"));
+				infraccion.setInftipopersonaC(rs.getString("INFTITPOPERSONA_C"));
 				infraccion.setInfmedidasAccV(rs.getString("INFTITPOPERSONA_C"));
 				infraccion.setInfnrouitI(rs.getInt("N° UIT"));
 				}
