@@ -24,6 +24,7 @@ import com.munichosica.myapp.dto.MotPolicia;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotTipoMedida;
 import com.munichosica.myapp.dto.MotUbigeo;
+import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.MotZona;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotConductorDaoException;
