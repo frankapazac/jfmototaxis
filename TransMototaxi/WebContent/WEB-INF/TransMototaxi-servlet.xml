@@ -17,6 +17,17 @@
 		</property>
 	</bean>
 	
+	<!-- bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<property name="supportedMediaTypes" value="application/json"/>
+	</bean>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonConverter"/>
+			</list>
+		</property>
+	</bean -->
+	
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -32,7 +43,9 @@
 		</property>
 		<property name="messageConverters">
 			<list>
-				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+					<property name="supportedMediaTypes" value="application/json"/>
+				</bean>
 			</list>
 		</property>
 	</bean>
