@@ -6,8 +6,28 @@ public class MotInfraccion {
 	protected String infinfraccionV;
 	protected String inftipoC;
 	protected String inftipopersonaC;
+	protected Integer infnrouitI;
+	protected String infestadoC;
+	protected String infmedidasAccV;
 	public Long getInfcodigoD() {
 		return infcodigoD;
+	}
+	public void setInfmedidasAccV(String infmedidasAccV) {
+		this.infmedidasAccV = infmedidasAccV;
+	}public String getInfmedidasAccV() {
+		return infmedidasAccV;
+	}
+	public void setInfestadoC(String infestadoC) {
+		this.infestadoC = infestadoC;
+	}
+	public String getInfestadoC() {
+		return infestadoC;
+	}
+	public void setInfnrouitI(Integer infnrouitI) {
+		this.infnrouitI = infnrouitI;
+	}
+	public Integer getInfnrouitI() {
+		return infnrouitI;
 	}
 	public void setInfcodigoD(Long infcodigoD) {
 		this.infcodigoD = infcodigoD;
