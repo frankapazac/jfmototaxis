@@ -9,6 +9,7 @@ public class MotInspector {
 	protected MotPersona persona;
 	protected MotAdjuntarArchivo foto;
 	protected List<MotInspDocumento> documentos;
+	protected String Lado; 
 	
 	public MotInspector(){
 		persona=new MotPersona();
@@ -40,10 +41,17 @@ public class MotInspector {
 	public void setInsestadoC(String insestadoC) {
 		this.insestadoC = insestadoC;
 	}
+
 	public MotPersona getPersona() {
 		return persona;
 	}
 	public void setPersona(MotPersona persona) {
 		this.persona = persona;
+	}
+	public String getLado() {
+		return Lado;
+	}
+	public void setLado(String lado) {
+		this.Lado = lado;
 	}
 }
