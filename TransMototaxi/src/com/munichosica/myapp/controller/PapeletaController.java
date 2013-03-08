@@ -233,4 +233,15 @@ public class PapeletaController {
 		}
 		return list;
 	}
+	
+	@RequestMapping(value="Obtener.htm", method=RequestMethod.GET)
+	public @ResponseBody MotPapeleta obtener(Long codigo){
+		MotPapeleta papeleta=null;
+		try {
+			papeleta = MotPapeletaDaoFactory.create().findByCodigo(codigo);
+		} catch (MotPapeletaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return papeleta;
+	}
 }

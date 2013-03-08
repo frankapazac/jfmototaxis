@@ -10,21 +10,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.dto.MotEmpRepresentante;
 import com.munichosica.myapp.dto.MotInfraccion;
 import com.munichosica.myapp.dto.MotInspector;
+import com.munichosica.myapp.dto.MotInteInventarioTipo;
 import com.munichosica.myapp.dto.MotMarca;
 import com.munichosica.myapp.dto.MotModelo;
 import com.munichosica.myapp.dto.MotOficinaRegistral;
-import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotPolicia;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUbigeo;
-import com.munichosica.myapp.dto.MotUnidConductor;
 import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.MotZona;
 import com.munichosica.myapp.dto.Rol;
@@ -32,6 +30,7 @@ import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
+import com.munichosica.myapp.exceptions.MotInteInventarioTipoDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
@@ -42,15 +41,14 @@ import com.munichosica.myapp.exceptions.MotZonaDaoException;
 import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
 import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
+import com.munichosica.myapp.factory.MotInteInventarioTipoDaoFactory;
 import com.munichosica.myapp.factory.MotMarcaDaoFactory;
 import com.munichosica.myapp.factory.MotModeloDaoFactory;
 import com.munichosica.myapp.factory.MotOficinaRegistralDaoFactory;
-import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotPoliciaDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
-import com.munichosica.myapp.factory.MotUnidConductorDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotZonaDaoFactory;
 import com.munichosica.myapp.util.UserSecurity;
@@ -275,7 +273,7 @@ public class PageController {
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesPapeleta";
 	}
-	
+
 	@RequestMapping(value="Operativos.htm",method=RequestMethod.GET)
 	public String operativos(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Operativos.htm");
@@ -296,5 +294,38 @@ public class PageController {
 		}
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesOperativos";
+	}
+
+	@RequestMapping(value="Internamientos.htm",method=RequestMethod.GET)
+	public String internamientos(HttpServletRequest request,Model model){
+		logger.info("Ingreso a Internamiento.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		List<MotInteInventarioTipo> parteExterior=null;
+		List<MotInteInventarioTipo> parteInterior=null;
+		List<MotInteInventarioTipo> parteMotor=null;
+		List<MotConductor> conductores=null;
+		List<MotUnidadEmpresa> placas=null;
+		try {
+			parteExterior=MotInteInventarioTipoDaoFactory.create().findbyTipo("E");
+			parteInterior=MotInteInventarioTipoDaoFactory.create().findbyTipo("I");
+			parteMotor=MotInteInventarioTipoDaoFactory.create().findbyTipo("M");
+			conductores = MotConductorDaoFactory.create().findAll();
+			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacas();
+			model.addAttribute("parteExterior", parteExterior);
+			model.addAttribute("parteInterior", parteInterior);
+			model.addAttribute("parteMotor", parteMotor);
+			model.addAttribute("conductores", conductores);
+			model.addAttribute("placas", placas);
+		} catch (MotInteInventarioTipoDaoException | MotConductorDaoException | MotUnidadEmpresaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesInternamiento";
 	}
 }
