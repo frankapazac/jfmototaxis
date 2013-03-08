@@ -78,7 +78,6 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 			if(results){
 				rs = stmt.getResultSet();
 				while(rs.next()){
-					System.out.println("entrodao");
 					operativo = new MotOperativo();
 					operativo.setOpecodigoD(rs.getLong("CodOperativo"));
 					operativo.setOpetituloV(rs.getString("Nombre Operativo"));
@@ -92,9 +91,7 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 					operativo.getInspector().getPersona().setPernombresV(rs.getString("Nombre"));
 					operativo.getInspector().getPersona().setPerpaternoV(rs.getString("Paterno"));
 					operativo.getInspector().getPersona().setPermaternoV(rs.getString("Materno"));
-					operativo.getInspector().setInscodigoI(rs.getInt("CodInspector"));
-					System.out.println(rs.getString("Descripcion"));	
-					System.out.println("saliodao");
+					operativo.getInspector().setInscodigoI(rs.getInt("CodInspector"));					
 				}
 			}
 		} catch (Exception ex) {
@@ -131,4 +128,5 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 			ResourceManager.close(rs);
 		}
 	}
+
 }

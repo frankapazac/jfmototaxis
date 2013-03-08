@@ -14,9 +14,11 @@ import com.munichosica.myapp.dao.MotEmpadronamientoDao;
 import com.munichosica.myapp.dto.MotEmpadronamiento;
 import com.munichosica.myapp.dto.MotEmprAsociado;
 import com.munichosica.myapp.dto.MotModelo;
+import com.munichosica.myapp.dto.MotOperativo;
 import com.munichosica.myapp.dto.MotPersona;
 import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
+import com.munichosica.myapp.exceptions.MotOperativoDaoException;
 
 
 public class MotEmpadronamientoDaoImpl implements MotEmpadronamientoDao {
@@ -94,6 +96,7 @@ protected static final Logger logger = Logger.getLogger(MotEmpadronamientoDaoImp
 				MotEmpadronamiento empadronamiento = null;
 				while(rs.next()){
 					empadronamiento=new MotEmpadronamiento();
+					empadronamiento.getPropUnidadEmpresa().setPmocodigoD(rs.getLong("PMOCODIGO_D"));
 					empadronamiento.getAsociado().getPersona().setPernombresV(rs.getString("Nombres"));
 					empadronamiento.getAsociado().getPersona().setPerpaternoV(rs.getString("Paterno"));
 					empadronamiento.getAsociado().getPersona().setPermaternoV(rs.getString("Materno"));
@@ -153,4 +156,108 @@ protected static final Logger logger = Logger.getLogger(MotEmpadronamientoDaoImp
 		}
 		return dto;
 	}
+	
+	//INFORME
+	@Override
+	public MotEmpadronamiento findByPropietarioEmp(Long codigo) throws MotEmpadronamientoDaoException {
+			
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		MotEmpadronamiento empadronamiento = null;
+						
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{call SP_MOT_GET_INFORME_MOTPROPUNIDEMPRESA;1(?)}");
+			stmt.setLong(1, codigo);
+			
+			boolean results = stmt.execute();
+			if(results){
+				
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					empadronamiento=new MotEmpadronamiento();
+					//Propietario
+					empadronamiento.getPropUnidadEmpresa().setPmocodigoD(rs.getLong("PMOCODIGO"));
+					empadronamiento.getAsociado().getPersona().setPernombresV(rs.getString("Nombres"));
+					empadronamiento.getAsociado().getPersona().setPerpaternoV(rs.getString("Paterno"));
+					empadronamiento.getAsociado().getPersona().setPermaternoV(rs.getString("Materno"));
+					empadronamiento.getAsociado().getPersona().setPerdomicilioV(rs.getString("Domicilio"));
+					empadronamiento.getAsociado().getPersona().setPerdniV(rs.getString("DNI"));
+					empadronamiento.getAsociado().getPersona().setPeremailV(rs.getString("Correo"));
+					empadronamiento.getAsociado().getPersona().setPerteleffijoV(rs.getString("TELEFONO"));
+					empadronamiento.getAsociado().getPersona().setPermovilclaV(rs.getString("CLARO"));
+					empadronamiento.getAsociado().getPersona().setPermovilmovV(rs.getString("MOVISTAR"));
+					empadronamiento.getAsociado().getPersona().setPermovilnexV(rs.getString("NEXTEL"));
+					empadronamiento.getAsociado().getPersona().setPerubidistnombreV(rs.getString("DISTRITO"));
+					empadronamiento.getAsociado().getPersona().setPerubprovnombreV(rs.getString("PROVINCIA"));
+					empadronamiento.getAsociado().getPersona().setPerubdptonombreV(rs.getString("DEPARTAMENTO"));
+					//VEHICULO
+					empadronamiento.getUnidadEmpresa().setUnecodigoD(rs.getLong("CODVEH"));
+					empadronamiento.getUnidadEmpresa().setUneplacanroV(rs.getString("PLACA"));
+					empadronamiento.getUnidadEmpresa().setUnetituloV(rs.getString("TITULO"));
+					empadronamiento.getUnidadEmpresa().setUneclaseV(rs.getString("CLASE"));
+					empadronamiento.getUnidadEmpresa().setUnenroruedasI(rs.getInt("RUEDAS"));
+					empadronamiento.getUnidadEmpresa().getMarca().setMarnombreV(rs.getString("MARCA"));
+					empadronamiento.getUnidadEmpresa().getModelo().setModnombre_V(rs.getString("MODELO"));
+					empadronamiento.getUnidadEmpresa().setUneannoC(rs.getString("ANNO"));
+					empadronamiento.getUnidadEmpresa().setUnecolorV(rs.getString("COLOR"));
+					empadronamiento.getUnidadEmpresa().setUnecombustibleC(rs.getString("COMBUSTIBLE"));				
+					empadronamiento.getUnidadEmpresa().setUnenroseriechasisV(rs.getString("NSERIE"));
+					empadronamiento.getUnidadEmpresa().setUnenromotorV(rs.getString("NMOTOR"));
+					empadronamiento.getUnidadEmpresa().setUnenroasientosI(rs.getInt("NASIENTOS"));
+					empadronamiento.getUnidadEmpresa().setUnenropasajerosI(rs.getInt("NPASAJEROS"));			
+					empadronamiento.getUnidadEmpresa().setUnecargautilD(rs.getBigDecimal("CUTIL"));
+					empadronamiento.getUnidadEmpresa().setUnelongitudD(rs.getBigDecimal("LONGITUD"));
+					empadronamiento.getUnidadEmpresa().setUneanchoD(rs.getBigDecimal("ANCHO"));
+					empadronamiento.getUnidadEmpresa().setUnealtoD(rs.getBigDecimal("ALTO"));
+				}
+			}
+			
+		} catch (SQLException ex) {
+			logger.error("Exception : " + ex.getMessage(), ex);
+			throw new MotEmpadronamientoDaoException( "Exception: " + ex.getMessage(), ex);
+		}finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+	
+		return empadronamiento;
+	}
+	
+	@Override
+	public MotEmpadronamiento findByPapeleta(Long codigo) throws MotEmpadronamientoDaoException {
+			
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		MotEmpadronamiento empadronamiento = null;
+						
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{call SP_MOT_GET_PAPELETA_X_PMOCODIGO;1(?)}");
+			stmt.setLong(1, codigo);
+			
+			boolean results = stmt.execute();
+			if(results){
+				
+				rs=stmt.getResultSet();
+				while(rs.next()){
+
+				}
+			}
+			
+		} catch (SQLException ex) {
+			logger.error("Exception : " + ex.getMessage(), ex);
+			throw new MotEmpadronamientoDaoException( "Exception: " + ex.getMessage(), ex);
+		}finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+	
+		return empadronamiento;
+	}
+	
 }

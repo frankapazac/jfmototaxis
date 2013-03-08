@@ -67,18 +67,34 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 		Connection conn = null;
 		CallableStatement stmt = null;
 		ResultSet rs = null;
-		
+		System.out.println("ENTRO A INSERTAR O ACTUALIZAR INFRACCION");
 		try {
 			conn = ResourceManager.getConnection();
 			stmt = conn.prepareCall("{call SP_MOT_INS_INFRACCION;1 (?,?,?,?,?,?,?)}");
-			stmt.setLong(1, dto.getInfcodigoD());
+			//stmt.setLong(1, dto.getInfcodigoD());
+			stmt.registerOutParameter(1, Types.DECIMAL);
 			stmt.setString(2,dto.getInfcodigoV());
 			stmt.setString(3,dto.getInfinfraccionV());
 			stmt.setString(4,dto.getInftipoC());
 			stmt.setString(5, dto.getInftipoPersonaC());
 			stmt.setString(6, dto.getInfmedidasAccV());
-			stmt.setInt(7, dto.getInfnrouitI());			
+			stmt.setInt(7, dto.getInfnrouitI());
+			
+			
 			stmt.execute();
+			
+			Long codigo=stmt.getLong(1);
+			if(codigo!=null){
+				dto.setInfcodigoD(codigo);
+			}
+			//System.out.println("CODIGO INFRACCION : " + codigo);
+			System.out.println(codigo);
+			System.out.println(dto.getInfcodigoV());
+			System.out.println(dto.getInfinfraccionV());
+			System.out.println(dto.getInftipoC());
+			System.out.println(dto.getInftipoPersonaC());
+			System.out.println(dto.getInfmedidasAccV());
+			System.out.println(dto.getInfnrouitI());
 								
 		} catch (SQLException e) {
 			throw new MotInfraccionDaoException(e.getMessage(), e);
@@ -112,9 +128,8 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 				infraccion.setInfcodigoV(rs.getString("CODIGOINFV"));
 				infraccion.setInfinfraccionV(rs.getString("DESCRIPCIÓN"));
 				infraccion.setInftipoC(rs.getString("TIPO INFRACCION").trim());
-				System.out.println(rs.getString("TIPO INFRACCION"));
 				infraccion.setInftipoPersonaC(rs.getString("INFTITPOPERSONA_C"));
-				infraccion.setInfmedidasAccV(rs.getString("MEDIDAS"));
+				infraccion.setInfmedidasAccV(rs.getString("INFTITPOPERSONA_C"));
 				infraccion.setInfnrouitI(rs.getInt("N° UIT"));
 				}
 			}
