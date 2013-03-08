@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$("#txtPapeleta").keyup(buscarPorPapeleta);
 	
 	function buscarPorPapeleta(){
-		alert($(this).val().length);
+		//alert($(this).val().length);
 		if($(this).val().length==12){
 			$.ajax({ 
 	    		data:{
