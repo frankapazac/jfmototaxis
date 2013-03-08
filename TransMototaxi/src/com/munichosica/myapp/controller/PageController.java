@@ -22,8 +22,8 @@ import com.munichosica.myapp.dto.MotOficinaRegistral;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotPolicia;
 import com.munichosica.myapp.dto.MotTipoDocumento;
+import com.munichosica.myapp.dto.MotTipoMedida;
 import com.munichosica.myapp.dto.MotUbigeo;
-import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.MotZona;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotConductorDaoException;
@@ -34,6 +34,7 @@ import com.munichosica.myapp.exceptions.MotInteInventarioTipoDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
+import com.munichosica.myapp.exceptions.MotTipoMedidaDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.exceptions.MotUbigeoDaoException;
@@ -48,6 +49,7 @@ import com.munichosica.myapp.factory.MotOficinaRegistralDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotPoliciaDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
+import com.munichosica.myapp.factory.MotTipoMedidaDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotZonaDaoFactory;
@@ -295,7 +297,30 @@ public class PageController {
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesOperativos";
 	}
-
+	
+	
+	@RequestMapping(value="Infraccion.htm",method=RequestMethod.GET)
+	public String infracciones(HttpServletRequest request,Model model){
+		logger.info("Ingreso a infracciones.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		
+		try {
+			List<MotTipoMedida> tipoMedida= MotTipoMedidaDaoFactory.create().findAllTipoMedida();
+			model.addAttribute("tipoMedida", tipoMedida);
+		} catch (MotTipoMedidaDaoException e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesInfracciones";
+	}
+	
 	@RequestMapping(value="Internamientos.htm",method=RequestMethod.GET)
 	public String internamientos(HttpServletRequest request,Model model){
 		logger.info("Ingreso a Internamiento.htm");
