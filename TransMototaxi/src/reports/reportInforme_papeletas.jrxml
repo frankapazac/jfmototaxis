@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportInforme_papeletas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f84c04d3-45a3-48f8-9581-0c43de50c791">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PMOCODIGO_D" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT PAP.PAPCODIGO_D AS PAPCODIGO_D,
+CONVERT(VARCHAR,PAP.PAPFECHAINFRACCION_F,103) AS FECHA,
+(select dbo.fnc_tra_FormateaHora(PAP.PAPHORAINFRACCION_F)) AS HORA,
+INF.INFCODIGO_V AS CODIGO,
+INF.INFTITPO_C AS TIPO,
+PAP.PAPNUMERO_V AS [N° PAPELETA],
+PER.PERNOMBRES_V NOMBRES,
+PER.PERPATERNO_V PATERNO,
+PER.PERMATERNO_V MATERNO,
+PER2.PERNOMBRES_V NOMBREINS,
+PER2.PERPATERNO_V PATERNOINS,
+PER2.PERMATERNO_V MATERNOINS,
+(SELECT CASE  PAP.PAPESTADO_C WHEN 'A' THEN 'ACTIVO' WHEN 'I' THEN 'INACTIVO' END) ESTADO --ACTIVO -- INACTION
+FROM MOT_PAPELETA PAP INNER JOIN MOT_INFR_MEDIDA IME ON PAP.IMECODIGO_I=IME.IMECODIGO_I
+INNER JOIN MOT_INFRACCION INF ON IME.INFCODIGO_D=INF.INFCODIGO_D
+INNER JOIN MOT_CONDUCTOR COND ON PAP.CONDCODIGO_I=COND.CONDCODIGO_I
+INNER JOIN MOT_PERSONA PER ON COND.PERCODIGO_D=PER.PERCODIGO_D
+INNER JOIN MOT_INSPECTOR INSP ON PAP.INSCODIGO_I=INSP.INSCODIGO_I
+INNER JOIN MOT_PERSONA PER2 ON INSP.PERCODIGO_D=PER2.PERCODIGO_D
+WHERE PAP.PMOCODIGO_D=$P{PMOCODIGO_D}
+ORDER BY PAP.PAPFECHAINFRACCION_F DESC]]>
+	</queryString>
+	<field name="PAPCODIGO_D" class="java.math.BigDecimal"/>
+	<field name="FECHA" class="java.lang.String"/>
+	<field name="HORA" class="java.lang.String"/>
+	<field name="CODIGO" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="N° PAPELETA" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="PATERNO" class="java.lang.String"/>
+	<field name="MATERNO" class="java.lang.String"/>
+	<field name="NOMBREINS" class="java.lang.String"/>
+	<field name="PATERNOINS" class="java.lang.String"/>
+	<field name="MATERNOINS" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="aa21ebb3-b58d-481c-bbb3-61fe95c1f003" x="0" y="0" width="529" height="41"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="e9f457aa-f635-44d3-a61a-dfadfc4b1597" x="3" y="21" width="47" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="deef7dc0-8fd5-4a9f-8cd2-c0c222e6b45f" x="52" y="21" width="43" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3133bb20-2d82-40fa-9075-baac04169531" x="96" y="21" width="45" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c1e7c526-0593-4a2d-9498-58f11a8a02d5" x="142" y="21" width="30" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="00cd2e9f-5968-4c65-90d7-c36a63fc14e1" x="174" y="21" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[N° PAPELETA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a23ad605-3bf2-4482-ac06-00cfae5e37f0" x="241" y="21" width="120" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="120ede51-b076-48c7-b927-5302f04622f9" x="362" y="21" width="120" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[INSPECTOR]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="51" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="95" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="172" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="240" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="360" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="141" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="5a433558-1ebe-45e7-b73d-5a01d36df022" x="1" y="20" width="527" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="f65fc9e7-778b-43dd-adf0-a4fb2ada55a7" x="3" y="0" width="525" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SANCIONES DEL VEHÍCULO / CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="29c2804a-7a7b-4ab1-b38d-3c7626f0f1ad" x="487" y="21" width="40" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="483" y="21" width="1" height="20"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="ffc49ecb-0106-4daa-84de-d3675eeb4db0" x="0" y="0" width="529" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="5930b5b7-75c2-4732-96a7-7999c01d62ee" x="3" y="0" width="47" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b16d1cbb-eb3c-47fe-814c-71540845f8be" x="52" y="0" width="43" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="71f93f24-12fa-4d53-b5be-71e2b05df8a0" x="96" y="0" width="45" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="faf122bc-75ea-4da4-b6ec-75e592ed503b" x="142" y="0" width="30" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a85fd4c1-b282-4c82-bf8c-0e91dc7f38fb" x="174" y="0" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{N° PAPELETA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a83915f8-9794-40e8-82f0-51883cc228a7" x="241" y="0" width="120" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRES}+" "+$F{PATERNO}+" "+$F{MATERNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f872f6b4-bf94-4442-a393-af62c3dda494" x="362" y="0" width="120" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBREINS}+" "+$F{PATERNOINS}+" "+$F{MATERNOINS}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="51" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="95" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="141" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="172" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="240" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="360" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement uuid="99ff42b1-5480-426c-9080-51acfaf0101c" x="486" y="0" width="40" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="ff8d5771-b420-486e-9b79-aa5053d89543" x="483" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportInforme_conductores" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bfe8464d-0d42-49de-bf95-269fa15bcac4">
+	<property name="ireport.zoom" value="1.3636363636363638"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PMOCODIGO_D" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT MUC.UCOCODIGO_D, PER.PERNOMBRES_V NOMBRES,PER.PERPATERNO_V PATERNO ,PER.PERMATERNO_V MATERNO,PER.PERDNI_V DNI,
+CONVERT(VARCHAR,MUC.UCOFECHAINICIO_F,103) [FECHA INICIO],
+ISNULL(CONVERT(VARCHAR,(MUC.UCOFECHACESE_F),103),'') [FECHA CESE],
+(SELECT CASE MUC.UCOESTADO_C WHEN 'A' THEN 'ACTIVO' WHEN 'I' THEN 'INACTIVO' END) ESTADO
+FROM MOT_UNID_CONDUCTOR MUC INNER JOIN MOT_CONDUCTOR COND ON  MUC.CONDCODIGO=COND.CONDCODIGO_I
+INNER JOIN MOT_PERSONA PER ON COND.PERCODIGO_D=PER.PERCODIGO_D
+INNER JOIN MOT_PROP_UNIEMPRESA UEM ON MUC.PMOCODIGO_D=UEM.PMOCODIGO_D
+AND UEM.UNECODIGO_D=(SELECT UNECODIGO_D FROM MOT_PROP_UNIEMPRESA WHERE PMOCODIGO_D=$P{PMOCODIGO_D})]]>
+	</queryString>
+	<field name="UCOCODIGO_D" class="java.math.BigDecimal"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="PATERNO" class="java.lang.String"/>
+	<field name="MATERNO" class="java.lang.String"/>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="FECHA INICIO" class="java.lang.String"/>
+	<field name="FECHA CESE" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="41">
+			<rectangle>
+				<reportElement uuid="3904c2b6-5aaa-4ec0-a340-c80ba5d974f2" x="0" y="1" width="529" height="40"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="a996e92d-3053-4d05-b185-52a98e329798" x="0" y="20" width="529" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="919ccd4c-b35d-4504-8bf9-5ec8a5cb2994" x="5" y="20" width="210" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d6118b1b-0823-43cf-a87d-93f418fdaf47" x="216" y="21" width="70" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="70684b49-413c-4cd5-892e-2dff84e90c72" x="289" y="20" width="70" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b11c744-d6eb-4164-9691-97f1de816b1b" x="362" y="20" width="69" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA CESE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="068ff657-fd42-467b-92cb-10fb93a13e8f" x="434" y="20" width="93" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="afe975e6-c001-4546-89dc-fcf79d4ed939" x="0" y="1" width="525" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONDUCTORES ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="432" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="215" y="21" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="287" y="21" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="360" y="21" width="1" height="19"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="9fc3440a-80cd-4cf6-aed8-97adf2e505bd" x="0" y="-1" width="529" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="e8bc1a7b-d02a-4440-a538-c26ccb8a7c62" x="5" y="0" width="210" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRES}+" "+$F{PATERNO}+" "+$F{MATERNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="529b4da0-979b-4d90-bcc3-4c2c66ffb619" x="216" y="0" width="70" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="59cc54f1-3ab1-47e7-9fa6-7653759f88b8" x="289" y="0" width="70" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c60c19c6-78b6-4c0f-a253-39d9d48e2125" x="363" y="0" width="68" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA CESE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="16678203-30cb-4c39-82fa-de391088171d" x="436" y="0" width="91" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="215" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="432" y="0" width="1" height="19"/>
+			</line>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="360" y="-1" width="1" height="21"/>
+			</line>
+			<line>
+				<reportElement uuid="02a3f733-40f8-4de4-b4c4-0a182347dc27" x="287" y="-1" width="1" height="19"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
