@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.munichosica.myapp.dto.MotAdjuntarArchivo;
 import com.munichosica.myapp.dto.MotEmpadronamiento;
 import com.munichosica.myapp.dto.MotUnidDocumento;
 import com.munichosica.myapp.dto.Rol;
@@ -72,7 +71,7 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 			}
 			mototaxi.setEmpadronamiento(MotEmpadronamientoDaoFactory.create().findByUnidad(codigo));
 		} catch (MotUnidadEmpresaDaoException | MotUnidDocumentoDaoException | MotEmpadronamientoDaoException e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return mototaxi;
 	}
