@@ -1,10 +1,9 @@
 $(document).ready(function(){
 	$("#divFormulario").hide();
+	$("#divFormularioVer").hide();
     
     var asocodigo_d="0";
-    
-	
-	
+     
 	$("#sltConductor").change(buscarConductorPorCodigo);
 	$("#txtConductorDNI").keyup(buscarConductorPorDNI);
 	$("#sltPlacas").change(buscarUnidadPorCodigo);
@@ -18,7 +17,9 @@ $(document).ready(function(){
 	$("#btnGuardar").click(insertarPapeleta);
 	$("#formFoto").submit(enviarFoto);
 	$("#btnNuevo").click(nuevaPapeleta);
-    //$(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
+	$("#btnImprimir").click(imprimirPapeleta);
+	$("#btnBuscar").click(function(){buscar($("#sltCriterio").val(),$("#txtTexto").val());});
+	//$(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
     $("#txtFecha").datetimepicker(
     	{	dateFormat:"dd/mm/yy",
     		Timeformat: "hh: mm tt",
@@ -38,7 +39,7 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarPorCriterio.htm", 
             success: function(data){
-            	alert(JSON.stringify(data));
+            	//alert(JSON.stringify(data));
             	llenarTablaPapeletas(data);
             },error: function(jqXHR, textStatus, errorThrown){
             	//mensajeError();
@@ -47,12 +48,12 @@ $(document).ready(function(){
     }
     
     function nuevaPapeleta(){
-    	$("#divFormulario").dialog({
-    		title:"Inspector",
-    		width:1100,
-    		height: 600,
-    		modal: true
-    	});
+    	llenarPapeleta("");
+    }
+    
+    function imprimirPapeleta(){
+    	var codigo=parseFloat($("#txtNumeroPapeleta").val());
+    	window.open("Papeletas/ImprimirPdf.htm?codigo="+codigo);
     }
     
     function enviarFoto(){
@@ -85,6 +86,7 @@ $(document).ready(function(){
     function insertarPapeleta(){
     	$.ajax({ 
     		data:{
+    			'papcodigoD':$("#txtNumeroPapeleta").val(),
     			'policia.polcodigoI':$("#sltPolicia").val(),
     			'infrMedida.imecodigoI':$("#sltSancion").val(),
     			'inspector.inscodigoI':$("#sltInspector").val(),
@@ -102,7 +104,9 @@ $(document).ready(function(){
             type: "POST", 
             url: "Papeletas/InsertarPapeleta.htm", 
             success: function(data){
+            	//alert(JSON.stringify(data));
             	$("#txtNumeroPapeleta").val(data.papcodigoD);
+            	buscar("PAP.PAPCODIGO_D",data.papcodigoD);
             },error: function(jqXHR, textStatus, errorThrown){
             	//mensajeError();
             }
@@ -423,14 +427,194 @@ $(document).ready(function(){
 			"<td>"+data[x].conductor.persona.pernombresV+"</td>"+
 			"<td>"+data[x].conductor.archivo.adjnumeroV+"</td>"+
 			"<td>"+data[x].papfechainfraccionF+"</td>"+
-			"<td><img alt='Ver' class='btnVer' id='ver"+data[x].papcodigoD+"' src='images/edit.png'></td>"+
+			"<td><img alt='Ver' class='btnVer' id='ver"+data[x].papcodigoD+"' src='images/ver.png'></td>"+
 			"<td><img alt='Modificar' class='btnModificar' id='mod"+data[x].papcodigoD+"' src='images/edit.png'></td>"+
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
     	paginacion();
+    	$(".btnVer").click(verAjaxPapeleta);
+    	$(".btnModificar").click(obtenerPapeleta);
     }
+	
+	function obtenerPapeleta(){
+		$.ajax({ 
+    		data:{
+    			codigo:$(this).attr("id").replace("mod","")
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "Papeletas/Obtener.htm", 
+            success: function(data){
+            	//alert(JSON.stringify(data));
+            	llenarPapeleta(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	//mensajeError();
+            }
+    	});
+	}
+	
+	function llenarPapeleta(data){
+		if(data!=""){
+			$("#txtNumeroPapeleta").val(data.papcodigoD);
+			$("#txtFecha").val(data.papfechainfraccionF);
+			$("#txtConductorDNI").val(data.conductor.persona.perdniV);
+			$('#sltConductor').combobox('autocomplete',data.conductor.concodigoD,data.conductor.persona.perpaternoV+' '+data.conductor.persona.permaternoV+', '+data.conductor.persona.pernombresV);
+			$("#txtConductorNroLicencia").val(data.conductor.archivo.adjnumeroV);
+			$("#txtEstadoLicencia").text(data.conductor.archivo.adjestadoV);
+			$("#txtLicenciaEmision").val(data.conductor.archivo.adjfechaemisionF);
+			$("#txtLicenciaCaducidad").val(data.conductor.archivo.adjfechacaducidadF);
+			$("#sltPlacas").combobox('autocomplete',data.propUnidadEmpresa.pmocodigoD,data.propUnidadEmpresa.unidadempresa.uneplacanroV);
+			$("#txtAnno").val(data.propUnidadEmpresa.unidadempresa.uneannoC);
+			$("#txtMarca").val(data.propUnidadEmpresa.unidadempresa.marca.marnombreV);
+			$("#txtModelo").val(data.propUnidadEmpresa.unidadempresa.modelo.modnombre_V);
+			$("#txtColor").val(data.propUnidadEmpresa.unidadempresa.unecolorV);
+			$("#txtTarjPropiedad").val(data.propUnidadEmpresa.unidadempresa.archivo.adjnumeroV);
+			$("#txtEstadoUnidad").text(data.propUnidadEmpresa.unidadempresa.archivo.adjestadoV);
+			$("#txtUnidadEmision").val(data.propUnidadEmpresa.unidadempresa.archivo.adjfechaemisionF);
+			$("#txtUnidadCaducidad").val(data.propUnidadEmpresa.unidadempresa.archivo.adjfechacaducidadF);
+			$("#txtPropRazonSocial").val(data.propUnidadEmpresa.asociado.asorazonsocialV);
+			$("#txtPropietario").val(data.propUnidadEmpresa.asociado.persona.perpaternoV+" "+
+					data.propUnidadEmpresa.asociado.persona.perpaternoV+", "+
+					data.propUnidadEmpresa.asociado.persona.pernombresV);
+			$("#txtPropDni").val(data.propUnidadEmpresa.asociado.persona.perdniV);
+			$("#txtPropDomicilio").val(data.propUnidadEmpresa.asociado.persona.perdomicilioV);
+			$("#txtDniInspector").val(data.inspector.persona.perdniV);
+			$("#txtInfraccionLugar").val(data.papinfrdireccionV);
+			$("#txtInfraccionReferencia").val(data.papinfrreferenciaV);
+			$('#sltInspector').combobox('autocomplete',data.inspector.inscodigoI,data.inspector.persona.perpaternoV+' '+data.inspector.persona.permaternoV+', '+data.inspector.persona.pernombresV);
+			$("#txaObserInspector").val(data.papobservinspectorV);
+			$("#txtCarnetPolicia").val(data.policia.polcarnetidentV);
+			$('#sltPolicia').combobox('autocomplete',data.policia.polcodigoI,data.policia.polpaternoV+' '+data.policia.polmaternoV+', '+data.policia.polnombresV);
+			if(data.pappropietarioC=='S'){
+				$("#rdPropietarioSi").attr("checked",true);
+			}else{
+				$("#rdPropietarioNo").attr("checked",true);
+			}
+			$("#sltInfraccion").combobox('autocomplete',data.infrMedida.infraccion.infcodigoD,data.infrMedida.infraccion.infcodigoV);
+			$("#sltSancion").append("<option value='"+data.infrMedida.imecodigoI+"'>"+data.infrMedida.tipoMedida.tmedescripcionV+"</option>");
+			$("#sltSancion").combobox('autocomplete',data.infrMedida.imecodigoI,data.infrMedida.tipoMedida.tmedescripcionV);
+			$("#txaDescripcion").val(data.infrMedida.infraccion.infinfraccionV);
+			$("#txaObserInfraccion").val(data.papobservinfraccionV);
+		}else{
+			$("#txtNumeroPapeleta").val("0");
+			$("#txtFecha").val("");
+			$("#txtConductorDNI").val("");
+			$('#sltConductor').combobox('autocomplete',"","");
+			$("#txtConductorNroLicencia").val("");
+			$("#txtEstadoLicencia").val("");
+			$("#txtLicenciaEmision").val("");
+			$("#txtLicenciaCaducidad").val("");
+			$("#sltPlacas").combobox('autocomplete',"","");
+			$("#txtAnno").val("");
+			$("#txtMarca").val("");
+			$("#txtModelo").val("");
+			$("#txtColor").val("");
+			$("#txtTarjPropiedad").val("");
+			$("#txtEstadoUnidad").val("");
+			$("#txtUnidadEmision").val("");
+			$("#txtUnidadCaducidad").val("");
+			$("#txtPropRazonSocial").val("");
+			$("#txtPropietario").val("");
+			$("#txtPropDni").val("");
+			$("#txtPropDomicilio").val("");
+			$("#txtDniInspector").val("");
+			$("#txtInfraccionLugar").val("");
+			$("#txtInfraccionReferencia").val("");
+			$('#sltInspector').combobox('autocomplete',"","");
+			$("#txaObserInspector").val("");
+			$("#txtCarnetPolicia").val("");
+			$('#sltPolicia').combobox('autocomplete',"","");
+			$("#rdPropietarioSi").attr("checked",true);
+			$("#sltInfraccion").combobox('autocomplete',"","");
+			$("#sltSancion").combobox('autocomplete',"","");
+			$("#txaDescripcion").val("");
+			$("#txaObserInfraccion").val("");
+		}
+		$("#divFormulario").dialog({
+    		title:"Inspector",
+    		width: 1100,
+    		height: 600,
+    		modal: true
+    	});
+	}
+	
 
+	function verAjaxPapeleta(){
+		$.ajax({ 
+    		data:{
+    			codigo:$(this).attr("id").replace("ver","")
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "Papeletas/Obtener.htm", 
+            success: function(data){
+            	verPapeleta(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	//mensajeError();
+            }
+    	});
+	}
+	
+	function verPapeleta(data){
+		if(data!=""){
+			$("#verNumeroPapeleta").text(data.papcodigoD);
+			$("#verFecha").text(data.papfechainfraccionF);
+			$("#verConductorDNI").text(data.conductor.persona.perdniV);
+			$('#verConductor').text(data.conductor.persona.perpaternoV+' '+data.conductor.persona.permaternoV+', '+data.conductor.persona.pernombresV);
+			$("#verConductorNroLicencia").text(data.conductor.archivo.adjnumeroV);
+			$("#verEstadoLicencia").text(data.conductor.archivo.adjestadoV);
+			$("#verLicenciaEmision").text(data.conductor.archivo.adjfechaemisionF);
+			$("#verLicenciaCaducidad").text(data.conductor.archivo.adjfechacaducidadF);
+			$("#verPlacas").text(data.propUnidadEmpresa.unidadempresa.uneplacanroV);
+			$("#verAnno").text(data.propUnidadEmpresa.unidadempresa.uneannoC);
+			$("#verMarca").text(data.propUnidadEmpresa.unidadempresa.marca.marnombreV);
+			$("#verModelo").text(data.propUnidadEmpresa.unidadempresa.modelo.modnombre_V);
+			$("#verColor").text(data.propUnidadEmpresa.unidadempresa.unecolorV);
+			$("#verTarjPropiedad").text(data.propUnidadEmpresa.unidadempresa.archivo.adjnumeroV);
+			$("#verEstadoUnidad").text(data.propUnidadEmpresa.unidadempresa.archivo.adjestadoV);
+			$("#verUnidadEmision").text(data.propUnidadEmpresa.unidadempresa.archivo.adjfechaemisionF);
+			$("#verUnidadCaducidad").text(data.propUnidadEmpresa.unidadempresa.archivo.adjfechacaducidadF);
+			$("#verPropRazonSocial").text(data.propUnidadEmpresa.asociado.asorazonsocialV);
+			$("#verPropietario").text(data.propUnidadEmpresa.asociado.persona.perpaternoV+" "+
+					data.propUnidadEmpresa.asociado.persona.perpaternoV+", "+
+					data.propUnidadEmpresa.asociado.persona.pernombresV);
+			$("#verPropDni").text(data.propUnidadEmpresa.asociado.persona.perdniV);
+			$("#verPropDomicilio").text(data.propUnidadEmpresa.asociado.persona.perdomicilioV);
+			$("#verDniInspector").text(data.inspector.persona.perdniV);
+			$("#verInfraccionLugar").text(data.papinfrdireccionV);
+			$("#verInfraccionReferencia").text(data.papinfrreferenciaV);
+			$('#verInspector').text(data.inspector.persona.perpaternoV+' '+data.inspector.persona.permaternoV+', '+data.inspector.persona.pernombresV);
+			$("#verObserInspector").text(data.papobservinspectorV);
+			$("#verCarnetPolicia").text(data.policia.polcarnetidentV);
+			$('#verPolicia').text(data.policia.polpaternoV+' '+data.policia.polmaternoV+', '+data.policia.polnombresV);
+			if(data.pappropietarioC=='S'){
+				$("#rdPropietarioSiVer").attr("checked",true);
+			}else{
+				$("#rdPropietarioNoVer").attr("checked",true);
+			}
+			$("#verInfraccion").text(data.infrMedida.infraccion.infcodigoD,data.infrMedida.infraccion.infcodigoV);
+			$("#verSancion").text(data.infrMedida.tipoMedida.tmedescripcionV);
+			$("#verSancion").text(data.infrMedida.tipoMedida.tmedescripcionV);
+			$("#verDescripcion").text(data.infrMedida.infraccion.infinfraccionV);
+			$("#verObserInfraccion").text(data.papobservinfraccionV);
+		}
+		$("#divFormularioVer").dialog({
+    		title:"Ver",
+    		width: 900,
+    		height: 600,
+    		modal: true
+    	});
+	}
+
+	$("#btnAceptar").click(function(){
+		$("#divFormularioVer").dialog("close");
+	});
+	
+	$("#btnCancelar").click(function(){
+		$("#divFormulario").dialog("close");
+	});
+	
 	function paginacion(){
 		$("#tblLista")//.tablesorter(); 
         .tablesorter({widthFixed: true, widgets: ['zebra']}) 
