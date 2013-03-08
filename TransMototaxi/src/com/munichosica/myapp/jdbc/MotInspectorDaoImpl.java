@@ -245,5 +245,37 @@ public class MotInspectorDaoImpl implements MotInspectorDao{
 		
 		return list;
 	}
-	
+
+	@Override
+	public List<MotInspector> findAll() throws MotInspectorDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotInspector> list=null;
+		try {
+			list=new ArrayList<MotInspector>();
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_FINDALLINSPECTORES;1}");
+			boolean results=stmt.execute();
+			if(results){
+				MotInspector inspector=null;
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					inspector=new MotInspector();
+					inspector.setInscodigoI(rs.getInt("CODIGO"));
+					inspector.getPersona().setPernombresV(rs.getString("NOMBRES"));
+					inspector.getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					inspector.getPersona().setPermaternoV(rs.getString("MATERNO"));
+					list.add(inspector);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotInspectorDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
 }
