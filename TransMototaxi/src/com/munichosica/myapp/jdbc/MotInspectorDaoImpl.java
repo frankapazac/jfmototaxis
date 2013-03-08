@@ -220,7 +220,6 @@ public class MotInspectorDaoImpl implements MotInspectorDao{
 			conn=ResourceManager.getConnection();
 			stmt=conn.prepareCall("{call SP_MOT_GET_FINDALL_INSPECTOR_NOTIN_INSPECTOR;1(?)}");
 			stmt.setInt(1, codigo);
-			System.out.println(codigo);
 			
 			boolean results = stmt.execute();			
 			if(results){
