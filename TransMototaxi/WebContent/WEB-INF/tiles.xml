@@ -71,4 +71,14 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/internamiento.jsp"/>
 	</definition>
 	
+	<definition name="tilesMaestroTransporte" extends="base.definition">
+		<put-attribute name="title" value="Internamiento"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/mantMaestrosTransporte.jsp"/>
+	</definition>
+	
+	<definition name="tilesMaestroEmpresa" extends="base.definition">
+		<put-attribute name="title" value="Internamiento"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/mantMaestrosEmpresa.jsp"/>
+	</definition>
+	
 </tiles-definitions>
