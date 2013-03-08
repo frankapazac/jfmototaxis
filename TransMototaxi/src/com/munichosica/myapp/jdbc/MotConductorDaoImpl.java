@@ -89,6 +89,9 @@ public class MotConductorDaoImpl implements MotConductorDao {
 					conductor.getPersona().setPernombresV(rs.getString("NOMBRES"));
 					conductor.getPersona().setPerpaternoV(rs.getString("PATERNO"));
 					conductor.getPersona().setPermaternoV(rs.getString("MATERNO"));
+					conductor.getPersona().setPerdomicilioV(rs.getString("DIRECCION"));
+					conductor.getPersona().setPerteleffijoV(rs.getString("TELEFONO"));
+					conductor.getPersona().setPermovilmovV(rs.getString("CELULAR"));
 					conductor.getPersona().setPerdniV(rs.getString("DNI"));
 					conductor.getArchivo().setAdjnumeroV(rs.getString("LIC_NUMERO"));
 					conductor.getArchivo().setAdjfechaemisionF(rs.getString("LIC_EMISION"));
@@ -123,6 +126,9 @@ public class MotConductorDaoImpl implements MotConductorDao {
 					conductor.getPersona().setPernombresV(rs.getString("NOMBRES"));
 					conductor.getPersona().setPerpaternoV(rs.getString("PATERNO"));
 					conductor.getPersona().setPermaternoV(rs.getString("MATERNO"));
+					conductor.getPersona().setPerdomicilioV(rs.getString("DIRECCION"));
+					conductor.getPersona().setPerteleffijoV(rs.getString("TELEFONO"));
+					conductor.getPersona().setPermovilmovV(rs.getString("CELULAR"));
 					conductor.getPersona().setPerdniV(rs.getString("DNI"));
 					conductor.getArchivo().setAdjnumeroV(rs.getString("LIC_NUMERO"));
 					conductor.getArchivo().setAdjfechaemisionF(rs.getString("LIC_EMISION"));
