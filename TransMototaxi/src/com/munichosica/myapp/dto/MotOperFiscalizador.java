@@ -6,6 +6,7 @@ public class MotOperFiscalizador {
 	protected MotOperativo operativo;
 	protected MotInspector fiscalizador;
 	
+	
 	public MotOperFiscalizador()
 	{
 		operativo = new MotOperativo();

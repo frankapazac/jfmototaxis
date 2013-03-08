@@ -4,6 +4,7 @@ public class MotEmpadronamiento {
 	protected Long epocodigoD;
 	protected MotEmpresa empresa;
 	protected MotUnidadEmpresa unidadEmpresa;
+	protected MotPropUnidadEmpresa propUnidadEmpresa;
 	protected String empfechainicioF;
 	protected String empfechaceseF;
 	protected String empvigenciaC;
@@ -15,7 +16,7 @@ public class MotEmpadronamiento {
 	public MotEmpadronamiento() {
 		empresa=new MotEmpresa();
 		unidadEmpresa=new MotUnidadEmpresa();
-		
+		propUnidadEmpresa = new MotPropUnidadEmpresa();
 		asociado=new MotEmprAsociado();
 	}
 	
@@ -74,6 +75,13 @@ public class MotEmpadronamiento {
 	}
 	public void setEmpobservacionesV(String empobservacionesV) {
 		this.empobservacionesV = empobservacionesV;
+	}
+	public MotPropUnidadEmpresa getPropUnidadEmpresa() {
+		return propUnidadEmpresa;
+	}
+
+	public void setPropUnidadEmpresa(MotPropUnidadEmpresa propUnidadEmpresa) {
+		this.propUnidadEmpresa = propUnidadEmpresa;
 	}
 	
 }

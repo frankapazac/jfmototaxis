@@ -4,6 +4,17 @@ public class MotTipoMedida {
 	protected int tmecodigoI;
 	protected String tmedescripcionV;
 	protected String tmeestadoC;
+	protected String Lado;
+	
+	
+	public String getLado() {
+		return Lado;
+	}
+	public void setLado(String lado) {
+		Lado = lado;
+	}
+
+	
 	public int getTmecodigoI() {
 		return tmecodigoI;
 	}

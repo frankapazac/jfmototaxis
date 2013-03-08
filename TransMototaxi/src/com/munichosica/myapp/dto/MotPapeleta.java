@@ -17,7 +17,9 @@ public class MotPapeleta {
 	protected int papnrocopiasI;
 	protected String papobservinfraccionV;
 	protected String papobservinspectorV;
+	protected String papestadoC;
 	
+
 	public MotPapeleta() {
 		policia=new MotPolicia();
 		archivo=new MotAdjuntarArchivo();
@@ -122,5 +124,11 @@ public class MotPapeleta {
 	}
 	public void setPapobservinspectorV(String papobservinspectorV) {
 		this.papobservinspectorV = papobservinspectorV;
+	}
+	public String getPapestadoC() {
+		return papestadoC;
+	}
+	public void setPapestadoC(String papestadoC) {
+		this.papestadoC = papestadoC;
 	}
 }
