@@ -51,6 +51,16 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/mantInspectores.jsp"/>
 	</definition>
 	
+	<definition name="tilesOperativos" extends="base.definition">
+		<put-attribute name="title" value="Operativos"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/mantOperativos.jsp"/>
+	</definition>
+	
+	<definition name="tilesInfracciones" extends="base.definition">
+		<put-attribute name="title" value="Infracciones"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/mantInfracciones.jsp"/>
+	</definition>
+	
 	<definition name="tilesPapeleta" extends="base.definition">
 		<put-attribute name="title" value="Papeletas"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/papeleta.jsp"/>
@@ -60,4 +70,5 @@
 		<put-attribute name="title" value="Internamiento"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/internamiento.jsp"/>
 	</definition>
+	
 </tiles-definitions>
