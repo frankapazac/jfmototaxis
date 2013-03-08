@@ -10,4 +10,6 @@ public interface MotInspectorDao {
 	public List<MotInspector> findByCriterio(String criterio,String texto) throws MotInspectorDaoException;
 	public MotInspector findByPrimaryKey(int codigo) throws MotInspectorDaoException;
 	public void delete(int codigo) throws MotInspectorDaoException;
+	public List<MotInspector> findAll() throws MotInspectorDaoException;
+	
 }
