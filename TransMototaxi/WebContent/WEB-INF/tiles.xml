@@ -55,4 +55,9 @@
 		<put-attribute name="title" value="Papeletas"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/papeleta.jsp"/>
 	</definition>
+	
+	<definition name="tilesInternamiento" extends="base.definition">
+		<put-attribute name="title" value="Internamiento"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/internamiento.jsp"/>
+	</definition>
 </tiles-definitions>
