@@ -202,6 +202,7 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 					unidadEmpresa.setUneplacanroV(rs.getString("PLACA"));
 					unidadEmpresa.getMarca().setMarnombreV(rs.getString("MARCA"));
 					unidadEmpresa.getModelo().setModnombre_V(rs.getString("MODELO"));
+					unidadEmpresa.setUnenromotorV(rs.getString("MOTOR"));
 					unidadEmpresa.setUneannoC(rs.getString("ANNO"));
 					unidadEmpresa.getArchivo().setAdjnumeroV(rs.getString("TARJPROPNUMERO"));
 					unidadEmpresa.getArchivo().setAdjfechaemisionF(rs.getString("FECHAEMISION"));
@@ -215,6 +216,13 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 					unidadEmpresa.getAsociado().getPersona().setPermaternoV(rs.getString("ASOMATERNO"));
 					unidadEmpresa.getAsociado().getPersona().setPerdniV(rs.getString("ASODNI"));
 					unidadEmpresa.getAsociado().getPersona().setPerdomicilioV(rs.getString("ASODOMICILIO"));
+					unidadEmpresa.getAsociado().getPersona().setPerteleffijoV(rs.getString("ASOTELEFONO"));
+					unidadEmpresa.getAsociado().getPersona().setPermovilmovV(rs.getString("ASOCELULAR"));
+
+					unidadEmpresa.getAsociado().getEmpresa().setEmprazonsocialV(rs.getString("EMPRESA"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmpdireccionV(rs.getString("EMPDIRECCION"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmptelefono1V(rs.getString("EMPTELEFONO"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmpcelularmovV(rs.getString("EMPCELULAR"));
 					
 					unidadEmpresa.getArchivo().setAdjestadoV(rs.getString("ESTADO"));
 					unidadEmpresa.setMensaje(rs.getString("MENSAJE"));

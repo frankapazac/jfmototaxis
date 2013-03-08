@@ -26,9 +26,11 @@ public class ReportsDaoImpl implements ReportsDao{
 			stmt.setLong(1, codigo);
 			boolean results=stmt.execute();
 			if(results){
+				System.out.println("INGRESO");
 				papeleta=new RepPapeleta();
 				rs=stmt.getResultSet();
 				if(rs.next()){
+					System.out.println(rs.getString("PAPNUMERO"));
 					papeleta.setPapcodigo(codigo);
 					papeleta.setPapnumero(rs.getString("PAPNUMERO"));
 					papeleta.setCondnombres(rs.getString("CONDNOMBRES"));

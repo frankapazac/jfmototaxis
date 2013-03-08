@@ -63,7 +63,7 @@ public class MotUnidDocumentoDaoImpl implements MotUnidDocumentoDao{
 				while(rs.next()){
 					documento=new MotUnidDocumento();
 					documento.getTipoDocumento().setMtdcodigoI(rs.getInt("TDOCODIGO"));
-					documento.getTipoDocumento().setMtdnombreV(rs.getString("TDPNOMBRE"));
+					documento.getTipoDocumento().setMtdnombreV(rs.getString("TDONOMBRE"));
 					documento.setPtdcodigoD(rs.getLong("UDOCODIGO"));
 					documento.getAdjuntarArchivo().setAdjcodigoD(rs.getLong("ADJCODIGO"));
 					documento.getAdjuntarArchivo().setAdjnombreV(rs.getString("NOMBRE"));
