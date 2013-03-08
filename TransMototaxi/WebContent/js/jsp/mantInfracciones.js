@@ -61,7 +61,7 @@ $(document).ready(function(){
 			"<td>"+data[x].infcodigoV+"</td>"+
 			"<td>"+data[x].infinfraccionV+"</td>"+
 			"<td>"+data[x].inftipoC+"</td>"+
-			"<td>"+data[x].inftipoPersonaC+"</td>"+
+			"<td>"+data[x].inftipopersonaC+"</td>"+
 			"<td>"+data[x].infnrouitI+"</td>"+
 			"<td>"+data[x].infestadoC+"</td>"+
 			"<td><img alt='Modificar' class='btnModificar' id='mod"+data[x].infcodigoD+"' src='images/edit.png'></td>"+
@@ -101,7 +101,7 @@ $(document).ready(function(){
     	tipoMedidasList.infraccion.infinfraccionV=$("#txtDescripcion").val();
     	tipoMedidasList.infraccion.infmedidasAccV=$("#txtMedidas").val();
     	tipoMedidasList.infraccion.inftipoC=$("#sltGravedad").val();
-    	tipoMedidasList.infraccion.inftipoPersonaC=$("#sltPara").val();
+    	tipoMedidasList.infraccion.inftipopersonaC=$("#sltPara").val();
     	tipoMedidasList.infraccion.infnrouitI=$("#txtNroUIT").val();
 		//alert(tipoMedidasList.infraccion.infcodigoD);
     	
@@ -110,9 +110,8 @@ $(document).ready(function(){
 			tipoMedida=new Object();
 			tipoMedida.tmecodigoI=value;
 			tipoMedidasList.tipoMedidas[cont++]=tipoMedida;
+			//alert(tipoMedida);
 		});
-
-		//alert(JSON.stringify(tipoMedidasList));
 		
     	$.ajax({ 
 			data: JSON.stringify(tipoMedidasList),
@@ -168,7 +167,7 @@ $(document).ready(function(){
     		$("#txtCodInfraccionV").val(data.infcodigoV);
     		$("#txtDescripcion").val(data.infinfraccionV);
     		$("#txtMedidas").val(data.infmedidasAccV);
-    		$("#sltPara").val(data.inftipoPersonaC);
+    		$("#sltPara").val(data.inftipopersonaC);
     		$("#sltGravedad").val(data.inftipoC);
     		$("#txtNroUIT").val(data.infnrouitI);
     		listarMedidaxInfraccion(data.infcodigoD);
@@ -278,6 +277,8 @@ $(document).ready(function(){
     });
     
     $('#btnLeft').click(function(e){
+    	alert($("#txtCodigoInfraccion").val());
+    	
     	var selectedOpts = $('#sltAgregaMedidas option:selected');
     	if(selectedOpts.length == 0){
     		alert("Elija un item correcto.");
@@ -338,6 +339,7 @@ $(document).ready(function(){
 			$.each(sel, function(key,value){
 				if(data[x].tipoMedida.tmecodigoI==value){
 					$("#sltMedidas").find("option[value='"+data[x].tipoMedida.tmecodigoI+"']").remove();
+					alert("option[value='"+data[x].tipoMedida.tmecodigoI+"']");
 				}
 	        });
 		}
