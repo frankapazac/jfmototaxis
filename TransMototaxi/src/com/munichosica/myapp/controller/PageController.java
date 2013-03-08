@@ -354,4 +354,43 @@ public class PageController {
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesInternamiento";
 	}
+	
+	@RequestMapping(value="MaestroEmpresa.htm",method=RequestMethod.GET)
+	public String maestroEmpresa(HttpServletRequest request,Model model){
+		logger.info("Ingreso a Internamiento.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		
+		try {
+			List<MotTipoMedida> tipoMedida= MotTipoMedidaDaoFactory.create().findAllTipoMedida();
+			model.addAttribute("tipoMedida", tipoMedida);
+		} catch (MotTipoMedidaDaoException e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesMaestroEmpresa";
+	}
+	
+	@RequestMapping(value="MaestroTransporte.htm",method=RequestMethod.GET)
+	public String maestroTransporte(HttpServletRequest request,Model model){
+		logger.info("Ingreso a Internamiento.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesMaestroTransporte";
+	}
+	
+	
 }
