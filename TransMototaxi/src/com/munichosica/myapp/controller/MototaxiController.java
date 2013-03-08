@@ -1,6 +1,8 @@
 package com.munichosica.myapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,16 +13,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.dto.MotEmpadronamiento;
+import com.munichosica.myapp.dto.MotOperFiscalizador;
+import com.munichosica.myapp.dto.RepPapeleta;
 import com.munichosica.myapp.dto.MotUnidDocumento;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
+import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
+import com.munichosica.myapp.exceptions.ReportsDaoException;
+import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.factory.MotEmpadronamientoDaoFactory;
+import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotUnidDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
+import com.munichosica.myapp.factory.ReportsDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
 
 @Controller
@@ -75,4 +87,38 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 		}
 		return mototaxi;
 	}
+	
+	@RequestMapping(value="ObtenerInforme.htm", method=RequestMethod.GET)
+	public @ResponseBody MotEmpadronamiento obtenerInforme(HttpServletRequest request,@RequestParam("codigo") Long codigo){	
+		logger.info("Ingreso a obtenerInforme/ObtenerInforme.htm");
+
+		MotEmpadronamiento empadronamiento = null;
+		try {
+			
+			empadronamiento = MotEmpadronamientoDaoFactory.create().findByPropietarioEmp(codigo);
+			
+		} catch (MotEmpadronamientoDaoException e) {
+			logger.info(e.getMessage());
+		}
+		return empadronamiento;
+	}
+	
+	@RequestMapping(value="ImprimirPdf.htm", method=RequestMethod.GET)
+	public ModelAndView descargarPdf(Long codigo){
+		ModelAndView mav=null;
+		System.out.println("Ingreso a Mototaxis/ImprimirPdf.htm Codigo:"+codigo);
+		Map<String, Object> parameters= new HashMap<String, Object>();
+		MotConductor conductor=null;
+		try {
+			conductor=MotConductorDaoFactory.create().findByPmoCodigo(codigo);
+			parameters.put("CODIGO", codigo);
+			parameters.put("conductor", conductor);
+			mav=new ModelAndView("reportInformeMototaxi", parameters);
+		} catch (MotConductorDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return mav;
+	}
+	
+
 }
