@@ -23,7 +23,6 @@ import com.munichosica.myapp.util.FileUtil;
 public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 	
 	protected static final Logger logger = Logger.getLogger( MotEmprAsociadoDaoImpl.class );
-
 	@Override
 	public void procesar(MotEmprAsociado dto) throws MotEmprAsociadoDaoException {
 		Connection conn = null;
