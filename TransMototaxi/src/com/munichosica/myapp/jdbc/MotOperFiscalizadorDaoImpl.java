@@ -162,11 +162,9 @@ public class MotOperFiscalizadorDaoImpl implements MotOperFiscalizadorDao  {
 		try {
 			conn = ResourceManager.getConnection();
 			stmt = conn.prepareCall("{call SP_MOT_INS_OPER_INSPECTOR;1 (?,?)}");
-			System.out.println("entro a call sp_oper_inspector");
 			stmt.setLong(1,dto.getOperativo().getOpecodigoD());
 			stmt.setInt(2, dto.getFiscalizador().getInscodigoI());	
 			stmt.execute();
-			System.out.println("salio a call sp_oper_inspector");
 								
 		} catch (SQLException e) {
 			throw new MotOperFiscalizadorDaoException(e.getMessage(), e);
@@ -177,5 +175,71 @@ public class MotOperFiscalizadorDaoImpl implements MotOperFiscalizadorDao  {
 		}
 	
 	}
+	
+	@Override
+	public List<MotOperFiscalizador> findInspectorporOperativo (Integer codigo) throws MotOperFiscalizadorDaoException {
+		Connection conn =null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<MotOperFiscalizador> listInpectoresxOperativo = new ArrayList<MotOperFiscalizador>();
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{CALL SP_MOT_GET_INSPECTORES_POR_OPERATIVO;1(?)}");
+			stmt.setLong(1, codigo);
+			
+			boolean results = stmt.execute();
+			if(results){
+				rs = stmt.getResultSet();
+				MotOperFiscalizador operativoFiscalizador = null;
+				while(rs.next()){
+					operativoFiscalizador = new MotOperFiscalizador();
+					operativoFiscalizador.getOperativo().getInspector().setInscodigoI(rs.getInt("INSCODIGO_I"));
+					operativoFiscalizador.getOperativo().getInspector().getPersona().setPernombresV(rs.getString("PERNOMBRES_V"));
+					operativoFiscalizador.getOperativo().getInspector().getPersona().setPerpaternoV(rs.getString("PERPATERNO_V"));
+					operativoFiscalizador.getOperativo().getInspector().getPersona().setPermaternoV(rs.getString("PERMATERNO_V"));
+					listInpectoresxOperativo.add(operativoFiscalizador);					
+				}
+			}
+		} catch (Exception ex) {
+			logger.error("Exception :" + ex.getMessage(),ex);
+			throw new MotOperFiscalizadorDaoException(" Exception: " + ex.getMessage(),ex);
+			
+		}finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+		}
+
+		return listInpectoresxOperativo;
+	}
+
+	@Override
+	public void actualizaEstado(MotOperFiscalizador dto) throws MotOperFiscalizadorDaoException{
+		
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{call SP_MOT_ACTUALIZA_ESTADO_INSP_OPERATIVO;1 (?,?,?)}");
+			stmt.setLong(1,dto.getOperativo().getOpecodigoD());
+			stmt.setInt(2, dto.getFiscalizador().getInscodigoI());	
+			stmt.setString(3,  dto.getFiscalizador().getLado());
+
+			stmt.execute();
+								
+		} catch (SQLException e) {
+			throw new MotOperFiscalizadorDaoException(e.getMessage(), e);
+		}finally{
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+			ResourceManager.close(rs);
+		}
+	
+	}
+
+	
 
 }
