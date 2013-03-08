@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="js/jsp/mantAsocMototaxis.js"></script>
 	<style type="text/css">
 		#tabs{
-			height: 920px;
+			height: 1080px;
 		}
 		.fileDocumento{
 			width: 300px;

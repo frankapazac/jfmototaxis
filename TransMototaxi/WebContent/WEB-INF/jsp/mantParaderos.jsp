@@ -93,12 +93,12 @@
 		</form>
 	</div>
 	
-	<!--  h4 align="center">
+	<h4 align="center">
 		<img id="btnNuevo" alt="Nuevo" src="images/new.png"/>
 		<a href="Reporte/Persona/DescargarPdf.jf">
 			<img alt="Imprimir" src="images/pdf.png">
 		</a>
-	</h4-->
+	</h4>
 	<div id="divMensaje"></div>
 </body>
 </html>

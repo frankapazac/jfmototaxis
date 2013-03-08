@@ -60,6 +60,9 @@
 			padding: 0.3em;
 			width: 200px;
 		}
+		.ver{
+			background-color: #f0f0f0;
+		}
 	</style>
 	<script>
 	(function( $ ) {
@@ -228,12 +231,12 @@
 			<tr>
 				<td>
 					<select id="sltCriterio">
-						<option value="PER.PERDNI_V">DNI</option>
-						<option value="PER.PERNOMBRES_V">Nombres</option>
-						<option value="PER.PERPATERNO_V">Paterno</option>
-						<option value="PER.PERMATERNO_V">Materno</option>
-						<option value="PER.PEREMAIL_V">Correo</option>
-						<option value="INS.INSESTADO_C">Estado</option>
+						<option value="PMO.PLACANRO">NRO. PLACA</option>
+						<option value="PMO.PERDNI_V">PROPIETARIO DNI</option>
+						<option value="PMO.CONDNOMBCOMP">PROPIETARIO NOMBRES</option>
+						<option value="CON.PERDNI_V">CONDUCTOR DNI</option>
+						<option value="CON.CONDNOMBCOMP">CONDUCTOR NOMBRES</option>
+						<option value="CON.LICENCIANRO">CONDUCTOR NRO. LICENCIA</option>
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
@@ -461,12 +464,159 @@
 			</table>
 		</fieldset>
 		<h4 align="center">
-			<a href="Papeletas/ImprimirPdf.htm?codigo=16">
-				<img alt="Imprimir" src="images/pdf.png">
-			</a>
+			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
 			<input type="button" value="Guardar" id="btnGuardar"/>
 			<input type="button" value="Cancelar" id="btnCancelar"/>
 		</h4>
 	</div>
+	
+	<div id="divFormularioVer">
+		<fieldset>
+			<legend>PAPELETA</legend>
+			<table>
+				<tr class="ver">
+					<td class="tdTitulo">Número</td>
+					<td class="tdContenido"><label id="verNumeroPapeleta" class="txtText"></label></td>
+					<td class="tdTitulo">Fecha</td>
+					<td class="tdContenido"><label id="verFecha"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend>DATOS DEL CONDUCTOR</legend>
+			<table>
+				<tr class="ver">
+					<td class="tdTitulo">DNI N°</td>
+					<td class="tdContenido"><label id="verConductorDNI" class="txtText"></label></td>
+					<td class="tdTitulo">Conductor</td>
+					<td class="tdContenido"><label id="verConductor"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">N° Licencia</td>
+					<td class="tdContenido"><label id="verConductorNroLicencia" class="txtText"></label></td>
+					<td class="tdTitulo">Estado</td>
+					<td class="tdContenido"><label id="verEstadoLicencia">SIN CONFIRMAR</label></td>
+				</tr>
+				<tr class="ver">
+					<td class="tdTitulo">Fecha de Emision</td>
+					<td class="tdContenido"><label id="verLicenciaEmision" class="txtText"></label></td>
+					<td class="tdTitulo">Fecha de Caducidad</td>
+					<td class="tdContenido"><label id="verLicenciaCaducidad" class="txtText"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend>DATOS DEL VEHICULO</legend>
+			<table>
+				<tr>
+					<td class="tdTitulo">N° Placa</td>
+					<td class="tdContenido"><label id="verPlacas"></label></td>
+					<td class="tdTitulo">Año de Fabricación</td>
+					<td class="tdContenido"><label id="verAnno" class="txtText"></label></td>
+				</tr>
+				<tr class="ver">
+					<td class="tdTitulo">Marca</td>
+					<td class="tdContenido"><label id="verMarca" class="txtText"></label></td>
+					<td class="tdTitulo">Modelo</td>
+					<td class="tdContenido"><label id="verModelo" class="txtText"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Colores</td>
+					<td colspan="3"><label id="verColor" class="txtTextCompleted"></label></td>
+				</tr>
+				<tr class="ver">
+					<td class="tdTitulo">N° Tarjeta de Propiedad</td>
+					<td class="tdContenido"><label id="verTarjPropiedad" class="txtText"></label></td>
+					<td class="tdTitulo">Estado</td>
+					<td class="tdContenido"><label id="verEstadoUnidad">SIN CONFIRMAR</label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Fecha de Emision</td>
+					<td class="tdContenido"><label id="verUnidadEmision" class="txtText"></label></td>
+					<td class="tdTitulo">Fecha de Caducidad</td>
+					<td class="tdContenido"><label id="verUnidadCaducidad" class="txtText"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend>DATOS DEL PROPIETARIO</legend>
+			<table>
+				<tr class="ver">
+					<td class="tdTitulo">Razón Social</td>
+					<td colspan="3"><label id="verPropRazonSocial" class="txtText"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Propietario</td>
+					<td class="tdContenido"><label id="verPropietario" class="txtText"></label></td>
+					<td class="tdTitulo">DNI N°</td>
+					<td class="tdContenido"><label id="verPropDni" class="txtText"></label></td>
+					
+				</tr>
+				<tr class="ver">
+					<td class="tdTitulo">Domicilio</td>
+					<td colspan="3"><label id="verPropDomicilio" class="txtTextCompleted"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend>SOBRE LA INFRACCIÓN</legend>
+			<table>
+				<tr>
+					<td class="tdTitulo">DNI N°</td>
+					<td class="tdContenido"><label id="verDniInspector" class="txtText"></label></td>
+					<td class="tdTitulo">Inspector</td>
+					<td class="tdContenido"><label id="verInspector"></label></td>
+				</tr>
+				<tr class="ver">
+					<td class="tdTitulo">Lugar de Infracción</td>
+					<td colspan="3"><label id="verInfraccionLugar" class="txtTextCompleted"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Referencia</td>
+					<td colspan="3"><label id="verInfraccionReferencia" class="txtTextCompleted"></label></td>
+				</tr>
+				<tr class="ver">
+					<td class="tdTitulo">Observacion del Inspector</td>
+					<td colspan="3"><label id="verObserInspector"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Carnet Ident N°</td>
+					<td class="tdContenido"><label id="verCarnetPolicia" class="txtText"></label></td>
+					<td class="tdTitulo">Policia</td>
+					<td class="tdContenido"><label id="verPolicia"></label>
+					</td>
+				</tr>
+				<tr class="ver">				
+					<td class="tdTitulo">Es propietario - conductor</td>
+					<td class="tdContenido">
+						<label><input type="radio" name="rdPropietarioVer" value="S" id="rdPropietarioSiVer" disabled="disabled"/> Si </label>
+						<label><input type="radio" name="rdPropietarioVer" value="N" id="rdPropietarioNoVer" disabled="disabled"/> No </label>
+					</td>
+					<td class="tdTitulo">Adjuntar Imagen</td>
+					<td class="tdContenido"><label id="lblFoto"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Codigo de Infracción</td>
+					<td class="tdContenido"><label id="verInfraccion"></label>
+					</td>
+					<td class="tdTitulo">Medidas/Sacion Complementaria</td>
+					<td class="tdContenido"><label id="verSancion"></label>
+					</td>
+				</tr>
+				<tr class="ver">
+					<td class="tdTitulo">Descripción</td>
+					<td colspan="3"><label id="verDescripcion"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Observacion sobre la Infracción</td>
+					<td colspan="3"><label id="verObserInfraccion"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+		<h4 align="center">
+			<input type="button" value="Aceptar" id="btnAceptar"/>
+		</h4>
+	</div>
+	
 </body>
 </html>
