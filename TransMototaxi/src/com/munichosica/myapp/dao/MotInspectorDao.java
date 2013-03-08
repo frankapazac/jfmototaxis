@@ -12,4 +12,5 @@ public interface MotInspectorDao {
 	public void delete(int codigo) throws MotInspectorDaoException;
 	public List<MotInspector> findByNotInCodInspector(int codigo) throws MotInspectorDaoException;
 	public List<MotInspector> findAll() throws MotInspectorDaoException;
+	List<MotInspector> findAllInspectores() throws MotInspectorDaoException;
 }
