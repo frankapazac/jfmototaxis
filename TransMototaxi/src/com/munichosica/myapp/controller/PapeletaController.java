@@ -24,6 +24,7 @@ import com.munichosica.myapp.dto.MotInfraccion;
 import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotPapeleta;
 import com.munichosica.myapp.dto.MotPolicia;
+import com.munichosica.myapp.dto.MotUnidConductor;
 import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.RepPapeleta;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
@@ -33,6 +34,7 @@ import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotPapeletaDaoException;
 import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
+import com.munichosica.myapp.exceptions.MotUnidConductorDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.exceptions.ReportsDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
@@ -42,6 +44,7 @@ import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotPapeletaDaoFactory;
 import com.munichosica.myapp.factory.MotPoliciaDaoFactory;
+import com.munichosica.myapp.factory.MotUnidConductorDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.ReportsDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
@@ -229,6 +232,28 @@ public class PapeletaController {
 		try {
 			list = MotPapeletaDaoFactory.create().findByCriterio(criterio, texto);
 		} catch (MotPapeletaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return list;
+	}
+	
+	@RequestMapping(value="ListaPapeletaxCodigo.htm", method=RequestMethod.GET)
+	public @ResponseBody List<MotPapeleta> ListaPapeletaxCodigo(Long codigo){
+		List<MotPapeleta> list=null;
+		try {
+			list = MotPapeletaDaoFactory.create().findByPmoCodigo(codigo);
+		} catch (MotPapeletaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return list;
+	}
+	
+	@RequestMapping(value="ListaConductorxVehiculo.htm", method=RequestMethod.GET)
+	public @ResponseBody List<MotUnidConductor> ListaConductorxVehiculo(Long codigo){
+		List<MotUnidConductor> list=null;
+		try {
+			list = MotUnidConductorDaoFactory.create().findByVehiculo(codigo);
+		} catch (MotUnidConductorDaoException e) {
 			logger.error(e.getMessage(), e);
 		}
 		return list;
