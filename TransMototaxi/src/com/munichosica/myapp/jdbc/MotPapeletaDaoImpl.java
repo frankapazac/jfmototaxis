@@ -92,6 +92,51 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 	}
 
 	@Override
+	public List<MotPapeleta> findByPmoCodigo(Long codigo) throws MotPapeletaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotPapeleta> list=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_PAPELETA_X_PMOCODIGO;1(?)}");
+			stmt.setLong(1, codigo);
+			
+			boolean results=stmt.execute();
+			if(results){
+				list=new ArrayList<MotPapeleta>();
+				rs=stmt.getResultSet();
+				MotPapeleta papeleta=null;
+				while(rs.next()){
+					papeleta=new MotPapeleta();
+					papeleta.setPapcodigoD(rs.getLong("PAPCODIGO_D"));
+					papeleta.setPapfechainfraccionF(rs.getString("FECHA"));
+					papeleta.setPaphorainfraccionF(rs.getString("HORA"));
+					papeleta.getInfrMedida().getInfraccion().setInfcodigoV(rs.getString("CODIGO"));
+					papeleta.getInfrMedida().getInfraccion().setInftipoC(rs.getString("TIPO"));
+					papeleta.setPapnumeroV(rs.getString("N° PAPELETA"));
+					papeleta.getConductor().getPersona().setPernombresV(rs.getString("NOMBRES"));
+					papeleta.getConductor().getPersona().setPermaternoV(rs.getString("PATERNO"));
+					papeleta.getConductor().getPersona().setPerpaternoV(rs.getString("MATERNO"));
+					papeleta.getInspector().getPersona().setPernombresV(rs.getString("NOMBREINS"));
+					papeleta.getInspector().getPersona().setPermaternoV(rs.getString("PATERNOINS"));
+					papeleta.getInspector().getPersona().setPerpaternoV(rs.getString("MATERNOINS"));
+					papeleta.setPapestadoC(rs.getString("ESTADO"));			
+					list.add(papeleta);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotPapeletaDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
+	
+	
+	@Override
 	public MotPapeleta findByCodigo(Long codigo) throws MotPapeletaDaoException {
 		Connection conn=null;
 		CallableStatement stmt=null;
