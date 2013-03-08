@@ -99,10 +99,7 @@
 	</div>
 	
 	<h4 align="center">
-		<img id="btnNuevo" alt="Nuevo" src="images/new.png"/>
-		<a href="Reporte/Persona/DescargarPdf.jf">
-			<img alt="Imprimir" src="images/pdf.png">
-		</a>
+		<img id="btnNuevo" alt="Nuevo" src="images/Nuevo.png"/>
 	</h4>
 	<div id="divMensaje"></div>
 	
