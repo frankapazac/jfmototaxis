@@ -18,6 +18,7 @@ public class MotEmprAsociado {
 	public MotEmprAsociado() {
 		persona=new MotPersona();
 		foto=new MotAdjuntarArchivo();
+		empresa=new MotEmpresa();
 	}
 	public void setFoto(MotAdjuntarArchivo foto) {
 		this.foto = foto;
