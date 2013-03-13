@@ -18,4 +18,8 @@ public interface MotUnidadEmpresaDao {
 	public List<MotUnidadEmpresa> findByCriterio(String criterio,String texto, Long modcodigo_D)throws MotUnidadEmpresaDaoException;
 	public List<MotUnidadEmpresa> findAllPlacas() throws MotUnidadEmpresaDaoException;
 	public MotUnidadEmpresa findByPlaca(String placa) throws MotUnidadEmpresaDaoException;
+	public List<MotUnidadEmpresa> findAllPlacasByAsociado()
+			throws MotUnidadEmpresaDaoException;
+	public MotUnidadEmpresa findPmoCodigo(Long codigo)
+			throws MotUnidadEmpresaDaoException;
 }
