@@ -132,9 +132,8 @@
 		<div>
 			<table>
 					<tr>
-							<c:set var="user" value="${USUARIO}"></c:set>
 							<td>Usuario</td>
-							<td><label id="lblnomUsuario"><c:out value="${user.usuario.usuusuarioV}"/></label></td>
+							<td><label id="lblnomUsuario"><c:out value="${USUARIO}"/></label></td>
 					</tr>
 					<tr>
 							<td>Clave Anterior</td>
