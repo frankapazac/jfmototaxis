@@ -389,6 +389,15 @@ public class PageController {
 			rol=new UserSecurity().getRol();
 			session.setAttribute("ROL", rol);
 		}
+	
+		try {
+			List<MotZona> zona;
+			zona = MotZonaDaoFactory.create().findAll();
+			model.addAttribute("zona", zona);
+		} catch (MotZonaDaoException e) {
+			e.printStackTrace();
+		}
+
 		
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesMaestroTransporte";
