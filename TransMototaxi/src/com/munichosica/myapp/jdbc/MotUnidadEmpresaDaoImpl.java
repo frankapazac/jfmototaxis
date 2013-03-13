@@ -23,7 +23,9 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 			conn=ResourceManager.getConnection();
 			stmt=conn.prepareCall("{call SP_MOT_INS_UNIDADEMPRESA;1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			stmt.registerOutParameter(1, Types.DECIMAL);
-			stmt.setLong(1, dto.getUnecodigoD());
+			if(dto.getUnecodigoD()!=null)
+				stmt.setLong(1, dto.getUnecodigoD());
+			else stmt.setNull(1, Types.DECIMAL);
 			stmt.setString(2, dto.getUneplacanroV());
 			stmt.setInt(3, dto.getOficina().getOficodigoI());
 			stmt.setString(4, dto.getUnenropadronV());
@@ -48,6 +50,7 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 			stmt.setBigDecimal(23, dto.getUnealtoD());
 			stmt.execute();
 			Long codigo=stmt.getLong(1);
+			System.out.println("UNIDDAD CODIGO: "+codigo);
 			if(codigo!=null){
 				dto.setUnecodigoD(codigo);
 			}
@@ -151,6 +154,34 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 	}
 
 	@Override
+	public List<MotUnidadEmpresa> findAllPlacasByAsociado()
+			throws MotUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotUnidadEmpresa> list=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_FINDPLACAS_BYPROPIETARIO;1}");
+			boolean results=stmt.execute();
+			if(results){
+				list=new ArrayList<MotUnidadEmpresa>();
+				MotUnidadEmpresa unidad=null;
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					unidad=new MotUnidadEmpresa();
+					unidad.setUnecodigoD(rs.getLong("PMOCODIGO"));
+					unidad.setUneplacanroV(rs.getString("PLACA"));
+					list.add(unidad);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidadEmpresaDaoException(e.getMessage(), e);
+		}
+		return list;
+	}
+
+	@Override
 	public MotUnidadEmpresa findByPlaca(String placa)
 			throws MotUnidadEmpresaDaoException {
 		Connection conn=null;
@@ -226,6 +257,56 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 					
 					unidadEmpresa.getArchivo().setAdjestadoV(rs.getString("ESTADO"));
 					unidadEmpresa.setMensaje(rs.getString("MENSAJE"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidadEmpresaDaoException(e.getMessage(),e);
+		}
+		return unidadEmpresa;
+	}
+	
+	@Override
+	public MotUnidadEmpresa findPmoCodigo(Long codigo)
+			throws MotUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotUnidadEmpresa unidadEmpresa=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_UNIDEMPRESABYPMOCODIGO;1(?)}");
+			stmt.setLong(1, codigo);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					unidadEmpresa=new MotUnidadEmpresa();
+					unidadEmpresa.setUneplacanroV(rs.getString("PLACA"));
+					unidadEmpresa.getMarca().setMarnombreV(rs.getString("MARCA"));
+					//unidadEmpresa.getModelo().setModnombre_V(rs.getString("MODELO"));
+					unidadEmpresa.setUnenromotorV(rs.getString("MOTOR"));
+					unidadEmpresa.setUneannoC(rs.getString("ANNO"));
+					unidadEmpresa.getArchivo().setAdjnumeroV(rs.getString("TARJPROPNUMERO"));
+					unidadEmpresa.getArchivo().setAdjfechaemisionF(rs.getString("FECHAEMISION"));
+					unidadEmpresa.getArchivo().setAdjfechacaducidadF(rs.getString("FECHACADUCIDAD"));
+					unidadEmpresa.setUnecolorV(rs.getString("COLOR"));
+					
+					unidadEmpresa.getAsociado().setAsorazonsocialV(rs.getString("ASORAZONSOCIAL"));
+					unidadEmpresa.getAsociado().setAsocodigoD(rs.getLong("ASOCODIGO"));
+					unidadEmpresa.getAsociado().getPersona().setPernombresV(rs.getString("ASONOMBRES"));
+					unidadEmpresa.getAsociado().getPersona().setPerpaternoV(rs.getString("ASOPATERNO"));
+					unidadEmpresa.getAsociado().getPersona().setPermaternoV(rs.getString("ASOMATERNO"));
+					unidadEmpresa.getAsociado().getPersona().setPerdniV(rs.getString("ASODNI"));
+					unidadEmpresa.getAsociado().getPersona().setPerdomicilioV(rs.getString("ASODOMICILIO"));
+					unidadEmpresa.getAsociado().getPersona().setPerteleffijoV(rs.getString("ASOTELEFONO"));
+					unidadEmpresa.getAsociado().getPersona().setPermovilmovV(rs.getString("ASOCELULAR"));
+
+					unidadEmpresa.getAsociado().getEmpresa().setEmprazonsocialV(rs.getString("EMPRESA"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmpdireccionV(rs.getString("EMPDIRECCION"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmptelefono1V(rs.getString("EMPTELEFONO"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmpcelularmovV(rs.getString("EMPCELULAR"));
+					
+					unidadEmpresa.getArchivo().setAdjestadoV(rs.getString("ESTADO"));
 				}
 			}
 		} catch (SQLException e) {
