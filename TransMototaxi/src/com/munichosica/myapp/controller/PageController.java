@@ -206,6 +206,8 @@ public class PageController {
 			emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(
 					rol.getUsuario().getEmpresa().getEmpcodigoD());
 			List<MotTipoDocumento> fotos = MotTipoDocumentoDaoFactory.create().findByTable("EMP");
+			System.out.println("USUARIOOOOOOOOOOOO "+rol.getUsuario().getUsuusuarioV());
+			model.addAttribute("USUARIO", rol.getUsuario().getUsuusuarioV());
 			model.addAttribute("emprepresentante", emprepresentante);//para enviar datos a esta pagina
 			model.addAttribute("fotos", fotos);
 		} catch (MotEmpRepresentanteDaoException | MotTipoDocumentoDaoException e) {
@@ -342,7 +344,7 @@ public class PageController {
 			parteInterior=MotInteInventarioTipoDaoFactory.create().findbyTipo("I");
 			parteMotor=MotInteInventarioTipoDaoFactory.create().findbyTipo("M");
 			conductores = MotConductorDaoFactory.create().findAll();
-			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacas();
+			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacasByAsociado();
 			model.addAttribute("parteExterior", parteExterior);
 			model.addAttribute("parteInterior", parteInterior);
 			model.addAttribute("parteMotor", parteMotor);
