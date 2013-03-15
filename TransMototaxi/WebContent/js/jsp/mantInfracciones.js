@@ -6,6 +6,10 @@ $(document).ready(function(){
     	buscar($("#sltCriterio").val(),$("#txtTexto").val());
     });
 	
+	$("#btnCancelar").click(function(){
+    	$("#divNuevoInfraccion").dialog("close");
+    });
+	
 	function buscar(criterio,texto){
 		$.ajax({ 
     		data:{
