@@ -8,11 +8,11 @@ import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 
 public interface MotModeloDao {
 
+
+	public List<MotModelo> findAll() throws MotModeloDaoException;
+	public List<MotModelo> findByCriterio(String criterio, String texto)throws MotModeloDaoException;
 	public void insert(MotModelo dto) throws MotModeloDaoException;
-	public void update(MotModelo dto) throws MotModeloDaoException;
-	public void delete(MotModelo dto) throws MotModeloDaoException;
-	public MotModelo findByPrimaryKey(int codigo) throws MotModeloDaoException;
-	public List<MotModelo> findByCriterio(String criterio,String texto, Long modcodigo_I)throws MotParaderoDaoException;
-	public List<MotModelo> findAll() throws MotModeloDaoException;	
+	public void delete(Integer codigo) throws MotModeloDaoException;
+	public MotModelo findByIdModelo(Long codigo) throws MotModeloDaoException;	
 	
 }

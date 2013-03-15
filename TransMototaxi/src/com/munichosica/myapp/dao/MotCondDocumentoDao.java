@@ -14,5 +14,7 @@ public interface MotCondDocumentoDao {
 	public void delete(MotCondDocumento dto) throws MotCondDocumentoDaoException;
 	public MotCondDocumento findByPrimaryKey(Long codigo) throws MotCondDocumentoDaoException;
 	List<MotCondDocumento> findByIdConductor(Long codigo)throws MotCondDocumentoDaoException;
+	public MotCondDocumento findByFechas(String fecha1, String fecha2) throws MotCondDocumentoDaoException;
+
 	
 }
