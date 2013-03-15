@@ -79,4 +79,6 @@ public class MotAdjuntarArchivoDaoImpl implements MotAdjuntarArchivoDao{
 		return list;
 	}
 
+	
+
 }

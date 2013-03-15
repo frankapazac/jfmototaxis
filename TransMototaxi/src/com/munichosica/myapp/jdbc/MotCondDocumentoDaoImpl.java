@@ -1,5 +1,6 @@
 package com.munichosica.myapp.jdbc;
 
+import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,13 +8,17 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 import com.munichosica.myapp.dao.MotCondDocumentoDao;
+import com.munichosica.myapp.dto.MotAdjuntarArchivo;
 import com.munichosica.myapp.dto.MotCondDocumento;
 import com.munichosica.myapp.dto.MotConductor;
+import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpParaderoDaoException;
+import com.munichosica.myapp.util.FileUtil;
 
 public class MotCondDocumentoDaoImpl implements MotCondDocumentoDao {
 	
@@ -167,4 +172,56 @@ public class MotCondDocumentoDaoImpl implements MotCondDocumentoDao {
 		}
 		
 	}
+	
+	@Override
+	public MotCondDocumento findByFechas(String fecha1, String fecha2)throws MotCondDocumentoDaoException {
+		
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotCondDocumento condDocumento=null;
+		
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_RPT_PAPELETA_CONDUCTOR_FECHAS;1(?,?)}");
+			stmt.setString(1, fecha1);
+			stmt.setString(2, fecha2);
+			boolean results=stmt.execute();
+			
+			/*if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					conductor=new MotConductor();
+					conductor.getArchivo().setAdjarchivoB(rs.getBytes("FOTO")!=null?FileUtil.deCompress(rs.getBytes("FOTO")):null);
+					conductor.getArchivo().setAdjnombreV(rs.getString("FOTO_NOMBRE"));
+				}
+			}*/
+			
+			if(results){
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					condDocumento=new MotCondDocumento();
+					condDocumento.getEmpresaConductor().getConductor().getPersona().setPerdniV(rs.getString("DNI"));
+					condDocumento.getAdjuntarArchivo().setAdjnumeroV(rs.getString("LICENCIA"));
+					condDocumento.getEmpresaConductor().getConductor().getPersona().setPernombresV(rs.getString("NOMBRES"));
+					condDocumento.getEmpresaConductor().getConductor().getPersona().setPerpaternoV(rs.getString("PATERNO"));
+					condDocumento.getEmpresaConductor().getConductor().getPersona().setPermaternoV(rs.getString("MATERNO"));
+					condDocumento.getEmpresaConductor().getEmpresa().setEmprazonsocialV(rs.getString("EMPRESA"));
+					condDocumento.getPapeleta().getInfrMedida().getInfraccion().setInfcodigoV(rs.getString("INFRACCION"));
+					condDocumento.getPapeleta().setPapfechainfraccionF(rs.getString("FECHA"));	
+					condDocumento.getPapeleta().setPapestadoC(rs.getString("ESTADO"));
+				}	
+			}
+		} catch (SQLException  e) {
+			throw new MotCondDocumentoDaoException(e.getMessage(),e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		
+		return condDocumento;
+	}
+	
+	
 }

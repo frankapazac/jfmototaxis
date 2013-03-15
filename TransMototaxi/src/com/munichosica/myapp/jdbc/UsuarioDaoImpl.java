@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.munichosica.myapp.dao.UsuarioDao;
+import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.Usuario;
+import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
 import com.munichosica.myapp.exceptions.UsuarioDaoException;
 
 public class UsuarioDaoImpl implements UsuarioDao {
