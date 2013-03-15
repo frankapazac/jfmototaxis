@@ -10,9 +10,21 @@
 	<http auto-config="true">
 		<!-- intercept-url pattern="/Panel.htm" access="ROLE_USER,ROLE_ADMIN"/-->
 		<intercept-url pattern="/Inicio.htm" access="ROLE_ADMIN_EMPR,ROLE_ADMIN_INTE"/>
-		<intercept-url pattern="/Asociados/Procesar.htm" access="ROLE_USER_EMPR,ROLE_ADMIN_EMPR"/>
-		
-		
+		<intercept-url pattern="/Asociados" access="ROLE_ADMIN_EMPR"/>
+		<intercept-url pattern="/Conductores.htm" access="ROLE_ADMIN_EMPR"/>
+		<intercept-url pattern="/Mototaxis.htm" access="ROLE_ADMIN_EMPR"/>
+		<intercept-url pattern="/Paraderos.htm" access="ROLE_ADMIN_EMPR"/>
+		<intercept-url pattern="/Documentacion.htm" access="ROLE_ADMIN_EMPR"/>
+		<intercept-url pattern="/Configuracion.htm" access="ROLE_ADMIN_EMPR"/>
+		<intercept-url pattern="/configuracionTrans.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Inspectores.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Papeletas.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Operativos.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Infraccion.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Internamientos.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/MaestroEmpresa.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/MaestroTransporte.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Asociados/Procesar.htm" access="ROLE_USER_EMPR"/>
 		<form-login login-page="/Ingresar.htm" default-target-url="/Inicio.htm"
 		authentication-failure-url="/FalloLogin.htm"/>
 		<logout logout-success-url="/Salir.htm"/>
