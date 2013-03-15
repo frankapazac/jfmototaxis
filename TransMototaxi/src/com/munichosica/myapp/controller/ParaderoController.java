@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.munichosica.myapp.dto.MotEmpParadero;
 import com.munichosica.myapp.dto.MotEmpresa;
 import com.munichosica.myapp.dto.MotParadero;
@@ -89,6 +88,56 @@ public class ParaderoController {
 				logger.error(e.getMessage());
 			}
 			return "Success";
-		}		
+		}
+		
+		//ESTO ES PARADERO PARA TRANSPORTES
+		
+		@RequestMapping(value="ListarParaderoTrans.htm", method=RequestMethod.POST)
+		public @ResponseBody List<MotParadero> listarParaderoTrans(HttpServletRequest request,@RequestParam("criterio") String criterio, @RequestParam("texto") String texto){
+			
+			logger.info("Ingreso a Mototaxi/Listar.htm");
+			List<MotParadero> list=null;
+			try {
+				list=MotParaderoDaoFactory.create().findByCriterioTrans(criterio, texto);
+			} catch (MotParaderoDaoException e) {
+				logger.error(e.getMessage());
+			}
+			return list;
+		}
+		
+		@RequestMapping(value="ProcesarParadero.htm", method=RequestMethod.POST)
+		public String agregar(HttpServletRequest request,MotParadero paradero){
+			try {
+				MotParaderoDaoFactory.create().insert(paradero);
+			} catch (MotParaderoDaoException e) {
+				logger.error(e.getMessage());
+			}
+			return "Success";
+		}	
+		
+		@RequestMapping(value="Obtener.htm", method=RequestMethod.GET)
+		public @ResponseBody MotParadero obtener(@RequestParam("codigo") Long codigo){
+			MotParadero paradero = null;
+			try {
+				paradero= MotParaderoDaoFactory.create().findByPrimaryKey(codigo);
+			} catch (MotParaderoDaoException e) {
+				logger.error(e.getMessage());
+			}
+			return paradero;
+		}
+		
+		@RequestMapping(value="EliminarParadero.htm",method=RequestMethod.GET)
+		public String eliminar(@RequestParam("codigo") Integer codigo){
+			
+			try {
+				MotParadero paradero=new MotParadero();
+				paradero.setParcodigoI(codigo);
+				System.out.println(paradero);
+				MotParaderoDaoFactory.create().delete(paradero);
+			} catch (MotParaderoDaoException e) {
+				logger.error(e.getMessage());
+			}
+			return "Success";
+		}
 		
 }

@@ -218,6 +218,39 @@ public class PageController {
 		return "tilesConfiguracion";
 	}
 	
+	
+	@RequestMapping(value="configuracionTrans.htm",method=RequestMethod.GET)
+	public String configuracionTrans(HttpServletRequest request,Model model){
+		logger.info("Ingreso a Configuracion.htm");
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		if(rol==null){
+			System.out.println("INICIO");
+			rol=new UserSecurity().getRol();
+			session.setAttribute("ROL", rol);
+		}
+		try {
+			MotEmpRepresentante emprepresentante=null;
+			emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(
+					rol.getUsuario().getEmpresa().getEmpcodigoD());
+			List<MotTipoDocumento> fotos = MotTipoDocumentoDaoFactory.create().findByTable("EMP");
+			System.out.println("USUARIOOOOOOOOOOOO "+rol.getUsuario().getUsuusuarioV());
+			model.addAttribute("USUARIO", rol.getUsuario().getUsuusuarioV());
+			model.addAttribute("emprepresentante", emprepresentante);//para enviar datos a esta pagina
+			model.addAttribute("fotos", fotos);
+		} catch (MotEmpRepresentanteDaoException | MotTipoDocumentoDaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute("paginas",rol.getPaginas());
+		return "tilesConfiguracion2";
+	}
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value="Inspectores.htm", method=RequestMethod.GET)
 	public String inspectores(HttpServletRequest request, Model model){
 		logger.info("Ingreso a Inspectores.htm");
