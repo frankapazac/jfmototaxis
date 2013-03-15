@@ -14,7 +14,6 @@ public class MotTipoMedida {
 		Lado = lado;
 	}
 
-	
 	public int getTmecodigoI() {
 		return tmecodigoI;
 	}

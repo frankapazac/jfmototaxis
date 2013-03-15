@@ -4,6 +4,16 @@ public class MotTipoDocumento {
 	protected int mtdcodigoI;
 	protected String mtdnombreV;
 	protected String mtdtablaC;
+	protected String mtdEstadoC;
+	protected String tipo;
+	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
 	public int getMtdcodigoI() {
 		return mtdcodigoI;
 	}
@@ -21,5 +31,11 @@ public class MotTipoDocumento {
 	}
 	public void setMtdtablaC(String mtdtablaC) {
 		this.mtdtablaC = mtdtablaC;
+	}
+	public String getMtdEstadoC() {
+		return mtdEstadoC;
+	}
+	public void setMtdEstadoC(String mtdEstadoC) {
+		this.mtdEstadoC = mtdEstadoC;
 	}
 }

@@ -14,6 +14,7 @@ public class MotCondDocumento {
 	protected MotConductor conductor;
 	protected MotTipoDocumento tipoDocumento;
 	protected MotEmpConductor empresaConductor;
+	protected MotPapeleta papeleta;
 	
 	
 
@@ -23,6 +24,14 @@ public class MotCondDocumento {
 		conductor=new MotConductor();
 		tipoDocumento=new MotTipoDocumento();
 		empresaConductor = new MotEmpConductor();
+	}
+	
+	public MotPapeleta getPapeleta() {
+		return papeleta;
+	}
+
+	public void setPapeleta(MotPapeleta papeleta) {
+		this.papeleta = papeleta;
 	}
 	
 	public Long getCdocodigoD() {
