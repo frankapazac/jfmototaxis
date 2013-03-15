@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.munichosica.myapp.dto.MotConductor;
+import com.munichosica.myapp.dto.MotEmpDocumento;
 import com.munichosica.myapp.dto.MotEmpRepresentante;
 import com.munichosica.myapp.dto.MotInfraccion;
 import com.munichosica.myapp.dto.MotInspector;
@@ -28,6 +29,7 @@ import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.MotZona;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotConductorDaoException;
+import com.munichosica.myapp.exceptions.MotEmpDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
@@ -40,6 +42,7 @@ import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.exceptions.MotUbigeoDaoException;
 import com.munichosica.myapp.exceptions.MotZonaDaoException;
+import com.munichosica.myapp.factory.MotEmpDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
 import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
@@ -54,6 +57,7 @@ import com.munichosica.myapp.factory.MotTipoMedidaDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotZonaDaoFactory;
+import com.munichosica.myapp.util.FileUtil;
 import com.munichosica.myapp.util.UserSecurity;
 
 @Controller
@@ -69,7 +73,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		model.addAttribute("usuario",rol.getUsuario());
@@ -84,7 +88,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		
@@ -113,6 +117,8 @@ public class PageController {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesAsociados";
 	}
@@ -124,10 +130,9 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
-		model.addAttribute("paginas",rol.getPaginas());
 		/*para el mantenimiendo de conductores*/
 		List<MotUbigeo> departamentos=null;
 		List<MotTipoDocumento> documentos=null;
@@ -139,6 +144,8 @@ public class PageController {
 		} catch (MotUbigeoDaoException | MotTipoDocumentoDaoException e) {
 			logger.error(e.getMessage());
 		}
+		model.addAttribute("usuario",rol.getUsuario());
+		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesConductores";
 	}
 
@@ -149,9 +156,11 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesMototaxis";
 	}
@@ -163,7 +172,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		try {
@@ -173,6 +182,8 @@ public class PageController {
 		} catch (MotParaderoDaoException e) {
 			logger.error(e.getMessage());
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesParaderos";
 	}
@@ -184,9 +195,11 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesDocumentacion";
 	}
@@ -198,22 +211,35 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		try {
 			MotEmpRepresentante emprepresentante=null;
 			emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(
 					rol.getUsuario().getEmpresa().getEmpcodigoD());
-			List<MotTipoDocumento> fotos = MotTipoDocumentoDaoFactory.create().findByTable("EMP");
-			System.out.println("USUARIOOOOOOOOOOOO "+rol.getUsuario().getUsuusuarioV());
+			//List<MotTipoDocumento> fotos = MotTipoDocumentoDaoFactory.create().findByTable("EMP");
+			List<MotEmpDocumento> imagenes=MotEmpDocumentoDaoFactory.create().findImagesByEmpresa(rol.getUsuario().getEmpresa().getEmpcodigoD());
+			String nombreArchivo=null;
+			for(MotEmpDocumento images:imagenes){
+				if(images.getAdjuntarArchivo()!=null&&images.getAdjuntarArchivo().getAdjarchivoB()!=null)
+				nombreArchivo="temp/"+FileUtil.createTempFile(request, images.getAdjuntarArchivo().getAdjnombreV(),images.getAdjuntarArchivo().getAdjarchivoB());
+				else
+				nombreArchivo="images/no_disponible_m.jpg";
+				
+				images.getAdjuntarArchivo().setAdjnombreV(nombreArchivo);
+			}
 			model.addAttribute("USUARIO", rol.getUsuario().getUsuusuarioV());
 			model.addAttribute("emprepresentante", emprepresentante);//para enviar datos a esta pagina
-			model.addAttribute("fotos", fotos);
-		} catch (MotEmpRepresentanteDaoException | MotTipoDocumentoDaoException e) {
+			//model.addAttribute("fotos", fotos);
+			model.addAttribute("imagenes", imagenes);
+			System.out.println(imagenes.size());
+		} catch (MotEmpRepresentanteDaoException | MotEmpDocumentoDaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesConfiguracion";
 	}
@@ -258,7 +284,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		
@@ -272,6 +298,8 @@ public class PageController {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesInspectores";
 	}
@@ -283,7 +311,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		try {
@@ -308,6 +336,8 @@ public class PageController {
 				MotPoliciaDaoException e) {
 			logger.error(e.getMessage());
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesPapeleta";
 	}
@@ -319,7 +349,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		try {
@@ -330,6 +360,8 @@ public class PageController {
 		} catch (MotInspectorDaoException | MotZonaDaoException e) {
 			e.printStackTrace();
 		}
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesOperativos";
 	}
@@ -342,7 +374,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		
@@ -352,7 +384,8 @@ public class PageController {
 		} catch (MotTipoMedidaDaoException e) {
 			e.printStackTrace();
 		}
-		
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesInfracciones";
 	}
@@ -364,7 +397,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		List<MotInteInventarioTipo> parteExterior=null;
@@ -386,6 +419,7 @@ public class PageController {
 		} catch (MotInteInventarioTipoDaoException | MotConductorDaoException | MotUnidadEmpresaDaoException e) {
 			logger.error(e.getMessage(), e);
 		}
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesInternamiento";
 	}
@@ -397,7 +431,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		
@@ -407,7 +441,8 @@ public class PageController {
 		} catch (MotTipoMedidaDaoException e) {
 			e.printStackTrace();
 		}
-		
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesMaestroEmpresa";
 	}
@@ -419,7 +454,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 	
@@ -431,7 +466,8 @@ public class PageController {
 			e.printStackTrace();
 		}
 
-		
+
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesMaestroTransporte";
 	}
