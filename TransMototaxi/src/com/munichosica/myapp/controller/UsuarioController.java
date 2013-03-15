@@ -8,9 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.munichosica.myapp.dto.MotTipoMedida;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.dto.Usuario;
+import com.munichosica.myapp.exceptions.MotTipoMedidaDaoException;
+import com.munichosica.myapp.exceptions.UsuarioDaoException;
+import com.munichosica.myapp.factory.MotTipoMedidaDaoFactory;
+import com.munichosica.myapp.factory.UsuarioDaoFactory;
+import com.sun.xml.internal.ws.wsdl.writer.UsingAddressing;
 
 @Controller
 @RequestMapping("/")
@@ -46,4 +53,30 @@ public class UsuarioController{
 	public String error403(Model model){
 		return "403";
 	}
+	
+	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
+	public String agregar(HttpServletRequest request,MotTipoMedida medida){
+		try {
+			MotTipoMedidaDaoFactory.create().insert(medida);
+		} catch (MotTipoMedidaDaoException e) {
+
+		}
+		return "Success";
+	}
+	
+	@RequestMapping(value="Actualizar.htm",method=RequestMethod.POST)
+	public String cambiarPass(HttpServletRequest request,Usuario usuario){
+		
+		System.out.println("ENTRO A USUARIO FEO");
+		
+		try {
+			UsuarioDaoFactory.create().update(usuario);
+		} catch (UsuarioDaoException e) {
+			e.printStackTrace();
+		}
+			
+		return "Success";
+	}
+	
+	
 }
