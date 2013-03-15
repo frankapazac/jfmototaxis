@@ -25,13 +25,14 @@ $(document).ready(function(){
             return false;
 	}
 	
-	
 	function fncActualizarPass(){
+
 		if($("#txtpassNuevo").val()!=$("#txtpassConfirma").val()){
 			alert("no coinciden las contraseñas");
 			return;
 		}
-		$.ajax({ 
+
+			$.ajax({ 
     		data:{
     			usuusuarioV:$("#lblnomUsuario").text(),
     			pass:$("#txtpassAnterior").val(),
@@ -41,7 +42,6 @@ $(document).ready(function(){
             type: "POST", 
             url: "Actualizar.htm",   
             success: function(data){
-                alert(data),
             	alert("Actualización exitosa");
             },error: function(jqXHR, textStatus, errorThrown){
             	//mensajeError();
@@ -66,6 +66,7 @@ $(document).ready(function(){
             type: "POST", 
             url: "Configuracion/Actualizar.htm", 
             success: function(data){
+            	alert("Insersion exitosa");
                 //alert(data),
             	//alert("Insersion exitosa");
             },error: function(jqXHR, textStatus, errorThrown){
