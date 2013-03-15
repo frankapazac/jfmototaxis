@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportCondAltaRotacion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="965029dc-4312-4d14-85a0-634cb62aeb0b">
+	<property name="ireport.zoom" value="1.5394743546921197"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT EMP.EMPRAZONSOCIAL_V EMPRESA,PER.PERNOMBRES_V+space(2)+PER.PERPATERNO_V+SPACE(2)+PER.PERMATERNO_V NOMBRES,
+(SELECT DISTINCT ADJ.ADJNUMERO_V FROM MOT_ADJUNTAR_ARCHIVO  ADJ
+INNER JOIN MOT_COND_DOCUMENTO  DOC ON ADJ.ADJCODIGO_D=DOC.ADJCODIGO_D
+INNER JOIN MOT_TIPO_DOCUMENTO  TIP ON DOC.MTDCODIGO_I=TIP.MTDCODIGO_I
+WHERE CONDCODIGO_D=CON.CONDCODIGO_I AND DOC.MTDCODIGO_I=18) LICENCIA,
+CONVERT(VARCHAR,ECO.ECOFECHAINICIO_F,103) [FECHA INICIO],
+ISNULL(CONVERT(VARCHAR,ECO.ECOFECHACESE_F,103),'') [FECHA FIN]
+,(SELECT COUNT(*) FROM MOT_EMP_CONDUCTOR WHERE CONDCODIGO_D=CON.CONDCODIGO_I
+/*AND EMPCODIGO_D=EMP.EMPCODIGO_D*/) ROTACION
+FROM MOT_EMP_CONDUCTOR ECO INNER JOIN MOT_EMPRESA EMP
+ON ECO.EMPCODIGO_D=EMP.EMPCODIGO_D INNER JOIN MOT_CONDUCTOR CON
+ON CON.CONDCODIGO_I=ECO.CONDCODIGO_D INNER JOIN MOT_PERSONA PER
+ON CON.PERCODIGO_D=PER.PERCODIGO_D
+/*WHERE /*EMP.EMPCODIGO_D=1  AND*/
+(SELECT COUNT(*) FROM MOT_EMP_CONDUCTOR WHERE CONDCODIGO_D=CON.CONDCODIGO_I) >1*//*NO BORRAR ESTO PORFAVOR*/
+GROUP BY EMP.EMPRAZONSOCIAL_V,PER.PERNOMBRES_V,PER.PERPATERNO_V,PER.PERMATERNO_V,
+ECO.ECOFECHAINICIO_F,ECO.ECOFECHACESE_F,CON.CONDCODIGO_I,EMP.EMPCODIGO_D
+ORDER BY ROTACION DESC]]>
+	</queryString>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="LICENCIA" class="java.lang.String"/>
+	<field name="FECHA INICIO" class="java.lang.String"/>
+	<field name="FECHA FIN" class="java.lang.String"/>
+	<field name="ROTACION" class="java.lang.Integer"/>
+	<group name="PORNOMBRES">
+		<groupExpression><![CDATA[$F{NOMBRES}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<line>
+					<reportElement uuid="873a6585-7407-42ac-95e9-e97e7c9c5528" x="34" y="19" width="494" height="1"/>
+				</line>
+				<textField>
+					<reportElement uuid="6a2a6285-5db2-4aca-9448-76ab3bb1929f" x="34" y="0" width="410" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["CONDUCTOR : "+$F{NOMBRES}+"   N° LICENCIA : " +$F{LICENCIA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="c856f665-b615-45b2-9a12-68654e0f9cae" x="34" y="19" width="302" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[EMPRESA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="80ea3d33-9660-4fc8-8c04-e33a0a89abc0" x="347" y="19" width="70" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA INICIO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="e0045d22-4d34-4b7a-b1d5-6a4f1c3b6464" x="454" y="19" width="70" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA FIN]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="28f3c209-d072-4a4d-ae8f-e55ecd76e493" x="444" y="0" width="80" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["N° Rotación :"+ $F{ROTACION}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="873a6585-7407-42ac-95e9-e97e7c9c5528" x="34" y="37" width="494" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3f9c4828-bec0-4fc2-8d65-9e14e6a03d26" x="0" y="11" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE CONDUCTORES CON ALTA ROTACIÓN]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="1" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement uuid="5e7cd178-ba3e-47db-9be0-56311a6d82dd" x="34" y="0" width="302" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4a82946e-366e-472d-8d94-f90f95a4fdb6" x="347" y="0" width="70" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="659e7f0d-c3a3-4655-8f78-d47f4271cd8a" x="454" y="0" width="70" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA FIN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="35" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="26245afe-ff6c-4326-a306-bd2d12e5fe48" x="455" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
