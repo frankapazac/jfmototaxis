@@ -32,6 +32,7 @@
 	    color: #fff;
 	    border-top: 1px solid rgba(255,255,255, 0.25);
 	    border-left: 1px solid rgba(255,255,255, 0.25);
+	    font-size: 1em;// Agregado por FAC
 	}
 	.horizontal-nav ul li:first-child a {
 	    border-left: 0 none;
@@ -39,6 +40,7 @@
 	.horizontal-nav ul li a:hover {
 	    background: #f0f0f0;
 	    color: #608A12;
+	    font-size: 1em;//agregado por FAC
 	}
 	.horizontal-nav ul li:first-child a {
 	    border-top-left-radius: 6px;

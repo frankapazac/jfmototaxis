@@ -18,10 +18,10 @@
 	}
 	h1{
 		color: #608A12;
-		margin: 20px 0px 10px 0px;
+		margin: 10px 0px 0px 0px;
 	}
 	h2{
-		font-size: 1.5em;
+		font-size: 1em;//1.5em
 		font-weight: bold;
 		margin: 5px 0px 5px 0px;
 	}
