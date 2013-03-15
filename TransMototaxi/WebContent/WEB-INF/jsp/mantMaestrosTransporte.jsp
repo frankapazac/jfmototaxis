@@ -14,7 +14,15 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/jsp/mantInfracciones.js"></script>
+	<script type="text/javascript" src="js/jsp/mantTipoDocumento.js"></script>
+	<script type="text/javascript" src="js/jsp/mantParaderosTrans.js"></script>
+	<script type="text/javascript" src="js/jsp/mantInventarioTipo.js"></script>
+	<script type="text/javascript" src="js/jsp/mantZona.js"></script>
+	<script type="text/javascript" src="js/jsp/mantMarca.js"></script>
+	<script type="text/javascript" src="js/jsp/mantModelo.js"></script>
 	<script type="text/javascript" src="js/jsp/mantMaestrosTransporte.js"></script>
+	<script type="text/javascript" src="js/jsp/mantTipoMedida.js"></script>
+	
 	<title>Insert title here</title>
 	<style type="text/css">
 		/*#tabs {margin:20px; }
@@ -28,11 +36,13 @@
 	<div id="tabs" class="tabs-bottom">
 		<ul>
 			<li><a href="#tabs-1">INFRACCIONES</a></li>
-			<li><a href="#tabs-2">TABLA 1</a></li>
-			<li><a href="#tabs-3">TABLA 2</a></li>
-			<li><a href="#tabs-4">TABLA 3</a></li>
-			<li><a href="#tabs-5">TABLA 4</a></li>
-			<li><a href="#tabs-6">TABLA 5</a></li>
+			<li><a href="#tabs-2">TIPO DE DOCUMENTO</a></li>
+			<li><a href="#tabs-3">PARADEROS</a></li>
+			<li><a href="#tabs-4">INVENTARIO</a></li>
+			<li><a href="#tabs-5">TIPO MEDIDA</a></li>
+			<li><a href="#tabs-6">ZONA ADMINISTRATIVA</a></li>
+			<li><a href="#tabs-7">MARCA</a></li>
+			<li><a href="#tabs-8">MODELO</a></li>
 		</ul>
 		<div class="tabs-spacer"></div>
 		<div id="tabs-1">
@@ -158,10 +168,573 @@
 					<input type="button" id="btnCancelar" value ='CANCELAR' align="middle"/>	
 			</div>
 		</div>
-		<div id="tabs-2"></div>
-		<div id="tabs-3"></div>
-		<div id="tabs-4"></div>
-		<div id="tabs-5"></div>
+		<div id="tabs-2">
+			<div id="divBuscarTipoDoc">
+				<table>
+						<tr>
+							<td>Criterio</td>
+							<td>Texto</td>
+						</tr>
+						
+						<tr>
+							<td>
+								<select id="sltCriterioTipDoc">
+								<option value="MTDNOMBRE_V">Descripción</option>
+								<option value="MTDTABLA_C">Tipo Infracción</option>
+								<option value="MTDESTADO_C">Estado</option>
+								</select>
+							</td>
+							<td><input type="text" id="txtTextoTipDoc" /></td>
+							<td><input type="button" id="btnBuscarTipDoc" value="Buscar"/></td>
+						</tr>		
+				</table>
+			</div>
+			
+			<div id="divListaTipDoc">
+			<table align="center" class="tablesorter" id="tblListaTipDoc"></table>	</div>
+			
+			<div id="pager2" class="pager">
+					<form>
+						<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+						<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+						<input type="text" class="pagedisplay">
+						<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+						<select class="pagesize">
+							<option selected="selected" value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+						</select>
+						<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+					</form>
+			</div>
+			
+			<div id="divMensajeTipDoc"></div>
+				
+			<h4 align="center">
+				<img id="btnNuevoTipDoc" alt="Nuevo" src="images/new.png"/>
+			</h4>
+			
+			<div id="divNuevoTipDoc">
+	    	<fieldset>
+	        	<legend>NUEVO TIPO DE DOCUMENTO</legend>     
+	        	<input type="hidden" id="txtcodigoTipDoc" value="0"/>        
+	        	<table align="center">
+	        			<tr>
+							<td>Nombre Documento:</td>
+							<td><input type="text" id="txtNombreDocumento" /></td>
+						</tr>
+						<tr>
+							<td>Nombre Tabla:</td>
+							<td><input type="text" id="txttabla"/></td>
+						</tr>
+						
+						<tr>
+							<td>Estado</td>
+							<td>
+								<select id="sltEstado">
+								<option value="A">ACTIVO</option>
+								<option value="I">INACTIVO</option>
+								</select>
+							</td>
+						</tr>
+			</table>	
+			</fieldset>
+			
+			<input type="button" id="btnGuardarTipDoc" value ='GUARDAR' align="middle"/>
+			<input type="button" id="btnCancelarTipDoc" value ='CANCELAR' align="middle"/>	
+			
+		
+		</div>
+		
+		</div>
+		<div id="tabs-3">
+				<div id="divBuscarParadero">
+					<table>
+						<tr>
+							<td>Criterio</td>
+							<td>Texto</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<select id="sltCriterioParadero">
+									<option value="PAR.PARNOMBRE_V">Nombre del Paradero</option>
+									<option value="PAR.PARUBICACION_V">Ubicación</option>
+									<option value="PAR.PARZONAADM_I">Zona Administrativa</option>
+									<option value="PAR.PARESTADO_C">Estado</option>
+								</select>
+							</td>
+							<td><input type="text" id="txtTextoParadero" /></td>
+							<td><input type="button" id="btnBuscarParadero" value="Buscar"/></td>
+						</tr>
+					</table>
+				</div>	
+				
+			<div id="divListaParaderos">
+				<table align="center" class="tablesorter" id="tblListaParaderos"></table>
+				<div id="pager3" class="pager">
+					<form>
+						<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+						<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+						<input type="text" class="pagedisplay">
+						<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+						<select class="pagesize">
+							<option selected="selected" value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+						</select>
+						<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+					</form>
+				</div>
+			</div>
+			
+			<h4 align="center">
+				<img id="btnNuevoParadero" alt="Nuevo" src="images/new.png"/>
+			</h4>
+			
+			<div id="divNuevoParadero">
+					<fieldset>
+					<legend>NUEVO PARADERO</legend>     
+						<input type="hidden" id="txtCodigoParadero"/>
+						<table align="center">
+							
+							<tr>
+								<td>Nombre Paradero:</td>
+								<td><input type="text" id="txtnombreparadero"/></td>
+							</tr>
+							
+							<tr>
+								<td>Ubicación:</td>
+								<td colspan="3"><textarea rows=4 id="txtUbicacion"></textarea></td>
+							</tr>
+							
+							<tr>
+								<td>Zona Administrativa:</td>
+								<td>
+								  <select id="sltZonaAdministrativa" style="width:250px;">
+								  		<option>Seleccione</option>
+						  				<c:forEach var="zona" items="${zona}">
+						  					<option value="${zona.zoncodigo_I}"><c:out value="${zona.zonnombre_V}"/></option>
+						  				</c:forEach>
+								  </select>
+								</td>
+							</tr>
+							<tr>
+							<td>Estado</td>
+							<td>
+								<select id="sltEstadoParadero">
+								<option value="A">ACTIVO</option>
+								<option value="I">INACTIVO</option>
+								</select>
+							</td>
+						</tr>
+
+						</table>
+						</fieldset>
+						<input type="button" value="Guardar" id="btnGuardarParadero" class="ui-button"/>
+						<input type="button" value="Cancelar" id="btnCancelarParadero" class="ui-button"/>
+			</div>
+		</div>
+		<div id="tabs-4">
+				<div id="divBuscarInventario">
+					<table>
+						<tr>
+							<td>Criterio</td>
+							<td>Texto</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<select id="sltCriterioInventario">
+									<option value="BITNOMBRE_V">Nombre</option>
+									<option value="BITTIPO_C">Tipo</option>
+									<option value="BITESTADO_C">Estado</option>
+								</select>
+							</td>
+							<td><input type="text" id="txtTextoInventario" /></td>
+							<td><input type="button" id="btnBuscarInventario" value="Buscar"/></td>
+						</tr>
+					</table>
+				</div>	
+				
+				<div id="divListaInventario">
+				<table align="center" class="tablesorter" id="tblListaInventario"></table>
+				</div>
+				
+					<div id="pager4" class="pager">
+					<form>
+						<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+						<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+						<input type="text" class="pagedisplay">
+						<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+						<select class="pagesize">
+							<option selected="selected" value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+						</select>
+						<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+					</form>
+					</div>
+					
+				<h4 align="center">
+				<img id="btnNuevoInventario" alt="Nuevo" src="images/new.png"/>
+				</h4>
+			
+				<div id="divNuevoInventario">
+					<fieldset>
+					<legend>INVENTARIO</legend>     
+						<input type="hidden" id="txtCodigoInventario"/>
+						<table align="center">
+							
+							<tr>
+								<td>Nombre Inventario:</td>
+								<td><input type="text" id="txtnombreInventario"/></td>
+							</tr>
+							
+							<tr>
+								<td>Tipo</td>
+								<td>
+									<select id="sltTipoInventario">
+									<option value="E">EXTERNO</option>
+									<option value="I">INTERNO</option>
+									<option value="M">MOTOR</option>
+									</select>
+								</td>
+							</tr>
+							
+							<tr>
+							<td>Estado</td>
+							<td>
+								<select id="sltEstadoInventario">
+								<option value="A">ACTIVO</option>
+								<option value="I">INACTIVO</option>
+								</select>
+							</td>
+						</tr>
+
+						</table>
+						</fieldset>
+						<input type="button" value="Guardar" id="btnGuardarInventario" class="ui-button"/>
+						<input type="button" value="Cancelar" id="btnCancelarInventario" class="ui-button"/>
+				</div>
+				
+				
+				
+				
+		</div>
+		
+		<div id="tabs-5">
+				<div id="divBuscarTipoMedida">
+					<table>
+						<tr>
+							<td>Criterio</td>
+							<td>Texto</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<select id="sltCriterioTipoMedida">
+									<option value="TMEDESCRIPCION_V">Tipo Medida</option>
+									<option value="TMEESTADO_C">Estado</option>
+								</select>
+							</td>
+							<td><input type="text" id="txtTextoTipoMedida" /></td>
+							<td><input type="button" id="btnBuscarMedida" value="Buscar"/></td>
+						</tr>
+					</table>
+				</div>	
+				
+				<div id="divListaMedida">
+				<table align="center" class="tablesorter" id="tblListaMedida"></table>
+					<div id="pager6" class="pager">
+					<form>
+						<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+						<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+						<input type="text" class="pagedisplay">
+						<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+						<select class="pagesize">
+							<option selected="selected" value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+						</select>
+						<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+					</form>
+					</div>
+				</div>
+				
+				<h4 align="center">
+				<img id="btnNuevaMedida" alt="Nuevo" src="images/new.png"/>
+				</h4>
+				
+				
+				<div id="divNuevaMedida">
+					<fieldset>
+					<legend>TIPO MEDIDA</legend>     
+						<input type="hidden" id="txtCodigoMedida"/>
+						<table align="center">
+							
+						<tr>
+								<td>Tipo Medida:</td>
+								<td><input type="text" id="txtnombremedida"/></td>
+						</tr>
+
+						<tr>
+							<td>Estado</td>
+							<td>
+								<select id="sltEstadoMedida">
+								<option value="A">ACTIVO</option>
+								<option value="I">INACTIVO</option>
+								</select>
+							</td>
+						</tr>
+
+						</table>
+						</fieldset>
+						<input type="button" value="Guardar" id="btnGuardarMedida" class="ui-button"/>
+						<input type="button" value="Cancelar" id="btnCancelarMedida" class="ui-button"/>
+				</div>
+				
+		</div>
+		
+		
+		<div id="tabs-6">
+			
+				<div id="divBuscarZona">
+					<table>
+						<tr>
+							<td>Criterio</td>
+							<td>Texto</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<select id="sltCriterioZona">
+									<option value="ZONNOMBRE_V">Zona Administrativa</option>
+									<option value="ZONESTADO_C">Estado</option>
+								</select>
+							</td>
+							<td><input type="text" id="txtTextoZona" /></td>
+							<td><input type="button" id="btnBuscarZona" value="Buscar"/></td>
+						</tr>
+					</table>
+				</div>	
+			
+				
+				
+			<div id="divListaZona">
+			<table align="center" class="tablesorter" id="tblListaZona"></table>
+			</div>
+			
+			<div id="pager7" class="pager">
+				<form>
+					<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+					<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+					<input type="text" class="pagedisplay">
+					<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+					<select class="pagesize">
+						<option selected="selected" value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+					</select>
+					<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+				</form>
+			</div>
+			
+			<h4 align="center">
+				<img id="btnNuevaZona" alt="Nuevo" src="images/new.png"/>
+				</h4>
+				
+				
+				<div id="divNuevaZona">
+					<fieldset>
+					<legend>ZONA</legend>     
+						<input type="hidden" id="txtCodigoZona"/>
+						<table align="center">
+							
+						<tr>
+								<td>Nombre Zona:</td>
+								<td><input type="text" id="txtnombrezona"/></td>
+						</tr>
+
+						<tr>
+							<td>Estado</td>
+							<td>
+								<select id="sltEstadoZona">
+								<option value="A">ACTIVO</option>
+								<option value="I">INACTIVO</option>
+								</select>
+							</td>
+						</tr>
+
+						</table>
+						</fieldset>
+						<input type="button" value="Guardar" id="btnGuardarZona" class="ui-button"/>
+						<input type="button" value="Cancelar" id="btnCancelarZona" class="ui-button"/>
+				</div>
+		</div>
+		
+		
+		
+		<div id="tabs-7">
+			
+				<div id="divBuscarMarca">
+					<table>
+						<tr>
+							<td>Criterio</td>
+							<td>Texto</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<select id="sltCriterioMarca">
+									<option value="MARNOMBRE_V">Marca</option>
+									<option value="MARESTADO_C">Estado</option>
+								</select>
+							</td>
+							<td><input type="text" id="txtTextoMarca" /></td>
+							<td><input type="button" id="btnBuscarMarca" value="Buscar"/></td>
+						</tr>
+					</table>
+				</div>	
+			
+				
+				
+			<div id="divListaMarca">
+			<table align="center" class="tablesorter" id="tblListaMarca"></table>
+			</div>
+			
+			<div id="pager8" class="pager">
+				<form>
+					<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+					<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+					<input type="text" class="pagedisplay">
+					<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+					<select class="pagesize">
+						<option selected="selected" value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+					</select>
+					<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+				</form>
+			</div>
+			
+			<h4 align="center">
+				<img id="btnNuevaMarca" alt="Nuevo" src="images/new.png"/>
+				</h4>
+				
+				
+				<div id="divNuevaMarca">
+					<fieldset>
+					<legend>MARCA</legend>     
+						<input type="hidden" id="txtCodigoMarca"/>
+						<table align="center">
+							
+						<tr>
+								<td>Nombre Marca:</td>
+								<td><input type="text" id="txtnombreMarca"/></td>
+						</tr>
+
+						<tr>
+							<td>Estado</td>
+							<td>
+								<select id="sltEstadoMarca">
+								<option value="A">ACTIVO</option>
+								<option value="I">INACTIVO</option>
+								</select>
+							</td>
+						</tr>
+
+						</table>
+						</fieldset>
+						<input type="button" value="Guardar" id="btnGuardarMarca" class="ui-button"/>
+						<input type="button" value="Cancelar" id="btnCancelarMarca" class="ui-button"/>
+				</div>
+		</div>
+		
+		<div id="tabs-8">
+			
+				<div id="divBuscarModelo">
+					<table>
+						<tr>
+							<td>Criterio</td>
+							<td>Texto</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<select id="sltCriterioModelo">
+									<option value="MODNOMBRE_V">Modelo</option>
+									<option value="MODESTADO_V">Estado</option>
+								</select>
+							</td>
+							<td><input type="text" id="txtTextoModelo" /></td>
+							<td><input type="button" id="btnBuscarModelo" value="Buscar"/></td>
+						</tr>
+					</table>
+				</div>	
+			
+				
+				
+			<div id="divListaModelo">
+			<table align="center" class="tablesorter" id="tblListaModelo"></table>
+			</div>
+			
+			<div id="pager9" class="pager">
+				<form>
+					<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+					<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+					<input type="text" class="pagedisplay">
+					<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+					<select class="pagesize">
+						<option selected="selected" value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+					</select>
+					<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+				</form>
+			</div>
+			
+			<h4 align="center">
+				<img id="btnNuevaModelo" alt="Nuevo" src="images/new.png"/>
+			</h4>
+				
+				
+				<div id="divNuevaModelo">
+					<fieldset>
+					<legend>MODELO</legend>     
+						<input type="hidden" id="txtCodigoModelo"/>
+						<table align="center">
+							
+						<tr>
+								<td>Nombre Modelo:</td>
+								<td><input type="text" id="txtnombreModelo"/></td>
+						</tr>
+
+						<tr>
+							<td>Estado</td>
+							<td>
+								<select id="sltEstadoModelo">
+								<option value="A">ACTIVO</option>
+								<option value="I">INACTIVO</option>
+								</select>
+							</td>
+						</tr>
+
+						</table>
+						</fieldset>
+						<input type="button" value="Guardar" id="btnGuardarModelo" class="ui-button"/>
+						<input type="button" value="Cancelar" id="btnCancelarModelo" class="ui-button"/>
+				</div>
+		</div>
+		
+		
 	</div>
 
 </body>
