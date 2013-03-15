@@ -24,10 +24,14 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 			stmt=conn.prepareCall("{call SP_MOT_INS_PAPELETA;1(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			stmt.registerOutParameter(1, Types.DECIMAL);
 			stmt.setLong(1, papeleta.getPapcodigoD());
-			stmt.setInt(2, papeleta.getPolicia().getPolcodigoI());
+			if(papeleta.getPolicia().getPolcodigoI()!=null)
+				stmt.setInt(2, papeleta.getPolicia().getPolcodigoI());
+			else stmt.setNull(2, Types.INTEGER);
 			stmt.setLong(3, papeleta.getArchivo().getAdjcodigoD());
 			stmt.setInt(4, papeleta.getInfrMedida().getImecodigoI());
-			stmt.setInt(5, papeleta.getInspector().getInscodigoI());
+			if(papeleta.getInspector().getInscodigoI()!=null)
+				stmt.setInt(5, papeleta.getInspector().getInscodigoI());
+			stmt.setNull(5, Types.INTEGER);
 			stmt.setLong(6, papeleta.getPropUnidadEmpresa().getPmocodigoD());
 			stmt.setLong(7, papeleta.getConductor().getConcodigoD());
 			stmt.setString(8, papeleta.getPapfechainfraccionF());
@@ -227,6 +231,7 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 				rs=stmt.getResultSet();
 				if(rs.next()){
 					papeleta=new MotPapeleta();
+					papeleta.setPapcodigoD(rs.getLong("PAPCODIGO"));
 					papeleta.getConductor().setConcodigoD(rs.getLong("CONDCODIGO"));
 					papeleta.getConductor().getPersona().setPerdniV(rs.getString("CONDDNI"));
 					papeleta.getConductor().getPersona().setPerpaternoV(rs.getString("CONDPATERNO"));
