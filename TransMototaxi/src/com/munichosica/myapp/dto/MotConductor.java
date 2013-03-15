@@ -11,13 +11,21 @@ public class MotConductor {
 	protected MotAdjuntarArchivo archivo;
 	protected String conestadoC;
 	protected String mensaje;
+	protected MotAdjuntarArchivo foto;
 	
 	public MotConductor() {
 		persona=new MotPersona();
 		documentos=new ArrayList<MotCondDocumento>();
 		archivo=new MotAdjuntarArchivo();
+		foto=new MotAdjuntarArchivo();
 	}
 	
+	public void setFoto(MotAdjuntarArchivo foto) {
+		this.foto = foto;
+	}
+	public MotAdjuntarArchivo getFoto() {
+		return foto;
+	}
 	public String getConestadoC() {
 		return conestadoC;
 	}

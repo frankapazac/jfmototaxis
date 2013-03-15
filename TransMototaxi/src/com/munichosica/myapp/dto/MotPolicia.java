@@ -1,16 +1,16 @@
 package com.munichosica.myapp.dto;
 
 public class MotPolicia {
-	protected int polcodigoI;
+	protected Integer polcodigoI;
 	protected String polcarnetidentV;
 	protected String polnombresV;
 	protected String polpaternoV;
 	protected String polmaternoV;
-	public int getPolcodigoI() {
-		return polcodigoI;
-	}
-	public void setPolcodigoI(int polcodigoI) {
+	public void setPolcodigoI(Integer polcodigoI) {
 		this.polcodigoI = polcodigoI;
+	}
+	public Integer getPolcodigoI() {
+		return polcodigoI;
 	}
 	public String getPolcarnetidentV() {
 		return polcarnetidentV;
