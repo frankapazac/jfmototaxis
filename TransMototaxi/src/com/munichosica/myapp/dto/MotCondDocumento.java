@@ -16,9 +16,6 @@ public class MotCondDocumento {
 	protected MotEmpConductor empresaConductor;
 	protected MotPapeleta papeleta;
 	
-	
-
-	
 	public MotCondDocumento() {
 		adjuntarArchivo=new MotAdjuntarArchivo();
 		conductor=new MotConductor();
