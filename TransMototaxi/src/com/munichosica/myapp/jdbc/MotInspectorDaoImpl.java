@@ -119,8 +119,9 @@ public class MotInspectorDaoImpl implements MotInspectorDao{
 			if(results){
 				rs=stmt.getResultSet();
 				if(rs.next()){
+					System.out.println("INGRESOOOOO");
 					inspector=new MotInspector();
-					inspector.setInscodigoI(rs.getInt("INSCODIGO"));
+					System.out.println(rs.getInt("INSCODIGO"));inspector.setInscodigoI(rs.getInt("INSCODIGO"));
 					inspector.setInsestadoC(rs.getString("ESTADO"));
 					inspector.getPersona().setPercodigoD(rs.getLong("CODIGO"));
 					inspector.getPersona().setPerdniV(rs.getString("DNI"));
@@ -140,9 +141,9 @@ public class MotInspectorDaoImpl implements MotInspectorDao{
 					inspector.getPersona().setPerubprovV(rs.getString("PROVINCIA"));
 					inspector.getPersona().setPerubdptonombreV(rs.getString("DEPARTAMENTONOMBRE"));
 					inspector.getPersona().setPerubidistnombreV(rs.getString("DISTRITONOMBRE"));
-					inspector.getPersona().setPerubprovnombreV(rs.getString("PROVINCIANOMBRE"));
-					inspector.getFoto().setAdjarchivoB(rs.getBytes("FOTO")!=null?FileUtil.deCompress(rs.getBytes("FOTO")):null);
-					inspector.getFoto().setAdjnombreV(rs.getString("NOMBRE_FOTO"));
+					System.out.println(rs.getString("PROVINCIANOMBRE"));inspector.getPersona().setPerubprovnombreV(rs.getString("PROVINCIANOMBRE"));
+					System.out.println(rs.getBytes("FOTO"));inspector.getFoto().setAdjarchivoB(rs.getBytes("FOTO")!=null?FileUtil.deCompress(rs.getBytes("FOTO")):null);
+					System.out.println(rs.getString("NOMBRE_FOTO"));inspector.getFoto().setAdjnombreV(rs.getString("NOMBRE_FOTO"));
 				}
 			}
 		} catch (Exception e) {

@@ -31,14 +31,14 @@ protected static final Logger logger = Logger.getLogger(MotEmpadronamientoDaoImp
 		CallableStatement stmt=null;
 		try {
 			conn=ResourceManager.getConnection();
-			stmt=conn.prepareCall("{call SP_MOT_INS_EMPADRONAMIENTO;1(?,?,?,?,?,?)}");
+			stmt=conn.prepareCall("{call SP_MOT_INS_EMPADRONAMIENTO;1(?,?,?,?)}");
 			stmt.registerOutParameter(1, Types.DECIMAL);
-			stmt.setLong(1, dto.getEpocodigoD());
+			if(dto.getEpocodigoD()!=null)
+				stmt.setLong(1, dto.getEpocodigoD());
+			else stmt.setNull(1, Types.DECIMAL);
 			stmt.setLong(2,dto.getEmpresa().getEmpcodigoD());
 			stmt.setLong(3, dto.getUnidadEmpresa().getUnecodigoD());
-			stmt.setString(4, dto.getEmpfechainicioF());
-			stmt.setString(5, dto.getEmpfechaceseF());
-			stmt.setString(6, dto.getEmpobservacionesV());
+			stmt.setString(4, dto.getEmpobservacionesV());
 			stmt.execute();
 			Long codigo=stmt.getLong(1);
 			if(codigo!=null){

@@ -3,13 +3,8 @@ package com.munichosica.myapp.jdbc;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.sql.Types;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -80,7 +75,7 @@ public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 			conn=ResourceManager.getConnection();
 			stmt=conn.prepareCall("{call SP_MOT_DEL_EMPRASOCIADO;1(?)}");
 			stmt.setLong(1, codigo);
-			boolean results=stmt.execute();
+			stmt.execute();
 		} 
 		catch (Exception ex) {
 			logger.error( "Exception: " + ex.getMessage(), ex );
@@ -108,7 +103,6 @@ public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 			boolean results=stmt.execute();
 			if(results){
 				rs=stmt.getResultSet();
-				MotPersona persona=null;
 				while(rs.next()){
 					asociado=new MotEmprAsociado();
 					asociado.setAsocodigoD(rs.getLong("ASOCODIGO"));
@@ -190,7 +184,7 @@ public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
                 	persona.setPerubprovV(rs.getString("PROVINCIA"));
                 	persona.setPerubdptoV(rs.getString("DEPARTAMENTO"));
                 	asociado=new MotEmprAsociado();
-                	asociado.setAsocodigoD(rs.getLong("CODIGO"));
+                	asociado.setAsocodigoD(rs.getLong("ASOCODIGO"));
                 	asociado.setAsorazonsocialV(rs.getString("RAZONSOCIAL"));
                 	asociado.setAsorucV(rs.getString("RUC"));
                 	asociado.setAsoestadoC(rs.getString("ESTADO"));
