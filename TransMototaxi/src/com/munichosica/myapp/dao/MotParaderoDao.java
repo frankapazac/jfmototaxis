@@ -16,5 +16,8 @@ public interface MotParaderoDao {
 	public List<MotParadero> findByCriterio(String criterio,String texto, Long parcodigoI) throws MotParaderoDaoException; 
 	public List<MotParadero> findZonaByEmpresa(Long empcodigoD) throws MotParaderoDaoException;
 	public MotParadero findByParadero(int codigo) throws MotParaderoDaoException;
+	
+	//transporte
+	public List<MotParadero> findByCriterioTrans(String criterio, String texto)throws MotParaderoDaoException;
 
 }

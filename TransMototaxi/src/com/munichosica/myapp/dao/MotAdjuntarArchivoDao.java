@@ -9,4 +9,5 @@ import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
 public interface MotAdjuntarArchivoDao {
 	public void insert(MotAdjuntarArchivo adjuntarArchivo)throws MotAdjuntarArchivoDaoException;
 	public List<MotAdjuntarArchivo> findArchivosByAsociado(Long codigo) throws MotAdjuntarArchivoDaoException;
+	
 }

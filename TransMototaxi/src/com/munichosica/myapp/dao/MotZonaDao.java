@@ -7,10 +7,11 @@ import com.munichosica.myapp.exceptions.MotZonaDaoException;
 
 public interface MotZonaDao {
 
-	public void insert(MotZonaDao dto) throws MotZonaDaoException;
-	public void update(MotZonaDao dto) throws MotZonaDaoException;
-	public void delete(MotZonaDao dto) throws MotZonaDaoException;
-	public MotZonaDao findByPrimaryKey (Long codigo) throws MotZonaDaoException;
+	public void insert(MotZona dto) throws MotZonaDaoException;
+	public MotZona findByPrimaryKey (Long codigo) throws MotZonaDaoException;
 	public List<MotZona> findAll() throws MotZonaDaoException;
+	public List<MotZona> findByCriterio(String criterio, String texto)throws MotZonaDaoException;
+	public void delete(Long codigo) throws MotZonaDaoException;
+
 
 }
