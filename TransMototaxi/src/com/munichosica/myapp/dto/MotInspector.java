@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MotInspector {
-	protected int inscodigoI;
+	protected Integer inscodigoI;
 	protected String insestadoC;
 	protected MotPersona persona;
 	protected MotAdjuntarArchivo foto;
@@ -29,11 +29,11 @@ public class MotInspector {
 	public void setDocumentos(List<MotInspDocumento> documentos) {
 		this.documentos = documentos;
 	}
-	public int getInscodigoI() {
-		return inscodigoI;
-	}
-	public void setInscodigoI(int inscodigoI) {
+	public void setInscodigoI(Integer inscodigoI) {
 		this.inscodigoI = inscodigoI;
+	}
+	public Integer getInscodigoI() {
+		return inscodigoI;
 	}
 	public String getInsestadoC() {
 		return insestadoC;

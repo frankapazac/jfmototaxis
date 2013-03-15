@@ -24,6 +24,9 @@ public class MotEmpresa {
 	protected MotUbigeo distrito;
 	protected MotUbigeo departamento;
 	protected MotUbigeo provincia;
+	protected String foto;
+	protected String logo;
+	protected String banner;
 	
 	public MotEmpresa() {
 		distrito=new MotUbigeo();
@@ -31,6 +34,30 @@ public class MotEmpresa {
 		provincia=new MotUbigeo();
 	}
 	
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getBanner() {
+		return banner;
+	}
+
+	public void setBanner(String banner) {
+		this.banner = banner;
+	}
+
 	public String getEmpcelularmovV() {
 		return empcelularmovV;
 	}
