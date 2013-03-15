@@ -15,22 +15,21 @@ $(document).ready(function(){
                 url:'UnidadEmpresa/Documento.htm',
                 dataType:'html',
                 beforeSubmit:function(){
-                    //$("#progressbar").show();
+                	$("#progressMototaxiArchivo").show();
                 },
                 uploadProgress: function(event, position, total, percentComplete) {
-                	$("#txtCargandoUnidad").empty();
-                	$("#txtCargandoUnidad").val(percentComplete);
-                	//$("#progressbar").empty();
-                    //$("#progressbar").progressbar({
-                    //        value: percentComplete
-                    //});
+                	$("#progressMototaxiArchivo").progressbar({
+                        value: percentComplete
+                	});
                 },
                 success: function(responseText, statusText) {      
-                	//$("#divContenedorTab2").empty();
-                    //$("#divContenedorTab2").append(responseText);
+                	$("#progressMototaxiArchivo").hide();
+                    $("#progressMototaxiArchivo").progressbar({
+                        value: 0
+                	});
                 } ,
                 error:function(){
-                    //alert("ERROR DE ENVIO");
+                	alert("ERROR");
                 }
             };
             $(this).ajaxSubmit(options);
@@ -39,28 +38,27 @@ $(document).ready(function(){
     //DOCUMENTO 
     function fncDocumentoFoto(){
     	var options={
-                //scriptCharset:"utf-8",
-                //contentType:"application/json; charset=utf-8",
     			type: "POST", 
                 url:'UnidadEmpresa/DocumentoFoto.htm',
-                dataType:'html',
+                dataType:'json',
                 beforeSubmit:function(){
-                    //$("#progressbar").show();
+                    $("#progressVehiculo").show();
                 },
                 uploadProgress: function(event, position, total, percentComplete) {
-                	$("#txtCargandoFotos").empty();
-                	$("#txtCargandoFotos").val(percentComplete);
-                	//$("#progressbar").empty();
-                    //$("#progressbar").progressbar({
-                    //        value: percentComplete
-                    //});
+                	$("#progressVehiculo").progressbar({
+                        value: percentComplete
+                	});
                 },
-                success: function(responseText, statusText) {      
-                	//$("#divContenedorTab2").empty();
-                    //$("#divContenedorTab2").append(responseText);
+                success: function(responseText, statusText) {
+                	var texto=responseText.split('|');
+                	$("#imgFotoVehiculo_"+texto[0]).attr("src","temp/"+texto[1]);
+                    $("#progressVehiculo").hide();
+                    $("#progressVehiculo").progressbar({
+                        value: 0
+                	});
                 } ,
                 error:function(){
-                    //alert("ERROR DE ENVIO");
+                	alert("ERROR");
                 }
             };
             $(this).ajaxSubmit(options);
@@ -68,12 +66,12 @@ $(document).ready(function(){
     }
 	
 	function fncVehiculoProcesar(){
+    	if(!validate("#tabs2")) return;
+		
 		$.ajax({ 
     		data:{
     			'propUnidadEmpresa.asociado.asocodigoD':$("#txtCodigoAsociado").val(),
     			'empadronamiento.epocodigoD':$("#txtCodigoEmpadronamiento").val(),
-    			'empadronamiento.empfechainicioF':$("#txtEmpadFechaInicio").val(),
-    			'empadronamiento.empfechaceseF':$("#txtEmpadFechaCese").val(),
     			'propUnidadEmpresa.unidadempresa.unecodigoD':$("#txtCodigoVehiculo").val(),
     			'propUnidadEmpresa.unidadempresa.uneplacanroV':$("#txtNroPlaca").val(),
     			'propUnidadEmpresa.unidadempresa.oficina.oficodigoI':$("#sltOfRegistral").val(),
@@ -119,6 +117,7 @@ $(document).ready(function(){
 			return;
 		}
 		llenarTablaMotos();
+		llenarDatosMototaxi("");
 		$("#tabs").tabs('enable',1).tabs("select",1);
 	}
 	
@@ -192,7 +191,13 @@ $(document).ready(function(){
 	
 	function llenarDatosMototaxi(data){
 		//alert(JSON.stringify(data));
-		if(data!=""){			
+		if(data!=""){
+			$("input[name='txtCodArchivo']").val("0");
+			$("input[name='txtNumDocumento']").val("");
+			$("input[name='txtFechaEmision']").val("");
+			$("input[name='txtFechaCaducidad']").val("");
+			
+			$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
     		$("#txtCodigoVehiculo").val(data.unidadEmpresa.unecodigoD);
 			$("#txtCodigoEmpadronamiento").val(data.empadronamiento.epocodigoD);
 			$("#txtEmpadFechaInicio").val(data.empadronamiento.empfechainicioF);
@@ -230,6 +235,12 @@ $(document).ready(function(){
 			}
 			$("#btnVehiculoProcesar").val("Modificar");
 		}else{
+			$("input[name='txtCodArchivo']").val("0");
+			$("input[name='txtNumDocumento']").val("");
+			$("input[name='txtFechaEmision']").val("");
+			$("input[name='txtFechaCaducidad']").val("");
+			
+			$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
 			$("#txtCodigoVehiculo").val("");
 			$("#txtCodigoEmpadronamiento").val("");
 			$("#txtEmpadFechaInicio").val("");
@@ -282,4 +293,118 @@ $(document).ready(function(){
 			}
 		});
     }
+	
+	 function validate(elemento){
+	    	$(".error").remove();
+	    	var elementText=$(elemento+" .requiredText");
+	    	var elementEmail=$(elemento+" .requiredEmail");
+	    	var elementNumero=$(elemento+" .requiredNumber");
+	    	var elementDecimal=$(elemento+" .requiredDecimal");
+	    	var elementFecha=$(elemento+" .requiredDate");
+	    	var elementHora=$(elemento+" .requiredHour");
+	    	var elementSelect=$(elemento+" .requiredSelect");
+	    	var elementFile=$(elemento+" .requiredFile");
+	    	var contador=0;
+	    	$.each(elementText,function(key,value){
+	    		if(!validarLetras($(this).val())){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Ingresar texto</span>");
+	    		}
+			});
+	    	$.each(elementEmail,function(key,value){
+	    		if(!validarEmail($(this).val())){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Ingresar correo</span>");
+	    		}
+	    	});
+	    	$.each(elementNumero,function(key,value){
+	    		if(!validarNumeros($(this).val())){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Ingresar numero</span>");
+	    		}
+	    	});
+	    	$.each(elementDecimal,function(key,value){
+	    		if(!validarDecimales($(this).val())){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Ingresar numero [00,00]</span>");
+	    		}
+	    	});
+	    	$.each(elementFecha,function(key,value){
+	    		if(!validarFechas($(this).val())){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Ingresar fecha</span>");
+	    		}
+	    	});
+	    	$.each(elementHora,function(key,value){
+	    		if(!validarHoras($(this).val())){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Ingresar hora</span>");
+	    		}
+	    	});
+	    	$.each(elementSelect,function(key,value){
+	    		if($(this).val()=="0"||$(this).val()==""){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Seleccione valor</span>");
+	    		}
+			});
+	    	$.each(elementFile,function(key,value){
+	    		if($(this).val()=="0"||$(this).val()==""){
+	    			contador++;
+	    			$(this).after("<span class='error' style='color:red'>Suba un archivo</span>");
+	    		}
+			});
+	    	if(contador<1){
+	    		return true;
+	    	}else{
+	    		return false;
+	    	}
+		}
+		
+		function validarEmail(texto){
+		    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+		    if(filter.test(texto))
+		        return true;
+		    else
+		        return false;
+		}
+
+		function validarLetras(texto){
+			var filter =/^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
+		    if(filter.test(texto))
+		        return true;
+		    else
+		        return false;
+		}
+
+		function validarNumeros(texto){
+		    var filter = /^(?:\+|-)?\d+$/;
+		    if(filter.test(texto))
+		        return true;
+		    else
+		        return false;
+		}	
+
+		function validarDecimales(texto){
+		    var filter = /^-?[0-9]+([,\.][0-9]*)?$/;
+		    if(filter.test(texto))
+		        return true;
+		    else
+		        return false;
+		}	
+
+		function validarFechas(texto){
+		    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+		    if(filter.test(texto))
+		        return true;
+		    else
+		        return false;
+		}	
+
+		function validarHoras(texto){
+		    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
+		    if(filter.test(texto))
+		        return true;
+		    else
+		        return false;
+		}	
 });

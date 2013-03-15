@@ -15,6 +15,10 @@ $(document).ready(function(){
     
     buscar("PER.PERCODIGO_D","");
     
+    $("input[type=text]").keyup(function(){
+	  $(this).val( $(this).val().toUpperCase() );
+	});
+    
     function departamento(){
     	$.ajax({
     		data:{
@@ -66,6 +70,8 @@ $(document).ready(function(){
     }
     
     function procesar(){
+    	if(!validate("#divFormulario")) return;
+    	
     	$.ajax({ 
 			data:{
 				'inscodigoI':$("#txtCodigoInspector").val(),
@@ -93,19 +99,19 @@ $(document).ready(function(){
 	        success: function(data){
 	        	$("#txtCodigoAsociado").val(data.inscodigoI);
 	        	$("#txtCodigoPersona").val(data.persona.percodigoD);
+	        	buscar("INS.INSCODIGO_I",data.inscodigoI);
+	    		$("#divFormulario").dialog("close");
 	        	txtHtml="<p>Operación realizada correctamente</p>";
 	        	mensaje(txtHtml);
 	        }/*,error: function(jqXHR, textStatus, errorThrown){
 	        	mensajeError();
 	        }*/
-		});
-		//$("#divFormulario").dialog("close");
-		buscar("INS.INSCODIGO_I",$("#txtCodigoInspector").val());
-		$("#divFormulario").dialog("close");
+		});		
     }
     
     function llenarFormulario(data){
     	if(data!=""){
+    		$(".error").remove();
     		//alert(JSON.stringify(data));
     		$("#imgFotoInspector").attr("src","temp/"+data.foto.adjnombreV);
     		//$(".fileFotoAsociado").val("");
@@ -138,6 +144,7 @@ $(document).ready(function(){
         	}
         	$("#btnProcesar").val("Modificar");
     	}else{
+    		$(".error").remove();
     		$("#imgFotoInspector").attr("src","images/no_disponible.jpg");
     		$("#txtCodigoInspector").val(0);
     		$("#txtCodigoPersona").val(0);
@@ -172,7 +179,7 @@ $(document).ready(function(){
     	$("#divFormulario").dialog({
     		title:"Inspector",
     		width:1100,
-    		height: 600,
+    		//height: 600,
     		modal: true
     	});
     }
@@ -271,22 +278,40 @@ $(document).ready(function(){
     }
     
     function eliminar(){
-    	//alert($(this).attr("id").replace("mod",""));
-    	//svar eliminar=mensajeEliminar();
-    	
-    	$.ajax({ 
-    		data:{
-    			codigo:$(this).attr("id").replace("del","")
-    		},
-            datatype:'html',
-            type: "GET", 
-            url: "Inspectores/Eliminar.htm", 
-            success: function(data){
-            	//alert(JSON.stringify(data));
-            	llenarFormulario(data);
-            },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
-            }
+    	var codigo=$(this).attr("id").replace("del","");
+    	$("#divConfirmacion").remove();
+    	$("body").append("<div id='divConfirmacion'><p>¿Esta seguro que desea eliminar?</p></div>");
+    	$("#divConfirmacion").dialog({
+			title:'Eliminar',
+    		resizable: false,
+			height:180,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.5
+			},buttons: {
+				'Eliminar': function() {
+			    	$.ajax({ 
+			    		data:{
+			    			codigo:codigo
+			    		},
+			            datatype:'html',
+			            type: "GET", 
+			            url: "Inspectores/Eliminar.htm", 
+			            success: function(data){
+			            	//alert(JSON.stringify(data));
+			            	llenarFormulario(data);
+			            },error: function(jqXHR, textStatus, errorThrown){
+			            	mensajeError();
+			            }
+			    	});
+			    	buscar($("#sltCriterio").val(),$("#txtTexto").val());
+			        	$(this).dialog('close');
+					},
+				'Cancelar': function() {
+					$(this).dialog('close');
+				}
+			}
     	});
     }
     
@@ -327,7 +352,7 @@ $(document).ready(function(){
                 	});
                 },
                 error:function(){
-                    alert("ERROR DE ENVIO");
+                    alert("ERROR");
                 }
             };
             $(this).ajaxSubmit(options);
@@ -337,8 +362,6 @@ $(document).ready(function(){
     //DOCUMENTO
     $(".formDocumento").submit(function(){
     	var options={
-                //scriptCharset:"utf-8",
-                //contentType:"application/json; charset=utf-8",
     			type: "POST", 
                 url:'Inspectores/Documento.htm',
                 dataType:'json',
@@ -352,12 +375,12 @@ $(document).ready(function(){
                 },
                 success: function(responseText, statusText) {      
                 	$("#progressArchivo").hide();
-                	$("#progressFoto").progressbar({
+                	$("#progressArchivo").progressbar({
                         value: 0
                 	});
                 } ,
                 error:function(){
-                    alert("ERROR DE ENVIO");
+                    alert("ERROR");
                 }
             };
             $(this).ajaxSubmit(options);
@@ -411,4 +434,124 @@ $(document).ready(function(){
         .tablesorter({widthFixed: true, widgets: ['zebra']}) 
         .tablesorterPager({container: $("#pager")}); 	
 	}
+    
+    function validate(elemento){
+    	$(".error").remove();
+    	var elementText=$(elemento+" .requiredText");
+    	var elementEmail=$(elemento+" .requiredEmail");
+    	var elementNumero=$(elemento+" .requiredNumber");
+    	var elementDecimal=$(elemento+" .requiredDecimal");
+    	var elementFecha=$(elemento+" .requiredDate");
+    	var elementHora=$(elemento+" .requiredHour");
+    	var elementSelect=$(elemento+" .requiredSelect");
+    	var elementFile=$(elemento+" .requiredFile");
+    	var elementRequired=$(elemento+" .required");
+    	var contador=0;
+    	$.each(elementRequired,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementText,function(key,value){
+    		if(!validarLetras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementEmail,function(key,value){
+    		if(!validarEmail($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementNumero,function(key,value){
+    		if(!validarNumeros($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementDecimal,function(key,value){
+    		if(!validarDecimales($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementFecha,function(key,value){
+    		if(!validarFechas($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementHora,function(key,value){
+    		if(!validarHoras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementSelect,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementFile,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	if(contador<1){
+    		return true;
+    	}else{
+    		return false;
+    	}
+	}
+	
+	function validarEmail(texto){
+	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarLetras(texto){
+		var filter =/^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarNumeros(texto){
+	    var filter = /^(?:\+|-)?\d+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarDecimales(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarFechas(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarHoras(texto){
+	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
 });

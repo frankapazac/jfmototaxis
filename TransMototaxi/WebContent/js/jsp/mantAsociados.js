@@ -5,6 +5,10 @@ $(document).ready(function(){
     $("#dtNacimiento").datepicker({dateFormat:"dd/mm/yy"});
     $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
     
+    $("input[type=text]").keyup(function(){
+	  $(this).val( $(this).val().toUpperCase() );
+	});
+    
     buscar("PER.PERCODIGO_D","");
     
     //ACCIONES
@@ -14,6 +18,7 @@ $(document).ready(function(){
     
     $("#btnNuevo").click(function(){
     	llenarFormulario("");
+    	$("#tabs").tabs('enable',0).tabs("select",0);
     });
 
     $("#btnCancelar").click(function(){
@@ -53,6 +58,7 @@ $(document).ready(function(){
     });
     
     $("#btnProcesar").click(function(){
+    	if(!validate("#tabs1")) return;
 		$.ajax({ 
 			data:{
 				'asocodigoD':$("#txtCodigoAsociado").val(),
@@ -82,14 +88,14 @@ $(document).ready(function(){
 	        success: function(data){
 	        	$("#txtCodigoAsociado").val(data.asocodigoD);
 	        	$("#txtCodigoPersona").val(data.persona.percodigoD);
+	    		buscar("ASO.ASOCODIGO_D",data.asocodigoD);
 	        	txtHtml="<p>Operación realizada correctamente</p>";
 	        	mensaje(txtHtml);
 	        }/*,error: function(jqXHR, textStatus, errorThrown){
 	        	mensajeError();
 	        }*/
 		});
-		//$("#divFormulario").dialog("close");
-		buscar("ASO.ASOCODIGO_D",$("#txtCodigoAsociado").val());
+		$("#divFormulario").dialog("close");
 	});
     
 	//FUNCIONES    
@@ -222,6 +228,8 @@ $(document).ready(function(){
         		//$("#fileDocumento_"+data.listDocumentos[x].tipoDocumento.mtdcodigoI).val(data.listDocumentos[x].archivo.adjnombreV);	
         	}
     	}else{
+    		$("#imgFotoAsociado").attr("src","images/no_disponible.jpg");
+    		$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
     		$("#txtCodigoAsociado").val(0);
     		$("#txtCodigoPersona").val(0);
         	$("#txtNombres").val("");
@@ -253,9 +261,9 @@ $(document).ready(function(){
     	$("#divFormulario").show();
     	//$("#divFormulario").dialog("open");
     	$("#divFormulario").dialog({
-    		title:"Persona",
+    		title:"Asociados",
     		width:1100,
-    		height: 600,
+    		//height: 600,
     		modal: true
     	});
     }
@@ -272,10 +280,7 @@ $(document).ready(function(){
 		}, 1500 );
     }
     
-	//$(".btnModificar").click(modificar); 
-    
     function modificar(){
-    	//alert($(this).attr("id").replace("mod",""));
     	$.ajax({ 
     		data:{
     			codigo:$(this).attr("id").replace("mod","")
@@ -284,8 +289,8 @@ $(document).ready(function(){
             type: "GET", 
             url: "Asociados/Obtener.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarFormulario(data);
+            	$("#tabs").tabs('enable',0).tabs("select",0);
             },error: function(jqXHR, textStatus, errorThrown){
             	mensajeError();
             }
@@ -348,28 +353,26 @@ $(document).ready(function(){
     //FOTO
     $(".formFotoAsociado").submit(function(){
     	var options={
-                //scriptCharset:"utf-8",
-                //contentType:"application/json; charset=utf-8",
     			type: "POST", 
                 url:'Asociados/Foto.htm',
-                dataType:'html',
+                dataType:'json',
                 beforeSubmit:function(){
-                    //$("#progressbar").show();
+                    $("#progressFoto").show();
                 },
                 uploadProgress: function(event, position, total, percentComplete) {
-                	$("#txtCargando").empty();
-                	$("#txtCargando").val(percentComplete);
-                	//$("#progressbar").empty();
-                    //$("#progressbar").progressbar({
-                    //        value: percentComplete
-                    //});
+                	$("#progressFoto").progressbar({
+                        value: percentComplete
+                	});
                 },
-                success: function(responseText, statusText) {      
-                	//$("#divContenedorTab2").empty();
-                    //$("#divContenedorTab2").append(responseText);
+                success: function(responseText, statusText) {  
+                	$("#imgFotoAsociado").attr("src","temp/"+responseText);
+                    $("#progressFoto").hide();
+                    $("#progressFoto").progressbar({
+                        value: 0
+                	});
                 } ,
                 error:function(){
-                    //alert("ERROR DE ENVIO");
+                    alert("ERROR");
                 }
             };
             $(this).ajaxSubmit(options);
@@ -379,28 +382,25 @@ $(document).ready(function(){
     //DOCUMENTO
     $(".formDocumento").submit(function(){
     	var options={
-                //scriptCharset:"utf-8",
-                //contentType:"application/json; charset=utf-8",
     			type: "POST", 
                 url:'Asociados/Documento.htm',
                 dataType:'html',
                 beforeSubmit:function(){
-                    //$("#progressbar").show();
+                    $("#progressArchivoAsociado").show();
                 },
                 uploadProgress: function(event, position, total, percentComplete) {
-                	$("#txtCargando").empty();
-                	$("#txtCargando").val(percentComplete);
-                	//$("#progressbar").empty();
-                    //$("#progressbar").progressbar({
-                    //        value: percentComplete
-                    //});
+                	$("#progressArchivoAsociado").progressbar({
+                        value: percentComplete
+                	});
                 },
                 success: function(responseText, statusText) {      
-                	//$("#divContenedorTab2").empty();
-                    //$("#divContenedorTab2").append(responseText);
+                	$("#progressArchivoAsociado").hide();
+                    $("#progressArchivoAsociado").progressbar({
+                        value: 0
+                	});
                 } ,
                 error:function(){
-                    //alert("ERROR DE ENVIO");
+                    alert("ERROR");
                 }
             };
             $(this).ajaxSubmit(options);
@@ -412,4 +412,124 @@ $(document).ready(function(){
         .tablesorter({widthFixed: true, widgets: ['zebra']}) 
         .tablesorterPager({container: $("#pager")}); 	
 	}
+    
+    function validate(elemento){
+    	$(".error").remove();
+    	var elementText=$(elemento+" .requiredText");
+    	var elementEmail=$(elemento+" .requiredEmail");
+    	var elementNumero=$(elemento+" .requiredNumber");
+    	var elementDecimal=$(elemento+" .requiredDecimal");
+    	var elementFecha=$(elemento+" .requiredDate");
+    	var elementHora=$(elemento+" .requiredHour");
+    	var elementSelect=$(elemento+" .requiredSelect");
+    	var elementFile=$(elemento+" .requiredFile");
+    	var elementRequired=$(elemento+" .required");
+    	var contador=0;
+    	$.each(elementRequired,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementText,function(key,value){
+    		if(!validarLetras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementEmail,function(key,value){
+    		if(!validarEmail($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementNumero,function(key,value){
+    		if(!validarNumeros($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementDecimal,function(key,value){
+    		if(!validarDecimales($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementFecha,function(key,value){
+    		if(!validarFechas($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementHora,function(key,value){
+    		if(!validarHoras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementSelect,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementFile,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	if(contador<1){
+    		return true;
+    	}else{
+    		return false;
+    	}
+	}
+	
+	function validarEmail(texto){
+	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarLetras(texto){
+		var filter =/^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarNumeros(texto){
+	    var filter = /^(?:\+|-)?\d+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarDecimales(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarFechas(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarHoras(texto){
+	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
 });

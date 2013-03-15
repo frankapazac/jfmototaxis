@@ -35,8 +35,8 @@ $(document).ready(function(){
     	$("#tblLista").empty();
     	txtHtml="<thead>"
 			+"<th class='header'>NUM</th>"
-			+"<th class='header'>NOMBRE OPERATIVO</th>"
-			+"<th class='header'>ZONA ADMINISTRATIVA</th>"
+			+"<th class='header'>OPERATIVO</th>"
+			+"<th class='header'>ZONA</th>"
 			//+"<th class='header'>DESCRIPCION</th>"
 			+"<th class='header'>LUGAR</th>"
 			+"<th class='header'>REFERENCIA</th>"
@@ -144,7 +144,7 @@ $(document).ready(function(){
     	$("#divNuevoOperativo").dialog({
     		title:"Operativo",
     		width:800,
-    		height: 550,
+    		//height: 550,
     		modal: true	
     	});
     	
@@ -214,6 +214,7 @@ $(document).ready(function(){
     
     //GUARDAR OPERATIVOS
     $("#btnGuardar").click(function(){
+    	if(!validate("#divNuevoOperativo")) return;
 		//alert("entro a guardar");
 		$("#sltAgregaInspector option").prop('selected', true);
 		var inspectorList=new Object();
@@ -449,7 +450,120 @@ $(document).ready(function(){
 
     
     
-    
+    function validate(elemento){
+    	$(".error").remove();
+    	var elementText=$(elemento+" .requiredText");
+    	var elementEmail=$(elemento+" .requiredEmail");
+    	var elementNumero=$(elemento+" .requiredNumber");
+    	var elementDecimal=$(elemento+" .requiredDecimal");
+    	var elementFecha=$(elemento+" .requiredDate");
+    	var elementHora=$(elemento+" .requiredHour");
+    	var elementSelect=$(elemento+" .requiredSelect");
+    	var elementFile=$(elemento+" .requiredFile");
+    	var contador=0;
+    	$.each(elementText,function(key,value){
+    		if(!validarLetras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementEmail,function(key,value){
+    		if(!validarEmail($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementNumero,function(key,value){
+    		if(!validarNumeros($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementDecimal,function(key,value){
+    		if(!validarDecimales($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementFecha,function(key,value){
+    		if(!validarFechas($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementHora,function(key,value){
+    		if(!validarHoras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementSelect,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementFile,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+
+    	if(contador<1){
+    		return true;
+    	}else{
+    		return false;
+    	}
+	}
+	
+	function validarEmail(texto){
+	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarLetras(texto){
+	    var filter = /^[A-Za-z\_\-\.\s\xF1\xD1]+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarNumeros(texto){
+	    var filter = /^(?:\+|-)?\d+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarDecimales(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarFechas(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarHoras(texto){
+	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
     
     
 });	

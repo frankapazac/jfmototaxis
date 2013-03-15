@@ -1,9 +1,6 @@
 $(document).ready(function(){
 	$("#divFormulario").hide();
-	$("#divFormularioVer").hide();
-    
-    var asocodigo_d="0";
-     
+	$("#divFormularioVer").hide();     
 	$("#sltConductor").change(buscarConductorPorCodigo);
 	$("#txtConductorDNI").keyup(buscarConductorPorDNI);
 	$("#sltPlacas").change(buscarUnidadPorCodigo);
@@ -28,6 +25,10 @@ $(document).ready(function(){
     	}
     );
     buscar("PMO.CONDNOMBCOMP","");
+    
+	$("input[type=text],textarea").keyup(function(){
+	  $(this).val( $(this).val().toUpperCase() );
+	});
     
     function buscar(criterio, texto){
     	$.ajax({ 
@@ -84,6 +85,7 @@ $(document).ready(function(){
     }
 
     function insertarPapeleta(){
+    	if(!validate("#divFormulario")) return;
     	$.ajax({ 
     		data:{
     			'papcodigoD':$("#txtNumeroPapeleta").val(),
@@ -158,10 +160,6 @@ $(document).ready(function(){
             }
     	});	
 	}
-	
-	$("#btnGuardar").click(function(){
-		//alert($('#sltConductor').combobox('getValue'));
-	});
 	
 	function buscarPorInfraccion(){
 		$.ajax({ 
@@ -432,9 +430,9 @@ $(document).ready(function(){
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
-    	paginacion();
     	$(".btnVer").click(verAjaxPapeleta);
     	$(".btnModificar").click(obtenerPapeleta);
+    	paginacion();
     }
 	
 	function obtenerPapeleta(){
@@ -532,14 +530,13 @@ $(document).ready(function(){
 			$("#txaObserInfraccion").val("");
 		}
 		$("#divFormulario").dialog({
-    		title:"Inspector",
-    		width: 1100,
-    		height: 600,
+    		title:"Papeleta",
+    		width: 900,
+    		//height: 600,
     		modal: true
     	});
 	}
 	
-
 	function verAjaxPapeleta(){
 		$.ajax({ 
     		data:{
@@ -602,7 +599,7 @@ $(document).ready(function(){
 		$("#divFormularioVer").dialog({
     		title:"Ver",
     		width: 900,
-    		height: 600,
+    		//height: 600,
     		modal: true
     	});
 	}
@@ -620,6 +617,126 @@ $(document).ready(function(){
         .tablesorter({widthFixed: true, widgets: ['zebra']}) 
         .tablesorterPager({container: $("#pager")}); 	
 	}
+	
+	function validate(elemento){
+    	$(".error").remove();
+    	var elementText=$(elemento+" .requiredText");
+    	var elementEmail=$(elemento+" .requiredEmail");
+    	var elementNumero=$(elemento+" .requiredNumber");
+    	var elementDecimal=$(elemento+" .requiredDecimal");
+    	var elementFecha=$(elemento+" .requiredDate");
+    	var elementHora=$(elemento+" .requiredHour");
+    	var elementSelect=$(elemento+" .requiredSelect");
+    	var elementFile=$(elemento+" .requiredFile");
+    	var elementRequired=$(elemento+" .required");
+    	var contador=0;
+    	$.each(elementRequired,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementText,function(key,value){
+    		if(!validarLetras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementEmail,function(key,value){
+    		if(!validarEmail($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementNumero,function(key,value){
+    		if(!validarNumeros($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementDecimal,function(key,value){
+    		if(!validarDecimales($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementFecha,function(key,value){
+    		if(!validarFechas($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementHora,function(key,value){
+    		if(!validarHoras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementSelect,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementFile,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	if(contador<1){
+    		return true;
+    	}else{
+    		return false;
+    	}
+	}
+	
+	function validarEmail(texto){
+	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarLetras(texto){
+	    var filter = /^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarNumeros(texto){
+	    var filter = /^(?:\+|-)?\d+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarDecimales(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarFechas(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarHoras(texto){
+	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
 	
 });
 
