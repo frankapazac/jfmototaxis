@@ -17,6 +17,12 @@
 		p:url="classpath:reports/reportPapeleta.jrxml"
 		p:jdbcDataSource-ref="dataSource">
 	</bean>
+		
+	<bean id="reportInternamiento" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/reportInternamiento.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
 	
 	
 	<bean id="reportInformePapeletasxFechas" 
