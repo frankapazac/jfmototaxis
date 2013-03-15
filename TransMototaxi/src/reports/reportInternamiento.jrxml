@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportInternamiento" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="952d11f8-7b27-4ee5-acb2-8f4b535dc491">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="@CODIGO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\SpringResources\\proyectos\\TransMototaxi\\WebContent\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT ITE.INTCODIGO_D AS INTCODIGO,
+BIN.BINNUMERO_V AS NUMERO,
+ISNULL(CAST(PAP.PAPNUMERO_V AS VARCHAR),'') AS PAPNUMERO,
+'V. A. Menor' AS CLASE,
+ISNULL(BIN.BINMOTIVO_V,'') AS MOTIVO,
+CONVERT(VARCHAR,ITE.INTFECHAINGRESO_F,103) AS INGRESO,
+CONVERT(VARCHAR,ITE.INTFECHAINGRESO_F,108) AS INGRESO_HORA,
+PERC.PERDNI_V AS COND_DNI,
+PERC.PERPATERNO_V+' '+PERC.PERMATERNO_V+', '+PERC.PERNOMBRES_V AS COND_NOMBRES,
+PERC.PERDOMICILIO_V AS COND_DIRECCION,
+PERC.PERTELEFFIJO_V AS COND_TELEFONO,
+ISNULL(PERC.PERMOVILMOV_V+' (Movistar)',ISNULL(PERC.PERMOVILCLA_V+' (Claro)',ISNULL(PERC.PERMOVILNEX_V+' (Nextel)',''))) AS COND_MOVIL,
+ISNULL(ADJ.ADJNUMERO_V,'') AS LIC_NUMERO,
+ISNULL(CONVERT(VARCHAR,ADJ.ADJFECHAEMISION_F,103),'') AS LIC_EMISION,
+ISNULL(CONVERT(VARCHAR,ADJ.ADJFECHACADUCIDAD_F,103),'') AS LIC_CADUCIDAD,
+CASE WHEN GETDATE()<=ADJ.ADJFECHACADUCIDAD_F THEN 'ACTIVO' ELSE 'CADUCO' END AS ESTADO,
+UNE.UNEPLACANRO_V AS UNID_PLACA,
+MAR.MARNOMBRE_V AS UNID_MARCA,
+UNE.UNENROMOTOR_V AS UNID_MOTOR,
+UNE.UNECOLOR_V AS UNID_COLOR,
+CASE UNE.UNECOMBUSTIBLE_C WHEN 'G' THEN 'GASOLINERO'
+ELSE 'PETROLERO' END AS UNID_COMBUSTIBLE,
+PERA.PERDNI_V AS PROP_DNI,
+PERA.PERPATERNO_V+' '+PERA.PERMATERNO_V+', '+PERA.PERNOMBRES_V AS PROP_NOMBRES,
+PERA.PERDOMICILIO_V AS PROP_DOMICILIO,
+PERA.PERTELEFFIJO_V AS PROP_TELEFONO,
+ISNULL(PERA.PERMOVILMOV_V+' (Movistar)',ISNULL(PERA.PERMOVILCLA_V+' (Claro)',ISNULL(PERA.PERMOVILNEX_V+' (Nextel)',''))) AS PROP_MOVIL,
+EMP.EMPRAZONSOCIAL_V AS EMPR_RAZONSOCIAL,
+EMP.EMPDIRECCION_V AS EMPR_DIRECCION,
+ISNULL(EMP.EMPTELEFONO1_V,ISNULL(EMP.EMPTELEFONO2_V,'')) AS EMPR_TELEFONO,
+ISNULL(EMP.EMPCELULARMOV_V+' (Movistar)',ISNULL(EMP.EMPCELULARCLA_V+' (Claro)',ISNULL(EMP.EMPCELULARNEX_V+' (Nextel)',''))) AS EMPR_CELULAR,
+ISNULL(ITE.INTOBSERVACIONES_V,'') AS OBSERVACIONES
+FROM MOT_INTERNAMIENTO ITE
+INNER JOIN MOT_CONDUCTOR CON ON CON.CONDCODIGO_I=ITE.CONDCODIGO_I
+LEFT JOIN (SELECT CONDCODIGO_D,ADJCODIGO_D,MTDCODIGO_I FROM MOT_COND_DOCUMENTO WHERE CDOESTADO_C!='I' AND MTDCODIGO_I=18) CDO ON CDO.CONDCODIGO_D=CON.CONDCODIGO_I
+LEFT JOIN MOT_ADJUNTAR_ARCHIVO ADJ ON ADJ.ADJCODIGO_D=CDO.ADJCODIGO_D
+INNER JOIN MOT_PERSONA PERC ON PERC.PERCODIGO_D=CON.PERCODIGO_D
+INNER JOIN MOT_PROP_UNIEMPRESA PUE ON PUE.PMOCODIGO_D=ITE.PMOCODIGO_D
+INNER JOIN MOT_EMPR_ASOCIADO ASO ON ASO.ASOCODIGO_D=PUE.ASOCODIGO_D
+INNER JOIN MOT_PERSONA PERA ON PERA.PERCODIGO_D=ASO.PERCODIGO_D
+INNER JOIN MOT_UNIDAD_EMPRESA UNE ON UNE.UNECODIGO_D=PUE.UNECODIGO_D
+LEFT JOIN MOT_MARCA MAR ON MAR.MARCODIGO_I=UNE.MARCODIGO_I
+LEFT JOIN MOT_PAPELETA PAP ON PAP.PAPCODIGO_D=ITE.PAPCODIGO_D
+LEFT JOIN MOT_BOLETA_INTERNAMIENTO BIN ON BIN.BINCODIGO_D=ITE.BINCODIGO_D
+LEFT JOIN MOT_EMPADRONAMIENTO EPA ON EPA.UNECODIGO_D=UNE.UNECODIGO_D
+LEFT JOIN MOT_EMPRESA EMP ON EMP.EMPCODIGO_D=EPA.EMPCODIGO_D
+WHERE ITE.INTCODIGO_D=$P{@CODIGO}]]>
+	</queryString>
+	<field name="INTCODIGO" class="java.math.BigDecimal"/>
+	<field name="NUMERO" class="java.lang.String"/>
+	<field name="PAPNUMERO" class="java.lang.String"/>
+	<field name="CLASE" class="java.lang.String"/>
+	<field name="MOTIVO" class="java.lang.String"/>
+	<field name="INGRESO" class="java.lang.String"/>
+	<field name="INGRESO_HORA" class="java.lang.String"/>
+	<field name="COND_DNI" class="java.lang.String"/>
+	<field name="COND_NOMBRES" class="java.lang.String"/>
+	<field name="COND_DIRECCION" class="java.lang.String"/>
+	<field name="COND_TELEFONO" class="java.lang.String"/>
+	<field name="COND_MOVIL" class="java.lang.String"/>
+	<field name="LIC_NUMERO" class="java.lang.String"/>
+	<field name="LIC_EMISION" class="java.lang.String"/>
+	<field name="LIC_CADUCIDAD" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="UNID_PLACA" class="java.lang.String"/>
+	<field name="UNID_MARCA" class="java.lang.String"/>
+	<field name="UNID_MOTOR" class="java.lang.String"/>
+	<field name="UNID_COLOR" class="java.lang.String"/>
+	<field name="UNID_COMBUSTIBLE" class="java.lang.String"/>
+	<field name="PROP_DNI" class="java.lang.String"/>
+	<field name="PROP_NOMBRES" class="java.lang.String"/>
+	<field name="PROP_DOMICILIO" class="java.lang.String"/>
+	<field name="PROP_TELEFONO" class="java.lang.String"/>
+	<field name="PROP_MOVIL" class="java.lang.String"/>
+	<field name="EMPR_RAZONSOCIAL" class="java.lang.String"/>
+	<field name="EMPR_DIRECCION" class="java.lang.String"/>
+	<field name="EMPR_TELEFONO" class="java.lang.String"/>
+	<field name="EMPR_CELULAR" class="java.lang.String"/>
+	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="23" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="320" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a88c26eb-9f42-459e-8c26-d8b9235d88e3" x="35" y="0" width="500" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOLETA DE INTERNAMIENTO Y SITUACION DE VEHICULOS MENORES U OTROS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="82fef625-2efd-424e-886e-d297d64f1177" x="35" y="27" width="500" height="32"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Motivo\t: "+$F{MOTIVO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d07786e3-531c-44d4-be6b-9ccd7e181fed" x="35" y="59" width="500" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEL VEHICULO INTERNADO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="81c5d08e-5d88-4031-869b-85bc64587d0d" x="35" y="79" width="180" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Placa\t: "+$F{UNID_PLACA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f8912815-53d2-40e3-bcbd-4686809627bf" x="215" y="79" width="160" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Fecha\t: "+$F{INGRESO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5b2cdcae-c446-4f88-8f1b-82dfe900031f" x="375" y="79" width="160" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Hora\t: "+$F{INGRESO_HORA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e7d6de19-6290-4237-8066-5cdb748b522f" x="35" y="119" width="180" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Marca\t: "+$F{UNID_MARCA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84bbdf8a-3089-4df9-8765-a73803dd0df5" x="35" y="99" width="180" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Clase\t: "+$F{CLASE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d181f3a2-ab61-4634-8668-f2192c3cdf81" x="215" y="99" width="320" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Color\t: "+$F{UNID_COLOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a7f2d5ec-7b69-49d0-b223-989b1fc2b458" x="215" y="119" width="160" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["N° motor\t: "+$F{UNID_MOTOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="39fb3ab8-6ffa-4019-980f-218191e25b0b" x="375" y="119" width="160" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Combustible\t: "+$F{UNID_COMBUSTIBLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e2ea1545-0b10-4d8c-bd21-8178ad94d737" x="35" y="139" width="340" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Conductor\t: "+$F{COND_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3a214fa5-227e-4694-bc18-1746b1bed7b7" x="35" y="159" width="500" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Dirección\t: "+$F{COND_DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0469bd99-80b6-49c6-bd72-c3205d5c8d73" x="35" y="179" width="250" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Telefono  \t: "+$F{PROP_TELEFONO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="98883bfb-e4d3-4323-bbff-c92e9e8e3495" x="285" y="179" width="250" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Celular    \t: "+$F{COND_MOVIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e2c5c7cc-88ae-4e02-a508-758af0ef77f8" x="375" y="139" width="160" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["DNI\t: "+$F{COND_DNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="597b59a6-cc04-4c68-8b1c-ad7fb21c2eb8" x="35" y="199" width="340" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Propietario\t: "+$F{PROP_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b0783cfb-4ea3-4343-8ebd-9435e61fc4b2" x="375" y="199" width="160" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["DNI\t: "+$F{PROP_DNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="203e5680-87a9-4d8d-bc7a-b996a1994486" x="35" y="219" width="500" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Dirección\t: "+$F{PROP_DOMICILIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3757eba4-fe14-4424-99f0-061826e7e1a9" x="35" y="239" width="250" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Telefono   \t: "+$F{PROP_TELEFONO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="853b7fd1-5cc1-4922-857a-9e4eb49b3a5b" x="285" y="239" width="250" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Celular    \t: "+$F{PROP_MOVIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ac6de623-bd0d-4073-98a9-b491fd548a22" x="35" y="259" width="500" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Empresa\t: "+$F{EMPR_RAZONSOCIAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5c0533d8-4f46-4360-8f51-5a1003acadad" x="35" y="279" width="500" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Dirección\t: "+$F{EMPR_DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="21086d07-a0ba-41aa-9f16-35902fe4ac51" x="35" y="299" width="250" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Telefono   \t: "+$F{EMPR_TELEFONO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0053c506-6780-49e4-a572-97485104bd51" x="285" y="299" width="250" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Celular    \t: "+$F{EMPR_CELULAR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a88c26eb-9f42-459e-8c26-d8b9235d88e3" x="35" y="0" width="500" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVENTARIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="54" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="1eba7d47-61fc-41bd-bd50-ff5c764be484" x="35" y="0" width="500" height="52"/>
+				<subreportParameter name="INTERNAMIENTO">
+					<subreportParameterExpression><![CDATA[$P{@CODIGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reportInternamientopSubReportParteExterior.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="54">
+			<subreport>
+				<reportElement uuid="05b66556-f36b-4727-a494-771e8f545240" x="35" y="0" width="500" height="52"/>
+				<subreportParameter name="INTERNAMIENTO">
+					<subreportParameterExpression><![CDATA[$P{@CODIGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reportInternamientopSubReportParteInterior.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="55">
+			<subreport>
+				<reportElement uuid="4d08703a-8a25-415f-a0db-a99f4f79381e" x="35" y="0" width="500" height="52"/>
+				<subreportParameter name="INTERNAMIENTO">
+					<subreportParameterExpression><![CDATA[$P{@CODIGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reportInternamientopSubReportParteMotor.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="70" splitType="Stretch">
+			<textField>
+				<reportElement uuid="291b4f1f-37f1-4d53-bb25-5ed77c2b98ae" x="35" y="0" width="500" height="66"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Observaciones\t: "+$F{OBSERVACIONES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="14" splitType="Stretch"/>
+	</summary>
+</jasperReport>
