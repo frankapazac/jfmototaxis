@@ -16,32 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotAdjuntarArchivo;
-import com.munichosica.myapp.dto.MotAsocDocumento;
 import com.munichosica.myapp.dto.MotCondDocumento;
-import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.dto.MotEmpConductor;
-import com.munichosica.myapp.dto.MotEmpParadero;
 import com.munichosica.myapp.dto.MotInspDocumento;
-import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUnidConductor;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
-import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpConductorDaoException;
-import com.munichosica.myapp.exceptions.MotEmpParaderoDaoException;
-import com.munichosica.myapp.exceptions.MotInspDocumentoDaoException;
-import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotUnidConductorDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
-import com.munichosica.myapp.factory.MotAsocDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotCondDocumentoDaoFactory;
-import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.factory.MotEmpConductorDaoFactory;
-import com.munichosica.myapp.factory.MotEmpParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotInspDocumentoDaoFactory;
-import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotUnidConductorDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
 import com.munichosica.myapp.util.UTFEncodingUtil;
@@ -123,7 +111,7 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 		Rol rol = (Rol) session.getAttribute("ROL");
 		DocumentoConductorSession documentos = (DocumentoConductorSession)
 				session.getAttribute("DOC_CONDUCTOR");
-		
+		DocumentoConductorSession foto=(DocumentoConductorSession) session.getAttribute("FOTO_CONDUCTOR");
 		conductor.setEmpresa((rol.getUsuario().getEmpresa()));
 		UTFEncodingUtil.decodeObjectUTF(conductor);
 		UTFEncodingUtil.decodeObjectUTF(conductor.getConductor().getPersona());
@@ -141,6 +129,17 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 				}
 			}
 			
+			if(foto!=null){
+				if(foto.getList()!=null && foto.getList().size()>0){
+					for(MotCondDocumento docum:foto.getList()){
+						docum.setConductor(conductor.getConductor());
+						MotAdjuntarArchivoDaoFactory.create().insert(docum.getAdjuntarArchivo());
+						MotCondDocumentoDaoFactory.create().insert(docum);
+						logger.info("MotCondDocumentoDaoFactory.create().insert(docum); Complete codigo: "+docum.getCdocodigoD());
+					}
+				}
+			}
+			
 		} catch (MotEmpConductorDaoException | MotAdjuntarArchivoDaoException | MotCondDocumentoDaoException e) {
 			logger.error(e.getMessage());
 		}
@@ -149,9 +148,43 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 		
 	}
 	
+	@RequestMapping(value="Foto.htm", method=RequestMethod.POST, headers="content-type=multipart/form-data")
+	public @ResponseBody String agregarFoto(HttpServletRequest request){
+		logger.info("Ingreso a Conductores/Foto.htm");
+		HttpSession session=request.getSession(true);
+		DocumentoConductorSession documentos=(DocumentoConductorSession) session.getAttribute("FOTO_CONDUCTOR");
+		if(documentos==null){
+			documentos=new DocumentoConductorSession();
+			session.setAttribute("FOTO_CONDUCTOR", documentos);
+			logger.info("Se creo session.setAttribute('FOTO_CONDUCTOR', documentos);");
+		}
+		String nombreArchivo="";
+		try {
+			for(Part part:request.getParts()){
+				MotCondDocumento documento=new MotCondDocumento();
+				InputStream inputStream=request.getPart(part.getName()).getInputStream();
+				int i=inputStream.available();
+				byte[] bs=new byte[i];
+				inputStream.read(bs);
+				if(part.getName().equals("fileFotoConductor")){
+					String filename=FileUtil.getFilename(part);
+					documento.getAdjuntarArchivo().setAdjcodigoD(0L);
+					documento.getAdjuntarArchivo().setAdjnombreV(filename);
+					documento.getAdjuntarArchivo().setAdjarchivoB(FileUtil.compress(bs));
+					documento.getAdjuntarArchivo().setAdjextensionV(FileUtil.getExtension(filename));
+					nombreArchivo=FileUtil.createTempFile(request, documento.getAdjuntarArchivo().getAdjnombreV(), bs);
+				}
+				documento.getTipoDocumento().setMtdcodigoI(21);
+				documentos.add(documento);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		} 
+		return nombreArchivo;
+	}
 	
 	@RequestMapping(value="Documento.htm", method=RequestMethod.POST, headers="content-type=multipart/form-data")
-	public String agregarDocumento(HttpServletRequest request){
+	public @ResponseBody String agregarDocumento(HttpServletRequest request){
 		logger.info("Ingreso a Condcutores/Documento.htm");
 		HttpSession session=request.getSession(true);
 		DocumentoConductorSession documentos=(DocumentoConductorSession) session.getAttribute("DOC_CONDUCTOR");
@@ -220,6 +253,12 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 			
 			List<MotCondDocumento> listDocumentos=MotCondDocumentoDaoFactory.create().findByIdConductor(codigo);
 			conductor.getConductor().setDocumentos(listDocumentos);
+			
+			String nombreArchivo=null;
+			if(conductor.getConductor().getFoto()!=null&&conductor.getConductor().getFoto().getAdjarchivoB()!=null){
+				nombreArchivo=FileUtil.createTempFile(request, conductor.getConductor().getFoto().getAdjnombreV(),conductor.getConductor().getFoto().getAdjarchivoB());
+				conductor.getConductor().getFoto().setAdjnombreV(nombreArchivo);
+			}
 		} catch (MotCondDocumentoDaoException e) {
 			logger.error(e.getMessage());
 		}

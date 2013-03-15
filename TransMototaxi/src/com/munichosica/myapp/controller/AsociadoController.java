@@ -118,6 +118,8 @@ public class AsociadoController {
 			asociadoUtil.setListDocumentos(listDocumentos);
 			logger.info("MotEmprAsociadoDaoFactory.create().findByPrimaryKey(codigo); Complete");
 			String nombreArchivo=null;
+			System.out.println(asociado);
+			System.out.println(asociado.getFoto());
 			if(asociado.getFoto().getAdjarchivoB()!=null){
 				nombreArchivo=FileUtil.createTempFile(request, asociado.getFoto().getAdjnombreV(),asociado.getFoto().getAdjarchivoB());
 				asociado.getFoto().setAdjnombreV(nombreArchivo);
@@ -141,7 +143,7 @@ public class AsociadoController {
 	}
 	
 	@RequestMapping(value="Foto.htm", method=RequestMethod.POST, headers="content-type=multipart/form-data")
-	public String agregarFoto(HttpServletRequest request){
+	public @ResponseBody String agregarFoto(HttpServletRequest request){
 		logger.info("Ingreso a Asociados/Foto.htm");
 		HttpSession session=request.getSession(true);
 		DocumentoSession documentos=(DocumentoSession) session.getAttribute("FOTO");
@@ -150,6 +152,7 @@ public class AsociadoController {
 			session.setAttribute("FOTO", documentos);
 			logger.info("Se creo session.setAttribute('DOCUMENTOS', documentos);");
 		}
+		String nombreArchivo="";
 		try {
 			for(Part part:request.getParts()){
 				MotAsocDocumento documento=new MotAsocDocumento();
@@ -163,6 +166,7 @@ public class AsociadoController {
 					documento.getArchivo().setAdjnombreV(filename);
 					documento.getArchivo().setAdjarchivoB(FileUtil.compress(bs));
 					documento.getArchivo().setAdjextensionV(FileUtil.getExtension(filename));
+					nombreArchivo=FileUtil.createTempFile(request, documento.getArchivo().getAdjnombreV(), bs);
 				}
 				documento.getTipoDocumento().setMtdcodigoI(16);
 				documentos.add(documento);
@@ -170,7 +174,7 @@ public class AsociadoController {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		} 
-		return "Success";
+		return nombreArchivo;
 	}
 	
 	@RequestMapping(value="Documento.htm", method=RequestMethod.POST, headers="content-type=multipart/form-data")

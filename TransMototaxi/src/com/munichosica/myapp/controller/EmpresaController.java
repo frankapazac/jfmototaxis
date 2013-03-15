@@ -1,12 +1,10 @@
 package com.munichosica.myapp.controller;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -20,12 +18,11 @@ import com.munichosica.myapp.dto.MotEmpresa;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpDocumentoDaoException;
-import com.munichosica.myapp.exceptions.MotEmpParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpresaDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
 import com.munichosica.myapp.factory.MotEmpDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotEmpresaDaoFactory;
-import com.munichosica.myapp.jdbc.ResourceManager;
+import com.munichosica.myapp.util.FileUtil;
 
 @Controller
 @RequestMapping("/Configuracion")
@@ -52,14 +49,14 @@ public class EmpresaController{
 	public String actualizar(HttpServletRequest request ,MotEmpresa empresa){
 		try {
 			HttpSession session=request.getSession(true);
-			EmpresaDocumentoSession documentoSession=(EmpresaDocumentoSession) session.getAttribute("DOCUMENTOS_EMPRESA");
+			DocumentoEmpresaSession documentos=(DocumentoEmpresaSession) session.getAttribute("FOTO_EMPRESA");
 			Rol rol=(Rol) session.getAttribute("ROL");
 			logger.info("Ingreso a Configuracion/Actualizar.htm");
 			MotEmpresaDaoFactory.create().update(empresa);
 			logger.info("MotEmpresaDaoFactory.create().update(empresa); Completed codigo: "+empresa.getEmpcodigoD());
-			if(documentoSession!=null){
-				if(documentoSession.getList()!=null&&documentoSession.getList().size()>0){
-					for(MotEmpDocumento documento: documentoSession.getList()){
+			if(documentos!=null){
+				if(documentos.getList()!=null&&documentos.getList().size()>0){
+					for(MotEmpDocumento documento: documentos.getList()){
 						documento.setEmpresa(rol.getUsuario().getEmpresa());
 						MotAdjuntarArchivoDaoFactory.create().insert(documento.getAdjuntarArchivo());
 						MotEmpDocumentoDaoFactory.create().insert(documento);
@@ -71,6 +68,44 @@ public class EmpresaController{
 		}
 		
 		return "Success";
+	}
+	
+	@RequestMapping(value="Foto.htm", method=RequestMethod.POST, headers="content-type=multipart/form-data")
+	public @ResponseBody String agregarFoto(HttpServletRequest request){
+		logger.info("Ingreso a Configuracion/Foto.htm");
+		HttpSession session=request.getSession(true);
+		DocumentoEmpresaSession documentos=(DocumentoEmpresaSession) session.getAttribute("FOTO_EMPRESA");
+		if(documentos==null){
+			documentos=new DocumentoEmpresaSession();
+			session.setAttribute("FOTO_EMPRESA", documentos);
+			logger.info("Se creo session.setAttribute('FOTO_EMPRESA', documentos);");
+		}
+		String nombreArchivo="";
+		try {
+			MotEmpDocumento documento=new MotEmpDocumento();
+			for(Part part:request.getParts()){
+				InputStream inputStream=request.getPart(part.getName()).getInputStream();
+				int i=inputStream.available();
+				byte[] bs=new byte[i];
+				inputStream.read(bs);
+				if(part.getName().equals("flFoto")){
+					String filename=FileUtil.getFilename(part);
+					documento.getAdjuntarArchivo().setAdjcodigoD(0L);
+					documento.getAdjuntarArchivo().setAdjnombreV(filename);
+					documento.getAdjuntarArchivo().setAdjarchivoB(FileUtil.compress(bs));
+					documento.getAdjuntarArchivo().setAdjextensionV(FileUtil.getExtension(filename));
+					nombreArchivo=FileUtil.createTempFile(request, documento.getAdjuntarArchivo().getAdjnombreV(), bs);
+				}else if(part.getName().equals("txtFotoCodigo")){
+					documento.getTipoDocumento().setMtdcodigoI(Integer.parseInt(new String(bs,"UTF8")));
+				}
+			}
+			nombreArchivo=documento.getTipoDocumento().getMtdcodigoI()+"|"+nombreArchivo;
+			documentos.add(documento);
+			logger.info("Fotos empresa subidos: "+documentos.getList().size());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		} 
+		return nombreArchivo;
 	}
 
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.pattern.LogEvent;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -115,12 +114,15 @@ public class InspectorController {
 			logger.info("MotInspectorDaoFactory.create().findByPrimaryKey(codigo); Completed");
 			
 			List<MotInspDocumento> listDocumentos=MotInspDocumentoDaoFactory.create().findByIdInspector(codigo);
+			if(listDocumentos!=null)
 			inspector.setDocumentos(listDocumentos);
 			
 			String nombreArchivo=null;
-			if(inspector.getFoto().getAdjarchivoB()!=null){
-				nombreArchivo=FileUtil.createTempFile(request, inspector.getFoto().getAdjnombreV(),inspector.getFoto().getAdjarchivoB());
-				inspector.getFoto().setAdjnombreV(nombreArchivo);
+			if(inspector.getFoto()!=null){
+				if(inspector.getFoto().getAdjarchivoB()!=null){
+					nombreArchivo=FileUtil.createTempFile(request, inspector.getFoto().getAdjnombreV(),inspector.getFoto().getAdjarchivoB());
+					inspector.getFoto().setAdjnombreV(nombreArchivo);
+				}
 			}
 		} catch (MotInspectorDaoException | MotInspDocumentoDaoException e) {
 			logger.error(e.getMessage());
