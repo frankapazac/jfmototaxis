@@ -18,4 +18,17 @@
 		p:jdbcDataSource-ref="dataSource">
 	</bean>
 	
+	
+	<bean id="reportInformePapeletasxFechas" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/RptTopPapeletas.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
+	<bean id="reportInformeConductorAltaRotacion" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/reportCondAltaRotacion.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
 </beans>
