@@ -8,7 +8,6 @@ $(document).ready(function(){
     });
     
     $("#btnImprimirRotacion").click(function(){
-    	alert("");
     	var linkText="Documentos/ImprimirCondAltaRotacionPdf.htm";
     	window.open(linkText);
     });

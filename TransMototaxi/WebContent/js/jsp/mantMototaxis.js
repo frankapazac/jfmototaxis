@@ -163,7 +163,7 @@ $(document).ready(function(){
 	    	$("#divInformeMotoTaxi").dialog({
 	    		title:"Informe",
 	    		width:1200,
-	    		height: 800,
+	    		//height: 800,
 	    		modal: true	
 	    	});
 	    	
