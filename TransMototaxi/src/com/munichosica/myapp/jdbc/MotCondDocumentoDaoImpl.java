@@ -95,6 +95,8 @@ public class MotCondDocumentoDaoImpl implements MotCondDocumentoDao {
 					conductor.getConductor().getPersona().setPerubidistnombreV(rs.getString("DISTRITONOMBRE"));
 					conductor.getConductor().getPersona().setPersexoC(rs.getString("SEXO"));
 					conductor.getEmpresaConductor().setEcofechainicioF(rs.getString("FECHA INICIO"));
+					conductor.getConductor().getFoto().setAdjnombreV(rs.getString("ARCHIVONOMBRE"));
+					conductor.getConductor().getFoto().setAdjarchivoB(rs.getBytes("ARCHIVO")!=null?FileUtil.deCompress(rs.getBytes("ARCHIVO")):null);
 				}
 			}
 		}

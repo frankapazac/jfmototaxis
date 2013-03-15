@@ -58,13 +58,13 @@ public class MotInspDocumentoDaoImpl implements MotInspDocumentoDao{
 				MotInspDocumento documento=null;
 				while(rs.next()){
 					documento=new MotInspDocumento();
-					System.out.println(rs.getLong("IDOCODIGO"));documento.setIdocodigoD(rs.getLong("IDOCODIGO"));
-					System.out.println(rs.getInt("TDOCODIGO"));documento.getTipoDocumento().setMtdcodigoI(rs.getInt("TDOCODIGO"));
-					System.out.println(rs.getLong("CODIGO"));documento.getArchivo().setAdjcodigoD(rs.getLong("CODIGO"));
-					System.out.println(rs.getString("NUMERO"));documento.getArchivo().setAdjnumeroV(rs.getString("NUMERO"));
-					System.out.println(rs.getString("FECHAEMISION"));documento.getArchivo().setAdjfechaemisionF(rs.getString("FECHAEMISION"));
-					System.out.println(rs.getString("FECHACADUCIDAD"));documento.getArchivo().setAdjfechacaducidadF(rs.getString("FECHACADUCIDAD"));
-					System.out.println(rs.getString("NOMBRE"));documento.getArchivo().setAdjnombreV(rs.getString("NOMBRE"));
+					documento.setIdocodigoD(rs.getLong("IDOCODIGO"));
+					documento.getTipoDocumento().setMtdcodigoI(rs.getInt("TDOCODIGO"));
+					documento.getArchivo().setAdjcodigoD(rs.getLong("CODIGO"));
+					documento.getArchivo().setAdjnumeroV(rs.getString("NUMERO"));
+					documento.getArchivo().setAdjfechaemisionF(rs.getString("FECHAEMISION"));
+					documento.getArchivo().setAdjfechacaducidadF(rs.getString("FECHACADUCIDAD"));
+					documento.getArchivo().setAdjnombreV(rs.getString("NOMBRE"));
 					list.add(documento);
 				}
 			}
