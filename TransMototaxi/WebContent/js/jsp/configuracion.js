@@ -51,7 +51,6 @@ $(document).ready(function(){
 	}
 	
 	function fncActualizar(){
-		alert("hola");
 		$.ajax({ 
     		data:{
     			empcodigoD:$("#txtcodEmp").val(),
@@ -67,13 +66,43 @@ $(document).ready(function(){
             type: "POST", 
             url: "Configuracion/Actualizar.htm", 
             success: function(data){
-                alert(data),
-            	alert("Insersion exitosa");
+                //alert(data),
+            	//alert("Insersion exitosa");
             },error: function(jqXHR, textStatus, errorThrown){
             	mensajeError();
             }
     	});
 	}
+	
+	 //DOCUMENTO
+    $(".formFotosEmpresa").submit(function(){
+    	var options={
+    			type: "POST", 
+                url:'Configuracion/Foto.htm',
+                dataType:'json',
+                beforeSubmit:function(){
+                	$("#progressArchivo").show();
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                    $("#progressArchivo").progressbar({
+                            value: percentComplete
+                    });
+                },
+                success: function(responseText, statusText) {  
+                	var texto=responseText.split("|");
+                	$("#imgFotoEmpresa_"+texto[0]).attr("src","temp/"+texto[1]);
+                	$("#progressArchivo").hide();
+                	$("#progressArchivo").progressbar({
+                        value: 0
+                	});
+                } ,
+                error:function(){
+                    alert("ERROR");
+                }
+            };
+            $(this).ajaxSubmit(options);
+            return false;
+    });
 /*
  * 
  * 

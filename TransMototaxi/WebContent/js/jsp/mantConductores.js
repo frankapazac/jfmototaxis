@@ -3,11 +3,17 @@ $(document).ready(function(){
 	$("#divFormulario").hide();
 	$("#divFormularioCese").hide();
 	$("#divAsignarMototaxi").hide();
+	$("#txtFechaInicio").datepicker({dateFormat:"dd/mm/yy"});
+	$("#dtNacimiento").datepicker({dateFormat:"dd/mm/yy"});
 	
 	var codigoConductor=0;
 	var conductores=[];//Todo los conductores
 	var codigoUndConductor=0;
 	var UndConductor=[];
+	
+	$("input[type=text]").keyup(function(){
+	  $(this).val( $(this).val().toUpperCase() );
+	});
 	
 	$("#txtFechaCese").datepicker({dateFormat:"dd/mm/yy"});
 	buscar("ECO.EMPCODIGO_D", "");
@@ -68,7 +74,7 @@ $(document).ready(function(){
 		$("#divFormulario").dialog({
     		title:"Conductores Mototaxis",
     		width:1100,
-    		height: 600,
+    		height: 500,
     		modal: true
 		});
     });
@@ -95,7 +101,7 @@ $(document).ready(function(){
     	$("#divFormularioCese").dialog({
     		title:"Cese Conductor",
     		width:700,
-    		height: 350,
+    		//height: 350,
     		modal: true
     	});
     });
@@ -175,11 +181,10 @@ $(document).ready(function(){
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
-    	paginacion();
     	$(".trConductor").click(obtenerCodigoConductor);
     	$(".btnModificar").click(modificar);
     	$(".btnEliminar").click(eliminar);
-    	
+    	paginacion();
     }
 	
     function modificar(){
@@ -346,7 +351,10 @@ $(document).ready(function(){
     });
     
     function llenarFormulario(data){
-    	if(data!=""){	
+    	if(data!=""){
+    		$(".error").remove();
+    		if(data.conductor.foto.adjnombreV==null)$("#imgFotoConductor").attr("src","images/no_disponible.jpg");
+    		else $("#imgFotoConductor").attr("src","temp/"+data.conductor.foto.adjnombreV);
     		$("#txtCodigoConductor").val(data.conductor.concodigoD);
     		$("#txtCodigoPersona").val(data.conductor.persona.percodigoD);
         	$("#txtNombres").val(data.conductor.persona.pernombresV);
@@ -381,6 +389,8 @@ $(document).ready(function(){
         		//$("#fileDocumento_"+data.listDocumentos[x].tipoDocumento.mtdcodigoI).val(data.listDocumentos[x].archivo.adjnombreV);	
         	}
     	}else{
+    		$(".error").remove();
+    		$("#imgFotoConductor").attr("src","images/no_disponible.jpg");
     		$("#txtCodigoAsociado").val(0);
     		$("#txtCodigoPersona").val(0);
         	$("#txtNombres").val("");
@@ -413,7 +423,7 @@ $(document).ready(function(){
     	$("#divNuevoCond").dialog({
     		title:"Persona",
     		width:1100,
-    		height: 600,
+    		//height: 600,
     		modal: true
     	});
     }
@@ -471,6 +481,9 @@ $(document).ready(function(){
     
     
     $("#btnGuardarCond").click(function(){
+
+    	if(!validate("#divNuevoCond")) return;
+    	
     	$.ajax({ 
 			data:{
 				'conductor.concodigoD':$("#txtCodigoConductor").val(),
@@ -500,7 +513,8 @@ $(document).ready(function(){
 	        	//alert(JSON.stringify(data));
 	        	$("#txtCodigoConductor").val(data.conductor.concodigoD);
 	        	$("#txtCodigoPersona").val(data.conductor.persona.percodigoD);
-
+	        	buscar("COND.CONDCODIGO_I",data.conductor.concodigoD);
+	        	$("#divNuevoCond").dialog("close");
 	        	txtHtml="<p>Operación realizada correctamente</p>";
 	        	mensaje(txtHtml);
 	        },error: function(jqXHR, textStatus, errorThrown){
@@ -508,8 +522,6 @@ $(document).ready(function(){
 	        }
 		});
     	//$(this).dialog('close');
-    	$("#divNuevoCond").dialog("close");
-    	buscar($("#sltCriterioAsignado").val(),$("#txtTexto").val());
     	
     	
 		//$("#divFormulario").dialog("close");
@@ -517,31 +529,58 @@ $(document).ready(function(){
     
 	});
     
+
+    //FOTO
+    $(".formFotoConductor").submit(function(){
+    	var options={
+    			type: "POST", 
+                url:'Conductores/Foto.htm',
+                dataType:'json',
+                beforeSubmit:function(){
+                    $("#progressFoto").show();
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                	$("#progressFoto").progressbar({
+                        value: percentComplete
+                	});
+                },
+                success: function(responseText, statusText) {     
+                	$("#imgFotoConductor").attr("src","temp/"+responseText);
+                    $("#progressFoto").hide();
+                    $("#progressFoto").progressbar({
+                        value: 0
+                	});
+                },
+                error:function(){
+                    alert("ERROR");
+                }
+            };
+            $(this).ajaxSubmit(options);
+            return false;
+    });
+    
     //DOCUMENTO
     $(".formDocumento").submit(function(){
     	var options={
-                //scriptCharset:"utf-8",
-                //contentType:"application/json; charset=utf-8",
     			type: "POST", 
                 url:'Conductores/Documento.htm',
-                dataType:'html',
+                dataType:'json',
                 beforeSubmit:function(){
-                    //$("#progressbar").show();
+                	$("#progressArchivo").show();
                 },
                 uploadProgress: function(event, position, total, percentComplete) {
-                	$("#txtCargando").empty();
-                	$("#txtCargando").val(percentComplete);
-                	//$("#progressbar").empty();
-                    //$("#progressbar").progressbar({
-                    //        value: percentComplete
-                    //});
+                	$("#progressArchivo").progressbar({
+                        value: percentComplete
+                	});
                 },
                 success: function(responseText, statusText) {      
-                	//$("#divContenedorTab2").empty();
-                    //$("#divContenedorTab2").append(responseText);
+                	$("#progressArchivo").hide();
+                	$("#progressArchivo").progressbar({
+                        value: 0
+                	});
                 } ,
                 error:function(){
-                    //alert("ERROR DE ENVIO");
+                    alert("ERROR");
                 }
             };
             $(this).ajaxSubmit(options);
@@ -572,6 +611,7 @@ $(document).ready(function(){
                         url: "Conductores/Eliminar.htm",
                         success: function(data){
 							mensaje(data);
+							buscar($("#sltCriterio").val(), $("#txtTexto").val());
                         },error: function(jqXHR, textStatus, errorThrown){
                         	mensajeError();
                         }
@@ -586,5 +626,124 @@ $(document).ready(function(){
 		});
     }
     
-    
+
+    function validate(elemento){
+    	$(".error").remove();
+    	var elementText=$(elemento+" .requiredText");
+    	var elementEmail=$(elemento+" .requiredEmail");
+    	var elementNumero=$(elemento+" .requiredNumber");
+    	var elementDecimal=$(elemento+" .requiredDecimal");
+    	var elementFecha=$(elemento+" .requiredDate");
+    	var elementHora=$(elemento+" .requiredHour");
+    	var elementSelect=$(elemento+" .requiredSelect");
+    	var elementFile=$(elemento+" .requiredFile");
+    	var elementRequired=$(elemento+" .required");
+    	var contador=0;
+    	$.each(elementRequired,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementText,function(key,value){
+    		if(!validarLetras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementEmail,function(key,value){
+    		if(!validarEmail($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementNumero,function(key,value){
+    		if(!validarNumeros($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementDecimal,function(key,value){
+    		if(!validarDecimales($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementFecha,function(key,value){
+    		if(!validarFechas($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementHora,function(key,value){
+    		if(!validarHoras($(this).val())){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+    	});
+    	$.each(elementSelect,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	$.each(elementFile,function(key,value){
+    		if($(this).val()=="0"||$(this).val()==""){
+    			contador++;
+    			$(this).after("<span class='error' style='color:red'>*</span>");
+    		}
+		});
+    	if(contador<1){
+    		return true;
+    	}else{
+    		return false;
+    	}
+	}
+	
+	function validarEmail(texto){
+	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarLetras(texto){
+		var filter =/^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}
+
+	function validarNumeros(texto){
+	    var filter = /^(?:\+|-)?\d+$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarDecimales(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarFechas(texto){
+	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
+
+	function validarHoras(texto){
+	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
+	    if(filter.test(texto))
+	        return true;
+	    else
+	        return false;
+	}	
 });
