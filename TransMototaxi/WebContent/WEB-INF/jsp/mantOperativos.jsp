@@ -93,11 +93,11 @@
 	        	<table align="center">
 	        			<tr>
 							<td>Nombre Operativo:</td>
-							<td><input type="text" id="txtNombreOperativo" /></td>
+							<td><input type="text" id="txtNombreOperativo" class="requiredText"/></td>
 						</tr>
 						<tr>
 							<td>Zona Administrativa:</td>
-							<td><select id="sltZona">
+							<td><select id="sltZona" class="requiredSelect">
 									<option value="">Seleccione</option>
 					  				<c:forEach var="zona" items="${zona}">
 					  					<option value="${zona.zoncodigo_I}"><c:out value="${zona.zonnombre_V}"/></option>
@@ -106,25 +106,25 @@
 						</tr>
 						<tr>
 							<td>Descripción:</td>
-							<td><input type="text" id="txtDescripcion"/></td>
+							<td><input type="text" id="txtDescripcion" class="requiredText"/></td>
 						</tr>
 						<tr>
 							<td>Dirección:</td>
-							<td><input type="text" id="txtDireccion"/></td>
+							<td><input type="text" id="txtDireccion" class="requiredText"/></td>
 						</tr>
 						
 						<tr>
 							<td>Referencia:</td>
-							<td><input type="text" id="txtReferencia"/></td>
+							<td><input type="text" id="txtReferencia" class="requiredText"/></td>
 						</tr>
 						<tr>
 							<td>Fecha:</td>
-							<td><input type="text" id="txtFecha" class="txtFecha dtFecha txtFecha"/></td>
+							<td><input type="text" id="txtFecha" class="txtFecha dtFecha requiredDate"/></td>
 						</tr>
 						<tr>
 							<td>Hora:</td>
 							<!--  <td><input type="text" id="txtHora"/></td> -->
-							<td><input type="text" name="fecha" id="txtHora" value=""/></td>
+							<td><input type="text" name="fecha" id="txtHora" value="" class="requiredHour"/></td>
 							
 						</tr>
 						
@@ -132,7 +132,7 @@
 						<tr>
 						<td>Responsable:</td>
 							<td>
-								<select id="sltResponsable">
+								<select id="sltResponsable" class="requiredSelect">
 									<option value="" selected="selected">Seleccione</option>
 					  				<c:forEach var="inspector" items="${inspectores}">
 					  					<option value="${inspector.inscodigoI}"><c:out value="${inspector.persona.perpaternoV}"/> <c:out value="${inspector.persona.permaternoV}"/>, <c:out value="${inspector.persona.pernombresV}"/></option>

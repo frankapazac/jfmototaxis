@@ -217,19 +217,76 @@
 	</script>
 </head>
 <body>
-<h1>Internamiento</h1>
+	<h1>Internamiento</h1>
+
+	<div id="divBuscar">
+		<table>
+			<tr>
+				<td>Criterio</td>
+				<td>Texto</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<select id="sltCriterio">
+						<option value="ITE.INTCODIGO_D">TODOS</option>
+						<option value="PAP.PAPNUMERO_V">PAPELETA</option>
+						<option value="UNE.UNEPLACANRO_V">PLACA</option>
+						<option value="CON.NOMBRES">CONDUCTOR</option>
+						<option value="CON.DNI">CONDUCTOR DNI</option>
+						<option value="ASO.NOMBRES">PROPIETARIO</option>
+						<option value="ASO.DNI">PROPIETARIO DNI</option>
+					</select>
+				</td>
+				<td><input type="text" id="txtTexto" /></td>
+				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="divLista">
+		<table align="center" class="tablesorter" id="tblLista">		
+		</table>
+	</div>
+	
+	<div id="pager" class="pager">
+		<form>
+			<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
+			<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
+			<input type="text" class="pagedisplay">
+			<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
+			<select class="pagesize">
+				<option selected="selected" value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="40">40</option>
+			</select>
+			<img src="js/tablesorter/addons/pager/icons/last.png" class="last">
+		</form>
+	</div>
+
+	<h4 align="center">
+		<img id="btnNuevo" alt="Nuevo" src="images/new.png"/>
+	</h4>	
 
 	<div id="divFormulario">
     	<fieldset>
         	<legend>SOBRE EL INTERNAMIENTO</legend>
+        	<input type="hidden" id="txtCodigo" value="0"/>
         	<table>
                 <tr>
                     <td>Papeleta</td>
-                    <td colspan="3"><input id="txtPapeleta" type="text"/></td>
+                    <td colspan="3">
+                    	<input id="txtPapeleta" type="text" class="requiredText"/>
+                    	<input id="txtPapCodigo" type="hidden"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>Motivo</td>
-                    <td colspan="3"><textarea id="txaMotivo" rows="2" cols="100"></textarea></td>
+                    <td colspan="3">
+                    	<input type="hidden" id="txtBinCodigo" value="0"/>
+                    	<textarea id="txaMotivo" rows="2" cols="100" class="requiredText"></textarea>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tdTitulo">Fecha</td>
@@ -244,10 +301,10 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">DNI N°</td>
-					<td class="tdContenido"><input type="text" id="txtConductorDNI" class="txtText"/></td>
+					<td class="tdContenido"><input type="text" id="txtConductorDNI" class="txtText requiredNumber"/></td>
 					<td class="tdTitulo">Conductor</td>
 					<td class="tdContenido">
-						<select id="sltConductor">
+						<select id="sltConductor" class="requiredSelect">
 							<option value="0">-Seleccione-</option>
 							<c:forEach var="conductor" items="${conductores}">
 								<option value="${conductor.concodigoD}"><c:out value="${conductor.persona.perpaternoV}"/> <c:out value="${conductor.persona.permaternoV}"/>, <c:out value="${conductor.persona.pernombresV}"/></option>
@@ -287,7 +344,7 @@
                 <tr>
 					<td class="tdTitulo">N° Placa</td>
                     <td class="tdContenido">
-                        <select id="sltPlacas">
+                        <select id="sltPlacas" class="requiredSelect">
                             <option value="0" selected="selected">-Seleccione-</option>
 							<c:forEach var="placa" items="${placas}">
 								<option value="${placa.unecodigoD}"><c:out value="${placa.uneplacanroV}"/></option>
@@ -463,7 +520,8 @@
 		</fieldset>
 		
 		<h4 align="center">
-			<input type="button" value="Procesar" id="btnProcesar"/>
+			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
+			<input type="button" value="Guardar" id="btnProcesar"/>
 			<input type="button" value="Cerrar" id="btnCancelar"/>
 		</h4>
     </div>
