@@ -152,7 +152,7 @@ public class MotUnidadEmpresaController {
 	}
 	
 	@RequestMapping(value="DocumentoFoto.htm", method=RequestMethod.POST, headers="content-type=multipart/form-data")
-	public String agregarDocumentoFoto(HttpServletRequest request){
+	public @ResponseBody String agregarDocumentoFoto(HttpServletRequest request){
 		logger.info("Ingreso a UnidadEmpresa/DocumentoFoto.htm");
 		HttpSession session=request.getSession(true);
 		MotUnidDocumentoSession documentos=(MotUnidDocumentoSession) session.getAttribute("UNIDAD_DOCUMENTOS_FOTO");
@@ -161,6 +161,7 @@ public class MotUnidadEmpresaController {
 			session.setAttribute("UNIDAD_DOCUMENTOS_FOTO", documentos);
 			logger.info("Se creo la session.setAttribute('UNIDAD_DOCUMENTOS_FOTO', documentos);");
 		}
+		String nombreArchivo="";
 		try {
 			MotUnidDocumento documento=new MotUnidDocumento();
 			MotTipoDocumento tipoDocumento=new MotTipoDocumento();
@@ -184,9 +185,13 @@ public class MotUnidadEmpresaController {
 						archivo.setAdjnombreV(filename);
 						archivo.setAdjarchivoB(FileUtil.compress(bs));
 						archivo.setAdjextensionV(FileUtil.getExtension(filename));
+						nombreArchivo=FileUtil.createTempFile(request, archivo.getAdjnombreV(), bs);
 						break;
 				}
 			}
+
+			nombreArchivo=tipoDocumento.getMtdcodigoI()+"|"+nombreArchivo;
+			
 			documento.setTipoDocumento(tipoDocumento);
 			documento.setAdjuntarArchivo(archivo);
 			documentos.add(documento);
@@ -194,6 +199,6 @@ public class MotUnidadEmpresaController {
 		} catch (Exception e) {
 			logger.error("ERROR: "+e.getMessage());
 		}
-		return "Success";
+		return nombreArchivo;
 	}
 }
