@@ -252,7 +252,7 @@ public class PageController {
 		Rol rol=(Rol) session.getAttribute("ROL");
 		if(rol==null){
 			System.out.println("INICIO");
-			rol=new UserSecurity().getRol();
+			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
 		try {
@@ -268,6 +268,7 @@ public class PageController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
 		return "tilesConfiguracion2";
 	}
