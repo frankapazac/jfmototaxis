@@ -54,7 +54,7 @@
 					<tr>
 						<td>Paradero:</td>
 						<td>
-						  <select id="sltParadero" style="width:250px;">
+						  <select id="sltParadero" style="width:250px;" class="requiredSelect">
 						  		<option>Seleccione</option>
 				  				<c:forEach var="paradero" items="${paraderos}">
 				  					<option value="${paradero.parcodigoI}"><c:out value="${paradero.parnombreV}"/></option>
@@ -62,11 +62,11 @@
 						  </select>
 						</td>
 						<td>Zona Administrativa:</td>
-						<td><input type="text" id="txtZonaAdministrativa"/></td>
+						<td><input type="text" id="txtZonaAdministrativa" class="requiredText" disabled="disabled"/></td>
 					</tr>
 					<tr>
 						<td>Ubicación:</td>
-						<td colspan="3"><textarea rows=4 id="txtUbicacion"></textarea></td>
+						<td colspan="3"><textarea rows=4 cols="75" id="txtUbicacion" disabled="disabled"></textarea></td>
 					</tr>
 				</table>
 				<input type="button" value="Agregar" id="btnAgregar" class="ui-button"/>

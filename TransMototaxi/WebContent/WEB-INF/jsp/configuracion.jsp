@@ -13,11 +13,22 @@
 <script type="text/javascript" src="js/jsp/configuracion.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+	#imgFotoEmpresa_13{
+		max-width: 400px;
+		max-height: 400px;
+	}
+	#imgFotoEmpresa_14{
+		max-width: 400px;
+		max-height: 70px;
+	}
+	#imgFotoEmpresa_15{
+		max-width: 400px;
+		max-height: 70px;
+	}
 	#divDatosEmpresa{
 		width:1050px;
 	}
 	#divDatos , #divFotos{
-		border: solid 1px black;
 		width: 500px;
 		height:500px;
 		padding: 20px 5px;		
@@ -45,84 +56,88 @@
 		<div>
 			<div id="divDatosEmpresa">
 			  <div id="divDatos">
-			  <input type="hidden" id="txtcodEmp" value="<c:out value="${emprepresentante.empProp.empresa.empcodigoD}"/>"/>
-				<table>
-		        		<tr> <!-- Fila -->
-		                		<td>Representante Legal</td> <!-- columnas -->
-		                        <td><label id="txtreplegal"><c:out value="${emprepresentante.empProp.empPropietario.persona.pernombresV}"/>&nbsp;
-		                        							<c:out value="${emprepresentante.empProp.empPropietario.persona.perpaternoV}"/>&nbsp;
-		                        							<c:out value="${emprepresentante.empProp.empPropietario.persona.permaternoV}"/>&nbsp;
-		                         </label></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Dirección</td> <!-- columnas -->
-		                        <td><label id="txtDireccion"><c:out value="${emprepresentante.empProp.empresa.empdireccionV}"/></label></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Departamento</td> <!-- columnas -->
-		                        <td><label id="txtdeparmento"><c:out value="${emprepresentante.empProp.empresa.departamento.nombubigeo}"/></label></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Provincia</td> <!-- columnas -->
-		                        <td><label id="txtprovincia"><c:out value="${emprepresentante.empProp.empresa.provincia.nombubigeo}"/></label></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Distrito</td> <!-- columnas -->
-		                        <td><label id=""></label><c:out value="${emprepresentante.empProp.empresa.distrito.nombubigeo}"/></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>RUC</td> <!-- columnas -->
-		                        <td><label id="txtruc"><c:out value="${emprepresentante.empProp.empresa.emptelefono2V}"/></label></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Teléfono 01</td> <!-- columnas -->
-		                        <td><input type="text" id="txtTelefono1" value="<c:out value="${emprepresentante.empProp.empresa.emptelefono1V}"/>"/></td>
-		                </tr>
-		                <tr> <!-- Fila -->
-		                		<td>Teléfono 02</td> <!-- columnas -->
-		                        <td><input type="text" id="txtTelefono2" value="<c:out value="${emprepresentante.empProp.empresa.emptelefono2V}"/>"/></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Celular movistar</td> <!-- columnas -->
-		                        <td><input type="text" id="txtCelMov" value="<c:out value="${emprepresentante.empProp.empresa.empcelularmovV}"/>"/></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Celular Claro</td> <!-- columnas -->
-		                        <td><input type="text" id="txtCelClaro" value="<c:out value="${emprepresentante.empProp.empresa.empcelularclaV}"/>"/></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Celular Nextel</td> <!-- columnas -->
-		                        <td><input type="text" id="txtCelNex" value="<c:out value="${emprepresentante.empProp.empresa.empcelularnexV}"/>"/> </td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Correo</td> <!-- columnas -->
-		                        <td><input type="text" id="txtCorreo" value="<c:out value="${emprepresentante.empProp.empresa.empmailV}"/>"/></td>
-		                </tr>
-		        		<tr> <!-- Fila -->
-		                		<td>Página Web</td> <!-- columnas -->
-		                        <td><input type="text" id="txtPag" value="<c:out value="${emprepresentante.empProp.empresa.emppagwebV}"/>"/></td>
-		                </tr>
-        		</table>
-					
+			  	<fieldset>
+			  		<legend>DATOS DE LA EMPRESA</legend>
+			  		<input type="hidden" id="txtcodEmp" value="<c:out value="${emprepresentante.empProp.empresa.empcodigoD}"/>"/>
+					<table>
+			        		<tr> <!-- Fila -->
+			                		<td>Representante Legal</td> <!-- columnas -->
+			                        <td><input type="text" id="txtreplegal" value="<c:out value="${emprepresentante.empProp.empPropietario.persona.pernombresV}"/> <c:out value="${emprepresentante.empProp.empPropietario.persona.perpaternoV}"/> <c:out value="${emprepresentante.empProp.empPropietario.persona.permaternoV}"/>" disabled="disabled"/>
+			                        </td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Dirección</td> <!-- columnas -->
+			                        <td><input type="text" id="txtDireccion" value="<c:out value="${emprepresentante.empProp.empresa.empdireccionV}"/>" disabled="disabled"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Departamento</td> <!-- columnas -->
+			                        <td><input type="text" id="txtdeparmento" value="<c:out value="${emprepresentante.empProp.empresa.departamento.nombubigeo}"/>" disabled="disabled"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Provincia</td> <!-- columnas -->
+			                        <td><input type="text" id="txtprovincia" value="<c:out value="${emprepresentante.empProp.empresa.provincia.nombubigeo}"/>" disabled="disabled"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Distrito</td> <!-- columnas -->
+			                        <td><input type="text" id="txtdistrito" value="<c:out value="${emprepresentante.empProp.empresa.distrito.nombubigeo}"/>" disabled="disabled"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>RUC</td> <!-- columnas -->
+			                        <td><input type="text" id="txtruc" value="<c:out value="${emprepresentante.empProp.empresa.emptelefono2V}"/>" disabled="disabled"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Teléfono 01</td> <!-- columnas -->
+			                        <td><input type="text" id="txtTelefono1" value="<c:out value="${emprepresentante.empProp.empresa.emptelefono1V}"/>"/></td>
+			                </tr>
+			                <tr> <!-- Fila -->
+			                		<td>Teléfono 02</td> <!-- columnas -->
+			                        <td><input type="text" id="txtTelefono2" value="<c:out value="${emprepresentante.empProp.empresa.emptelefono2V}"/>"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Celular movistar</td> <!-- columnas -->
+			                        <td><input type="text" id="txtCelMov" value="<c:out value="${emprepresentante.empProp.empresa.empcelularmovV}"/>"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Celular Claro</td> <!-- columnas -->
+			                        <td><input type="text" id="txtCelClaro" value="<c:out value="${emprepresentante.empProp.empresa.empcelularclaV}"/>"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Celular Nextel</td> <!-- columnas -->
+			                        <td><input type="text" id="txtCelNex" value="<c:out value="${emprepresentante.empProp.empresa.empcelularnexV}"/>"/> </td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Correo</td> <!-- columnas -->
+			                        <td><input type="text" id="txtCorreo" value="<c:out value="${emprepresentante.empProp.empresa.empmailV}"/>"/></td>
+			                </tr>
+			        		<tr> <!-- Fila -->
+			                		<td>Página Web</td> <!-- columnas -->
+			                        <td><input type="text" id="txtPag" value="<c:out value="${emprepresentante.empProp.empresa.emppagwebV}"/>"/></td>
+			                </tr>
+	        		</table>
+			  	</fieldset>	
 			  </div>
 			  
 			  <div id="divFotos">
-			  	<c:forEach var="foto" items="${fotos}" varStatus="status">
-				  	<table>
-				  		<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formFotosEmpresa">
-				  			<tr>
-				  				<td><c:out value="${status.count}"/>
-				  					<input type="hidden" name="txtFotoCodigo" value="${foto.mtdcodigoI}"/>
-				  				</td>
-				  				<td><c:out value="${foto.mtdnombreV}"/></td>
-				  				<td>
-				  					<input type="file" name="flFoto" class="flArchivo"/>
-				  					<input type="submit" value="Enviar"/>
-				  				</td>
-				  			</tr>
-			  			</form:form>
-			  		</table>	
-			  	</c:forEach>
+			  	<fieldset>
+			  		<legend>FOTOS DE LA EMPRESA</legend>
+			  		<c:forEach var="imagen" items="${imagenes}" varStatus="status">
+				  		<img alt="Foto" id="imgFotoEmpresa_<c:out value="${imagen.tipoDocumento.mtdcodigoI}" />" src="<c:out value="${imagen.adjuntarArchivo.adjnombreV}"/>"/>
+					  	<table>
+					  		<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formFotosEmpresa">
+					  			<tr>
+					  				<td><c:out value="${status.count}"/>
+					  					<input type="hidden" name="txtFotoCodigo" value="${imagen.tipoDocumento.mtdcodigoI}"/>
+					  				</td>
+					  				<td><c:out value="${imagen.tipoDocumento.mtdnombreV}"/></td>
+					  				<td>
+					  					<input type="file" name="flFoto" class="flArchivo"/>
+					  					<input type="submit" value="Enviar"/>
+					  				</td>
+					  			</tr>
+				  			</form:form>
+				  		</table>	
+				  	</c:forEach>
+			  	</fieldset>
 			  </div>
 			  <input type="button" id="btnGuardar" value="Guardar" />
 			</div>

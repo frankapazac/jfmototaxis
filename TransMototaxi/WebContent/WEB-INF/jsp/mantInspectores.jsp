@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.progressbar.js"></script>
+	<!-- script type="text/javascript" src="js/jefra.validate.js"></script -->
 	<script type="text/javascript" src="js/jsp/mantInspectores.js"></script>
 	<title>Insert title here</title>
 	<style type="text/css">
@@ -113,13 +114,13 @@
 						<table align="center">
 							<tr>
 								<td>Nombres:</td>
-								<td><input type="text" id="txtNombres"/></td>
+								<td><input type="text" id="txtNombres" class="requiredText"/></td>
 								<td>Dirección:</td>
-								<td><input type="text" id="txtDireccion"/></td>
+								<td><input type="text" id="txtDireccion" class="requiredText"/></td>
 							</tr>
 							<tr>
 								<td>Paterno:</td>
-								<td><input type="text" id="txtPaterno"/></td>
+								<td><input type="text" id="txtPaterno" class="requiredText"/></td>
 								<td>Departamento:</td>
 								<td>
 									<select id="sltDepartamentos">
@@ -134,20 +135,20 @@
 							</tr>
 							<tr>
 								<td>Materno:</td>
-								<td><input type="text" id="txtMaterno"/></td>
+								<td><input type="text" id="txtMaterno" class="requiredText"/></td>
 								<td>Provincia:</td>
 								<td>
-									<select id="sltProvincia">
+									<select id="sltProvincia" class="requiredSelect">
 										<option value="">Seleccione</option>
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<td>DNI</td>
-								<td><input type="text" id="txtDni"/></td>
+								<td><input type="text" id="txtDni" class="requiredNumber"/></td>
 								<td>Distrito:</td>
 								<td>
-									<select id="sltDistrito">
+									<select id="sltDistrito" class="requiredSelect">
 										<option value="">Seleccione</option>
 									</select>
 								</td>
@@ -155,7 +156,7 @@
 							<tr>
 								<td>Estado Civil</td>
 								<td>
-									<select id="sltEstadoCivil">
+									<select id="sltEstadoCivil" class="requiredSelect">
 										<option value="" selected="selected">Seleccione</option>
 										<option value="S">Soltero</option>
 										<option value="C">Casado</option>
@@ -165,31 +166,31 @@
 									</select>
 								</td>
 								<td>Telefono:</td>
-								<td><input type="text" id="txtTelefono"/></td>
+								<td><input type="text" id="txtTelefono" class="requiredNumber"/></td>
 							</tr>
 							<tr>
 								<td>Sexo</td>
 								<td>
-									<select id="sltSexo">
+									<select id="sltSexo" class="requiredSelect">
 										<option value="" selected="selected">Seleccione</option>
 										<option value="M">Masculino</option>
 										<option value="F">Femenino</option>
 									</select>
 								</td>
 								<td>Cel. Movistar:</td>
-								<td><input type="text" id="txtMovistar"/></td>
+								<td><input type="text" id="txtMovistar" class="required"/></td>
 							</tr>
 							<tr>
 								<td>Fecha Nacimiento</td>
-								<td><input type="text" id="dtNacimiento"/></td>
+								<td><input type="text" id="dtNacimiento" class="requiredDate"/></td>
 								<td>Cel. Claro:</td>
-								<td><input type="text" id="txtClaro"/></td>
+								<td><input type="text" id="txtClaro" class="required"/></td>
 							</tr>
 							<tr>
 								<td>Correo:</td>
-								<td><input type="text" id="txtCorreo"/></td>
+								<td><input type="text" id="txtCorreo" class="requiredEmail"/></td>
 								<td>Cel. Nextel:</td>
-								<td><input type="text" id="txtNextel"/></td>
+								<td><input type="text" id="txtNextel" class="required"/></td>
 							</tr>
 						</table>
 					</fieldset>
@@ -228,11 +229,11 @@
 										<input type="hidden" name="txtCodArchivo" id="documento_<c:out value="${documento.mtdcodigoI}"/>" value="0"/>
 									</td>
 									<td><c:out value="${documento.mtdnombreV}"/></td>
-									<td><input type="text" name="txtNumDocumento" id="txtNumDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="txtNumeroDocumento"/></td>
-									<td><input type="text" name="txtFechaEmision" id="txtFechaEmision_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaEmision dtFecha"/></td>
-									<td><input type="text" name="txtFechaCaducidad" id="txtFechaCaducidad_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha"/></td>
+									<td><input type="text" name="txtNumDocumento" id="txtNumDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="txtNumeroDocumento required"/></td>
+									<td><input type="text" name="txtFechaEmision" id="txtFechaEmision_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaEmision dtFecha required"/></td>
+									<td><input type="text" name="txtFechaCaducidad" id="txtFechaCaducidad_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha required"/></td>
 									<td>
-										<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="fileDocumento"/>
+										<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="fileDocumento required"/>
 										<input type="submit" value="Enviar"/>
 									</td>
 								</tr>

@@ -290,10 +290,10 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">DNI N°</td>
-					<td class="tdContenido"><input type="text" id="txtConductorDNI" class="txtText"/></td>
+					<td class="tdContenido"><input type="text" id="txtConductorDNI" class="txtText requiredNumber"/></td>
 					<td class="tdTitulo">Conductor</td>
 					<td class="tdContenido">
-						<select id="sltConductor">
+						<select id="sltConductor" class="requiredSelect">
 							<option value="">-Seleccione-</option>
 							<c:forEach var="conductor" items="${conductores}">
 								<option value="${conductor.concodigoD}"><c:out value="${conductor.persona.perpaternoV}"/> <c:out value="${conductor.persona.permaternoV}"/>, <c:out value="${conductor.persona.pernombresV}"/></option>
@@ -323,7 +323,7 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">N° Placa</td>
-					<td class="tdContenido"><select id="sltPlacas">
+					<td class="tdContenido"><select id="sltPlacas" class="requiredSelect">
 							<option value="" selected="selected">-Seleccione-</option>
 							<c:forEach var="placa" items="${placas}">
 								<option value="${placa.unecodigoD}"><c:out value="${placa.uneplacanroV}"/></option>
@@ -385,10 +385,10 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">DNI N°</td>
-					<td class="tdContenido"><input id="txtDniInspector" type="text" class="txtText" /></td>
+					<td class="tdContenido"><input id="txtDniInspector" type="text" class="txtText required" /></td>
 					<td class="tdTitulo">Inspector</td>
 					<td class="tdContenido">
-						<select id="sltInspector">
+						<select id="sltInspector" class="required">
 							<option value="">-Seleccione-</option>
 							<c:forEach var="inspector" items="${inspectores}">
 								<option value="${inspector.inscodigoI}"><c:out value="${inspector.persona.perpaternoV}"/> <c:out value="${inspector.persona.permaternoV}"/>, <c:out value="${inspector.persona.pernombresV}"/></option>
@@ -398,22 +398,22 @@
 				</tr>
 				<tr>
 					<td class="tdTitulo">Lugar de Infracción</td>
-					<td colspan="3"><input id="txtInfraccionLugar" type="text" class="txtTextCompleted" /></td>
+					<td colspan="3"><input id="txtInfraccionLugar" type="text" class="txtTextCompleted requiredText" /></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Referencia</td>
-					<td colspan="3"><input id="txtInfraccionReferencia" type="text" class="txtTextCompleted" /></td>
+					<td colspan="3"><input id="txtInfraccionReferencia" type="text" class="txtTextCompleted requiredText" /></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Observacion del Inspector</td>
-					<td colspan="3"><textarea id="txaObserInspector" rows="3" cols="85"></textarea></td>
+					<td colspan="3"><textarea id="txaObserInspector" rows="3" cols="98" class="requiredText"></textarea></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Carnet Ident N°</td>
-					<td class="tdContenido"><input id="txtCarnetPolicia" type="text" class="txtText" /></td>
+					<td class="tdContenido"><input id="txtCarnetPolicia" type="text" class="txtText required" /></td>
 					<td class="tdTitulo">Policia</td>
 					<td class="tdContenido">
-						<select id="sltPolicia">
+						<select id="sltPolicia" class="required">
 							<option value="">-Seleccione-</option>
 							<c:forEach var="policia" items="${policias}">
 								<option value="${policia.polcodigoI}"><c:out value="${policia.polpaternoV}"/> <c:out value="${policia.polmaternoV}"/>, <c:out value="${policia.polnombresV}"/></option>
@@ -439,7 +439,7 @@
 				<tr>
 					<td class="tdTitulo">Codigo de Infracción</td>
 					<td class="tdContenido">
-						<select id="sltInfraccion">
+						<select id="sltInfraccion" class="requiredSelect">
 							<option value="" selected="selected">-Seleccione-</option>
 							<c:forEach var="infraccion" items="${infracciones}">
 								<option value="${infraccion.infcodigoD}"><c:out value="${infraccion.infcodigoV}"/></option>
@@ -448,18 +448,18 @@
 					</td>
 					<td class="tdTitulo">Medidas/Sacion Complementaria</td>
 					<td class="tdContenido">
-						<select id="sltSancion">
+						<select id="sltSancion" class="requiredSelect">
 							<option value="" selected="selected">-Seleccione-</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Descripción</td>
-					<td colspan="3"><textarea id="txaDescripcion" rows="3" cols="85" disabled="disabled"></textarea></td>
+					<td colspan="3"><textarea id="txaDescripcion" rows="3" cols="98" disabled="disabled"></textarea></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Observacion sobre la Infracción</td>
-					<td colspan="3"><textarea id="txaObserInfraccion" rows="3" cols="85"></textarea></td>
+					<td colspan="3"><textarea id="txaObserInfraccion" rows="3" cols="98" class="requiredText"></textarea></td>
 				</tr>
 			</table>
 		</fieldset>

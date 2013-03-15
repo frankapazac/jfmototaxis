@@ -15,11 +15,12 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.progressbar.js"></script>
 	<script type="text/javascript" src="js/jsp/mantAsociados.js"></script>
 	<script type="text/javascript" src="js/jsp/mantAsocMototaxis.js"></script>
 	<style type="text/css">
 		#tabs{
-			height: 1080px;
+			height: 910px;
 		}
 		.fileDocumento{
 			width: 300px;
@@ -118,16 +119,16 @@
 							<table align="center">
 								<tr>
 									<td>Nombres:</td>
-									<td><input type="text" id="txtNombres"/></td>
+									<td><input type="text" id="txtNombres" class="requiredText"/></td>
 									<td>Dirección:</td>
-									<td><input type="text" id="txtDireccion"/></td>
+									<td><input type="text" id="txtDireccion" class="requiredText"/></td>
 								</tr>
 								<tr>
 									<td>Paterno:</td>
-									<td><input type="text" id="txtPaterno"/></td>
+									<td><input type="text" id="txtPaterno" class="requiredText"/></td>
 									<td>Departamento:</td>
 									<td>
-										<select id="sltDepartamentos">
+										<select id="sltDepartamentos" class="requiredSelect">
 											<option value="">Seleccione</option>
 											<c:forEach items="${departamentos}" var="departamento">
 												<option value="${departamento.idubigeo}">
@@ -139,20 +140,20 @@
 								</tr>
 								<tr>
 									<td>Materno:</td>
-									<td><input type="text" id="txtMaterno"/></td>
+									<td><input type="text" id="txtMaterno" class="requiredText"/></td>
 									<td>Provincia:</td>
 									<td>
-										<select id="sltProvincia">
+										<select id="sltProvincia" class="requiredSelect">
 											<option value="">Seleccione</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
 									<td>DNI</td>
-									<td><input type="text" id="txtDni"/></td>
+									<td><input type="text" id="txtDni" class="requiredNumber"/></td>
 									<td>Distrito:</td>
 									<td>
-										<select id="sltDistrito">
+										<select id="sltDistrito" class="requiredSelect">
 											<option value="">Seleccione</option>
 										</select>
 									</td>
@@ -161,18 +162,18 @@
 									<td>RUC</td>
 									<td><input type="text" id="txtRuc"/></td>
 									<td>Correo:</td>
-									<td><input type="text" id="txtCorreo"/></td>
+									<td><input type="text" id="txtCorreo" class="requiredEmail"/></td>
 								</tr>
 								<tr>
 									<td>Razón Social</td>
 									<td><input type="text" id="txtRazonSocial"/></td>
-									<td>Telefono:</td>
-									<td><input type="text" id="txtTelefono"/></td>
+									<td>Teléfono:</td>
+									<td><input type="text" id="txtTelefono" class="requiredNumber"/></td>
 								</tr>
 								<tr>
 									<td>Estado Civil</td>
 									<td>
-										<select id="sltEstadoCivil">
+										<select id="sltEstadoCivil" class="requiredSelect">
 											<option value="S" selected="selected">Soltero</option>
 											<option value="C">Casado</option>
 											<option value="T">Conviviente</option>
@@ -186,7 +187,7 @@
 								<tr>
 									<td>Sexo</td>
 									<td>
-										<select id="sltSexo">
+										<select id="sltSexo" class="requiredSelect">
 											<option value="M" selected="selected">Masculino</option>
 											<option value="F">Femenino</option>
 										</select>
@@ -196,7 +197,7 @@
 								</tr>
 								<tr>
 									<td>Fecha Nacimiento</td>
-									<td><input type="text" id="dtNacimiento"/></td>
+									<td><input type="text" id="dtNacimiento" class="requiredDate"/></td>
 									<td>Cel. Nextel:</td>
 									<td><input type="text" id="txtNextel"/></td>
 								</tr>
@@ -206,12 +207,13 @@
 					<div id="divTab1TopRight" align="center">
 						<fieldset>
 							<legend>FOTO DEL ASOCIADO</legend>
-							<img alt="Foto" id="imgFotoAsociado" src=""/>
+							<img alt="Foto" id="imgFotoAsociado" src="images/no_disponible.jpg"/>
 							<br/>
 							<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formFotoAsociado">
 								<input type="file" name="fileFotoAsociado" class="fileFotoAsociado"/>
 								<input type="submit" value="Enviar"/>
 							</form>
+							<div id="progressFoto"></div>
 						</fieldset>
 					</div>
 				</div>
@@ -225,7 +227,7 @@
 								<td>N° Documento</td>
 								<td>Fec. Emision</td>
 								<td>Fec. Caducidad</td>
-								<td>Porcentaje: <input type="text" id="txtCargando" size="4"/>%</td>
+								<td></td>
 							</tr>
 							<c:forEach var="documento" items="${documentos}" varStatus="status">
 								<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formDocumento">
@@ -236,17 +238,18 @@
 											<input type="hidden" name="txtCodArchivo" id="documento_<c:out value="${documento.mtdcodigoI}"/>" value="0"/>
 										</td>
 										<td><c:out value="${documento.mtdnombreV}"/></td>
-										<td><input type="text" name="txtNumDocumento" id="txtNumDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="txtNumeroDocumento"/></td>
-										<td><input type="text" name="txtFechaEmision" id="txtFechaEmision_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaEmision dtFecha"/></td>
-										<td><input type="text" name="txtFechaCaducidad" id="txtFechaCaducidad_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha"/></td>
+										<td><input type="text" name="txtNumDocumento" id="txtNumDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="txtNumeroDocumento required"/></td>
+										<td><input type="text" name="txtFechaEmision" id="txtFechaEmision_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaEmision dtFecha required"/></td>
+										<td><input type="text" name="txtFechaCaducidad" id="txtFechaCaducidad_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha required"/></td>
 										<td>
-											<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="fileDocumento"/>
+											<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="fileDocumento required"/>
 											<input type="submit" value="Enviar"/>
 										</td>
 									</tr>
 								</form:form>
 							</c:forEach>
 						</table>
+						<div id="progressArchivoAsociado"></div>
 					</fieldset>
 					
 					<input type="button" value="Guardar" id="btnProcesar" class="ui-button"/>
@@ -270,24 +273,13 @@
 				    	<input type="hidden" id="txtCodigoVehiculo" value="0"/>
 				    	<input type="hidden" id="txtCodigoEmpadronamiento" value="0"/>
 				    	<fieldset>
-				    		<legend>EMPADRONAMIENTO</legend>
-				    		<table>
-				    			<tr>
-				    				<td>Fecha de Inicio</td>
-				    				<td><input type="text" id="txtEmpadFechaInicio" class="dtFecha"></td>
-				    				<td>Fecha de Cese</td>
-				    				<td><input type="text" id="txtEmpadFechaCese" class="dtFecha"></td>
-				    			</tr>
-				    		</table>
-				    	</fieldset>
-				    	<fieldset>
 				        	<legend>DATOS VEHICULO</legend>
 				            <table>
 				            	<tr>
 				                	<td>N° Placa</td>
-				                	<td><input type="text" id="txtNroPlaca"/></td>
+				                	<td><input type="text" id="txtNroPlaca" class="requiredText"/></td>
 				                	<td>Carroceria</td>
-				                	<td><select id="sltCarroceria">
+				                	<td><select id="sltCarroceria" class="requiredSelect">
 				                    		<option value="">Seleccione</option>
 				                    		<option value="T">TRIMOVIL DE PASAJEROS</option>
 				                    	</select>
@@ -295,7 +287,7 @@
 				                </tr>
 				            	<tr>
 				                	<td>Of. Registral</td>
-				                	<td><select id="sltOfRegistral">
+				                	<td><select id="sltOfRegistral" class="requiredSelect">
 				                    		<option value="">Seleccione</option>
 				                    		<c:forEach var="oficina" items="${oficinas}">
 				                    			<option value="${oficina.oficodigoI}"><c:out value="${oficina.ofinombreV}"/></option>
@@ -303,75 +295,75 @@
 				                    	</select>
 									</td>
 				                	<td>N° Serie/Chasis</td>
-				                	<td><input type="text" id="txtNroSerieChasis"/></td>
+				                	<td><input type="text" id="txtNroSerieChasis" class="requiredText"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>N° Padrón</td>
-				                	<td><input type="text" id="txtNroPadron"/></td>
+				                	<td><input type="text" id="txtNroPadron" class="requiredText"/></td>
 				                	<td>N° Motor</td>
-				                	<td><input type="text" id="txtNroMotor"/></td>
+				                	<td><input type="text" id="txtNroMotor" class="requiredText"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Part. Registral</td>
-				                	<td><input type="text" id="txtPartRegistral"/></td>
+				                	<td><input type="text" id="txtPartRegistral" class="requiredText"/></td>
 				                	<td>N° NIV</td>
-				                	<td><input type="text" id="txtNroNiv"/></td>
+				                	<td><input type="text" id="txtNroNiv" class="requiredText"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Titulo</td>
-				                	<td><input type="text" id="txtTitulo"/></td>
+				                	<td><input type="text" id="txtTitulo" class="requiredText"/></td>
 				                	<td>Ruedas</td>
-				                	<td><input type="text" id="txtRuedas"/></td>
+				                	<td><input type="text" id="txtRuedas" class="requiredNumber"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Clase</td>
-				                	<td><input type="text" id="txtClase"/></td>
+				                	<td><input type="text" id="txtClase" class="requiredText"/></td>
 				                	<td>N° Asientos</td>
-				                	<td><input type="text" id="txtNroAsientos"/></td>
+				                	<td><input type="text" id="txtNroAsientos" class="requiredNumber"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Marca</td>
-				                	<td><select id="sltMarca">
+				                	<td><select id="sltMarca" class="requiredSelect">
 				                    		<option value="">Seleccione</option>
 				                    		<c:forEach var="marca" items="${marcas}">
 				                    			<option value="${marca.marcodigoI}"><c:out value="${marca.marnombreV }"/></option>
 				                    		</c:forEach>
 				                    	</select></td>
 				                	<td>N° Pasajeros</td>
-				                	<td><input type="text" id="txtNroPasajeros"/></td>
+				                	<td><input type="text" id="txtNroPasajeros" class="requiredNumber"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Modelo</td>
-				                	<td><select id="sltModelo">
+				                	<td><select id="sltModelo" class="requiredSelect">
 				                    		<option value="">Seleccione</option>
 				                    		<c:forEach var="modelo" items="${modelos}">
 				                    			<option value="${modelo.modcodigo_D }"><c:out value="${modelo.modnombre_V }" /></option>
 				                    		</c:forEach>
 				                    	</select></td>
 				                	<td>Carga Util</td>
-				                	<td><input type="text" id="txtCargaUtil"/></td>
+				                	<td><input type="text" id="txtCargaUtil" class="requiredDecimal"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Año</td>
-				                	<td><input type="text" id="txtAno"/></td>
+				                	<td><input type="text" id="txtAno" class="requiredNumber"/></td>
 				                	<td>Longitud</td>
-				                	<td><input type="text" id="txtLongitud"/></td>
+				                	<td><input type="text" id="txtLongitud" class="requiredDecimal"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Color</td>
-				                	<td><input type="text" id="txtColor"/></td>
+				                	<td><input type="text" id="txtColor" class="requiredText"/></td>
 				                	<td>Ancho</td>
-				                	<td><input type="text" id="txtAncho"/></td>
+				                	<td><input type="text" id="txtAncho" class="requiredDecimal"/></td>
 				                </tr>
 				            	<tr>
 				                	<td>Combustible</td>
-				                	<td><select id="sltCombustible">
+				                	<td><select id="sltCombustible" class="requiredSelect">
 				                    		<option value="">Seleccione</option>
 				                    		<option value="P">PETROLEO</option>
 				                    		<option value="G">GASOLINA</option>
 				                    	</select></td>
 				                	<td>Alto</td>
-				                	<td><input type="text" id="txtAlto"/></td>
+				                	<td><input type="text" id="txtAlto" class="requiredDecimal"/></td>
 				                </tr>
 				            </table>
 				        </fieldset>
@@ -397,12 +389,12 @@
 												<input type="hidden" name="txtCodArchivo" id="documentoUnd_<c:out value="${docunidad.mtdcodigoI}"/>" value="0"/>
 											</td>
 											<td><c:out value="${docunidad.mtdnombreV}"/></td>
-											<td><input type="text" name="txtNumDocumento" id="txtUndNumDocumento_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtNumeroDocumento txtVehNumDocumento"/></td>
-											<td><input type="text" name="txtFechaEmision" id="txtUndFechaEmision_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtFechaEmision dtFecha txtVehFecEmision"/></td>
-											<td><input type="text" name="txtFechaCaducidad" id="txtUndFechaCaducidad_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha txtVehFecCaducidad"/></td>
+											<td><input type="text" name="txtNumDocumento" id="txtUndNumDocumento_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtNumeroDocumento txtVehNumDocumento requiredNumber"/></td>
+											<td><input type="text" name="txtFechaEmision" id="txtUndFechaEmision_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtFechaEmision dtFecha txtVehFecEmision requiredDate"/></td>
+											<td><input type="text" name="txtFechaCaducidad" id="txtUndFechaCaducidad_<c:out value="${docunidad.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha txtVehFecCaducidad requiredDate"/></td>
 											<td>
 												<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formDocumento">
-													<input type="file" name="fileDocumento" id="fileUndDocumento_<c:out value="${docunidad.mtdcodigoI}"/>" class="fileDocumento"/>
+													<input type="file" name="fileDocumento" id="fileUndDocumento_<c:out value="${docunidad.mtdcodigoI}"/>" class="fileDocumento requiredFile"/>
 													<input type="submit" value="Enviar"/>
 												</form>
 											</td>
@@ -410,6 +402,7 @@
 									</form:form>
 								</c:forEach>
 							</table>
+							<div id="progressMototaxiArchivo"></div>
 				        </fieldset>
 				    	<fieldset>
 				        	<legend>ADJUNTAR FOTOS</legend>
@@ -417,7 +410,7 @@
 								<tr>
 									<td>N°</td>
 									<td>Adjuntar</td>
-									<td>Porcentaje: <input type="text" id="txtCargandoFotos" size="4"/>%</td>
+									<td></td>
 								</tr>
 					            <c:forEach var="docunidadfoto" items="${documentosUnidadFotos}" varStatus="status">
 									<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formDocumentoFoto">
@@ -431,7 +424,7 @@
 											<td>
 												<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formDocumento">
 													<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${docunidadfoto.mtdcodigoI}"/>" class="fileDocumento"/>
-													<input type="submit" value="Enviar"/>
+													<input type="submit" value="Enviar" id="btnFoto_<c:out value="${docunidadfoto.mtdcodigoI}"/>"/>
 												</form>
 											</td>
 										</tr>
@@ -440,10 +433,10 @@
 							</table>
 			
 							<div id="gallery" align="center">
-								<img src="" id="imgFotoVehiculo_9" class="imgFotosVehiculo"/>
-								<img src="" id="imgFotoVehiculo_10" class="imgFotosVehiculo"/>
-								<img src="" id="imgFotoVehiculo_11" class="imgFotosVehiculo"/>	
-								<img src="" id="imgFotoVehiculo_12" class="imgFotosVehiculo"/>
+								<c:forEach var="docunidadfoto" items="${documentosUnidadFotos}" varStatus="status">
+									<img alt="<c:out value="${docunidadfoto.mtdnombreV}"/>" id="imgFotoVehiculo_<c:out value="${docunidadfoto.mtdcodigoI}"/>" class="imgFotosVehiculo" src="images/no_disponible.jpg"/>
+								</c:forEach>
+								<div id="progressVehiculo"></div>
 							</div>
 			
 				        </fieldset>

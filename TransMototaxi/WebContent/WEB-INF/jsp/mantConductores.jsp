@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.progressbar.js"></script>
 	<script type="text/javascript" src="js/jsp/mantConductores.js"></script>
 	<script type="text/javascript" src="js/jsp/mantConductoresAsignar.js"></script>
 <title>Insert title here</title>
@@ -40,6 +41,24 @@
 	#divAsignarAba{
 		width:100%;	
 		float:left;
+	}
+	#divTab1TopLeft{
+		width: 70%;
+		float: left;
+	}
+	#divTab1TopRight{
+		width: 30%;
+		float: right;
+	}
+	#divTab1Bottom{
+		float: left;
+		width: 100%;
+	}
+	.fileFotoConductor, #formFotoConductor{
+		width: 265px;
+	}
+	#imgFotoConductor{
+		width: 250px;
 	}
 </style>
 <body>
@@ -91,7 +110,7 @@
 
 
 	<div id="divFormulario">
-		<p id="txtNombreConductor">NOMBRE DEL CONDUCTOR</p>		
+		<h1>Conductor: <label id="txtNombreConductor">NOMBRE DEL CONDUCTOR</label></h1>		
 		<div id="tabs">
 			<ul>
 			</ul>
@@ -133,9 +152,9 @@
 			<table align="center" class="tablesorter" id="tblListaMotosAsignadas">		
 			</table>
 			
-			<div id="pagerMotosAsignadas" class="pager">
+			<div id="pagerMotosAsignadas" class="pager" align="center">
 				<form>
-					<img src="js/tablesorter/addons/pager/icons/ftblListaMotosAsignadasirst.png" class="first">
+					<img src="js/tablesorter/addons/pager/icons/first.png" class="first">
 					<img src="js/tablesorter/addons/pager/icons/prev.png" class="prev">
 					<input type="text" class="pagedisplay">
 					<img src="js/tablesorter/addons/pager/icons/next.png" class="next">
@@ -248,130 +267,148 @@
 		<!-- MANTENIMIENTO CONDUCTOR  -->
 		
 		<div id="divNuevoCond">
-	    	<fieldset>
-	        	<legend>NUEVO CONDUCTOR</legend>     
-	        	<input type="hidden" id="txtCodigoConductor" value="0"/>
-				<input type="hidden" id="txtCodigoPersona" value="0"/>        
-	        	<table align="center">
-						<tr>
-							<td>Nombres:</td>
-							<td><input type="text" id="txtNombres"/></td>
-							<td>Dirección:</td>
-							<td><input type="text" id="txtDireccion"/></td>
-						</tr>
-						<tr>
-							<td>Paterno:</td>
-							<td><input type="text" id="txtPaterno"/></td>
-							<td>Departamento:</td>
-							<td>
-								<select id="sltDepartamentos">
-									<option value="">Seleccione</option>
-									<c:forEach items="${departamentos}" var="departamento">
-										<option value="${departamento.idubigeo}">
-											<c:out value="${departamento.nombubigeo}"/>
-										</option>
-									</c:forEach>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>Materno:</td>
-							<td><input type="text" id="txtMaterno"/></td>
-							<td>Provincia:</td>
-							<td>
-								<select id="sltProvincia">
-									<option value="">Seleccione</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>DNI</td>
-							<td><input type="text" id="txtDni"/></td>
-							<td>Distrito:</td>
-							<td>
-								<select id="sltDistrito">
-									<option value="">Seleccione</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>Correo:</td>
-							<td><input type="text" id="txtCorreo"/></td>
-							<td>Telefono:</td>
-							<td><input type="text" id="txtTelefono"/></td>
-						</tr>
-						<tr>
-							<td>Estado Civil</td>
-							<td>
-								<select id="sltEstadoCivil">
-									<option value="S" selected="selected">Soltero</option>
-									<option value="C">Casado</option>
-									<option value="T">Conviviente</option>
-									<option value="V">Viudo</option>
-									<option value="D">Divorciado</option>
-								</select>
-							</td>
-							<td>Cel. Movistar:</td>
-							<td><input type="text" id="txtMovistar"/></td>
-						</tr>
-						<tr>
-							<td>Sexo</td>
-							<td>
-								<select id="sltSexo">
-									<option value="M" selected="selected">Masculino</option>
-									<option value="F">Femenino</option>
-								</select>
-							</td>
-							<td>Cel. Claro:</td>
-							<td><input type="text" id="txtClaro"/></td>
-						</tr>
-						<tr>
-							<td>Fecha Nacimiento</td>
-							<td><input type="text" id="dtNacimiento"/></td>
-							<td>Cel. Nextel:</td>
-							<td><input type="text" id="txtNextel"/></td>
-						</tr>
-						<tr>
-							<td>Fecha Inicio:</td>
-							<td><input type="text" id="txtFechaInicio"/></td>
-						</tr>						
-				</table>
-              
-	        </fieldset>
-	        <fieldset>
-				        	<legend>ADJUNTAR DOCUMENTOS</legend>
-				        	<table id="tblDocumentos">
+			<div id="divTab1Top">
+				<div id="divTab1TopLeft">
+			    	<fieldset>
+			        	<legend>NUEVO CONDUCTOR</legend>     
+			        	<input type="hidden" id="txtCodigoConductor" value="0"/>
+						<input type="hidden" id="txtCodigoPersona" value="0"/>        
+			        	<table align="center">
 								<tr>
-									<td>N°</td>
-									<td>Adjuntar</td>
-									<td>N° Documento</td>
-									<td>Fec. Emision</td>
-									<td>Fec. Caducidad</td>
-									<td>Porcentaje: <input type="text" id="txtCargandoUnidad" size="4"/>%</td>
+									<td>Nombres:</td>
+									<td><input type="text" id="txtNombres" class="requiredText"/></td>
+									<td>Dirección:</td>
+									<td><input type="text" id="txtDireccion" class="requiredText"/></td>
 								</tr>
-								
-						<c:forEach var="documento" items="${documentos}" varStatus="status">
-							<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formDocumento">
 								<tr>
+									<td>Paterno:</td>
+									<td><input type="text" id="txtPaterno" class="requiredText"/></td>
+									<td>Departamento:</td>
 									<td>
-										<c:out value="${status.count}"/>
-										<input type="hidden" name="txtCodDocumento" value="<c:out value="${documento.mtdcodigoI}"/>"/>
-										<input type="hidden" name="txtCodArchivo" id="documento_<c:out value="${documento.mtdcodigoI}"/>" value="0"/>
-									</td>
-									<td><c:out value="${documento.mtdnombreV}"/></td>
-									<td><input type="text" name="txtNumDocumento" id="txtNumDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="txtNumeroDocumento"/></td>
-									<td><input type="text" name="txtFechaEmision" id="txtFechaEmision_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaEmision dtFecha"/></td>
-									<td><input type="text" name="txtFechaCaducidad" id="txtFechaCaducidad_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha"/></td>
-									<td>
-										<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="fileDocumento"/>
-										<input type="submit" value="Enviar"/>
+										<select id="sltDepartamentos" class="requiredSelect">
+											<option value="">Seleccione</option>
+											<c:forEach items="${departamentos}" var="departamento">
+												<option value="${departamento.idubigeo}">
+													<c:out value="${departamento.nombubigeo}"/>
+												</option>
+											</c:forEach>
+										</select>
 									</td>
 								</tr>
-							</form:form>
-						</c:forEach>	
-							</table>
-				</fieldset>
-				<input type="button" id="btnGuardarCond" value="Guardar" style="left"/>
+								<tr>
+									<td>Materno:</td>
+									<td><input type="text" id="txtMaterno" class="requiredText"/></td>
+									<td>Provincia:</td>
+									<td>
+										<select id="sltProvincia" class="requiredSelect">
+											<option value="">Seleccione</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>DNI</td>
+									<td><input type="text" id="txtDni" class="requiredNumber"/></td>
+									<td>Distrito:</td>
+									<td>
+										<select id="sltDistrito" class="requiredSelect">
+											<option value="">Seleccione</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Correo:</td>
+									<td><input type="text" id="txtCorreo" class="requiredEmail"/></td>
+									<td>Telefono:</td>
+									<td><input type="text" id="txtTelefono" class="requiredNumber"/></td>
+								</tr>
+								<tr>
+									<td>Estado Civil</td>
+									<td>
+										<select id="sltEstadoCivil" class="requiredSelect">
+											<option value="S" selected="selected">Soltero</option>
+											<option value="C">Casado</option>
+											<option value="T">Conviviente</option>
+											<option value="V">Viudo</option>
+											<option value="D">Divorciado</option>
+										</select>
+									</td>
+									<td>Cel. Movistar:</td>
+									<td><input type="text" id="txtMovistar" class="required"/></td>
+								</tr>
+								<tr>
+									<td>Sexo</td>
+									<td>
+										<select id="sltSexo" class="requiredSelect">
+											<option value="M" selected="selected">Masculino</option>
+											<option value="F">Femenino</option>
+										</select>
+									</td>
+									<td>Cel. Claro:</td>
+									<td><input type="text" id="txtClaro" class="required"/></td>
+								</tr>
+								<tr>
+									<td>Fecha Nacimiento</td>
+									<td><input type="text" id="dtNacimiento" class="requiredDate"/></td>
+									<td>Cel. Nextel:</td>
+									<td><input type="text" id="txtNextel" class="required"/></td>
+								</tr>
+								<tr>
+									<td>Fecha Inicio:</td>
+									<td><input type="text" id="txtFechaInicio" class="requiredDate"/></td>
+								</tr>						
+						</table>
+			        </fieldset>
+		        </div>
+		        <div id="divTab1TopRight" align="center">
+					<fieldset>
+						<legend>FOTO DEL CONDUCTOR</legend>
+						<img alt="Foto" id="imgFotoConductor" src="images/no_disponible.jpg"/>
+						<br/>
+						<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formFotoConductor">
+							<input type="file" name="fileFotoConductor" class="fileFotoConductor"/>
+							<input type="submit" value="Enviar"/>
+						</form>
+						<div id="progressFoto"></div>
+					</fieldset>
+				</div>
+			</div>
+			<div id="divTab1Bottom">
+	       		<fieldset>
+		        	<legend>ADJUNTAR DOCUMENTOS</legend>
+			        	<table id="tblDocumentos">
+							<tr>
+								<td>N°</td>
+								<td>Adjuntar</td>
+								<td>N° Documento</td>
+								<td>Fec. Emision</td>
+								<td>Fec. Caducidad</td>
+								<td></td>
+							</tr>	
+							<c:forEach var="documento" items="${documentos}" varStatus="status">
+								<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formDocumento">
+									<tr>
+										<td>
+											<c:out value="${status.count}"/>
+											<input type="hidden" name="txtCodDocumento" value="<c:out value="${documento.mtdcodigoI}"/>"/>
+											<input type="hidden" name="txtCodArchivo" id="documento_<c:out value="${documento.mtdcodigoI}"/>" value="0"/>
+										</td>
+										<td><c:out value="${documento.mtdnombreV}"/></td>
+										<td><input type="text" name="txtNumDocumento" id="txtNumDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="txtNumeroDocumento required"/></td>
+										<td><input type="text" name="txtFechaEmision" id="txtFechaEmision_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaEmision dtFecha required"/></td>
+										<td><input type="text" name="txtFechaCaducidad" id="txtFechaCaducidad_<c:out value="${documento.mtdcodigoI}"/>" class="txtFechaCaducidad dtFecha required"/></td>
+										<td>
+											<input type="file" name="fileDocumento" id="fileDocumento_<c:out value="${documento.mtdcodigoI}"/>" class="fileDocumento"/>
+											<input type="submit" value="Enviar"/>
+										</td>
+									</tr>
+								</form:form>
+							</c:forEach>	
+						</table>
+						<div id="progressArchivo"></div>
+					</fieldset>
+					
+					<input type="button" id="btnGuardarCond" class="ui-button" value="Guardar"/>
+				</div>
 	    </div>
 	    
 		<h4 align="center">
