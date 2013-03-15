@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportInternamientopSubReportParteExterior" pageWidth="500" pageHeight="802" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6aeac187-e81b-4407-8e4d-60bf7b04531f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="INTERNAMIENTO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT IVT.BITNOMBRE_V AS NOMBRE,
+CASE INV.BIVESTADO_C
+WHEN 'B' THEN 'BUENO'
+WHEN 'R' THEN 'REGULAR'
+ELSE 'MALO' END AS ESTADO,
+INV.BIVCANTIDAD_I AS CANTIDAD
+FROM MOT_INTE_INVENTARIO INV
+INNER JOIN MOT_INTE_INVENTARIO_TIPO IVT ON IVT.BITCODIGO_I=INV.BITCODIGO_I
+WHERE INTCODIGO_D=$P{INTERNAMIENTO}
+AND INV.ESTADO_C!='I'
+AND INV.BIVESTADO_C!='N'
+AND IVT.BITTIPO_C='M']]>
+	</queryString>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="CANTIDAD" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="f264fe3b-b593-4b92-8076-157de49ad34e" x="0" y="0" width="500" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[PARTE EXTERIOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="566279af-36ac-4f4c-bbff-f317ae28cb63" x="58" y="20" width="272" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="566279af-36ac-4f4c-bbff-f317ae28cb63" x="430" y="20" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="566279af-36ac-4f4c-bbff-f317ae28cb63" x="330" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7a508693-2ba1-4c89-9d7b-555645d6fa7c" x="30" y="0" width="28" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="002bc1c5-e431-499a-af49-c5cbffeb5499" x="58" y="0" width="272" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3d4051c9-b160-4f34-8fbf-fe1e574e1b87" x="330" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="04ec9c66-8020-4558-9c7b-13cafe73bbe8" x="430" y="0" width="70" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
