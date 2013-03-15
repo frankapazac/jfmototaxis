@@ -81,4 +81,9 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/mantMaestrosEmpresa.jsp"/>
 	</definition>
 	
+	<definition name="tilesConfiguracion2" extends="base.definition">
+		<put-attribute name="title" value="Configuración"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/configuracionTrans.jsp"/>
+	</definition>
+	
 </tiles-definitions>
