@@ -142,6 +142,8 @@ $(document).ready(function(){
         .tablesorterPager({container: $("#pager")}); 	
 	}
     
+
+    
     function validate(elemento){
     	$(".error").remove();
     	var elementText=$(elemento+" .requiredText");
