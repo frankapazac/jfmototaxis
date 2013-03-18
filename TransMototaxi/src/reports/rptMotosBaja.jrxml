@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptMotosBaja" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c186e9b-ccfb-42e1-b2e1-806cc13d6c6b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FECHA1" class="java.lang.String"/>
+	<parameter name="FECHA2" class="java.lang.String"/>
+	<parameter name="EMPCODIGO_D" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT UNE.UNEPLACANRO_V PLACA,MAR.MARNOMBRE_V MARCA,MOT.MODNOMBRE_V MODELO,UNE.UNEANNO_C AÑO,
+CONVERT(VARCHAR,UCO.UCOFECHAINICIO_F,103) [FECHA INICIO],
+ISNULL(CONVERT(VARCHAR,UCO.UCOFECHACESE_F,103),'') [FECHA CESE],
+EMP.EMPRAZONSOCIAL_V EMPRESA,
+(SELECT CASE UCO.UCOESTADO_C WHEN 'A' THEN 'ALTA' WHEN 'I' THEN 'BAJA' END) ESTADO,PER.PERNOMBRES_V,PER.PERPATERNO_V,PER.PERMATERNO_V
+FROM MOT_UNIDAD_EMPRESA UNE
+INNER JOIN MOT_PROP_UNIEMPRESA MPU ON UNE.UNECODIGO_D=MPU.UNECODIGO_D
+INNER JOIN MOT_UNID_CONDUCTOR UCO ON UCO.PMOCODIGO_D=MPU.PMOCODIGO_D
+INNER JOIN MOT_MODELO MOT ON UNE.MODCODIGO_I=MOT.MODCODIGO_I
+INNER JOIN MOT_MARCA MAR ON UNE.MARCODIGO_I=MAR.MARCODIGO_I
+INNER JOIN MOT_EMPR_ASOCIADO EAS ON EAS.ASOCODIGO_D=MPU.ASOCODIGO_D
+INNER JOIN MOT_EMPRESA EMP ON EAS.EMPCODIGO_D=EMP.EMPCODIGO_D
+INNER JOIN MOT_PERSONA PER ON EAS.PERCODIGO_D=PER.PERCODIGO_D
+WHERE UCO.UCOFECHAINICIO_F BETWEEN
+CAST($P{FECHA1} AS DATETIME) AND CAST($P{FECHA2} AS DATETIME) AND EMP.EMPCODIGO_D=$P{EMPCODIGO_D} AND  UCOESTADO_C='I']]>
+	</queryString>
+	<field name="PLACA" class="java.lang.String"/>
+	<field name="MARCA" class="java.lang.String"/>
+	<field name="MODELO" class="java.lang.String"/>
+	<field name="AÑO" class="java.lang.String"/>
+	<field name="FECHA INICIO" class="java.lang.String"/>
+	<field name="FECHA CESE" class="java.lang.String"/>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="PERNOMBRES_V" class="java.lang.String"/>
+	<field name="PERPATERNO_V" class="java.lang.String"/>
+	<field name="PERMATERNO_V" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f2547fe4-6261-4b1f-8922-2868ae660f3b" x="0" y="8" width="554" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REPORTE DE BAJAS ENTRE LAS FECHAS " + "( "+ $P{FECHA1} + "  -  " + $P{FECHA2} +" )"+ " - " + $F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4ce120d6-911b-4250-a3b4-06d54fb12ff5" x="16" y="34" width="539" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b445c950-3873-4414-a89d-fc485fc2a918" x="15" y="1" width="57" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PLACA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4bb4f11c-dc29-4a0a-bc50-083ea5e9b416" x="72" y="1" width="69" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[MARCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c27375b7-4a68-4a1f-b816-2a4dcc99454c" x="141" y="1" width="69" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[MODELO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b3bad05b-37d1-46d8-a616-4245e9dea068" x="242" y="1" width="48" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FEC. INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ae72a9a1-7c1c-4869-aab0-e6c47fdf0bec" x="510" y="1" width="44" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="45da6b95-9155-44f4-9c3b-ffc35ebbaf79" x="210" y="1" width="29" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f3cdd89f-b4b0-4cd2-ac2c-7e44267a6ebe" x="345" y="1" width="165" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ASOCIADO]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4ce120d6-911b-4250-a3b4-06d54fb12ff5" x="15" y="20" width="539" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="e1e00f81-9f2b-426b-a4f5-0f7091941fc3" x="290" y="1" width="53" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FEC.CESE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="399b7cb4-ea8c-40dd-afdc-3def92a14e2a" x="15" y="0" width="57" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLACA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e7883100-b28a-4f20-892c-acec6e5b3730" x="72" y="0" width="69" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MARCA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="90768002-e104-441f-853b-ff6185553ca4" x="141" y="0" width="69" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODELO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6fec1a7d-c3ee-4b35-a73a-0e13826579e4" x="242" y="0" width="48" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a685080f-9b4f-42c5-846d-46c152c55bec" x="510" y="0" width="44" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="806c5094-18e9-40d0-b0e8-8c31c85c6e5e" x="210" y="0" width="29" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AÑO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1620adb7-6b19-4134-97c8-775003089b6d" x="345" y="0" width="165" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERNOMBRES_V}+" "+$F{PERPATERNO_V}+" "+$F{PERMATERNO_V}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="48743045-2236-4d94-a49a-265c3577e914" x="290" y="1" width="53" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA CESE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="49" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement uuid="bbbb6f89-87fe-4baa-bbde-09a46db3c621" x="445" y="3" width="109" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Unidades :  " + $V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="0fee262f-0869-4e00-a2c6-767622345e31" x="12" y="1" width="542" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
