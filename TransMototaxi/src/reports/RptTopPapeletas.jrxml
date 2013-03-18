@@ -9,6 +9,7 @@
 	<parameter name="FECHA2" class="java.lang.String">
 		<defaultValueExpression><![CDATA[01/01/2014]]></defaultValueExpression>
 	</parameter>
+	<parameter name="EMPCODIGO_D" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT  DISTINCT  PER.PERDNI_V DNI,
 (SELECT DISTINCT ADJ.ADJNUMERO_V FROM MOT_ADJUNTAR_ARCHIVO  ADJ
@@ -28,7 +29,7 @@ LEFT JOIN MOT_EMP_CONDUCTOR ECO ON ECO.CONDCODIGO_D=COND.CONDCODIGO_I
 LEFT JOIN MOT_EMPRESA EMP ON EMP.EMPCODIGO_D=ECO.EMPCODIGO_D
 LEFT JOIN MOT_INFR_MEDIDA IME ON PAP.IMECODIGO_I=IME.IMECODIGO_I
 INNER JOIN MOT_INFRACCION INF ON INF.INFCODIGO_D=IME.INFCODIGO_D
-WHERE PAPFECHAINFRACCION_F BETWEEN CAST($P{FECHA1} AS DATETIME)  AND CAST($P{FECHA2} AS DATETIME)
+WHERE PAPFECHAINFRACCION_F BETWEEN CAST($P{FECHA1} AS DATETIME)  AND CAST($P{FECHA2} AS DATETIME) AND EMP.EMPCODIGO_D=$P{EMPCODIGO_D}
 ORDER BY CONVERT(VARCHAR,PAP.PAPFECHAINFRACCION_F,103) ASC]]>
 	</queryString>
 	<field name="DNI" class="java.lang.String"/>
@@ -97,50 +98,65 @@ ORDER BY CONVERT(VARCHAR,PAP.PAPFECHAINFRACCION_F,103) ASC]]>
 		<band height="23" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="eb0cce5f-6319-4fd1-88fe-c510a6914912" x="3" y="2" width="47" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ae7e829b-08bd-4111-aaff-30b721325a5d" x="51" y="2" width="62" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="ae7e829b-08bd-4111-aaff-30b721325a5d" x="50" y="2" width="61" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[LICENCIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="61024459-e932-4059-9be4-66c12be53d59" x="114" y="2" width="130" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="61024459-e932-4059-9be4-66c12be53d59" x="111" y="2" width="130" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="33196c05-12b2-484b-b3fe-6d7e7b91e23b" x="246" y="2" width="110" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="33196c05-12b2-484b-b3fe-6d7e7b91e23b" x="240" y="2" width="110" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[EMPRESA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="02f7c008-773a-4412-8317-2a2dfa67f253" x="361" y="2" width="75" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="02f7c008-773a-4412-8317-2a2dfa67f253" x="409" y="2" width="56" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[INFRACCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e9752a2b-8c6d-490e-830f-d56d58a4b237" x="438" y="2" width="52" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="e9752a2b-8c6d-490e-830f-d56d58a4b237" x="464" y="2" width="43" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b846b0ce-a24c-4f39-acbf-a67b9c9f57a3" x="493" y="2" width="60" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement uuid="b846b0ce-a24c-4f39-acbf-a67b9c9f57a3" x="507" y="2" width="46" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="5209dd99-f670-48cc-88c0-3ee34cfc38ff" x="5" y="2" width="548" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="01d0155a-e0fd-467a-ba18-c85cc3596685" x="5" y="22" width="548" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="7430f475-bcb4-4a6a-8b33-432ccaa459e5" x="348" y="2" width="60" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[N° PAPELETA]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -148,60 +164,73 @@ ORDER BY CONVERT(VARCHAR,PAP.PAPFECHAINFRACCION_F,103) ASC]]>
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement uuid="235e6304-51bb-475f-9fe2-c7b26779c2ba" x="3" y="0" width="47" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DNI}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="189471fb-397c-4ece-81d7-103bd7f7ef84" x="51" y="0" width="62" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="189471fb-397c-4ece-81d7-103bd7f7ef84" x="50" y="0" width="61" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{LICENCIA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e1898d5d-4f12-4fb9-8080-e8e89028a911" x="114" y="0" width="130" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="e1898d5d-4f12-4fb9-8080-e8e89028a911" x="111" y="0" width="130" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NOMBRES}+" "+$F{PATERNO}+" "+$F{MATERNO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8a635b88-5e65-43ac-a130-73eceb771fd8" x="246" y="0" width="110" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="8a635b88-5e65-43ac-a130-73eceb771fd8" x="240" y="0" width="110" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2f3024ab-e339-47fc-af61-6d1fbbff44ba" x="361" y="0" width="75" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="2f3024ab-e339-47fc-af61-6d1fbbff44ba" x="409" y="0" width="56" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{INFRACCION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="eec8aad1-da92-4496-a4b6-af2764467e5e" x="438" y="0" width="52" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+				<reportElement uuid="eec8aad1-da92-4496-a4b6-af2764467e5e" x="464" y="0" width="43" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0d1bbd64-1d5e-4bdc-88c5-cf641bcb8fa1" x="493" y="0" width="60" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement uuid="0d1bbd64-1d5e-4bdc-88c5-cf641bcb8fa1" x="507" y="0" width="46" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8b1f73f5-22f1-47f4-b5ed-fbf38da495e1" x="348" y="0" width="60" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PAPNUMERO_V}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="1" splitType="Stretch"/>
+		<band height="6" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<line>
+				<reportElement uuid="0fee262f-0869-4e00-a2c6-767622345e31" x="5" y="4" width="548" height="1"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>
