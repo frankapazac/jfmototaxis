@@ -37,4 +37,16 @@
 		p:jdbcDataSource-ref="dataSource">
 	</bean>
 	
+	<bean id="reportInformeMotosAlta" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/rptMotosAlta.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
+	<bean id="reportInformeMotosBaja" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/rptMotosBaja.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
 </beans>
