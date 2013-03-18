@@ -120,5 +120,40 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 		return mav;
 	}
 	
+	
+	
+	@RequestMapping(value="ImprimirMotosconAltas.htm", method=RequestMethod.GET)
+	public ModelAndView ImprimirMotosconAltas(HttpServletRequest request,String FECHA1 ,String FECHA2){
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		ModelAndView mav=null;
+		Map<String, Object> parameters= new HashMap<String, Object>();
+		parameters.put("FECHA1", FECHA1);
+		parameters.put("FECHA2", FECHA2);
+		parameters.put("EMPCODIGO_D", rol.getUsuario().getEmpresa().getEmpcodigoD());
+			mav=new ModelAndView("reportInformeMotosAlta", parameters);
+			
+		return mav;
+	}
+
+	@RequestMapping(value="ImprimirMotosconBajas.htm", method=RequestMethod.GET)
+	public ModelAndView ImprimirMotosconBajas(HttpServletRequest request,String FECHA1 ,String FECHA2){
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		ModelAndView mav=null;
+		Map<String, Object> parameters= new HashMap<String, Object>();
+			parameters.put("FECHA1", FECHA1);
+			parameters.put("FECHA2", FECHA2);
+			parameters.put("EMPCODIGO_D", rol.getUsuario().getEmpresa().getEmpcodigoD());
+			mav=new ModelAndView("reportInformeMotosBaja", parameters);
+			
+		return mav;
+	}
+	
+	
+	
+
+	
+	
 
 }
