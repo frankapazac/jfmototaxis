@@ -5,6 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript" src="js/jsp/documentacion.js"></script>
+<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 
 <title>Insert title here</title>
 </head>
@@ -20,18 +23,37 @@
 							<td>CONDUCTORES CON PAPELETA ENTRE RANGOS DE FECHAS</td>
 							<td></td>						
 							<td>FECHA 1</td>
-							<td><input type="text" id="txtfecha1"/></td>
+							<td><input type="text" id="txtfecha1" class="requiredDate txtfecha"/></td>
 							<td>FECHA 2</td>
-							<td><input type="text" id="txtfecha2"/></td>
-							<td><input type="button" id="btnImprimir" value="Visualizar" style="left"/></td>
+							<td><input type="text" id="txtfecha2" class="requiredDate txtfecha"/></td>
+							<td><input type="button" id="btnImprimir" value="Visualizar"/></td>
 							
 							
 							<tr>
 							<td>CONDUCTORES CON ALTA ROTACIÓN</td>
 							<td></td>						
-							<td><input type="button" id="btnImprimirRotacion" value="Visualizar" style="left"/></td>
-			
-					</tr>
+							<td><input type="button" id="btnImprimirRotacion" value="Visualizar"/></td>
+							</tr>
+							
+							<tr>
+							<td>MOTOTAXIS DADOS DE ALTA ENTRE RANGOS DE FECHAS</td>
+							<td></td>						
+							<td>FECHA 1</td>
+							<td><input type="text" id="txtfecha1a" class="requiredDate txtfecha" /></td>
+							<td>FECHA 2</td>
+							<td><input type="text" id="txtfecha2a" class="requiredDate txtfecha"/></td>
+							<td><input type="button" id="btnImprimirAlta" value="Visualizar"/></td>						
+							</tr>
+							
+							<tr>
+							<td>MOTOTAXIS DADOS DE BAJA ENTRE RANGOS DE FECHAS</td>
+							<td></td>						
+							<td>FECHA 1</td>
+							<td><input type="text" id="txtfecha1b" class="requiredDate txtfecha"/></td>
+							<td>FECHA 2</td>
+							<td><input type="text" id="txtfecha2b" class="requiredDate txtfecha"s/></td>
+							<td><input type="button" id="btnImprimirBaja" value="Visualizar"/></td>
+							</tr>
 			 </table>
 			 </fieldset>
 		</div>
