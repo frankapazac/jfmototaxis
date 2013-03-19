@@ -116,7 +116,7 @@ public class OperativoController {
 			logger.error(e.getMessage());
 		}
 			
-		return "Success";
+		return String.valueOf(inspectorList.getOperativo().getOpecodigoD());
 	}
 	
 	
