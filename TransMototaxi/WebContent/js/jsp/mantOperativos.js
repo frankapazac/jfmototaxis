@@ -1,11 +1,22 @@
 $(document).ready(function(){
 
 	//LISTADO GENERAL
+	$("#divNuevoOperativo").hide();
+    $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
+    
+    $(function(){
+    	$('#txtHora').timepicker();//$('#fechaNueva').datetimepicker(); esto sirve para mostrar la hora
+    });
+
 	buscar("OP.OPETITULO_V", "");
 		
 	$("#btnBuscar").click(function(){
     	buscar($("#sltCriterio").val(),$("#txtTexto").val());
     });
+	
+	$("input[type=text]").keyup(function(){
+	  $(this).val( $(this).val().toUpperCase() );
+	});
 	
 	function buscar(criterio,texto){
 		$.ajax({ 
@@ -102,12 +113,6 @@ $(document).ready(function(){
     
     //MOSTRAR NUEVO OPERATIVO
     
-	$("#divNuevoOperativo").hide();
-    $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
-    
-    $(function(){
-    	$('#txtHora').timepicker();//$('#fechaNueva').datetimepicker(); esto sirve para mostrar la hora
-    });
     
     $("#btnNuevOperativo").click(function(){
     	llenarFormulario("");
@@ -250,14 +255,15 @@ $(document).ready(function(){
             contentType : "application/json",
             url: "Operativos/Procesar.htm", 
             success: function(data){
-            	alert(JSON.stringify(inspectorList));
+            	//alert(JSON.stringify(inspectorList));
+            	$("#sltAgregaInspector option").prop('selected', false);
+        		buscar("OP.OPECODIGO_D",data);
+        		$("#divNuevoOperativo").dialog('close');
             },error: function(jqXHR, textStatus, errorThrown){
             	mensajeError();
             }
     	});
-		$("#sltAgregaInspector option").prop('selected', false);
-		buscar($("#sltCriterio").val(),$("#txtTexto").val());
-    	$(this).dialog('close');
+		
 	});
     /*
     $("#btnGuardar").click(function(){
@@ -526,7 +532,7 @@ $(document).ready(function(){
 	}
 
 	function validarLetras(texto){
-	    var filter = /^[A-Za-z\_\-\.\s\xF1\xD1]+$/;
+	    var filter = /^[a-zA-Z0-9 ·ÈÌÛ˙A…Õ”⁄—Ò]+$/;
 	    if(filter.test(texto))
 	        return true;
 	    else

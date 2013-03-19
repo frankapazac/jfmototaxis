@@ -11,7 +11,10 @@ $(document).ready(function(){
     
     $("#btnNuevo").click(function(){llenarFormulario("");});
     $("#btnBuscar").click(function(){buscar($("#sltCriterio").val(),$("#txtTexto").val());});
-    $("#btnCancelar").click(function(){$("#divFormulario").dialog("close");});
+    $("#btnCancelar").click(function(){
+		$("#divFormulario").validate();
+    //	$("#divFormulario").dialog("close");
+    });
     
     buscar("PER.PERCODIGO_D","");
     
