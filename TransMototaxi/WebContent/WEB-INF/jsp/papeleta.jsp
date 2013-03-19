@@ -464,7 +464,6 @@
 			</table>
 		</fieldset>
 		<h4 align="center">
-			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
 			<input type="button" value="Guardar" id="btnGuardar"/>
 			<input type="button" value="Cancelar" id="btnCancelar"/>
 		</h4>
@@ -614,6 +613,7 @@
 			</table>
 		</fieldset>
 		<h4 align="center">
+			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
 			<input type="button" value="Aceptar" id="btnAceptar"/>
 		</h4>
 	</div>

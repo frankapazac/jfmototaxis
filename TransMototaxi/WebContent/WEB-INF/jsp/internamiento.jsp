@@ -32,13 +32,17 @@
 		.tdContenido{
 			width: 250px;
 		}
-		/*.txtText{
+		.txtText{
 			width: 245px;
-		}*/
+		}
 		.txtTextCompleted{
 			width: 703px;
 		}
 		.divPartes{
+			width:33%;
+			float:left;
+		}
+		.divPartesV{
 			width:33%;
 			float:left;
 		}
@@ -270,33 +274,31 @@
 	</h4>	
 
 	<div id="divFormulario">
-    	<fieldset>
+		<fieldset>
         	<legend>SOBRE EL INTERNAMIENTO</legend>
         	<input type="hidden" id="txtCodigo" value="0"/>
         	<table>
                 <tr>
                     <td>Papeleta</td>
                     <td colspan="3">
-                    	<input id="txtPapeleta" type="text" class="requiredText"/>
-                    	<input id="txtPapCodigo" type="hidden"/>
+                    	<input type="text" id="txtPapeleta" class="txtText"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Motivo</td>
                     <td colspan="3">
-                    	<input type="hidden" id="txtBinCodigo" value="0"/>
-                    	<textarea id="txaMotivo" rows="2" cols="100" class="requiredText"></textarea>
+                    	<textarea id="txtMotivo" class="txtTextCompleted" rows="3"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTitulo">Fecha</td>
-                    <td class="tdContenido"><label id="lblFecha"></label></td>
+                    <td class="tdContenido"><label id="txtFecha"></label></td>
                     <td class="tdTitulo">Hora</td>
-                    <td class="tdContenido"><label id="lblHora"></label></td>
+                    <td class="tdContenido"><label id="txtHora"></label></td>
                 </tr>
             </table>
         </fieldset>
-        <fieldset>
+    	<fieldset>
 			<legend>DATOS DEL CONDUCTOR</legend>
 			<table>
 				<tr>
@@ -314,27 +316,27 @@
 				</tr>
                 <tr>
 					<td class="tdTitulo">Dirección</td>
-					<td colspan="3"><label id="lblDireccion">SIN DIRECCIÓN</label></td>
+					<td colspan="3"><input type="text" id="txtDireccion" class="txtTextCompleted" disabled="disabled"/></td>
 				</tr>
                 <tr>
 					<td class="tdTitulo">Telefono</td>
-					<td class="tdContenido"><label id="lblTelefono">SIN TELEFONO</label></td>
+					<td class="tdContenido"><input type="text" id="txtTelefono" class="txtText" disabled="disabled"/></td>
 					<td class="tdTitulo">Celular</td>
-					<td class="tdContenido"><label id="lblCelular">SIN CELULAR</label></td>
+					<td class="tdContenido"><input type="text" id="txtCelular" class="txtText" disabled="disabled"/></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">N° Licencia</td>
-					<td class="tdContenido"><label id="lblNroLicencia">SIN NRO DE LICENCIA</label></td>
+					<td class="tdContenido"><input type="text" id="txtNroLicencia" class="txtText" disabled="disabled"/></td>
 					<td class="tdTitulo">Estado</td>
 					<td class="tdContenido">
-						<label id="txtEstadoLicencia">SIN CONFIRMAR</label>
+						<input type="text" id="txtEstadoLicencia" class="txtText" disabled="disabled"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Fecha de Emision</td>
-					<td class="tdContenido"><label id="lblFechaEmision">SIN FECHA DE EMISION</label></td>
+					<td class="tdContenido"><input type="text" id="txtFechaEmision" class="txtText" disabled="disabled"/></td>
 					<td class="tdTitulo">Fecha de Caducidad</td>
-					<td class="tdContenido"><label id="lblFechaCaducidad">SIN FECHA DE CADUCIDAD</label></td>
+					<td class="tdContenido"><input type="text" id="txtFechaCaducidad" class="txtText" disabled="disabled"/></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -352,13 +354,13 @@
                         </select>
                     </td>
                     <td class="tdTitulo">Marca</td>
-                    <td class="tdContenido"><label id="lblMarca">SIN MARCA</label></td>
+                    <td class="tdContenido"><input type="text" id="txtMarca" class="txtText" disabled="disabled"/></td>
                 </tr>
                 <tr>
                 	<td class="tdTitulo">N° motor</td>
-                	<td class="tdContenido"><label id="lblNroMotor">SIN NRO DE MOTOR</label></td>
+                	<td class="tdContenido"><input type="text" id="txtNroMotor" class="txtText" disabled="disabled"/></td>
                 	<td class="tdTitulo">Color</td>
-                	<td class="tdContenido"><label id="lblColor">SIN COLOR</label></td>
+                	<td class="tdContenido"><input type="text" id="txtColor" class="txtText" disabled="disabled"/></td>
                 </tr>
             </table>
         </fieldset>
@@ -367,19 +369,19 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">DNI N°</td>
-					<td class="tdContenido"><label id="lblDniPropietario">SIN DNI</label></td>
+					<td class="tdContenido"><input type="text" id="txtDniPropietario" class="txtText" disabled="disabled"/></td>
 					<td class="tdTitulo">Apellidos y Nombres</td>
-					<td class="tdContenido"><label id="lblNombresPropietario">SIN APELLIDOS Y NOMBRES</label></td>
+					<td class="tdContenido"><input type="text" id="txtNombresPropietario" class="txtText" disabled="disabled"/></td>
 				</tr>
                 <tr>
 					<td class="tdTitulo">Dirección</td>
-					<td colspan="3"><label id="lblDirecPropietario">SIN DIRECCION</label></td>
+					<td colspan="3"><input type="text" id="txtDirecPropietario" class="txtTextCompleted" disabled="disabled"/></td>
 				</tr>
                 <tr>
 					<td class="tdTitulo">Telefono</td>
-					<td class="tdContenido"><label id="lblTelefPropietario">SIN TELEFONO</label></td>
+					<td class="tdContenido"><input type="text" id="txtTelefPropietario" class="txtText" disabled="disabled"/></td>
 					<td>Celular</td>
-					<td class="tdContenido"><label id="lblCelulPropietario">SIN CELULAR</label></td>
+					<td class="tdContenido"><input type="text" id="txtCelulPropietario" class="txtText" disabled="disabled"/></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -388,17 +390,17 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">Empresa</td>
-					<td colspan="3"><label id="lblEmpresa">SIN EMPRESA</label></td>
+					<td colspan="3"><input type="text" id="txtEmpresa" class="txtTextCompleted" disabled="disabled"/></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Dirección</td>
-					<td colspan="3"><label id="lblEmprDireccion">SIN DIRECCION</label></td>
+					<td colspan="3"><input type="text" id="txtEmprDireccion" class="txtTextCompleted" disabled="disabled"/></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Telefono</td>
-					<td class="tdContenido"><label id="lblEmprTelefono">SIN TELEFONO</label></td>
+					<td class="tdContenido"><input type="text" id="txtEmprTelefono" class="txtText" disabled="disabled"/></td>
 					<td class="tdTitulo">Celular</td>
-					<td class="tdContenido"><label id="lblEmprCelular">SIN CELULAR</label></td>
+					<td class="tdContenido"><input type="text" id="txtEmprCelular" class="txtText" disabled="disabled"/></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -520,9 +522,253 @@
 		</fieldset>
 		
 		<h4 align="center">
-			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
 			<input type="button" value="Guardar" id="btnProcesar"/>
 			<input type="button" value="Cerrar" id="btnCancelar"/>
+		</h4>
+    </div>
+    
+    
+	<div id="divFormularioVer">
+    	<fieldset>
+        	<legend>SOBRE EL INTERNAMIENTO</legend>
+        	<input type="hidden" id="lblCodigo" value="0"/>
+        	<table>
+                <tr>
+                    <td>Papeleta</td>
+                    <td colspan="3">
+                    	<label id="lblPapeleta"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Motivo</td>
+                    <td colspan="3">
+                    	<label id="lblMotivo"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitulo">Fecha</td>
+                    <td class="tdContenido"><label id="lblFecha"></label></td>
+                    <td class="tdTitulo">Hora</td>
+                    <td class="tdContenido"><label id="lblHora"></label></td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+			<legend>DATOS DEL CONDUCTOR</legend>
+			<table>
+				<tr>
+					<td class="tdTitulo">DNI N°</td>
+					<td class="tdContenido"><label id="lblConductorDNI"></label></td>
+					<td class="tdTitulo">Conductor</td>
+					<td class="tdContenido">
+						<label id="lblConductor"></label>
+					</td>
+				</tr>
+                <tr>
+					<td class="tdTitulo">Dirección</td>
+					<td colspan="3"><label id="lblDireccion"></label></td>
+				</tr>
+                <tr>
+					<td class="tdTitulo">Telefono</td>
+					<td class="tdContenido"><label id="lblTelefono"></label></td>
+					<td class="tdTitulo">Celular</td>
+					<td class="tdContenido"><label id="lblCelular"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">N° Licencia</td>
+					<td class="tdContenido"><label id="lblNroLicencia"></label></td>
+					<td class="tdTitulo">Estado</td>
+					<td class="tdContenido">
+						<label id="lblEstadoLicencia"></label>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Fecha de Emision</td>
+					<td class="tdContenido"><label id="lblFechaEmision"></label></td>
+					<td class="tdTitulo">Fecha de Caducidad</td>
+					<td class="tdContenido"><label id="lblFechaCaducidad"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+        <fieldset>
+        	<legend>DATOS DEL VEHICULO</legend>
+            <table>
+                <tr>
+					<td class="tdTitulo">N° Placa</td>
+                    <td class="tdContenido">
+                        <label id="lblPlacas"></label>
+                    </td>
+                    <td class="tdTitulo">Marca</td>
+                    <td class="tdContenido"><label id="lblMarca"></label></td>
+                </tr>
+                <tr>
+                	<td class="tdTitulo">N° motor</td>
+                	<td class="tdContenido"><label id="lblNroMotor"></label></td>
+                	<td class="tdTitulo">Color</td>
+                	<td class="tdContenido"><label id="lblColor"></label></td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+			<legend>DATOS DEL PROPIETARIO</legend>
+			<table>
+				<tr>
+					<td class="tdTitulo">DNI N°</td>
+					<td class="tdContenido"><label id="lblDniPropietario"></label></td>
+					<td class="tdTitulo">Apellidos y Nombres</td>
+					<td class="tdContenido"><label id="lblNombresPropietario"></label></td>
+				</tr>
+                <tr>
+					<td class="tdTitulo">Dirección</td>
+					<td colspan="3"><label id="lblDirecPropietario"></label></td>
+				</tr>
+                <tr>
+					<td class="tdTitulo">Telefono</td>
+					<td class="tdContenido"><label id="lblTelefPropietario"></label></td>
+					<td>Celular</td>
+					<td class="tdContenido"><label id="lblCelulPropietario"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+        <fieldset>
+			<legend>DATOS DE LA EMPRESA</legend>
+			<table>
+				<tr>
+					<td class="tdTitulo">Empresa</td>
+					<td colspan="3"><label id="lblEmpresa"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Dirección</td>
+					<td colspan="3"><label id="lblEmprDireccion"></label></td>
+				</tr>
+				<tr>
+					<td class="tdTitulo">Telefono</td>
+					<td class="tdContenido"><label id="lblEmprTelefono"></label></td>
+					<td class="tdTitulo">Celular</td>
+					<td class="tdContenido"><label id="lblEmprCelular"></label></td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend>INVENTARIO</legend>
+			<div id="divPartePrincipal">
+		    	<div class="divPartesV">
+		    		<h5>PARTE EXTERIOR</h5>
+					<table>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>N</td>
+							<td>B</td>
+							<td>R</td>
+							<td>M</td>
+							<td>Cant.</td>
+						</tr>
+						<c:forEach var="parteExterior" items="${parteExterior}" varStatus="status">
+							<tr>
+								<td><c:out value="${status.count}"/></td>
+								<td><c:out value="${parteExterior.bitnombreV}"/></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									value="N" checked="checked" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									value="B" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									value="R" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									value="M" disabled="disabled"></td>
+								<td><input id="cant_<c:out value="${parteExterior.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+		        <div class="divPartesV">
+					<h5>PARTE INTERIOR</h5>
+					<table>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>N</td>
+							<td>B</td>
+							<td>R</td>
+							<td>M</td>
+							<td>Cant.</td>
+						</tr>
+						<c:forEach var="parteInterior" items="${parteInterior}" varStatus="status">
+							<tr>
+								<td><c:out value="${status.count}"/></td>
+								<td><c:out value="${parteInterior.bitnombreV}"/></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									value="N" checked="checked" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									value="B" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									value="R" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									value="M" disabled="disabled"></td>
+								<td><input id="cant_<c:out value="${parteInterior.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+		        <div class="divPartesV">
+					<h5>MOTOR</h5>
+					<table>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>N</td>
+							<td>B</td>
+							<td>R</td>
+							<td>M</td>
+							<td>Cant.</td>
+						</tr>
+						<c:forEach var="parteMotor" items="${parteMotor}" varStatus="status">
+							<tr>
+								<td><c:out value="${status.count}"/></td>
+								<td><c:out value="${parteMotor.bitnombreV}"/></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									value="N" checked="checked" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									value="B" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									value="R" disabled="disabled"></td>
+								<td><input type="radio" 
+									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									value="M" disabled="disabled"></td>
+								<td><input id="cant_<c:out value="${parteMotor.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+		    </div>
+		</fieldset>
+		
+		<h4 align="center">
+			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
+			<input type="button" value="Aceptar" id="btnAceptarVer"/>
 		</h4>
     </div>
 </body>
