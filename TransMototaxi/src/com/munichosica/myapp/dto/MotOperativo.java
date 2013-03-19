@@ -9,6 +9,7 @@ public class MotOperativo {
 	protected String opereferencia;
 	protected String opefecha;
 	protected String opehora;
+	protected String opehorafin;
 	protected MotZona zona;
 	protected MotInspector inspector;
 	protected String estado;
@@ -18,7 +19,15 @@ public class MotOperativo {
 		zona = new MotZona();
 		inspector = new MotInspector();
 	}
-		
+	
+	public String getOpehorafin() {
+		return opehorafin;
+	}
+
+	public void setOpehorafin(String opehorafin) {
+		this.opehorafin = opehorafin;
+	}
+	
 	public long getOpecodigoD() {
 		return opecodigoD;
 	}
