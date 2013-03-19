@@ -31,7 +31,7 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 		
 		try {
 			conn = ResourceManager.getConnection();
-			stmt = conn.prepareCall("{call SP_MOT_INS_OPERATIVO;1 (?,?,?,?,?,?,?,?,?,?)}");
+			stmt = conn.prepareCall("{call SP_MOT_INS_OPERATIVO;1 (?,?,?,?,?,?,?,?,?,?,?)}");
 			stmt.registerOutParameter(1, Types.DECIMAL);
 			stmt.setLong(2,dto.getOpecodigoD());
 			stmt.setString(3,dto.getOpetituloV());
@@ -42,6 +42,8 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 			stmt.setString(8, dto.getOpehora());
 			stmt.setLong(9, dto.getZona().getZoncodigo_I());
 			stmt.setLong(10, dto.getInspector().getInscodigoI());
+			stmt.setString(11, dto.getOpehorafin());
+			
 			
 			stmt.execute();
 
@@ -49,7 +51,7 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 			if(codigo!=null){
 				dto.setOpecodigoD(codigo);
 			}
-			System.out.println(codigo);
+			//System.out.println(dto.getOpehorafin());
 								
 		} catch (SQLException e) {
 			throw new MotOperativoDaoException(e.getMessage(), e);
@@ -91,7 +93,8 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 					operativo.getInspector().getPersona().setPernombresV(rs.getString("Nombre"));
 					operativo.getInspector().getPersona().setPerpaternoV(rs.getString("Paterno"));
 					operativo.getInspector().getPersona().setPermaternoV(rs.getString("Materno"));
-					operativo.getInspector().setInscodigoI(rs.getInt("CodInspector"));					
+					operativo.getInspector().setInscodigoI(rs.getInt("CodInspector"));
+					operativo.setOpehorafin(rs.getString("HoraFin"));
 				}
 			}
 		} catch (Exception ex) {
