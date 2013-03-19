@@ -2,6 +2,7 @@ $(document).ready(function(){
 	updateTime();
 	setInterval(updateTime, 30000);
 	$("#divFormulario").hide();
+	$("#divFormularioVer").hide();
 	$("#sltConductor").change(buscarConductorPorCodigo);
 	$("#txtConductorDNI").keyup(buscarConductorPorDNI);
 	$("#sltPlacas").change(buscarUnidadPorCodigo);
@@ -10,6 +11,9 @@ $(document).ready(function(){
 	$("#btnImprimir").click(imprimirPapeleta);
 	$("#btnBuscar").click(function(){buscar($("#sltCriterio").val(),$("#txtTexto").val());});
 	$("#btnNuevo").click(function(){llenarDatos("");});
+	$("#btnAceptarVer").click(function(){
+		$("#divFormularioVer").dialog('close');
+	});
 	
 	buscar('ITE.INTCODIGO_D','');
 	
@@ -90,12 +94,12 @@ $(document).ready(function(){
     	}
 		
     	$(".btnObtener").click(obtener);
-    	/*$(".btnVer").click(eliminar);*/
+    	$(".btnVer").click(ver);
     	paginacion();
     }
 	
 	function imprimirPapeleta(){
-    	var codigo=parseFloat($("#txtCodigo").val());
+    	var codigo=parseFloat($("#lblCodigo").val());
     	window.open("Internamientos/ImprimirPdf.htm?codigo="+codigo);
     }
 	
@@ -116,30 +120,45 @@ $(document).ready(function(){
     	});
 	}
 	
-	function llenarDatos(data){
+	function ver(){
+		$.ajax({ 
+			data: {
+				codigo:$(this).attr("id").replace('ver','')
+			},
+            datatype:'json',
+            type: "POST", 
+            url: "Internamientos/Obtener.htm", 
+            success: function(data){
+            	//alert(JSON.stringify(data));
+            	llenarDatosVer(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	//mensajeError();
+            }
+    	});
+	}
+	
+	function llenarDatosVer(data){
 		if(data!=""){
 			$(".divPartes input[value='N']").attr('checked',true);
-			$("#btnProcesar").val("Modificar");
-			$("#txtCodigo").val(data.intcodigoD);
-			$("#txtBinCodigo").val(data.boletaInternamiento.bincodigoD);
-			$("#txaMotivo").val(data.boletaInternamiento.binmotivoV);
+			$("#lblCodigo").val(data.intcodigoD);
+			$("#lblBinCodigo").text(data.boletaInternamiento.bincodigoD);
+			$("#lblMotivo").text(data.boletaInternamiento.binmotivoV);
 			$("#lblFecha").text(data.intfechaingresoF);
 			$("#lblHora").text(data.intfechasalidaF);
-			$("#txtPapeleta").val(data.papeleta.papnumeroV);
-			$("#txtPapCodigo").val(data.papeleta.papcodigoD);
-			$('#sltConductor').combobox('autocomplete',data.conductor.concodigoD,data.conductor.persona.pernombresV);
-			$("#txtConductorNroLicencia").val(data.conductor.archivo.adjnumeroV);
-			$("#txtEstadoLicencia").text(data.conductor.archivo.adjestadoV);
+			$("#lblPapeleta").text(data.papeleta.papnumeroV);
+			$("#lblPapCodigo").text(data.papeleta.papcodigoD);
+			$('#lblConductor').text(data.conductor.persona.pernombresV);
+			$("#lblConductorNroLicencia").text(data.conductor.archivo.adjnumeroV);
+			$("#lblEstadoLicencia").text(data.conductor.archivo.adjestadoV);
 			$("#lblFechaEmision").text(data.conductor.archivo.adjfechaemisionF);
 			$("#lblFechaCaducidad").text(data.conductor.archivo.adjfechacaducidadF);
-			$("#txtConductorDNI").val(data.conductor.persona.perdniV);
+			$("#lblConductorDNI").text(data.conductor.persona.perdniV);
 			$("#lblNroLicencia").text(data.conductor.archivo.adjnumeroV);
 			$("#lblDireccion").text(data.conductor.persona.perdomicilioV);
 			$("#lblTelefono").text(data.conductor.persona.perteleffijoV);
 			$("#lblCelular").text(data.conductor.persona.permovilmovV);
-			
-			asocodigo_d=data.propUnidadEmpresa.asociado.asocodigoD;
-			$('#sltPlacas').combobox('autocomplete',data.propUnidadEmpresa.pmocodigoD,data.propUnidadEmpresa.unidadempresa.uneplacanroV);
+			//asocodigo_d=data.propUnidadEmpresa.asociado.asocodigoD;
+			$('#lblPlacas').text(data.propUnidadEmpresa.unidadempresa.uneplacanroV);
 			$("#lblMarca").text(data.propUnidadEmpresa.unidadempresa.marca.marnombreV);
 			$("#lblNroMotor").text(data.propUnidadEmpresa.unidadempresa.unenromotorV);
 			$("#lblColor").text(data.propUnidadEmpresa.unidadempresa.unecolorV);	
@@ -155,44 +174,90 @@ $(document).ready(function(){
 			for(var x=0;x<data.inventarios.length;x++){
 				$(".rdParte_"+data.inventarios[x].inventarioTipo.bitcodigoI+"[value="+data.inventarios[x].bivestadoC+"]").attr('checked',true);
 			}
+		}
+		$("#divFormularioVer").dialog({
+			title:"Internamiento Mototaxis",
+			width:1000,
+			//height: 600,
+			modal: true
+		});
+	}
+	
+	function llenarDatos(data){
+		if(data!=""){
+			$(".divPartes input[value='N']").attr('checked',true);
+			$("#btnProcesar").val("Modificar");
+			$("#txtCodigo").val(data.intcodigoD);
+			$("#txtBinCodigo").val(data.boletaInternamiento.bincodigoD);
+			$("#txtMotivo").val(data.boletaInternamiento.binmotivoV);
+			$("#txtFecha").val(data.intfechaingresoF);
+			$("#txtHora").val(data.intfechasalidaF);
+			$("#txtPapeleta").val(data.papeleta.papnumeroV);
+			$("#txtPapCodigo").val(data.papeleta.papcodigoD);
+			$('#sltConductor').combobox('autocomplete',data.conductor.concodigoD,data.conductor.persona.pernombresV);
+			$("#txtConductorNroLicencia").val(data.conductor.archivo.adjnumeroV);
+			$("#txtEstadoLicencia").val(data.conductor.archivo.adjestadoV);
+			$("#txtFechaEmision").val(data.conductor.archivo.adjfechaemisionF);
+			$("#txtFechaCaducidad").val(data.conductor.archivo.adjfechacaducidadF);
+			$("#txtConductorDNI").val(data.conductor.persona.perdniV);
+			$("#txtNroLicencia").val(data.conductor.archivo.adjnumeroV);
+			$("#txtDireccion").val(data.conductor.persona.perdomicilioV);
+			$("#txtTelefono").val(data.conductor.persona.perteleffijoV);
+			$("#txtCelular").val(data.conductor.persona.permovilmovV);
+			//asocodigo_d=data.propUnidadEmpresa.asociado.asocodigoD;
+			$('#sltPlacas').combobox('autocomplete',data.propUnidadEmpresa.pmocodigoD,data.propUnidadEmpresa.unidadempresa.uneplacanroV);
+			$("#txtMarca").val(data.propUnidadEmpresa.unidadempresa.marca.marnombreV);
+			$("#txtNroMotor").val(data.propUnidadEmpresa.unidadempresa.unenromotorV);
+			$("#txtColor").val(data.propUnidadEmpresa.unidadempresa.unecolorV);	
+			$("#txtDniPropietario").val(data.propUnidadEmpresa.asociado.persona.perdniV);
+			$("#txtNombresPropietario").val(data.propUnidadEmpresa.asociado.persona.pernombresV);
+			$("#txtDirecPropietario").val(data.propUnidadEmpresa.asociado.persona.perdomicilioV);
+			$("#txtTelefPropietario").val(data.propUnidadEmpresa.asociado.persona.perteleffijoV);
+			$("#txtCelulPropietario").val(data.propUnidadEmpresa.asociado.persona.permovilmovV);
+			$("#txtEmpresa").val(data.propUnidadEmpresa.asociado.empresa.emprazonsocialV);
+			$("#txtEmprDireccion").val(data.propUnidadEmpresa.asociado.empresa.empdireccionV);
+			$("#txtEmprTelefono").val(data.propUnidadEmpresa.asociado.empresa.emptelefono1V);
+			$("#txtEmprCelular").val(data.propUnidadEmpresa.asociado.empresa.empcelularmovV);
+			for(var x=0;x<data.inventarios.length;x++){
+				$(".rdParte_"+data.inventarios[x].inventarioTipo.bitcodigoI+"[value="+data.inventarios[x].bivestadoC+"]").attr('checked',true);
+			}
 		}else{
 			updateTime();
 			$(".divPartes input[value='N']").attr('checked',true);
 			$("#btnProcesar").val("Guardar");
 			$("#txtCodigo").val("0");
 			$("#txtBinCodigo").val("0");
-			$("#txaMotivo").val("");
+			$("#txtMotivo").val("");
 			$("#txtPapeleta").val("");
 			$("#txtPapCodigo").val("0");
 			$('#sltConductor').combobox('autocomplete','','');
 			$("#txtConductorNroLicencia").val("");
-			$("#txtEstadoLicencia").text("");
-			$("#lblFechaEmision").text("");
-			$("#lblFechaCaducidad").text("");
+			$("#txtEstadoLicencia").val("");
+			$("#txtFechaEmision").val("");
+			$("#txtFechaCaducidad").val("");
 			$("#txtConductorDNI").val("");
-			$("#lblNroLicencia").text("");
-			$("#lblDireccion").text("");
-			$("#lblTelefono").text("");
-			$("#lblCelular").text("");
-			
-			asocodigo_d=0;
+			$("#txtNroLicencia").val("");
+			$("#txtDireccion").val("");
+			$("#txtTelefono").val("");
+			$("#txtCelular").val("");
+			//asocodigo_d=0;
 			$('#sltPlacas').combobox('autocomplete','','');
-			$("#lblMarca").text("");
-			$("#lblNroMotor").text("");
-			$("#lblColor").text("");	
-			$("#lblDniPropietario").text("");
-			$("#lblNombresPropietario").text("");
-			$("#lblDirecPropietario").text("");
-			$("#lblTelefPropietario").text("");
-			$("#lblCelulPropietario").text("");
-			$("#lblEmpresa").text("");
-			$("#lblEmprDireccion").text("");
-			$("#lblEmprTelefono").text("");
-			$("#lblEmprCelular").text("");
+			$("#txtMarca").val("");
+			$("#txtNroMotor").val("");
+			$("#txtColor").val("");	
+			$("#txtDniPropietario").val("");
+			$("#txtNombresPropietario").val("");
+			$("#txtDirecPropietario").val("");
+			$("#txtTelefPropietario").val("");
+			$("#txtCelulPropietario").val("");
+			$("#txtEmpresa").val("");
+			$("#txtEmprDireccion").val("");
+			$("#txtEmprTelefono").val("");
+			$("#txtEmprCelular").val("");
 		}
 		$("#divFormulario").dialog({
 			title:"Internamiento Mototaxis",
-			width:1100,
+			width:1000,
 			//height: 600,
 			modal: true
 		});
@@ -209,7 +274,7 @@ $(document).ready(function(){
 		internamiento.propUnidadEmpresa=new Object();
 		internamiento.intcodigoD=$("#txtCodigo").val();
 		internamiento.boletaInternamiento.bincodigoD=$("#txtBinCodigo").val();
-		internamiento.boletaInternamiento.binmotivoV=$("#txaMotivo").val();
+		internamiento.boletaInternamiento.binmotivoV=$("#txtMotivo").val();
 		internamiento.conductor.concodigoD=$("#sltConductor").val();
 		internamiento.papeleta.papcodigoD=$("#txtPapCodigo").val();
 		internamiento.propUnidadEmpresa.pmocodigoD=$("#sltPlacas").val();
@@ -342,7 +407,7 @@ $(document).ready(function(){
 	
 	function llenarDatosUnidad(data){
 		if(data!=""){
-			asocodigo_d=data.asociado.asocodigoD;
+			//asocodigo_d=data.asociado.asocodigoD;
 			$("#lblMarca").text(data.marca.marnombreV);
 			$("#lblNroMotor").text(data.unenromotorV);
 			$("#lblColor").text(data.unecolorV);	
@@ -358,7 +423,7 @@ $(document).ready(function(){
 			$("#lblEmprCelular").text(data.asociado.empresa.empcelularmovV);
 			//TODO LLENAR COMBO INFRACCION
 		}else{
-			asocodigo_d="0";
+			//asocodigo_d="0";
 			
 		}
 	}
@@ -424,8 +489,8 @@ $(document).ready(function(){
 	        ("0" + d.getDate()).slice(-2) + "/" +
 	        ("0" + (d.getMonth() + 1)).slice(-2) + "/" + 
 	        d.getFullYear();
-	    $("#lblFecha").text(today_date);
-	    $("#lblHora").text(hour+":"+minute);
+	    $("#txtFecha").text(today_date);
+	    $("#txtHora").text(hour+":"+minute);
 	}
 	
     

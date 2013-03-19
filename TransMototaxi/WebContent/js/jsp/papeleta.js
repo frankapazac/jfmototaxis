@@ -53,7 +53,7 @@ $(document).ready(function(){
     }
     
     function imprimirPapeleta(){
-    	var codigo=parseFloat($("#txtNumeroPapeleta").val());
+    	var codigo=parseFloat($("#verNumeroPapeleta").text());
     	window.open("Papeletas/ImprimirPdf.htm?codigo="+codigo);
     }
     
@@ -92,7 +92,7 @@ $(document).ready(function(){
     			'policia.polcodigoI':$("#sltPolicia").val(),
     			'infrMedida.imecodigoI':$("#sltSancion").val(),
     			'inspector.inscodigoI':$("#sltInspector").val(),
-    			'propUnidadEmpresa.pmocodigoD':asocodigo_d,
+    			'propUnidadEmpresa.pmocodigoD':$("#sltPlacas").val(),
     			'conductor.concodigoD':$("#sltConductor").val(),
     			'papfechainfraccionF':$("#txtFecha").val(),
     			'paphorainfraccionF':$("#txtFecha").val(),
@@ -106,9 +106,9 @@ $(document).ready(function(){
             type: "POST", 
             url: "Papeletas/InsertarPapeleta.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	$("#txtNumeroPapeleta").val(data.papcodigoD);
             	buscar("PAP.PAPCODIGO_D",data.papcodigoD);
+            	$("#divFormulario").dialog('close');
             },error: function(jqXHR, textStatus, errorThrown){
             	//mensajeError();
             }
@@ -404,6 +404,7 @@ $(document).ready(function(){
 			+"<th class='header'>Fecha Infracción</th>"
 			+"<th class='header'>Ver</th>"
 			+"<th class='header'>Modificar</th>"
+			+"<th class='header'>Imprimir</th>"
 			+"</thead>"
 			+"<tfoot>"
     		+"<th>N°</th>"
@@ -414,6 +415,7 @@ $(document).ready(function(){
 			+"<th>Fecha Infracción</th>"
 			+"<th>Ver</th>"
 			+"<th>Modificar</th>"
+			+"<th>Imprimir</th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
 			$("#tblLista").append(txtHtml);
@@ -427,12 +429,19 @@ $(document).ready(function(){
 			"<td>"+data[x].papfechainfraccionF+"</td>"+
 			"<td><img alt='Ver' class='btnVer' id='ver"+data[x].papcodigoD+"' src='images/ver.png'></td>"+
 			"<td><img alt='Modificar' class='btnModificar' id='mod"+data[x].papcodigoD+"' src='images/edit.png'></td>"+
+			"<td><img alt='Imprimir' class='btnImprimir' id='imp"+data[x].papcodigoD+"' src='images/printer.png'></td>"+
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
     	$(".btnVer").click(verAjaxPapeleta);
     	$(".btnModificar").click(obtenerPapeleta);
+    	$(".btnImprimir").click(printPapeleta);
     	paginacion();
+    }
+	
+	function printPapeleta(){
+    	var codigo=$(this).attr("id").replace("imp","");
+    	window.open("Papeletas/ImprimirPdf.htm?codigo="+codigo);
     }
 	
 	function obtenerPapeleta(){
