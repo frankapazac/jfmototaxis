@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.progressbar.js"></script>
-	<!-- script type="text/javascript" src="js/jefra.validate.js"></script -->
+	<script type="text/javascript" src="js/jefra.validate.js"></script >
 	<script type="text/javascript" src="js/jsp/mantInspectores.js"></script>
 	<title>Insert title here</title>
 	<style type="text/css">
@@ -123,7 +123,7 @@
 								<td><input type="text" id="txtPaterno" class="requiredText"/></td>
 								<td>Departamento:</td>
 								<td>
-									<select id="sltDepartamentos">
+									<select id="sltDepartamentos" class="requiredSelect">
 										<option value="">Seleccione</option>
 										<c:forEach items="${departamentos}" var="departamento">
 											<option value="${departamento.idubigeo}">
