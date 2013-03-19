@@ -28,7 +28,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\ebujaico\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\reports\\Mototaxi\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="conductor" class="com.munichosica.myapp.dto.MotConductor"/>
 	<queryString>
