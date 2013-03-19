@@ -48,14 +48,11 @@ $(document).ready(function(){
 			+"<th class='header'>NUM</th>"
 			+"<th class='header'>OPERATIVO</th>"
 			+"<th class='header'>ZONA</th>"
-			//+"<th class='header'>DESCRIPCION</th>"
 			+"<th class='header'>LUGAR</th>"
 			+"<th class='header'>REFERENCIA</th>"
 			+"<th class='header'>FECHA</th>"
 			+"<th class='header'>HORA</th>"
-			+"<th class='header'>NOMBRES</th>"
-			//+"<th class='header'>PATERNO</th>"
-			//+"<th class='header'>MATERNO</th>"
+			+"<th class='header'>RESPONSABLE</th>"
 			+"<th class='header'>ESTADO</th>"
 			+"<th class='header'>EDITAR</th>"
 			+"<th class='header'>ELIMINAR</th>"
@@ -64,14 +61,11 @@ $(document).ready(function(){
 			+"<th>NUM</th>"
 			+"<th>NOMBRE OPERATIVO</th>"
 			+"<th>ZONA ADMINISTRATIVA</th>"
-			//+"<th>DESCRIPCION</th>"
 			+"<th>LUGAR</th>"
 			+"<th>REFERENCIA</th>"
 			+"<th>FECHA</th>"
 			+"<th>HORA</th>"
-			+"<th>NOMBRES</th>"
-			//+"<th>PATERNO</th>"
-			//+"<th>MATERNO</th>"
+			+"<th>RESPONSABLE</th>"
 			+"<th>ESTADO</th>"
 			+"<th>EDITAR</th>"
 			+"<th>ELIMINAR</th>"
@@ -113,6 +107,13 @@ $(document).ready(function(){
     
     //MOSTRAR NUEVO OPERATIVO
     
+	$("#divNuevoOperativo").hide();
+    $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
+    
+    $(function(){
+    	$('#txtHora').timepicker();//$('#fechaNueva').datetimepicker(); esto sirve para mostrar la hora
+    	$('#txtHoraFin').timepicker();
+    });
     
     $("#btnNuevOperativo").click(function(){
     	llenarFormulario("");
@@ -129,6 +130,7 @@ $(document).ready(function(){
     		$("#sltZona").val(data.zona.zoncodigo_I);
     		$("#txtFecha").val(data.opefecha);
     		$("#txtHora").val(data.opehora);
+    		$("#txtHoraFin").val(data.opehorafin);
     		$("#sltResponsable").val(data.inspector.inscodigoI);
     		listarResponsablesNotIn(data.inspector.inscodigoI);
     	   	listarInpectorxOperativo(data.opecodigoD);
@@ -143,6 +145,7 @@ $(document).ready(function(){
           	$("#txtReferencia").val("");
           	$("#txtFecha").val("");
           	$("#txtHora").val("");
+          	$("#txtHoraFin").val("");
        	}   
     	
     	$("#divNuevoOperativo").show();
@@ -234,6 +237,7 @@ $(document).ready(function(){
 		inspectorList.operativo.opereferencia=$("#txtReferencia").val();
 		inspectorList.operativo.opefecha=$("#txtFecha").val();
 		inspectorList.operativo.opehora=$("#txtHora").val();
+		inspectorList.operativo.opehorafin=$("#txtHoraFin").val();
 		inspectorList.operativo.zona= new Object();
 		inspectorList.operativo.zona.zoncodigo_I=$("#sltZona").val();
 		inspectorList.operativo.inspector = new Object();
@@ -254,7 +258,7 @@ $(document).ready(function(){
             type: "POST", 
             contentType : "application/json",
             url: "Operativos/Procesar.htm", 
-            success: function(data){
+            success: function(data){;
             	//alert(JSON.stringify(inspectorList));
             	$("#sltAgregaInspector option").prop('selected', false);
         		buscar("OP.OPECODIGO_D",data);
@@ -263,7 +267,9 @@ $(document).ready(function(){
             	mensajeError();
             }
     	});
-		
+		$("#sltAgregaInspector option").prop('selected', false);
+		buscar($("#sltCriterio").val(),$("#txtTexto").val());
+    	$(this).dialog('close');
 	});
     /*
     $("#btnGuardar").click(function(){
