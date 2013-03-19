@@ -323,7 +323,7 @@ public class PageController {
 			List<MotPolicia> policias=null;
 			
 			conductores = MotConductorDaoFactory.create().findAll();
-			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacas();
+			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacasByAsociado();
 			inspectores=MotInspectorDaoFactory.create().findAll();
 			infracciones=MotInfraccionDaoFactory.create().findAll();
 			policias=MotPoliciaDaoFactory.create().findAll();
