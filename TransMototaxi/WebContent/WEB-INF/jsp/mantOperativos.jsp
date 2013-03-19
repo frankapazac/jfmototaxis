@@ -122,11 +122,18 @@
 							<td><input type="text" id="txtFecha" class="txtFecha dtFecha requiredDate"/></td>
 						</tr>
 						<tr>
-							<td>Hora:</td>
+							<td>Hora Inicio:</td>
 							<!--  <td><input type="text" id="txtHora"/></td> -->
 							<td><input type="text" name="fecha" id="txtHora" value="" class="requiredHour"/></td>
 							
 						</tr>
+						
+						<tr>
+							<td>Hora Término:</td>
+							<td><input type="text" name="fecha" id="txtHoraFin" value="" class="requiredHour"/></td>
+							
+						</tr>
+						
 						
 						
 						<tr>
