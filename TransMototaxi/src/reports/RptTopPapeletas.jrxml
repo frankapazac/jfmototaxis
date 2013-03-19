@@ -221,7 +221,7 @@ ORDER BY CONVERT(VARCHAR,PAP.PAPFECHAINFRACCION_F,103) ASC]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="6" splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>
