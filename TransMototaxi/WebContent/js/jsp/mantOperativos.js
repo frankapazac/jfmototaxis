@@ -4,14 +4,17 @@ $(document).ready(function(){
 	$("#divNuevoOperativo").hide();
     $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
     
-    $(function(){
-    	$('#txtHora').timepicker();//$('#fechaNueva').datetimepicker(); esto sirve para mostrar la hora
+    $('#txtHora').timepicker();//$('#fechaNueva').datetimepicker(); esto sirve para mostrar la hora
+    
+    $("#btnCancelar").click(function(){
+		$("#divNuevoOperativo").dialog("close");
     });
 
 	buscar("OP.OPETITULO_V", "");
 		
 	$("#btnBuscar").click(function(){
     	buscar($("#sltCriterio").val(),$("#txtTexto").val());
+    	$.message.Find();
     });
 	
 	$("input[type=text]").keyup(function(){
@@ -31,7 +34,7 @@ $(document).ready(function(){
             	//alert(JSON.stringify(data));
             	llenarTabla(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Delete();
             }
     	});
 	}
@@ -181,7 +184,7 @@ $(document).ready(function(){
            success: function(data){
 				mensaje(data);
            },error: function(jqXHR, textStatus, errorThrown){
-           	mensajeError();
+           		$.message.Delete();
            }
     	});
     	
@@ -210,7 +213,7 @@ $(document).ready(function(){
            success: function(data){
 				mensaje(data);
            },error: function(jqXHR, textStatus, errorThrown){
-           	mensajeError();
+           	$.message.Delete();
            }
     	});
     	
@@ -222,8 +225,9 @@ $(document).ready(function(){
     
     //GUARDAR OPERATIVOS
     $("#btnGuardar").click(function(){
-    	if(!validate("#divNuevoOperativo")) return;
-		//alert("entro a guardar");
+
+    	$("#divNuevoOperativo").validate();
+    	//alert("entro a guardar");
 		$("#sltAgregaInspector option").prop('selected', true);
 		var inspectorList=new Object();
 		inspectorList.operativo=new Object();
@@ -263,13 +267,14 @@ $(document).ready(function(){
             	$("#sltAgregaInspector option").prop('selected', false);
         		buscar("OP.OPECODIGO_D",data);
         		$("#divNuevoOperativo").dialog('close');
+        		$.message.Success();
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Delete();
             }
     	});
 		$("#sltAgregaInspector option").prop('selected', false);
-		buscar($("#sltCriterio").val(),$("#txtTexto").val());
-    	$(this).dialog('close');
+		//buscar($("#sltCriterio").val(),$("#txtTexto").val());
+    	//$(this).dialog('close');
 	});
     /*
     $("#btnGuardar").click(function(){
@@ -294,7 +299,7 @@ $(document).ready(function(){
 	        	txtHtml="<p>Operación realizada correctamente</p>";
 	        	mensaje(txtHtml);
 	        },error: function(jqXHR, textStatus, errorThrown){
-	        	mensajeError();
+	        	$.message.Delete();
 	        }
 		});
     	//$(this).dialog('close');
@@ -317,8 +322,9 @@ $(document).ready(function(){
 	        url: "Operativos/Obtener.htm", 
 	        success: function(data){
 	        	llenarFormulario(data);
+	        	$.message.Get();
 	        },error: function(jqXHR, textStatus, errorThrown){
-	        	mensajeError();
+	        	$.message.Delete();
 	        }
 		});
    }
@@ -350,12 +356,13 @@ $(document).ready(function(){
                        url: "Operativos/Eliminar.htm",
                        success: function(data){
 							mensaje(data);
+							buscar($("#sltCriterio").val(),$("#txtTexto").val());
+				        	$(this).dialog('close');
+							$.message.Delete();
                        },error: function(jqXHR, textStatus, errorThrown){
-                       	mensajeError();
+                       	$.message.Delete();
                        }
 		        	});
-					buscar($("#sltCriterio").val(),$("#txtTexto").val());
-		        	$(this).dialog('close');
 				},
 				'Cancelar': function() {
 					$(this).dialog('close');
@@ -389,9 +396,8 @@ $(document).ready(function(){
             success: function(data){
             	//alert(JSON.stringify(data));
             	llenarListboxInspector(data);
-            	
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Delete();
             }
     	});
     }
@@ -408,7 +414,7 @@ $(document).ready(function(){
             success: function(data){
             	llenarInspectores(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Delete();
             }
     	});
     }
@@ -438,7 +444,7 @@ $(document).ready(function(){
 	        });
 		}
     }
-    
+    /*
     $("#btnCancelar").click(function(){//SUPONGAMOS QUE VA A LA DERECHA
     	$.ajax({ 
     		data:{
@@ -452,130 +458,10 @@ $(document).ready(function(){
            success: function(data){
 				mensaje(data);
            },error: function(jqXHR, textStatus, errorThrown){
-           	mensajeError();
+           	$.message.Delete();
            }
     	});
     	
-    });
-    
-    
-
-    
-    
-    function validate(elemento){
-    	$(".error").remove();
-    	var elementText=$(elemento+" .requiredText");
-    	var elementEmail=$(elemento+" .requiredEmail");
-    	var elementNumero=$(elemento+" .requiredNumber");
-    	var elementDecimal=$(elemento+" .requiredDecimal");
-    	var elementFecha=$(elemento+" .requiredDate");
-    	var elementHora=$(elemento+" .requiredHour");
-    	var elementSelect=$(elemento+" .requiredSelect");
-    	var elementFile=$(elemento+" .requiredFile");
-    	var contador=0;
-    	$.each(elementText,function(key,value){
-    		if(!validarLetras($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementEmail,function(key,value){
-    		if(!validarEmail($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementNumero,function(key,value){
-    		if(!validarNumeros($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementDecimal,function(key,value){
-    		if(!validarDecimales($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementFecha,function(key,value){
-    		if(!validarFechas($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementHora,function(key,value){
-    		if(!validarHoras($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementSelect,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementFile,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-
-    	if(contador<1){
-    		return true;
-    	}else{
-    		return false;
-    	}
-	}
-	
-	function validarEmail(texto){
-	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}
-
-	function validarLetras(texto){
-	    var filter = /^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}
-
-	function validarNumeros(texto){
-	    var filter = /^(?:\+|-)?\d+$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarDecimales(texto){
-	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarFechas(texto){
-	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarHoras(texto){
-	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-    
+    });*/    
     
 });	
