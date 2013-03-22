@@ -13,5 +13,7 @@ public interface MotOperativoDao {
 	public void insert(MotOperativo dto) throws MotOperativoDaoException;
 	public void delete (MotOperativo dto) throws MotOperativoDaoException;
 	public MotOperativo findByIdOperativo(Long codigo)throws MotOperativoDaoException;
-	
+	public List<MotOperativo> findByFecha(String fecha) throws MotOperativoDaoException;
+	public void updateObs(MotOperativo operativo)throws MotOperativoDaoException;
+
 }
