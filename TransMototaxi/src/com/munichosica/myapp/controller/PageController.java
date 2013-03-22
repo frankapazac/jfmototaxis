@@ -1,5 +1,6 @@
 package com.munichosica.myapp.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ import com.munichosica.myapp.dto.MotInteInventarioTipo;
 import com.munichosica.myapp.dto.MotMarca;
 import com.munichosica.myapp.dto.MotModelo;
 import com.munichosica.myapp.dto.MotOficinaRegistral;
+import com.munichosica.myapp.dto.MotOperFiscalizador;
+import com.munichosica.myapp.dto.MotOperativo;
 import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.MotPolicia;
 import com.munichosica.myapp.dto.MotTipoDocumento;
@@ -34,6 +37,8 @@ import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotInteInventarioTipoDaoException;
+import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
+import com.munichosica.myapp.exceptions.MotOperativoDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
 import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
@@ -50,6 +55,8 @@ import com.munichosica.myapp.factory.MotInteInventarioTipoDaoFactory;
 import com.munichosica.myapp.factory.MotMarcaDaoFactory;
 import com.munichosica.myapp.factory.MotModeloDaoFactory;
 import com.munichosica.myapp.factory.MotOficinaRegistralDaoFactory;
+import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
+import com.munichosica.myapp.factory.MotOperativoDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
 import com.munichosica.myapp.factory.MotPoliciaDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
@@ -57,6 +64,7 @@ import com.munichosica.myapp.factory.MotTipoMedidaDaoFactory;
 import com.munichosica.myapp.factory.MotUbigeoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotZonaDaoFactory;
+import com.munichosica.myapp.util.DateUtil;
 import com.munichosica.myapp.util.FileUtil;
 import com.munichosica.myapp.util.UserSecurity;
 
@@ -198,9 +206,17 @@ public class PageController {
 			rol=new UserSecurity().getRol(request);
 			session.setAttribute("ROL", rol);
 		}
+		
+		try {
+			List<MotOperativo> operativo = MotOperativoDaoFactory.create().findByFecha("28/02/2013"/*DateUtil.getFechaActual()*/);
+			model.addAttribute("operativo",operativo);
+		} catch (MotOperativoDaoException e) {
 
+		}
+		
 		model.addAttribute("usuario",rol.getUsuario());
 		model.addAttribute("paginas",rol.getPaginas());
+
 		return "tilesDocumentacion";
 	}
 
