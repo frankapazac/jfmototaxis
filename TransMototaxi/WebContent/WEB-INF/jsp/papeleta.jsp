@@ -9,6 +9,8 @@
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="js/jquery.form.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect-clip.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.button.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.tabs.js"></script>
@@ -23,6 +25,9 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.mouse.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.slider.js"></script>
 	<script type="text/javascript" src="js/ui/jquery-ui-timepicker-addon.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
+	<script type="text/javascript" src="js/jefra.validate.js"></script >
+	<script type="text/javascript" src="js/jefra.message.js"></script >
 	<script type="text/javascript" src="js/jsp/papeleta.js"></script>
 	<title>Insert title here</title>
 	<style type="text/css">
@@ -278,9 +283,10 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">Número</td>
-					<td class="tdContenido"><input type="text" id="txtNumeroPapeleta" class="txtText" disabled="disabled"/></td>
+					<td class="tdContenido"><input type="text" id="txtNumeroPap" class="txtText" disabled="disabled"/>
+					<input type="hidden" id="txtNumeroPapeleta" class="txtText" disabled="disabled"/></td>
 					<td class="tdTitulo">Fecha</td>
-					<td class="tdContenido"><input type="text" id="txtFecha"/></td>
+					<td class="tdContenido"><input type="text" id="txtFecha" class="required"/></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -459,7 +465,7 @@
 				</tr>
 				<tr>
 					<td class="tdTitulo">Observacion sobre la Infracción</td>
-					<td colspan="3"><textarea id="txaObserInfraccion" rows="3" cols="98" class="requiredText"></textarea></td>
+					<td colspan="3"><textarea id="txaObserInfraccion" rows="3" cols="98" class="required"></textarea></td>
 				</tr>
 			</table>
 		</fieldset>
