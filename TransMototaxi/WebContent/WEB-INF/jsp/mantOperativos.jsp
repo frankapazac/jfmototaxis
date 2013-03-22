@@ -8,6 +8,8 @@
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect-clip.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.tabs.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
@@ -16,6 +18,9 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.mouse.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.slider.js"></script>
 	<script type="text/javascript" src="js/ui/jquery-ui-timepicker-addon.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
+	<script type="text/javascript" src="js/jefra.validate.js"></script >
+	<script type="text/javascript" src="js/jefra.message.js"></script >
 	<script type="text/javascript" src="js/jsp/mantOperativos.js"></script>
 	<!-- http://trentrichardson.com/examples/timepicker/ -->
 <title>Insert title here</title>
@@ -93,7 +98,7 @@
 	        	<table align="center">
 	        			<tr>
 							<td>Nombre Operativo:</td>
-							<td><input type="text" id="txtNombreOperativo" class="requiredText"/></td>
+							<td><input type="text" id="txtNombreOperativo" class="requiredAlpha"/></td>
 						</tr>
 						<tr>
 							<td>Zona Administrativa:</td>
@@ -106,16 +111,16 @@
 						</tr>
 						<tr>
 							<td>Descripción:</td>
-							<td><input type="text" id="txtDescripcion" class="requiredText"/></td>
+							<td><input type="text" id="txtDescripcion" class="requiredAlpha"/></td>
 						</tr>
 						<tr>
 							<td>Dirección:</td>
-							<td><input type="text" id="txtDireccion" class="requiredText"/></td>
+							<td><input type="text" id="txtDireccion" class="requiredAlpha"/></td>
 						</tr>
 						
 						<tr>
 							<td>Referencia:</td>
-							<td><input type="text" id="txtReferencia" class="requiredText"/></td>
+							<td><input type="text" id="txtReferencia" class="requiredAlpha"/></td>
 						</tr>
 						<tr>
 							<td>Fecha:</td>
