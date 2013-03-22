@@ -49,4 +49,10 @@
 		p:jdbcDataSource-ref="dataSource">
 	</bean>
 	
+	<bean id="reportInformeInfDiarioActa" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/rptInformeActaInterv.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
 </beans>
