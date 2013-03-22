@@ -90,6 +90,7 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 					operativo.getZona().setZoncodigo_I(rs.getLong("CodZona"));
 					operativo.setOpefecha(rs.getString("Fecha"));
 					operativo.setOpehora(rs.getString("Hora"));
+					operativo.setOpehorafin(rs.getString("Horafin"));
 					operativo.getInspector().getPersona().setPernombresV(rs.getString("Nombre"));
 					operativo.getInspector().getPersona().setPerpaternoV(rs.getString("Paterno"));
 					operativo.getInspector().getPersona().setPermaternoV(rs.getString("Materno"));
@@ -130,6 +131,75 @@ public class MotOperativoDaoImpl implements MotOperativoDao{
 			ResourceManager.close(conn);
 			ResourceManager.close(rs);
 		}
+	}
+
+	@Override
+	public List<MotOperativo> findByFecha(String fecha)throws MotOperativoDaoException {
+		
+		Connection conn =null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<MotOperativo> list = new ArrayList<MotOperativo>();
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{CALL SP_MOT_GET_OPERATIVO_X_FECHA;1(?)}");
+			stmt.setString(1, fecha);
+			
+			
+			boolean results = stmt.execute();
+			if(results){
+				rs = stmt.getResultSet();
+				MotOperativo operativo = null;
+				while(rs.next()){
+					operativo = new MotOperativo();
+					operativo.setOpecodigoD(rs.getLong("CodOperativo"));
+					operativo.setOpetituloV(rs.getString("Nombre Operativo"));
+					operativo.setOpefecha(rs.getString("fechaini"));
+					operativo.setOpehora(rs.getString("horaini"));
+					operativo.setOpehorafin(rs.getString("horafin"));
+					list.add(operativo);					
+				}
+			}
+		} catch (Exception ex) {
+			logger.error("Exception :" + ex.getMessage(),ex);
+			throw new MotOperativoDaoException(" Exception: " + ex.getMessage(),ex);
+			
+		}finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+		}
+
+		return list;
+
+		
+		
+		
+	}
+
+	@Override
+	public void updateObs(MotOperativo dto)throws MotOperativoDaoException {
+
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall("{call SP_MOT_UPD_OBSERVACIONES_OPERATIVOS;1 (?,?)}");
+			stmt.setLong(1,dto.getOpecodigoD());
+			stmt.setString(2,dto.getOpeobservacion());
+			stmt.execute();
+								
+		} catch (SQLException e) {
+			throw new MotOperativoDaoException(e.getMessage(), e);
+		}finally{
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+			ResourceManager.close(rs);
+		}
+		
 	}
 
 }
