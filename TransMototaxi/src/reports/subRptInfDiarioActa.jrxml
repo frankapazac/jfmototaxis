@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subRptInfDiarioActa" pageWidth="517" pageHeight="802" whenNoDataType="BlankPage" columnWidth="517" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3ecf244c-cf96-4c99-9c56-ba790cd34b6c">
+	<property name="ireport.zoom" value="1.6963904734899393"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="OPECODIGO_D" class="java.lang.String">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SP_MOT_GET_INSPECTORES_INFORME_ACTA_INTERVENCION $P{OPECODIGO_D}]]>
+	</queryString>
+	<field name="OPECODIGO_D" class="java.math.BigDecimal"/>
+	<field name="PERNOMBRES_V" class="java.lang.String"/>
+	<field name="PERPATERNO_V" class="java.lang.String"/>
+	<field name="PERMATERNO_V" class="java.lang.String"/>
+	<field name="PERDNI_V" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="8" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="da030dad-7592-4774-ad04-8c34b38c566f" x="12" y="1" width="487" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="724a7e2b-174a-45d7-8dd0-0e880668cf37" x="35" y="0" width="263" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSPECTORES DE TRANSPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d68f4214-f0d4-4b93-bf17-101452b1483f" x="297" y="1" width="95" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d68f4214-f0d4-4b93-bf17-101452b1483f" x="392" y="0" width="106" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d68f4214-f0d4-4b93-bf17-101452b1483f" x="12" y="1" width="23" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  N°]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="6fc997e9-332a-4bad-916d-1c889121cee2" x="12" y="0" width="487" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="5806b40e-15fe-4967-88bf-7e26b4cdf40a" x="48" y="-1" width="249" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERNOMBRES_V}+""+$F{PERPATERNO_V}+""+$F{PERMATERNO_V}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="60d1843f-c776-4e5d-a2ee-77ce18a47d33" x="297" y="0" width="95" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERDNI_V}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2c234e06-a791-4437-80a6-af190055ec52" x="12" y="0" width="23" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="6" splitType="Stretch"/>
+	</summary>
+</jasperReport>
