@@ -151,8 +151,8 @@ $(document).ready(function(){
           	$("#txtHoraFin").val("");
        	}   
     	
-    	$("#divNuevoOperativo").show();
-    	$("#divNuevoOperativo").dialog({
+    	$("#divNuevoInformeDiario").show();
+    	$("#divNuevoInformeDiario").dialog({
     		title:"Operativo",
     		width:800,
     		//height: 550,
@@ -322,7 +322,6 @@ $(document).ready(function(){
 	        url: "Operativos/Obtener.htm", 
 	        success: function(data){
 	        	llenarFormulario(data);
-	        	$.message.Get();
 	        },error: function(jqXHR, textStatus, errorThrown){
 	        	$.message.Delete();
 	        }
