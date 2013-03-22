@@ -98,7 +98,7 @@ public class PapeletaController {
 	public @ResponseBody MotUnidadEmpresa buscarUnidadPorPlaca(@RequestParam("codigo") Long codigo){
 		MotUnidadEmpresa unidadEmpresa=null;
 		try {
-			unidadEmpresa=MotUnidadEmpresaDaoFactory.create().findByCodigo(codigo);
+			unidadEmpresa=MotUnidadEmpresaDaoFactory.create().findPmoCodigo(codigo);
 		} catch (MotUnidadEmpresaDaoException e) {
 			logger.error(e.getMessage(), e);
 		}
