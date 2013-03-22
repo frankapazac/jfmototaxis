@@ -34,6 +34,7 @@ $(document).ready(function(){
 
 	$("#btnBuscar").click(function(){
     	buscar($("#sltCriterio").val(),$("#txtTexto").val());
+    	$.message.Find();
     });
 	
     $("#btnBuscarAsignado").click(function(){
@@ -42,6 +43,7 @@ $(document).ready(function(){
     		return;
     	}
     	buscarMototaxis($("#sltCriterioAsignado").val(),$("#txtTextoAsignado").val(),codigoConductor);
+    	$.message.Find();
     });
 	
     $("#btnNuevo").click(function(){
@@ -132,7 +134,7 @@ $(document).ready(function(){
             	conductores=data;
             	llenarTabla(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -196,10 +198,10 @@ $(document).ready(function(){
             type: "GET", 
             url: "Conductores/Obtener.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarFormulario(data);
+            	$.message.Get();
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Error();
             }
     	});
     }
@@ -221,8 +223,9 @@ $(document).ready(function(){
             success: function(data){
             	UndConductor=data;
             	llenarTablaMotodAsignadas(data);
+            	$.message.Get();
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Error();
             }
     	});
     }
@@ -314,9 +317,9 @@ $(document).ready(function(){
     		type:"POST",
     		url: "Conductores/CesarConductor.htm",
     		success: function(data){    	
-    			mensaje(data);
+    			$.message.Success();
     		},error: function(jqXHR, textStatus, errorThrown){
-    			mensajeError();
+    			$.message.Error();
     		}
     	});
     	//buscar("PAR.PARCODIGO_I",$("#txtCodigo").val());
@@ -324,21 +327,6 @@ $(document).ready(function(){
     	$("#divFormularioCese").dialog("close");
     	buscarMototaxis($("#sltCriterioAsignado").val(),$("#txtTextoAsignado").val(),codigoConductor);
     }); 
-    
-
-    function mensaje(data){
-    	$("#divMensaje").empty();
-    	$("#divMensaje").append(data);
-    	$("#divMensaje").show();
-    	var top=(screen.height-200)+'px';
-    	var left=(screen.width-400)+'px';
-    	$("#divMensaje").css({'position':'absolute','top':top,'left':left});
-    	setTimeout(function() {
-			$("#divMensaje").hide();
-		}, 1500 );
-    }
-    
-    /*mantenimiento conductor*/
     
     $("#divNuevoCond").hide();
     
@@ -439,7 +427,7 @@ $(document).ready(function(){
             success: function(data){
             	llenarComboProvincia(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Error();
             }
     	});
     });
@@ -465,7 +453,7 @@ $(document).ready(function(){
             success: function(data){
             	llenarComboDistrito(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Error();
             }
     	});
     });
@@ -482,7 +470,7 @@ $(document).ready(function(){
     
     $("#btnGuardarCond").click(function(){
 
-    	if(!validate("#divNuevoCond")) return;
+    	$("#divNuevoCond").validate();
     	
     	$.ajax({ 
 			data:{
@@ -516,9 +504,9 @@ $(document).ready(function(){
 	        	buscar("COND.CONDCODIGO_I",data.conductor.concodigoD);
 	        	$("#divNuevoCond").dialog("close");
 	        	txtHtml="<p>Operación realizada correctamente</p>";
-	        	mensaje(txtHtml);
+	        	$.message.Success();
 	        },error: function(jqXHR, textStatus, errorThrown){
-	        	mensajeError();
+	        	$.message.Error();
 	        }
 		});
     	//$(this).dialog('close');
@@ -610,10 +598,10 @@ $(document).ready(function(){
                         type: "GET", 
                         url: "Conductores/Eliminar.htm",
                         success: function(data){
-							mensaje(data);
 							buscar($("#sltCriterio").val(), $("#txtTexto").val());
+							$.message.Delete();
                         },error: function(jqXHR, textStatus, errorThrown){
-                        	mensajeError();
+                        	$.message.Error();
                         }
 		        	});
 		        	buscar($("#sltCriterio").val(),$("#txtTexto").val());
@@ -625,125 +613,4 @@ $(document).ready(function(){
 			}
 		});
     }
-    
-
-    function validate(elemento){
-    	$(".error").remove();
-    	var elementText=$(elemento+" .requiredText");
-    	var elementEmail=$(elemento+" .requiredEmail");
-    	var elementNumero=$(elemento+" .requiredNumber");
-    	var elementDecimal=$(elemento+" .requiredDecimal");
-    	var elementFecha=$(elemento+" .requiredDate");
-    	var elementHora=$(elemento+" .requiredHour");
-    	var elementSelect=$(elemento+" .requiredSelect");
-    	var elementFile=$(elemento+" .requiredFile");
-    	var elementRequired=$(elemento+" .required");
-    	var contador=0;
-    	$.each(elementRequired,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementText,function(key,value){
-    		if(!validarLetras($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementEmail,function(key,value){
-    		if(!validarEmail($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementNumero,function(key,value){
-    		if(!validarNumeros($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementDecimal,function(key,value){
-    		if(!validarDecimales($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementFecha,function(key,value){
-    		if(!validarFechas($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementHora,function(key,value){
-    		if(!validarHoras($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementSelect,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementFile,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	if(contador<1){
-    		return true;
-    	}else{
-    		return false;
-    	}
-	}
-	
-	function validarEmail(texto){
-	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}
-
-	function validarLetras(texto){
-		var filter =/^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}
-
-	function validarNumeros(texto){
-	    var filter = /^(?:\+|-)?\d+$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarDecimales(texto){
-	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarFechas(texto){
-	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarHoras(texto){
-	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
 });
