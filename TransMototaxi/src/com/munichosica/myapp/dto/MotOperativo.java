@@ -13,8 +13,17 @@ public class MotOperativo {
 	protected MotZona zona;
 	protected MotInspector inspector;
 	protected String estado;
+	protected String opeobservacion;
 	
 	
+	public String getOpeobservacion() {
+		return opeobservacion;
+	}
+
+	public void setOpeobservacion(String opeobservacion) {
+		this.opeobservacion = opeobservacion;
+	}
+
 	public MotOperativo(){
 		zona = new MotZona();
 		inspector = new MotInspector();
