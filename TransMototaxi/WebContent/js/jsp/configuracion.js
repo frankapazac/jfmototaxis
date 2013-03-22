@@ -10,15 +10,14 @@ $(document).ready(function(){
                 url:"EmpresaDocumento/Agregar.htm",
                 dataType:'html',
                 beforeSubmit:function(){
-                    //$("#progressbar").show();
                 },
                 uploadProgress: function(event, position, total, percentComplete) {
-                	//$("#txtCargandoUnidad").empty();
-                	//$("#txtCargandoUnidad").val(percentComplete);
                 },
                 success: function(responseText, statusText) {      
+                	$.message.File();
                 } ,
                 error:function(){
+                	$.message.Error();
                 }
             };
             $(this).ajaxSubmit(options);
@@ -42,10 +41,9 @@ $(document).ready(function(){
             type: "POST", 
             url: "Actualizar.htm",   
             success: function(data){
-                //alert(data),
-            	alert("Actualización exitosa");
+            	$.message.Update();
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
 		
@@ -67,10 +65,9 @@ $(document).ready(function(){
             type: "POST", 
             url: "Configuracion/Actualizar.htm", 
             success: function(data){
-                //alert(data),
-            	//alert("Insersion exitosa");
+                $.message.Update();
             },error: function(jqXHR, textStatus, errorThrown){
-            	mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -96,9 +93,10 @@ $(document).ready(function(){
                 	$("#progressArchivo").progressbar({
                         value: 0
                 	});
+                	$.message.File();
                 } ,
                 error:function(){
-                    alert("ERROR");
+                	$.message.Error();
                 }
             };
             $(this).ajaxSubmit(options);

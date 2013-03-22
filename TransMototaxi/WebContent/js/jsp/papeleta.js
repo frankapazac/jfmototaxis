@@ -15,12 +15,15 @@ $(document).ready(function(){
 	$("#formFoto").submit(enviarFoto);
 	$("#btnNuevo").click(nuevaPapeleta);
 	$("#btnImprimir").click(imprimirPapeleta);
-	$("#btnBuscar").click(function(){buscar($("#sltCriterio").val(),$("#txtTexto").val());});
+	$("#btnBuscar").click(function(){
+		buscar($("#sltCriterio").val(),$("#txtTexto").val());
+		$.message.Find();
+	});
 	//$(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
     $("#txtFecha").datetimepicker(
     	{	dateFormat:"dd/mm/yy",
     		Timeformat: "hh: mm tt",
-    		minDate: getMinFormattedDate(new Date()),
+    		//minDate: getMinFormattedDate(new Date()),
     		maxDate: getMaxFormattedDate(new Date())
     	}
     );
@@ -85,7 +88,7 @@ $(document).ready(function(){
     }
 
     function insertarPapeleta(){
-    	if(!validate("#divFormulario")) return;
+    	$("#divFormulario").validate();
     	$.ajax({ 
     		data:{
     			'papcodigoD':$("#txtNumeroPapeleta").val(),
@@ -107,10 +110,12 @@ $(document).ready(function(){
             url: "Papeletas/InsertarPapeleta.htm", 
             success: function(data){
             	$("#txtNumeroPapeleta").val(data.papcodigoD);
+            	$("#txtNumeroPap").val(data.papnumeroV);
             	buscar("PAP.PAPCODIGO_D",data.papcodigoD);
             	$("#divFormulario").dialog('close');
+            	$.message.Success();
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
     }
@@ -136,10 +141,9 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarInfraccionPorEstado.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarComboInfraccion(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});	
 	}
@@ -153,10 +157,9 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarInfraccionPorEstado.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarComboInfraccion(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});	
 	}
@@ -170,10 +173,9 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarTipoMedidaPorInfraccion.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarDatosInfraccion(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});	
 	}
@@ -187,10 +189,9 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarPoliciaPorCodigo.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarDatosPolicia(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -205,10 +206,9 @@ $(document).ready(function(){
 	            type: "GET", 
 	            url: "Papeletas/BuscarPoliciaPorCarnet.htm", 
 	            success: function(data){
-	            	//alert(JSON.stringify(data));
 	            	llenarDatosPolicia(data);
 	            },error: function(jqXHR, textStatus, errorThrown){
-	            	//mensajeError();
+	            	$.message.Error();
 	            }
 	    	});
 		}
@@ -224,10 +224,9 @@ $(document).ready(function(){
 	            type: "GET", 
 	            url: "Papeletas/BuscarInspectorPorDni.htm", 
 	            success: function(data){
-	            	//alert(JSON.stringify(data));
 	            	llenarDatosInspector(data);
 	            },error: function(jqXHR, textStatus, errorThrown){
-	            	//mensajeError();
+	            	$.message.Error();
 	            }
 	    	});
 		}
@@ -243,10 +242,9 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarUnidadPorCodigo.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarDatosUnidad(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -263,7 +261,7 @@ $(document).ready(function(){
 	            success: function(data){
 	            	llenarDatosConductor(data);
 	            },error: function(jqXHR, textStatus, errorThrown){
-	            	//mensajeError();
+	            	$.message.Error();
 	            }
 	    	});
 		}
@@ -280,7 +278,7 @@ $(document).ready(function(){
             success: function(data){
             	llenarDatosInspector(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -294,10 +292,9 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarConductorPorCodigo.htm", 
             success: function(data){
-            	//alert(JSON.stringify(data));
             	llenarDatosConductor(data);
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -455,8 +452,9 @@ $(document).ready(function(){
             success: function(data){
             	//alert(JSON.stringify(data));
             	llenarPapeleta(data);
+            	$.message.Get();
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -464,6 +462,7 @@ $(document).ready(function(){
 	function llenarPapeleta(data){
 		if(data!=""){
 			$("#txtNumeroPapeleta").val(data.papcodigoD);
+			$("#txtNumeroPap").val(data.papnumeroV);
 			$("#txtFecha").val(data.papfechainfraccionF);
 			$("#txtConductorDNI").val(data.conductor.persona.perdniV);
 			$('#sltConductor').combobox('autocomplete',data.conductor.concodigoD,data.conductor.persona.perpaternoV+' '+data.conductor.persona.permaternoV+', '+data.conductor.persona.pernombresV);
@@ -482,17 +481,21 @@ $(document).ready(function(){
 			$("#txtUnidadCaducidad").val(data.propUnidadEmpresa.unidadempresa.archivo.adjfechacaducidadF);
 			$("#txtPropRazonSocial").val(data.propUnidadEmpresa.asociado.asorazonsocialV);
 			$("#txtPropietario").val(data.propUnidadEmpresa.asociado.persona.perpaternoV+" "+
-					data.propUnidadEmpresa.asociado.persona.perpaternoV+", "+
+					data.propUnidadEmpresa.asociado.persona.permaternoV+", "+
 					data.propUnidadEmpresa.asociado.persona.pernombresV);
 			$("#txtPropDni").val(data.propUnidadEmpresa.asociado.persona.perdniV);
 			$("#txtPropDomicilio").val(data.propUnidadEmpresa.asociado.persona.perdomicilioV);
 			$("#txtDniInspector").val(data.inspector.persona.perdniV);
 			$("#txtInfraccionLugar").val(data.papinfrdireccionV);
 			$("#txtInfraccionReferencia").val(data.papinfrreferenciaV);
-			$('#sltInspector').combobox('autocomplete',data.inspector.inscodigoI,data.inspector.persona.perpaternoV+' '+data.inspector.persona.permaternoV+', '+data.inspector.persona.pernombresV);
+			var inspectorNombres="";
+			if(data.inspector.inscodigoI>0) inspectorNombres=data.inspector.persona.perpaternoV+' '+data.inspector.persona.permaternoV+', '+data.inspector.persona.pernombresV;
+			$('#sltInspector').combobox('autocomplete',data.inspector.inscodigoI,inspectorNombres);
 			$("#txaObserInspector").val(data.papobservinspectorV);
 			$("#txtCarnetPolicia").val(data.policia.polcarnetidentV);
-			$('#sltPolicia').combobox('autocomplete',data.policia.polcodigoI,data.policia.polpaternoV+' '+data.policia.polmaternoV+', '+data.policia.polnombresV);
+			var policiaNombres="";
+			if(data.policia.polcodigoI>0) policiaNombres=data.policia.polpaternoV+' '+data.policia.polmaternoV+', '+data.policia.polnombresV;
+			$('#sltPolicia').combobox('autocomplete',data.policia.polcodigoI,policiaNombres);
 			if(data.pappropietarioC=='S'){
 				$("#rdPropietarioSi").attr("checked",true);
 			}else{
@@ -505,6 +508,7 @@ $(document).ready(function(){
 			$("#txaObserInfraccion").val(data.papobservinfraccionV);
 		}else{
 			$("#txtNumeroPapeleta").val("0");
+			$("#txtNumeroPap").val("");
 			$("#txtFecha").val("");
 			$("#txtConductorDNI").val("");
 			$('#sltConductor').combobox('autocomplete',"","");
@@ -556,8 +560,9 @@ $(document).ready(function(){
             url: "Papeletas/Obtener.htm", 
             success: function(data){
             	verPapeleta(data);
+            	$.message.Get();
             },error: function(jqXHR, textStatus, errorThrown){
-            	//mensajeError();
+            	$.message.Error();
             }
     	});
 	}
@@ -626,126 +631,5 @@ $(document).ready(function(){
         .tablesorter({widthFixed: true, widgets: ['zebra']}) 
         .tablesorterPager({container: $("#pager")}); 	
 	}
-	
-	function validate(elemento){
-    	$(".error").remove();
-    	var elementText=$(elemento+" .requiredText");
-    	var elementEmail=$(elemento+" .requiredEmail");
-    	var elementNumero=$(elemento+" .requiredNumber");
-    	var elementDecimal=$(elemento+" .requiredDecimal");
-    	var elementFecha=$(elemento+" .requiredDate");
-    	var elementHora=$(elemento+" .requiredHour");
-    	var elementSelect=$(elemento+" .requiredSelect");
-    	var elementFile=$(elemento+" .requiredFile");
-    	var elementRequired=$(elemento+" .required");
-    	var contador=0;
-    	$.each(elementRequired,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementText,function(key,value){
-    		if(!validarLetras($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementEmail,function(key,value){
-    		if(!validarEmail($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementNumero,function(key,value){
-    		if(!validarNumeros($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementDecimal,function(key,value){
-    		if(!validarDecimales($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementFecha,function(key,value){
-    		if(!validarFechas($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementHora,function(key,value){
-    		if(!validarHoras($(this).val())){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-    	});
-    	$.each(elementSelect,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	$.each(elementFile,function(key,value){
-    		if($(this).val()=="0"||$(this).val()==""){
-    			contador++;
-    			$(this).after("<span class='error' style='color:red'>*</span>");
-    		}
-		});
-    	if(contador<1){
-    		return true;
-    	}else{
-    		return false;
-    	}
-	}
-	
-	function validarEmail(texto){
-	    var filter = /[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}
-
-	function validarLetras(texto){
-	    var filter = /^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}
-
-	function validarNumeros(texto){
-	    var filter = /^(?:\+|-)?\d+$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarDecimales(texto){
-	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarFechas(texto){
-	    var filter = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-
-	function validarHoras(texto){
-	    var filter = /^[0-2][0-9]:[0-5][0-9]$/;
-	    if(filter.test(texto))
-	        return true;
-	    else
-	        return false;
-	}	
-	
 });
 
