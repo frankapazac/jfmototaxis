@@ -7,11 +7,19 @@ public class Usuario {
 	private String pass;
 	private String newPass;
 	private MotEmpresa empresa;
+    private MotZona zona;
+
+	public MotZona getZona() {
+		return zona;
+	}
+	public void setZona(MotZona zona) {
+		this.zona = zona;
+	}
 	
 	public Usuario() {
 		empresa=new MotEmpresa();
+		zona=new MotZona();
 	}
-
 	public MotEmpresa getEmpresa() {
 		return empresa;
 	}
