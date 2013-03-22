@@ -1,6 +1,8 @@
 package com.munichosica.myapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import sun.print.resources.serviceui;
 
 import com.munichosica.myapp.dto.MotCondDocumento;
 import com.munichosica.myapp.dto.MotEmpConductor;
@@ -182,5 +187,52 @@ public class OperativoController {
 		}
 		return "Success";
 	}
+	
+	@RequestMapping(value="ImprimirInfDiarioActa.htm", method=RequestMethod.GET)
+	public ModelAndView ImprimirMotosconBajas(HttpServletRequest request,String FECHAINI ,String HORAINI,String HORAFIN,
+			String OPECODIGO,String INDOBSERVACION_V,String VISTAPREVIA){
+		HttpSession session=request.getSession(true);
+		Rol rol=(Rol) session.getAttribute("ROL");
+		ModelAndView mav=null;
 		
+		Map<String, Object> parameters= new HashMap<String, Object>();
+			parameters.put("FECHAINI", FECHAINI);
+			parameters.put("HORAINI", HORAINI);
+			parameters.put("HORAFIN", HORAFIN);
+			parameters.put("OPECODIGO", OPECODIGO);
+			parameters.put("VISTAPREVIA", VISTAPREVIA);
+			parameters.put("INDOBSERVACION_V", INDOBSERVACION_V);
+			mav=new ModelAndView("reportInformeInfDiarioActa", parameters);
+			
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="ListarOperaticoxFecha.htm", method=RequestMethod.POST)
+	public @ResponseBody List<MotOperativo> listarOperativoxFecha(HttpServletRequest request,
+			@RequestParam("criterio") String fecha){
+		List<MotOperativo> list=null;
+		try {
+			list=MotOperativoDaoFactory.create().findByFecha(fecha);
+			logger.info("MotOperFiscalizadorDaoFactory.create().findByCriterio(criterio, texto); Complete");
+		} catch (MotOperativoDaoException e) {
+			logger.error(e.getMessage());
+		}
+		return list;
+	}
+		
+	@RequestMapping(value="Actualizar.htm", method=RequestMethod.POST)
+	public  String actualizar (HttpServletRequest request, MotOperativo operativo){
+		
+		try {
+			MotOperativoDaoFactory.create().updateObs(operativo);
+		} catch (MotOperativoDaoException e) {
+			e.printStackTrace();
+		}			
+
+	return "Success";
+	}
+		
+
+	
 }
