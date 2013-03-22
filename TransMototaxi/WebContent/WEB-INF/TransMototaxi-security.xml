@@ -10,7 +10,7 @@
 	<http auto-config="true">
 		<!-- intercept-url pattern="/Panel.htm" access="ROLE_USER,ROLE_ADMIN"/-->
 		<intercept-url pattern="/Inicio.htm" access="ROLE_ADMIN_EMPR,ROLE_ADMIN_INTE"/>
-		<intercept-url pattern="/Asociados" access="ROLE_ADMIN_EMPR"/>
+		<intercept-url pattern="/Asociados.htm" access="ROLE_ADMIN_EMPR"/>
 		<intercept-url pattern="/Conductores.htm" access="ROLE_ADMIN_EMPR"/>
 		<intercept-url pattern="/Mototaxis.htm" access="ROLE_ADMIN_EMPR"/>
 		<intercept-url pattern="/Paraderos.htm" access="ROLE_ADMIN_EMPR"/>
