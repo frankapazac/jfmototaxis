@@ -19,32 +19,38 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 		System.out.println("INGRESO ACA");
 		Connection conn=null;
 		CallableStatement stmt=null;
+		System.out.println("INSPECTOR "+papeleta.getInspector().getInscodigoI());
 		try {
 			conn=ResourceManager.getConnection();
-			stmt=conn.prepareCall("{call SP_MOT_INS_PAPELETA;1(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			stmt=conn.prepareCall("{call SP_MOT_INS_PAPELETA;1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			stmt.registerOutParameter(1, Types.DECIMAL);
 			stmt.setLong(1, papeleta.getPapcodigoD());
+			stmt.registerOutParameter(2, Types.VARCHAR);
 			if(papeleta.getPolicia().getPolcodigoI()!=null)
-				stmt.setInt(2, papeleta.getPolicia().getPolcodigoI());
-			else stmt.setNull(2, Types.INTEGER);
-			stmt.setLong(3, papeleta.getArchivo().getAdjcodigoD());
-			stmt.setInt(4, papeleta.getInfrMedida().getImecodigoI());
+				stmt.setInt(3, papeleta.getPolicia().getPolcodigoI());
+			else stmt.setNull(3, Types.INTEGER);
+			stmt.setLong(4, papeleta.getArchivo().getAdjcodigoD());
+			stmt.setInt(5, papeleta.getInfrMedida().getImecodigoI());
 			if(papeleta.getInspector().getInscodigoI()!=null)
-				stmt.setInt(5, papeleta.getInspector().getInscodigoI());
-			stmt.setNull(5, Types.INTEGER);
-			stmt.setLong(6, papeleta.getPropUnidadEmpresa().getPmocodigoD());
-			stmt.setLong(7, papeleta.getConductor().getConcodigoD());
-			stmt.setString(8, papeleta.getPapfechainfraccionF());
-			stmt.setString(9, papeleta.getPaphorainfraccionF());
-			stmt.setString(10, papeleta.getPapinfrdireccionV());
-			stmt.setString(11, papeleta.getPapinfrreferenciaV());
-			stmt.setString(12, papeleta.getPappropietarioC());
-			stmt.setString(13, papeleta.getPapobservinfraccionV());
-			stmt.setString(14, papeleta.getPapobservinspectorV());
+				stmt.setInt(6, papeleta.getInspector().getInscodigoI());
+			else stmt.setNull(6, Types.INTEGER);
+			stmt.setLong(7, papeleta.getPropUnidadEmpresa().getPmocodigoD());
+			stmt.setLong(8, papeleta.getConductor().getConcodigoD());
+			stmt.setString(9, papeleta.getPapfechainfraccionF());
+			stmt.setString(10, papeleta.getPaphorainfraccionF());
+			stmt.setString(11, papeleta.getPapinfrdireccionV());
+			stmt.setString(12, papeleta.getPapinfrreferenciaV());
+			stmt.setString(13, papeleta.getPappropietarioC());
+			stmt.setString(14, papeleta.getPapobservinfraccionV());
+			stmt.setString(15, papeleta.getPapobservinspectorV());
 			stmt.execute();
 			Long codigo=stmt.getLong(1);
+			String numero=stmt.getString(2);
 			if(codigo!=null){
 				papeleta.setPapcodigoD(codigo);
+				if(numero!=null){
+					papeleta.setPapnumeroV(numero);
+				}
 			}
 		} catch (SQLException e) {
 			throw new MotPapeletaDaoException(e.getMessage(), e);
