@@ -16,7 +16,12 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.progressbar.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect-clip.js"></script>
+	<script type="text/javascript" src="js/jefra.onlychar.js"></script >
 	<script type="text/javascript" src="js/jefra.validate.js"></script >
+	<script type="text/javascript" src="js/jefra.message.js"></script >
 	<script type="text/javascript" src="js/jsp/mantInspectores.js"></script>
 	<title>Insert title here</title>
 	<style type="text/css">
@@ -102,7 +107,6 @@
 	<h4 align="center">
 		<img id="btnNuevo" alt="Nuevo" src="images/Nuevo.png"/>
 	</h4>
-	<div id="divMensaje"></div>
 	
 	<div id="divFormulario">
 		<div id="divTab1Top">
@@ -116,7 +120,7 @@
 								<td>Nombres:</td>
 								<td><input type="text" id="txtNombres" class="requiredText"/></td>
 								<td>Dirección:</td>
-								<td><input type="text" id="txtDireccion" class="requiredText"/></td>
+								<td><input type="text" id="txtDireccion" class="requiredAlpha"/></td>
 							</tr>
 							<tr>
 								<td>Paterno:</td>
@@ -166,7 +170,7 @@
 									</select>
 								</td>
 								<td>Telefono:</td>
-								<td><input type="text" id="txtTelefono" class="requiredNumber"/></td>
+								<td><input type="text" id="txtTelefono" class="requiredPhone"/></td>
 							</tr>
 							<tr>
 								<td>Sexo</td>

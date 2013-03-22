@@ -8,10 +8,15 @@
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect-clip.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.tabs.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
+	<script type="text/javascript" src="js/jefra.validate.js"></script >
+	<script type="text/javascript" src="js/jefra.message.js"></script >
 	<script type="text/javascript" src="js/jsp/mantParaderos.js"></script>
 <title>Insert title here</title>
 </head>
@@ -55,7 +60,7 @@
 						<td>Paradero:</td>
 						<td>
 						  <select id="sltParadero" style="width:250px;" class="requiredSelect">
-						  		<option>Seleccione</option>
+						  		<option value="" selected="selected">Seleccione</option>
 				  				<c:forEach var="paradero" items="${paraderos}">
 				  					<option value="${paradero.parcodigoI}"><c:out value="${paradero.parnombreV}"/></option>
 				  				</c:forEach>

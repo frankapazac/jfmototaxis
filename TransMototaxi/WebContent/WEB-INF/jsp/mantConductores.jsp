@@ -9,6 +9,8 @@
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="js/jquery.form.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect-clip.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.tabs.js"></script>
@@ -16,6 +18,9 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.progressbar.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
+	<script type="text/javascript" src="js/jefra.validate.js"></script >
+	<script type="text/javascript" src="js/jefra.message.js"></script >
 	<script type="text/javascript" src="js/jsp/mantConductores.js"></script>
 	<script type="text/javascript" src="js/jsp/mantConductoresAsignar.js"></script>
 <title>Insert title here</title>
@@ -278,7 +283,7 @@
 									<td>Nombres:</td>
 									<td><input type="text" id="txtNombres" class="requiredText"/></td>
 									<td>Dirección:</td>
-									<td><input type="text" id="txtDireccion" class="requiredText"/></td>
+									<td><input type="text" id="txtDireccion" class="requiredAlpha"/></td>
 								</tr>
 								<tr>
 									<td>Paterno:</td>
@@ -286,7 +291,7 @@
 									<td>Departamento:</td>
 									<td>
 										<select id="sltDepartamentos" class="requiredSelect">
-											<option value="">Seleccione</option>
+											<option value="" selected="selected">Seleccione</option>
 											<c:forEach items="${departamentos}" var="departamento">
 												<option value="${departamento.idubigeo}">
 													<c:out value="${departamento.nombubigeo}"/>
@@ -301,7 +306,7 @@
 									<td>Provincia:</td>
 									<td>
 										<select id="sltProvincia" class="requiredSelect">
-											<option value="">Seleccione</option>
+											<option value="" selected="selected">Seleccione</option>
 										</select>
 									</td>
 								</tr>
@@ -311,7 +316,7 @@
 									<td>Distrito:</td>
 									<td>
 										<select id="sltDistrito" class="requiredSelect">
-											<option value="">Seleccione</option>
+											<option value="" selected="selected">Seleccione</option>
 										</select>
 									</td>
 								</tr>
@@ -319,7 +324,7 @@
 									<td>Correo:</td>
 									<td><input type="text" id="txtCorreo" class="requiredEmail"/></td>
 									<td>Telefono:</td>
-									<td><input type="text" id="txtTelefono" class="requiredNumber"/></td>
+									<td><input type="text" id="txtTelefono" class="requiredPhone"/></td>
 								</tr>
 								<tr>
 									<td>Estado Civil</td>
@@ -339,7 +344,8 @@
 									<td>Sexo</td>
 									<td>
 										<select id="sltSexo" class="requiredSelect">
-											<option value="M" selected="selected">Masculino</option>
+											<option value="" selected="selected">Seleccione</option>
+											<option value="M">Masculino</option>
 											<option value="F">Femenino</option>
 										</select>
 									</td>

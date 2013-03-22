@@ -8,6 +8,8 @@
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="js/tablesorter/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="js/jquery.form.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.effect-clip.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.button.js"></script>
@@ -23,6 +25,9 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.mouse.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.slider.js"></script>
 	<script type="text/javascript" src="js/ui/jquery-ui-timepicker-addon.js"></script>
+	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
+	<script type="text/javascript" src="js/jefra.validate.js"></script >
+	<script type="text/javascript" src="js/jefra.message.js"></script >
 	<script type="text/javascript" src="js/jsp/internamiento.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
@@ -281,13 +286,14 @@
                 <tr>
                     <td>Papeleta</td>
                     <td colspan="3">
-                    	<input type="text" id="txtPapeleta" class="txtText"/>
+                    	<input type="text" id="txtPapeleta" class="txtText required"/>
+                    	<input type="hidden" id="txtPapCodigo"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Motivo</td>
                     <td colspan="3">
-                    	<textarea id="txtMotivo" class="txtTextCompleted" rows="3"></textarea>
+                    	<textarea id="txtMotivo" class="txtTextCompleted requiredText" rows="3"></textarea>
                     </td>
                 </tr>
                 <tr>
