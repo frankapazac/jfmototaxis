@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptInformeActaInterv" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34ef330d-1f80-4f78-bf46-b8f466c2f4aa">
+	<property name="ireport.zoom" value="1.3310000000000022"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\ebujaico\\Desktop\\Proyecto Mototaxis\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OPECODIGO" class="java.lang.String"/>
+	<parameter name="INDOBSERVACION_V" class="java.lang.String"/>
+	<parameter name="FECHAINI" class="java.lang.String"/>
+	<parameter name="HORAINI" class="java.lang.String"/>
+	<parameter name="HORAFIN" class="java.lang.String"/>
+	<parameter name="VISTAPREVIA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT OPE.OPECODIGO_D,OPE.OPETITULO_V,OPE.OPEDESCRIPCION_V ,ZON.ZONNOMBRE_V,OPE.OPELUGAR_V,OPE.OPEREFERENCIA_V,
+CONVERT(VARCHAR,OPE.OPEFECHA_F,103) FECHA ,
+CONVERT(VARCHAR(5),OPE.OPEHORA_F,108)+ ' '+ SUBSTRING(CONVERT(VARCHAR,OPE.OPEHORA_F,109),25,3) 	 [HORA INICIO],
+CONVERT(VARCHAR(5),OPE.OPEHORAFIN_F,108) + ' '+ SUBSTRING(CONVERT(VARCHAR,OPE.OPEHORAFIN_F,109),25,3)  [HORA FIN],
+PER.PERNOMBRES_V,PER.PERPATERNO_V,PER.PERMATERNO_V,PER.PERDNI_V
+FROM MOT_OPERATIVO OPE INNER JOIN MOT_ZONA ZON
+ON  OPE.ZONCODIGO_I=ZON.ZONCODIGO_I INNER JOIN MOT_INSPECTOR INS ON OPE.INSCODIGO_I=INS.INSCODIGO_I
+INNER JOIN MOT_PERSONA PER ON PER.PERCODIGO_D=INS.PERCODIGO_D
+WHERE OPE.OPECODIGO_D=$P{OPECODIGO}]]>
+	</queryString>
+	<field name="OPECODIGO_D" class="java.math.BigDecimal"/>
+	<field name="OPETITULO_V" class="java.lang.String"/>
+	<field name="OPEDESCRIPCION_V" class="java.lang.String"/>
+	<field name="ZONNOMBRE_V" class="java.lang.String"/>
+	<field name="OPELUGAR_V" class="java.lang.String"/>
+	<field name="OPEREFERENCIA_V" class="java.lang.String"/>
+	<field name="FECHA" class="java.lang.String"/>
+	<field name="HORA INICIO" class="java.lang.String"/>
+	<field name="HORA FIN" class="java.lang.String"/>
+	<field name="PERNOMBRES_V" class="java.lang.String"/>
+	<field name="PERPATERNO_V" class="java.lang.String"/>
+	<field name="PERMATERNO_V" class="java.lang.String"/>
+	<field name="PERDNI_V" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a80c871a-8b0c-4953-a475-603d96fbe04c" x="0" y="19" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[HOJA DE INFORME DIARIO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c89d2f56-a33f-4c62-832e-966bf5a94ac8" x="13" y="0" width="542" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VISTAPREVIA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="67d1b18f-9dbb-4d5f-a8c1-11b3b21ab470" x="38" y="19" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zona Administrativa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="67d1b18f-9dbb-4d5f-a8c1-11b3b21ab470" x="378" y="20" width="56" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="67d1b18f-9dbb-4d5f-a8c1-11b3b21ab470" x="378" y="39" width="56" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Término]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="67d1b18f-9dbb-4d5f-a8c1-11b3b21ab470" x="38" y="39" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar de Trabajo]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="af0b5e05-d8d5-4aaa-a77d-49b508e8610f" x="128" y="19" width="102" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZONNOMBRE_V}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="67d1b18f-9dbb-4d5f-a8c1-11b3b21ab470" x="38" y="0" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Operativo]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ab9e235f-25cb-48a2-974a-da0179857862" x="128" y="39" width="102" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPELUGAR_V}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7e1e35e0-8003-40d0-9e94-c93f6be0bdd9" x="444" y="20" width="72" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORA INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d21eb5a1-55d3-401a-af58-5f9982a40953" x="444" y="39" width="72" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORA FIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="67d1b18f-9dbb-4d5f-a8c1-11b3b21ab470" x="38" y="58" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cd78cae2-5c89-483b-9dc4-48f8585af33a" x="128" y="58" width="388" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPEDESCRIPCION_V}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a2ef4751-2bb8-4df4-a207-d8252ff4ad39" x="128" y="0" width="102" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPETITULO_V}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="67d1b18f-9dbb-4d5f-a8c1-11b3b21ab470" x="378" y="0" width="56" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="08211e3a-a35a-4ff8-9fa7-95662b0d7830" x="444" y="0" width="72" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="1" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="1d65a485-857e-4d3e-9018-4c4fbfc5233d" x="26" y="1" width="490" height="54"/>
+				<subreportParameter name="OPECODIGO_D">
+					<subreportParameterExpression><![CDATA[$P{OPECODIGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subRptInfDiarioActa.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="394" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="773a9ed7-95ba-48f7-80ae-1badae2e354d" x="38" y="0" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="32d2e750-4f3c-4d33-a79a-90eb89ca1c61" stretchType="RelativeToBandHeight" x="38" y="19" width="478" height="17"/>
+				<textElement textAlignment="Justified">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{INDOBSERVACION_V}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e589b02d-ed1f-4e5f-bc5f-89fddfcbe565" positionType="Float" x="68" y="328" width="136" height="15"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Inspector Encargado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e589b02d-ed1f-4e5f-bc5f-89fddfcbe565" positionType="Float" x="316" y="328" width="188" height="26"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[V° B° Del  Adm Agencia Municipal De La Zona Administrativa]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="1ea4bc55-7cfa-4872-a032-c8050bc13732" positionType="Float" x="38" y="325" width="192" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c27dd469-5ac1-4d69-9231-c69c254c0c25" positionType="Float" x="296" y="327" width="226" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="15bfd94e-4e21-4418-889d-ba7faba3611e" positionType="Float" x="38" y="339" width="192" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PERNOMBRES_V}+" "+$F{PERPATERNO_V}+" "+$F{PERMATERNO_V}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7654b207-4ba9-456b-9f93-081df4dee3e4" positionType="Float" x="68" y="353" width="136" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["DNI :" +$F{PERDNI_V}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="d8a6baf1-f3f4-4634-8a59-d4d1c00659f0" x="38" y="18" width="478" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
