@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotEmpadronamiento;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
 import com.munichosica.myapp.factory.MotEmpadronamientoDaoFactory;
+import com.munichosica.myapp.util.UserSecurity;
 
 public class AdjuntarArchivoController {
 	
@@ -26,11 +28,11 @@ public class AdjuntarArchivoController {
 				@RequestParam("texto") String texto, HttpServletRequest request){
 		logger.info("Ingreso a Mototaxi/Listar.htm");
 		HttpSession session=request.getSession(true);
-		Rol rol=(Rol) session.getAttribute("ROL");
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		List<MotEmpadronamiento> list=null;
 		try {
 			list=MotEmpadronamientoDaoFactory.create().findByCriterio(criterio, texto,
-					rol.getUsuario().getEmpresa().getEmpcodigoD());
+					usuario.getEmpresa().getEmpcodigoD());
 			logger.info("MotParaderoDaoFactory.create().findByCriterio(criterio, texto,(long) 1);Completed");
 		} catch (MotEmpadronamientoDaoException e) {
 			logger.error(e.getMessage());

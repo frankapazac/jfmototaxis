@@ -19,6 +19,7 @@ import com.munichosica.myapp.dto.MotAsocDocumento;
 import com.munichosica.myapp.dto.MotEmprAsociado;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotAsocDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotEmprAsociadoDaoException;
@@ -39,11 +40,11 @@ public class AsociadoController {
 			@RequestParam("criterio") String criterio, @RequestParam("texto") String texto){
 		logger.info("Ingreso a Asociados/Listar.htm");
 		HttpSession session=request.getSession(true);
-		Rol rol=(Rol) session.getAttribute("ROL");
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		List<MotEmprAsociado> list=null;
 		try {
 			list=MotEmprAsociadoDaoFactory.create().findByCriterio(criterio, 
-					texto, rol.getUsuario().getEmpresa().getEmpcodigoD());
+					texto, usuario.getEmpresa().getEmpcodigoD());
 			logger.info("MotEmprAsociadoDaoFactory.create().findByCriterio(criterio, texto, codigo); Complete");
 		} catch (MotEmprAsociadoDaoException e) {
 			logger.error(e.getMessage());
@@ -56,14 +57,14 @@ public class AsociadoController {
 		logger.info("Ingreso a Asociados/Procesar.htm");
 		try {
 			HttpSession session=request.getSession(true);
-			Rol rol=(Rol) session.getAttribute("ROL");
+			Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 			DocumentoSession documentos=(DocumentoSession) session.getAttribute("DOCUMENTOS");
 			DocumentoSession foto=(DocumentoSession) session.getAttribute("FOTO");
 			/*if(documentos==null||documentos.getList().size()<3){
 				throw new MotEmprAsociadoDaoException("Aun no se agregaron documentos");
 			}*/
 			
-			asociado.setEmpresa(rol.getUsuario().getEmpresa());
+			asociado.setEmpresa(usuario.getEmpresa());
 			UTFEncodingUtil.decodeObjectUTF(asociado);
 			UTFEncodingUtil.decodeObjectUTF(asociado.getPersona());
 			MotEmprAsociadoDaoFactory.create().procesar(asociado);

@@ -20,6 +20,7 @@ import com.munichosica.myapp.dto.MotPropUnidadEmpresa;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUnidDocumento;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
 import com.munichosica.myapp.exceptions.MotPropUnidadEmpresaDaoException;
@@ -43,11 +44,11 @@ public class MotUnidadEmpresaController {
 			EmpadronamientoUtil empadronamientoUtil){
 		logger.info("Ingreso a /UnidadEmpresa/Procesar.htm");
 		HttpSession session=request.getSession(true);
-		Rol rol=(Rol) session.getAttribute("ROL");
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		MotUnidDocumentoSession documentosUnidad=(MotUnidDocumentoSession) session.getAttribute("UNIDAD_DOCUMENTOS");
 		MotUnidDocumentoSession documentosFoto=(MotUnidDocumentoSession) session.getAttribute("UNIDAD_DOCUMENTOS_FOTO");
 		try {
-			empadronamientoUtil.getEmpadronamiento().setEmpresa(rol.getUsuario().getEmpresa());
+			empadronamientoUtil.getEmpadronamiento().setEmpresa(usuario.getEmpresa());
 			MotUnidadEmpresaDaoFactory.create().insert(
 					empadronamientoUtil.getPropUnidadEmpresa().getUnidadempresa());
 			logger.info("MotUnidadEmpresaDaoFactory.create().insert(empadronamientoUtil.getPropUnidadEmpresa().getUnidadempresa());Completed codigo:"+

@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jdt.internal.compiler.lookup.MostSpecificExceptionMethodBinding;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,33 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import sun.print.resources.serviceui;
-
-import com.munichosica.myapp.dto.MotCondDocumento;
-import com.munichosica.myapp.dto.MotEmpConductor;
-import com.munichosica.myapp.dto.MotEmprAsociado;
 import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotOperativo;
-import com.munichosica.myapp.dto.MotParadero;
 import com.munichosica.myapp.dto.Rol;
-import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
-import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
-import com.munichosica.myapp.exceptions.MotEmpConductorDaoException;
-import com.munichosica.myapp.exceptions.MotEmprAsociadoDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotOperativoDaoException;
-import com.munichosica.myapp.exceptions.MotParaderoDaoException;
-import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
-import com.munichosica.myapp.factory.MotCondDocumentoDaoFactory;
-import com.munichosica.myapp.factory.MotEmpConductorDaoFactory;
-import com.munichosica.myapp.factory.MotEmprAsociadoDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotOperativoDaoFactory;
-import com.munichosica.myapp.factory.MotParaderoDaoFactory;
-import com.munichosica.myapp.util.UTFEncodingUtil;
 
 @Controller
 @RequestMapping("/Operativos")
@@ -53,9 +34,8 @@ public class OperativoController {
 	protected static final Logger logger = Logger.getLogger( OperativoController.class );
 	
 	@RequestMapping(value="ListaInspectoresNotIn.htm",method=RequestMethod.POST)
-	public @ResponseBody List<MotInspector> listarInspectoresNotIn(HttpServletRequest request,@RequestParam("codigo") int codigo){
+	public @ResponseBody List<MotInspector> listarInspectoresNotIn(@RequestParam("codigo") int codigo){
 		logger.info("Ingreso a Operativos/ListaInspectoresNotIn.htm");
-		HttpSession session=request.getSession(true);
 		List<MotInspector> listarInspectoresNotIn = null;
 		try {
 			listarInspectoresNotIn = MotInspectorDaoFactory.create().findByNotInCodInspector(codigo);
@@ -67,11 +47,8 @@ public class OperativoController {
 	}
 	
 	@RequestMapping(value="Listar.htm", method=RequestMethod.POST)
-	public @ResponseBody List<MotOperFiscalizador> listar(HttpServletRequest request,
-			@RequestParam("criterio") String criterio, @RequestParam("texto") String texto){
+	public @ResponseBody List<MotOperFiscalizador> listar(@RequestParam("criterio") String criterio, @RequestParam("texto") String texto){
 		logger.info("Ingreso a Operativos/Listar.htm");
-		HttpSession session=request.getSession(true);
-		Rol rol=(Rol) session.getAttribute("ROL");
 		List<MotOperFiscalizador> list=null;
 		try {
 			list=MotOperFiscalizadorDaoFactory.create().findByCriterio(criterio,texto);
@@ -100,13 +77,10 @@ public class OperativoController {
 
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
 	public @ResponseBody String procesar 
-	(HttpServletRequest request , @RequestBody MotInspectorList inspectorList){
+	(@RequestBody MotInspectorList inspectorList){
 		
 		logger.info("Ingreso a GuardarOperativo/Procesar.htm");
-		
-		HttpSession session= request.getSession(true);
-		Rol rol = (Rol) session.getAttribute("ROL");
-		
+			
 		try {
 			MotOperativoDaoFactory.create().insert(inspectorList.getOperativo());
 			for(MotInspector inspector:inspectorList.getInspectores()){

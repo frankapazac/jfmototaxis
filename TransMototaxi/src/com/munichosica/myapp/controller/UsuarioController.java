@@ -77,6 +77,4 @@ public class UsuarioController{
 			
 		return "Success";
 	}
-	
-	
 }
