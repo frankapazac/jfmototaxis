@@ -3,7 +3,8 @@ package com.munichosica.myapp.dto;
 public class Usuario {
 	private Integer usucodigoI;
 	private String usuusuarioV;
-	private String usurolV;
+	private Rol rol;
+	private MotPersona persona;
 	private String pass;
 	private String newPass;
 	private MotEmpresa empresa;
@@ -19,6 +20,8 @@ public class Usuario {
 	public Usuario() {
 		empresa=new MotEmpresa();
 		zona=new MotZona();
+		rol=new Rol();
+		persona=new MotPersona();
 	}
 	public MotEmpresa getEmpresa() {
 		return empresa;
@@ -45,11 +48,18 @@ public class Usuario {
 	public void setUsuusuarioV(String usuusuarioV) {
 		this.usuusuarioV = usuusuarioV;
 	}
-	public String getUsurolV() {
-		return usurolV;
+	
+	public Rol getRol() {
+		return rol;
 	}
-	public void setUsurolV(String usurolV) {
-		this.usurolV = usurolV;
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+	public MotPersona getPersona() {
+		return persona;
+	}
+	public void setPersona(MotPersona persona) {
+		this.persona = persona;
 	}
 	public Integer getUsucodigoI() {
 		return usucodigoI;

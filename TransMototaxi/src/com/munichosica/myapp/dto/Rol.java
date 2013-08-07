@@ -5,12 +5,10 @@ import java.util.List;
 
 public class Rol {
 	protected int rolcodigoI;
-	protected Usuario usuario;
 	protected String rolnombreV;
 	protected List<Pagina> paginas;
 	
 	public Rol() {
-		usuario=new Usuario();
 		paginas=new ArrayList<Pagina>();
 	}
 	
@@ -27,12 +25,6 @@ public class Rol {
 	}
 	public void setRolcodigoI(int rolcodigoI) {
 		this.rolcodigoI = rolcodigoI;
-	}
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 	public String getRolnombreV() {
 		return rolnombreV;
