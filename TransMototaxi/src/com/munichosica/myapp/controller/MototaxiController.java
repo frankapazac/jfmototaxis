@@ -21,6 +21,7 @@ import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.RepPapeleta;
 import com.munichosica.myapp.dto.MotUnidDocumento;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
 import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
@@ -45,11 +46,11 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 				@RequestParam("texto") String texto, HttpServletRequest request){
 		logger.info("Ingreso a Mototaxi/Listar.htm");
 		HttpSession session=request.getSession(true);
-		Rol rol=(Rol) session.getAttribute("ROL");
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		List<MotEmpadronamiento> list=null;
 		try {
 			list=MotEmpadronamientoDaoFactory.create().findByCriterio(criterio, texto,
-					rol.getUsuario().getEmpresa().getEmpcodigoD());
+					usuario.getEmpresa().getEmpcodigoD());
 			logger.info("MotParaderoDaoFactory.create().findByCriterio(criterio, texto,(long) 1);Completed");
 		} catch (MotEmpadronamientoDaoException e) {
 			logger.error(e.getMessage());
@@ -125,12 +126,12 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 	@RequestMapping(value="ImprimirMotosconAltas.htm", method=RequestMethod.GET)
 	public ModelAndView ImprimirMotosconAltas(HttpServletRequest request,String FECHA1 ,String FECHA2){
 		HttpSession session=request.getSession(true);
-		Rol rol=(Rol) session.getAttribute("ROL");
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		ModelAndView mav=null;
 		Map<String, Object> parameters= new HashMap<String, Object>();
 		parameters.put("FECHA1", FECHA1);
 		parameters.put("FECHA2", FECHA2);
-		parameters.put("EMPCODIGO_D", rol.getUsuario().getEmpresa().getEmpcodigoD());
+		parameters.put("EMPCODIGO_D", usuario.getEmpresa().getEmpcodigoD());
 			mav=new ModelAndView("reportInformeMotosAlta", parameters);
 			
 		return mav;
@@ -139,12 +140,12 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 	@RequestMapping(value="ImprimirMotosconBajas.htm", method=RequestMethod.GET)
 	public ModelAndView ImprimirMotosconBajas(HttpServletRequest request,String FECHA1 ,String FECHA2){
 		HttpSession session=request.getSession(true);
-		Rol rol=(Rol) session.getAttribute("ROL");
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		ModelAndView mav=null;
 		Map<String, Object> parameters= new HashMap<String, Object>();
 			parameters.put("FECHA1", FECHA1);
 			parameters.put("FECHA2", FECHA2);
-			parameters.put("EMPCODIGO_D", rol.getUsuario().getEmpresa().getEmpcodigoD());
+			parameters.put("EMPCODIGO_D", usuario.getEmpresa().getEmpcodigoD());
 			mav=new ModelAndView("reportInformeMotosBaja", parameters);
 			
 		return mav;

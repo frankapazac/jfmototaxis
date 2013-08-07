@@ -22,6 +22,7 @@ import com.munichosica.myapp.dto.MotInspDocumento;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUnidConductor;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
 import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpConductorDaoException;
@@ -42,13 +43,14 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 	
 	@RequestMapping(value="Listar.htm", method=RequestMethod.POST)
 	public @ResponseBody List<MotEmpConductor> listar
-	(@RequestParam("criterio") String criterio,@RequestParam("texto") String texto){
-		
+	(HttpServletRequest request,@RequestParam("criterio") String criterio,@RequestParam("texto") String texto){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		logger.info("Ingreso a Conductores/Listar.htm");
 		List<MotEmpConductor> list = null;
 		
 		try {
-			list = MotEmpConductorDaoFactory.create().findByCriterio(criterio, texto, (long) 1);
+			list = MotEmpConductorDaoFactory.create().findByCriterio(criterio, texto, usuario.getEmpresa().getEmpcodigoD());
 			logger.info("MotEmpConductorDaoFactory.create().findByCriterio(criterio, texto, (long) 1);Completed");
 		} catch (MotEmpConductorDaoException e) {
 			logger.error(e.getMessage());
@@ -63,6 +65,7 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 			@RequestParam("texto") String texto,@RequestParam("codCondu") Long conductor){
 		logger.info("Ingreso a Conductores/ListarMotosAsignadas.htm");
 		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		MotPropUnidEmpresaSession puemp=(MotPropUnidEmpresaSession) 
 				session.getAttribute("PROP_UNID_EMPRESA");
 		if(puemp==null){
@@ -78,7 +81,11 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 		puemp.getConductor().setConcodigoD(conductor);
 		List<MotUnidConductor> list = null;
 		try {
-			list = MotUnidConductorDaoFactory.create().findByCriterio(criterio, texto, (long) 1, conductor);
+			/*System.out.println("Criterio "+criterio);
+			System.out.println("texto "+texto);
+			System.out.println("usuario.getEmpresa().getEmpcodigoD() "+usuario.getEmpresa().getEmpcodigoD());
+			System.out.println("conductor "+conductor);*/
+			list = MotUnidConductorDaoFactory.create().findByCriterio(criterio, texto, usuario.getEmpresa().getEmpcodigoD(), conductor);
 			logger.info("MotUnidConductorDaoFactory.create().findByCriterio(criterio, texto, (long) 1);Completed");
 		} catch (MotUnidConductorDaoException e) {
 			logger.error(e.getMessage());
@@ -107,12 +114,12 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 		
 		logger.info("Ingreso a GuardarConductor/Procesar.htm");
 		
-		HttpSession session= request.getSession(true);
-		Rol rol = (Rol) session.getAttribute("ROL");
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
 		DocumentoConductorSession documentos = (DocumentoConductorSession)
 				session.getAttribute("DOC_CONDUCTOR");
 		DocumentoConductorSession foto=(DocumentoConductorSession) session.getAttribute("FOTO_CONDUCTOR");
-		conductor.setEmpresa((rol.getUsuario().getEmpresa()));
+		conductor.setEmpresa((usuario.getEmpresa()));
 		UTFEncodingUtil.decodeObjectUTF(conductor);
 		UTFEncodingUtil.decodeObjectUTF(conductor.getConductor().getPersona());
 		try {
