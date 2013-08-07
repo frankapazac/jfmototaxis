@@ -36,12 +36,6 @@ $(document).ready(function(){
     	});
 	}
 	
-	function paginacion(){
-		$("#tblLista")//.tablesorter(); 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
-	}
-	
 	function llenarTabla(data){
     	if(data==""){ 
     		$("#tblLista").empty();
@@ -91,13 +85,14 @@ $(document).ready(function(){
 			"<td>"+data[x].unidadEmpresa.unecolorV+"</td>"+
 			"<td>"+data[x].empfechainicioF+"</td>"+
 			"<td>"+data[x].empfechaceseF+"</td>"+
-			"<td><img alt='Informe' class='btnInforme' id='mod"+data[x].propUnidadEmpresa.pmocodigoD+"' src='images/edit.png'></td>"+
+			"<td><img alt='Informe' class='btnInforme' id='mod"+data[x].propUnidadEmpresa.pmocodigoD+"' src='images/page_find.png'></td>"+
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     		//alert(data[x].propUnidadEmpresa.pmocodigoD);
     	}
     	$(".btnInforme").click(mostrarInforme);
-    	paginacion();
+
+    	$("#tblLista").paginacion();
     }
 
 	
@@ -129,7 +124,7 @@ $(document).ready(function(){
 	    {
 	    	if(data!=""){	
 	    		//alert(data.unidadEmpresa.unetituloV);
-	    		$("#txtNombresPropietario").text(data.asociado.persona.pernombresV);
+	    		$("#txtNombresPropietario").text(data.asociado.persona.pernombresV+' '+data.asociado.persona.perpaternoV+' '+data.asociado.persona.permaternoV);
 	    		$("#txtdni").text(data.asociado.persona.perdniV);
 	    		$("#txtdireccion").text(data.asociado.persona.perdomicilioV);
 	    		$("#txtDistrito").text(data.asociado.persona.perubidistnombreV);
@@ -187,13 +182,7 @@ $(document).ready(function(){
 	    	});
 		}
 		
-		function paginacion2(){
-			$("#tblListaPapeleta")
-	        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-	        .tablesorterPager({container: $("#pager2")}); 	
-		}
-		
-	    function llenarTabla2(data){
+		function llenarTabla2(data){
 	    	if(data==""){ 
 	    		$("#tblListaPapeleta").empty();
 	    		return;
@@ -244,7 +233,8 @@ $(document).ready(function(){
 	    		$("#tblListaPapeleta tbody").append(txtHtml);
 	    		//alert(data[x].propUnidadEmpresa.pmocodigoD);
 	    	}
-	    	paginacion2();   	
+	    	$("#tblListaPapeleta").paginacionPager("#pager2");
+			  	
 	    }
 	    
 	    //llenar conductores
@@ -303,14 +293,10 @@ $(document).ready(function(){
 				"</tr>";
 	    		$("#tblListaConductor tbody").append(txtHtml);
 	    	} 	
-	    	paginacion3();  
+
+	    	$("#tblListaConductor").paginacionPager("#pager3");
 	    }
 		
-		function paginacion3(){
-			$("#tblListaConductor")
-	        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-	        .tablesorterPager({container: $("#pager3")}); 	
-		}
 	    $("#btnCerrar").click(function(){
 	    	$("#divInformeMotoTaxi").dialog("close");
 	    });

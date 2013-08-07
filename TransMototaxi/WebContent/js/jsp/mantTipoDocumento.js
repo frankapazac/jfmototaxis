@@ -67,14 +67,9 @@ $(document).ready(function(){
 
 		$(".btnModificarTipDoc").click(modificar);
     	$(".btnEliminarTipDoc").click(eliminar);
-    	paginacion();
-    }
 
-    function paginacion(){
-		$("#tblListaTipDoc") 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager2")}); 	
-	}
+    	$("#tblListaTipDoc").paginacionPager("#pager2");
+    }
     
     
 	$("#divNuevoTipDoc").hide();

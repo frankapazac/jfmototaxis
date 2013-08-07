@@ -19,6 +19,10 @@ $(document).ready(function(){
     	});
     });
     
+    $("#btnCancelar").click(function(){
+    	$("#divFormulario").dialog('close');
+    });
+    
     $("#sltParadero").change(function(){
     	$.ajax({ 
     		data:{
@@ -112,7 +116,7 @@ $(document).ready(function(){
     	}
     	
     	$(".btnEliminar").click(eliminar);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
 	
 	function eliminar(){
@@ -132,13 +136,5 @@ $(document).ready(function(){
     	//alert("CODIGO: "+codigo);
     	//buscar("EMP.EMPCODIGO_D",$("#txtCodigo").val());
     	buscar("EMP.EMPCODIGO_D","");
-    	paginacion();
-	}
-	
-	
-    function paginacion(){
-		$("#tblLista")//.tablesorter(); 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
 	}
 });

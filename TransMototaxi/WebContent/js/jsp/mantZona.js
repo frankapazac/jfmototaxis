@@ -64,15 +64,10 @@ $(document).ready(function(){
 
 		$(".btnModificarZona").click(modificar);
     	$(".btnEliminarZona").click(eliminar);
-    	paginacion();
+
+    	$("#tblListaZona").paginacionPager("#pager7");
     }
 
-
-    function paginacion(){
-		$("#tblListaZona") 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager7")}); 	
-	}
     
     $("#divNuevaZona").hide();
 	

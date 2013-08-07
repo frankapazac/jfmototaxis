@@ -62,16 +62,8 @@ $(document).ready(function(){
 
 		$(".btnModificarModelo").click(modificar);
     	$(".btnEliminarModelo").click(eliminar);
-    	paginacion();
-    }
-
-
-    function paginacion(){
-		$("#tblListaModelo") 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager9")}); 	
-	}
-    
+    	$("#tblListaModelo").paginacionPager("#pager9");
+    }    
     
     $("#divNuevaModelo").hide();
 	

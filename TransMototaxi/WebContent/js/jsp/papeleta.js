@@ -433,7 +433,7 @@ $(document).ready(function(){
     	$(".btnVer").click(verAjaxPapeleta);
     	$(".btnModificar").click(obtenerPapeleta);
     	$(".btnImprimir").click(printPapeleta);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
 	
 	function printPapeleta(){
@@ -626,10 +626,5 @@ $(document).ready(function(){
 		$("#divFormulario").dialog("close");
 	});
 	
-	function paginacion(){
-		$("#tblLista")//.tablesorter(); 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
-	}
 });
 

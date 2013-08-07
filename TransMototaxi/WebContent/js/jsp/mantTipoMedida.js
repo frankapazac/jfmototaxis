@@ -65,15 +65,8 @@ $(document).ready(function(){
 
 		$(".btnModificarMed").click(modificar);
     	$(".btnEliminarMed").click(eliminar);
-    	paginacion();
+    	$("#tblListaMedida").paginacionPager("#pager6");
     }
-
-
-    function paginacion(){
-		$("#tblListaMedida") 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager6")}); 	
-	}
     
 		$("#divNuevaMedida").hide();
 	

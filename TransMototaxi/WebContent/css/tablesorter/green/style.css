@@ -17,6 +17,9 @@ table.tablesorter td {
 table.tablesorter .even {
 	background-color: #C0EDB6;
 }
+table.tablesorter .jfhover {
+	background-color: #00CCFF;/*Agregado por Frank Apaza C.*/
+}
 table.tablesorter .odd {
 	background-color: white;
 }

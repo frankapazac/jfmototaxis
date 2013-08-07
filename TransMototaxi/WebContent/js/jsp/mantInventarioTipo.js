@@ -69,14 +69,9 @@ $(document).ready(function(){
 
 		$(".btnModificarInv").click(modificar);
     	$(".btnEliminarInv").click(eliminar);
-    	paginacion();
+    	$("#tblListaInventario").paginacionPager("#pager4");
     }
 
-	 function paginacion(){
-			$("#tblListaInventario") 
-	        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-	        .tablesorterPager({container: $("#pager4")}); 	
-	 }
 	 
 	 $("#divNuevoInventario").hide();
 	 

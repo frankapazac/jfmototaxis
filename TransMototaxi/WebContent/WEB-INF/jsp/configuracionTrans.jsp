@@ -10,6 +10,8 @@
 <script type="text/javascript" src="js/ui/jquery.ui.core.js"></script>
 <script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="js/ui/jquery.ui.accordion.js"></script>
+	<script type="text/javascript" src="js/jefra.message.js"></script >
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 <script type="text/javascript" src="js/jsp/configuracion.js"></script>
 <title>Insert title here</title>
 <style type="text/css">

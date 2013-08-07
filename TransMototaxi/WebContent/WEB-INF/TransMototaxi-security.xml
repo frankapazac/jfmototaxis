@@ -9,7 +9,7 @@
 	
 	<http auto-config="true">
 		<!-- intercept-url pattern="/Panel.htm" access="ROLE_USER,ROLE_ADMIN"/-->
-		<intercept-url pattern="/Inicio.htm" access="ROLE_ADMIN_EMPR,ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/Inicio.htm" access="ROLE_ADMIN,ROLE_ADMIN_EMPR,ROLE_ADMIN_INTE"/>
 		<intercept-url pattern="/Asociados.htm" access="ROLE_ADMIN_EMPR"/>
 		<intercept-url pattern="/Conductores.htm" access="ROLE_ADMIN_EMPR"/>
 		<intercept-url pattern="/Mototaxis.htm" access="ROLE_ADMIN_EMPR"/>
@@ -22,8 +22,8 @@
 		<intercept-url pattern="/Operativos.htm" access="ROLE_ADMIN_INTE"/>
 		<intercept-url pattern="/Infraccion.htm" access="ROLE_ADMIN_INTE"/>
 		<intercept-url pattern="/Internamientos.htm" access="ROLE_ADMIN_INTE"/>
-		<intercept-url pattern="/MaestroEmpresa.htm" access="ROLE_ADMIN_INTE"/>
-		<intercept-url pattern="/MaestroTransporte.htm" access="ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/MaestroEmpresa.htm" access="ROLE_ADMIN,ROLE_ADMIN_INTE"/>
+		<intercept-url pattern="/MaestroTransporte.htm" access="ROLE_ADMIN,ROLE_ADMIN_INTE"/>
 		<form-login login-page="/Ingresar.htm" default-target-url="/Inicio.htm"
 		authentication-failure-url="/FalloLogin.htm"/>
 		<logout logout-success-url="/Salir.htm"/>
@@ -36,7 +36,7 @@
 				users-by-username-query="SELECT USUUSUARIO_V AS USERNAME,USUCLAVE_V AS PASSWORD,
 					USUHABILITADO_C AS ENABLED FROM USUARIO WHERE USUUSUARIO_V=?"
 				authorities-by-username-query="SELECT U.USUUSUARIO_V AS USERNAME,R.ROLNOMBRE_V AS ROLE
-					FROM USUARIO U, ROL R WHERE U.USUCODIGO_I=R.USUCODIGO_I 
+					FROM USUARIO U, ROL R WHERE U.ROLCODIGO_I=R.ROLCODIGO_I
 					AND U.USUUSUARIO_V=?"/>
 		</authentication-provider>
 	</authentication-manager>

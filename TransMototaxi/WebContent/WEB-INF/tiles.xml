@@ -41,6 +41,11 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/documentacion.jsp"/>
 	</definition>
 	
+	<definition name="tilesDocumentacionTrans" extends="base.definition">
+		<put-attribute name="title" value="Documentación"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/documentacionTrans.jsp"/>
+	</definition>
+	
 	<definition name="tilesConfiguracion" extends="base.definition">
 		<put-attribute name="title" value="Configuración"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/configuracion.jsp"/>
@@ -84,6 +89,11 @@
 	<definition name="tilesConfiguracion2" extends="base.definition">
 		<put-attribute name="title" value="Configuración"/>
 		<put-attribute name="body" value="/WEB-INF/jsp/configuracionTrans.jsp"/>
+	</definition>
+	
+	<definition name="tilesEmpresas" extends="base.definition">
+		<put-attribute name="title" value="Empresas"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/mantEmpresa.jsp"/>
 	</definition>
 	
 </tiles-definitions>
