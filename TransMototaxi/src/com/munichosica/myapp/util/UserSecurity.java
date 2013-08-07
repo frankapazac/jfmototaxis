@@ -48,60 +48,71 @@ public class UserSecurity {
 		return usuario;
 	}*/
 	
-	private Usuario getUsuarioByUser(HttpServletRequest request,String user) throws SQLException{
+	public Usuario getUsuarioByUser(HttpServletRequest request){
 		Connection conn=null;
 		CallableStatement stmt=null;
 		ResultSet rs=null;
 		Usuario usuario=null;
 		try {
-			conn=ResourceManager.getConnection();
-			stmt=conn.prepareCall("{call SP_MOT_GET_USERDETAIL;1(?)}");
-			stmt.setString(1, user);
-			boolean results=stmt.execute();
-			if(results){
-				rs=stmt.getResultSet();
-				if(rs.next()){
-					usuario=new Usuario();
-					usuario.setUsucodigoI(rs.getInt("CODUSUARIO"));
-					usuario.setUsuusuarioV(rs.getString("USUARIO"));
-					usuario.getEmpresa().setEmpcodigoD(rs.getLong("CODEMPRESA"));
-					usuario.getEmpresa().setEmprazonsocialV(rs.getString("RAZONSOCIAL"));
-					usuario.getEmpresa().setEmpdireccionV(rs.getString("DIRECCION"));
-					usuario.getEmpresa().setEmprucV(rs.getString("RUC"));
-					usuario.getEmpresa().setEmppagwebV(rs.getString("WEB"));
-					
-					//usuario.getEmpresa().getFoto().setAdjarchivoB(rs.getBytes("FOTO_ARCHIVO"));
-					String nombreBanner="images/bannerMunicipalidad.png",nombreLogo="images/no_disponible.jpg",nombreFoto="images/no_disponible.jpg";
-					if(rs.getBytes("FOTO_ARCHIVO")!=null){
-						nombreFoto="temp/"+FileUtil.createTempFile(request, rs.getString("FOTO_NOMB"), 
-							FileUtil.deCompress(rs.getBytes("FOTO_ARCHIVO")));
+			if(authentication!=null&&authentication.isAuthenticated()){
+				usuario=new Usuario();
+				
+				User user=(User) authentication.getPrincipal();
+				usuario.getRol().setRolnombreV(user.getAuthorities().toString().replace("[", "").replace("]",""));
+				usuario.getRol().setPaginas(paginasByRol(usuario.getRol().getRolnombreV()));
+				
+				conn=ResourceManager.getConnection();
+				stmt=conn.prepareCall("{call SP_MOT_GET_USERDETAIL;1(?)}");
+				stmt.setString(1, user.getUsername());
+				boolean results=stmt.execute();
+				if(results){
+					rs=stmt.getResultSet();
+					if(rs.next()){						
+						usuario.setUsucodigoI(rs.getInt("CODUSUARIO"));
+						usuario.setUsuusuarioV(rs.getString("USUARIO"));
+						usuario.getEmpresa().setEmpcodigoD(rs.getLong("CODEMPRESA"));
+						usuario.getEmpresa().setEmprazonsocialV(rs.getString("RAZONSOCIAL"));
+						usuario.getEmpresa().setEmpdireccionV(rs.getString("DIRECCION"));
+						usuario.getEmpresa().setEmprucV(rs.getString("RUC"));
+						usuario.getEmpresa().setEmppagwebV(rs.getString("WEB"));
+						
+						//usuario.getEmpresa().getFoto().setAdjarchivoB(rs.getBytes("FOTO_ARCHIVO"));
+						String nombreBanner="images/bannerMunicipalidad.png",nombreLogo="images/no_disponible.jpg",nombreFoto="images/no_disponible.jpg";
+						if(rs.getBytes("FOTO_ARCHIVO")!=null){
+							nombreFoto="temp/"+FileUtil.createTempFile(request, rs.getString("FOTO_NOMB"), 
+								FileUtil.deCompress(rs.getBytes("FOTO_ARCHIVO")));
+						}
+						usuario.getEmpresa().setFoto(nombreFoto);
+						if(rs.getBytes("LOGO_ARCHIVO")!=null){
+							nombreLogo="temp/"+FileUtil.createTempFile(request, rs.getString("LOGO_NOMB"), 
+								FileUtil.deCompress(rs.getBytes("LOGO_ARCHIVO")));
+						}
+						usuario.getEmpresa().setLogo(nombreLogo);
+						if(rs.getBytes("BANER_ARCHIVO")!=null){
+							nombreBanner="temp/"+FileUtil.createTempFile(request, rs.getString("BANER_NOMB"), 
+								FileUtil.deCompress(rs.getBytes("BANER_ARCHIVO")));
+						}
+						usuario.getEmpresa().setBanner(nombreBanner);
 					}
-					usuario.getEmpresa().setFoto(nombreFoto);
-					if(rs.getBytes("LOGO_ARCHIVO")!=null){
-						nombreLogo="temp/"+FileUtil.createTempFile(request, rs.getString("LOGO_NOMB"), 
-							FileUtil.deCompress(rs.getBytes("LOGO_ARCHIVO")));
-					}
-					usuario.getEmpresa().setLogo(nombreLogo);
-					if(rs.getBytes("BANER_ARCHIVO")!=null){
-						nombreBanner="temp/"+FileUtil.createTempFile(request, rs.getString("BANER_NOMB"), 
-							FileUtil.deCompress(rs.getBytes("BANER_ARCHIVO")));
-					}
-					usuario.getEmpresa().setBanner(nombreBanner);
 				}
 			}
 		} catch (SQLException | IOException | DataFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			rs.close();
-			stmt.close();
-			conn.close();
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return usuario;
 	}
 
-	public Rol getRol(HttpServletRequest request) {
+	/*public Rol getRol(HttpServletRequest request) {
 		Rol rol=null;
 		try {
 			if(authentication!=null&&authentication.isAuthenticated()){
@@ -117,7 +128,7 @@ public class UserSecurity {
 		}			
 		
 		return rol;
-	}
+	}*/
 
 	private List<Pagina> paginasByRol(String rolnombreV) {
 		List<Pagina> list=null;
