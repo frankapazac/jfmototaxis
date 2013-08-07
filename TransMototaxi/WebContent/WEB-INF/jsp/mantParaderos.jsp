@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
 	<script type="text/javascript" src="js/jefra.validate.js"></script >
 	<script type="text/javascript" src="js/jefra.message.js"></script >
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	<script type="text/javascript" src="js/jsp/mantParaderos.js"></script>
 <title>Insert title here</title>
 </head>
@@ -74,8 +75,10 @@
 						<td colspan="3"><textarea rows=4 cols="75" id="txtUbicacion" disabled="disabled"></textarea></td>
 					</tr>
 				</table>
-				<input type="button" value="Agregar" id="btnAgregar" class="ui-button"/>
-				<input type="button" value="Cancelar" id="btnCancelar" class="ui-button"/>
+				<center>
+					<input type="button" value="Agregar" id="btnAgregar" class="ui-button"/>
+					<input type="button" value="Cancelar" id="btnCancelar" class="ui-button"/>
+				</center>
 		  	</div>
 			<div id="tabs2">
 			</div>
@@ -99,10 +102,7 @@
 	</div>
 	
 	<h4 align="center">
-		<img id="btnNuevo" alt="Nuevo" src="images/new.png"/>
-		<a href="Reporte/Persona/DescargarPdf.jf">
-			<img alt="Imprimir" src="images/pdf.png">
-		</a>
+		<img id="btnNuevo" alt="Nuevo" src="images/Add.png"/>
 	</h4>
 	<div id="divMensaje"></div>
 </body>

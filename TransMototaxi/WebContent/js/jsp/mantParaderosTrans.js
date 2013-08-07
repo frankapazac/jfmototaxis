@@ -69,14 +69,9 @@ $(document).ready(function(){
     	$(".btnModificarParadero").click(modificar);
     	$(".btnEliminarParadero").click(eliminar);
 		
-    	paginacion();
+
+    	$("#tblListaParaderos").paginacionPager("#pager3");
     }
-	
-    function paginacion(){
-		$("#tblListaParaderos")//.tablesorter(); 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager3")}); 	
-	}
     
 	$("#divNuevoParadero").hide();
 	

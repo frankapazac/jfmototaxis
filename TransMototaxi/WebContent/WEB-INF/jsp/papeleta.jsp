@@ -28,6 +28,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
 	<script type="text/javascript" src="js/jefra.validate.js"></script >
 	<script type="text/javascript" src="js/jefra.message.js"></script >
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	<script type="text/javascript" src="js/jsp/papeleta.js"></script>
 	<title>Insert title here</title>
 	<style type="text/css">
@@ -274,7 +275,7 @@
 	</div>
 	
 	<h4 align="center">
-		<img id="btnNuevo" alt="Nuevo" src="images/Nuevo.png"/>
+		<img id="btnNuevo" alt="Nuevo" src="images/Add.png"/>
 	</h4>
 	
 	<div id="divFormulario">

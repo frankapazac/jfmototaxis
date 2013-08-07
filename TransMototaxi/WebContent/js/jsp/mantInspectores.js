@@ -1,6 +1,5 @@
 $(document).ready(function(){       
     $("#divFormulario").hide();
-    $("#divMensaje").hide();
     $("#tabs").tabs();
     $("#dtNacimiento").datepicker({dateFormat:"dd/mm/yy"});
     $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
@@ -117,7 +116,11 @@ $(document).ready(function(){
     	if(data!=""){
     		$(".error").remove();
     		//alert(JSON.stringify(data));
-    		$("#imgFotoInspector").attr("src","temp/"+data.foto.adjnombreV);
+    		if(data.foto.adjnombreV!=null){
+    			$("#imgFotoInspector").attr("src","temp/"+data.foto.adjnombreV);
+    		}else{
+    			$("#imgFotoInspector").attr("src","images/no_disponible.jpg");
+    		}
     		//$(".fileFotoAsociado").val("");
     		$("#txtCodigoInspector").val(data.inscodigoI);
     		$("#txtCodigoPersona").val(data.persona.percodigoD);
@@ -260,7 +263,7 @@ $(document).ready(function(){
 		
     	$(".btnModificar").click(modificar);
     	$(".btnEliminar").click(eliminar);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
     
     function modificar(){
@@ -377,10 +380,4 @@ $(document).ready(function(){
             $(this).ajaxSubmit(options);
             return false;
     });
-    
-    function paginacion(){
-		$("#tblLista")//.tablesorter(); 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
-	}
 });

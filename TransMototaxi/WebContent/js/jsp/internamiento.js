@@ -101,7 +101,7 @@ $(document).ready(function(){
     	$(".btnObtener").click(obtener);
     	$(".btnVer").click(ver);
     	$(".btnImprimir").click(printInternamiento);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
 	function printInternamiento(){
     	var codigo=$(this).attr("id").replace("imp","");
@@ -494,12 +494,5 @@ $(document).ready(function(){
 	        d.getFullYear();
 	    $("#txtFecha").text(today_date);
 	    $("#txtHora").text(hour+":"+minute);
-	}
-	
-    
-    function paginacion(){
-		$("#tblLista")//.tablesorter(); 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
 	}
 });

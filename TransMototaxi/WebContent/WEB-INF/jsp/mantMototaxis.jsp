@@ -11,7 +11,11 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.tabs.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	<script type="text/javascript" src="js/jsp/mantMototaxis.js"></script>
+	<style type="text/css">
+		.odd{ background-color: #C0EDB6;}
+	</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -72,8 +76,8 @@
 	    	<fieldset>
 	        	<legend>DATOS DEL PROPIETARIO</legend>     
 	        	<input type="hidden" id="txtcodigoMototaxi" value="0"/>        
-	        	<table align="center">
-	        			<tr>
+	        	<table align="center" width="900px">
+	        			<tr class="odd">
 							<td>Nombres:</td>
 							<!-- td><input type="text" id="txtNombresPropietario"/></td> -->
 							<td><label id="txtNombresPropietario"></label></td> 
@@ -86,7 +90,7 @@
 							<td colspan="3"><label id="txtdireccion" style="width: 580px"></label></td> 
 						</tr>
 						
-						<tr>
+						<tr class="odd">
 							<td>Distrito:</td>
 							<td><label id="txtDistrito"></label></td> 
 							<td>Teléfono:</td>
@@ -100,7 +104,7 @@
 							<td><label id="txtmovClaro"></label></td>
 						</tr>
 						
-						<tr>
+						<tr class="odd">
 							<td>Departamento:</td>
 							<td><label id="txtdepartamento"></label></td>
 							<td>Celular Nextel :</td>
@@ -121,8 +125,8 @@
 			<fieldset>
 	        	<legend>DATOS DEL MOTOTAXI</legend>     
 	        	<!--  input type="hidden" id="txtcodigoMototaxi" value="0"/>-->        
-	        	<table align="center">
-	        			<tr>
+	        	<table align="center" width="900px">
+	        			<tr class="odd">
 							<td>N° Placa:</td>
 							<td><label id="txtplaca"></label></td>
 							<td>N° Titulo:</td>
@@ -138,7 +142,7 @@
 							<td>Año:</td>
 							<td><label id="txtanno"></label></td>
 						</tr>						
-						<tr>
+						<tr class="odd">
 							<td>Color :</td>
 							<td><label id="txtcolor"></label></td>
 							<td>Combustible:</td>
@@ -156,7 +160,7 @@
 							<td><label id="txtcargautil"></label></td>
 						</tr>	
 			
-						<tr>
+						<tr class="odd">
 							<td>Longitud :</td>
 							<td><label id="txtlongitud"></label></td>
 							<td>Ancho :</td>

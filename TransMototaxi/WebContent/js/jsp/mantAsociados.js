@@ -171,7 +171,7 @@ $(document).ready(function(){
 		
     	$(".btnModificar").click(modificar);
     	$(".btnEliminar").click(eliminar);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
     
     function llenarComboProvincia(data){
@@ -384,10 +384,4 @@ $(document).ready(function(){
             $(this).ajaxSubmit(options);
             return false;
     });
-    		        
-    function paginacion(){
-		$("#tblLista")//.tablesorter(); 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
-	}
 });

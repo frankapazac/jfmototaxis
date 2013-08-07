@@ -13,6 +13,7 @@
 <script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="js/ui/jquery.ui.accordion.js"></script>
 <script type="text/javascript" src="js/jefra.message.js"></script >
+<script type="text/javascript" src="js/jefra.util.js"></script >
 <script type="text/javascript" src="js/jsp/configuracion.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
@@ -86,7 +87,7 @@
 			                </tr>
 			        		<tr> <!-- Fila -->
 			                		<td>RUC</td> <!-- columnas -->
-			                        <td><input type="text" id="txtruc" value="<c:out value="${emprepresentante.empProp.empresa.emptelefono2V}"/>" disabled="disabled"/></td>
+			                        <td><input type="text" id="txtruc" value="<c:out value="${emprepresentante.empProp.empresa.emprucV}"/>" disabled="disabled"/></td>
 			                </tr>
 			        		<tr> <!-- Fila -->
 			                		<td>Teléfono 01</td> <!-- columnas -->
@@ -142,7 +143,9 @@
 				  	</c:forEach>
 			  	</fieldset>
 			  </div>
-			  <input type="button" id="btnGuardar" value="Guardar" />
+			  <center>
+			  	<input type="button" id="btnGuardar" value="Guardar" />
+			  </center>
 			</div>
 		</div>
 		<h3>Cambio de clave</h3>

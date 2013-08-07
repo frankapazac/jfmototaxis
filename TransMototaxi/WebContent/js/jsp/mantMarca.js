@@ -64,17 +64,8 @@ $(document).ready(function(){
 
 		$(".btnModificarMarca").click(modificar);
     	$(".btnEliminarMarca").click(eliminar);
-    	paginacion();
-    }
-
-
-    function paginacion(){
-		$("#tblListaMarca") 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager8")}); 	
-	}
-    
-    
+    	$("#tblListaMarca").paginacionPager("#pager8");
+    }    
     //
     $("#divNuevaMarca").hide();
 	

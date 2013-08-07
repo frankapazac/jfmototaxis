@@ -22,6 +22,7 @@
 	<script type="text/javascript" src="js/jsp/mantModelo.js"></script>
 	<script type="text/javascript" src="js/jsp/mantMaestrosTransporte.js"></script>
 	<script type="text/javascript" src="js/jsp/mantTipoMedida.js"></script>
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	
 	<title>Insert title here</title>
 	<style type="text/css">
@@ -92,7 +93,7 @@
 			<div id="divMensaje"></div>
 				
 			<h4 align="center">
-				<img id="btnNuevaInfraccion" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevaInfraccion" alt="Nuevo" src="images/Add.png"/>
 			</h4>	
 			
 			<div id="divNuevoInfraccion">
@@ -212,7 +213,7 @@
 			<div id="divMensajeTipDoc"></div>
 				
 			<h4 align="center">
-				<img id="btnNuevoTipDoc" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevoTipDoc" alt="Nuevo" src="images/Add.png"/>
 			</h4>
 			
 			<div id="divNuevoTipDoc">
@@ -291,7 +292,7 @@
 			</div>
 			
 			<h4 align="center">
-				<img id="btnNuevoParadero" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevoParadero" alt="Nuevo" src="images/Add.png"/>
 			</h4>
 			
 			<div id="divNuevoParadero">
@@ -380,7 +381,7 @@
 					</div>
 					
 				<h4 align="center">
-				<img id="btnNuevoInventario" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevoInventario" alt="Nuevo" src="images/Add.png"/>
 				</h4>
 			
 				<div id="divNuevoInventario">
@@ -467,7 +468,7 @@
 				</div>
 				
 				<h4 align="center">
-				<img id="btnNuevaMedida" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevaMedida" alt="Nuevo" src="images/Add.png"/>
 				</h4>
 				
 				
@@ -546,7 +547,7 @@
 			</div>
 			
 			<h4 align="center">
-				<img id="btnNuevaZona" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevaZona" alt="Nuevo" src="images/Add.png"/>
 				</h4>
 				
 				
@@ -625,7 +626,7 @@
 			</div>
 			
 			<h4 align="center">
-				<img id="btnNuevaMarca" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevaMarca" alt="Nuevo" src="images/Add.png"/>
 				</h4>
 				
 				
@@ -702,7 +703,7 @@
 			</div>
 			
 			<h4 align="center">
-				<img id="btnNuevaModelo" alt="Nuevo" src="images/new.png"/>
+				<img id="btnNuevaModelo" alt="Nuevo" src="images/Add.png"/>
 			</h4>
 				
 				

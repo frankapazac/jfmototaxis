@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
 	<script type="text/javascript" src="js/jefra.validate.js"></script >
 	<script type="text/javascript" src="js/jefra.message.js"></script >
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	<script type="text/javascript" src="js/jsp/mantOperativos.js"></script>
 	<!-- http://trentrichardson.com/examples/timepicker/ -->
 <title>Insert title here</title>
@@ -86,7 +87,7 @@
 	<div id="divMensaje"></div>
 	
 	<h4 align="center">
-		<img id="btnNuevOperativo" alt="Nuevo" src="images/new.png"/>
+		<img id="btnNuevOperativo" alt="Nuevo" src="images/Add.png"/>
 	</h4>	
 	
 	<!-- AGREGAR OPERATIVO -->	
@@ -111,16 +112,16 @@
 						</tr>
 						<tr>
 							<td>Descripción:</td>
-							<td><input type="text" id="txtDescripcion" class="requiredAlpha"/></td>
+							<td><input type="text" id="txtDescripcion" class="required"/></td>
 						</tr>
 						<tr>
 							<td>Dirección:</td>
-							<td><input type="text" id="txtDireccion" class="requiredAlpha"/></td>
+							<td><input type="text" id="txtDireccion" class="required"/></td>
 						</tr>
 						
 						<tr>
 							<td>Referencia:</td>
-							<td><input type="text" id="txtReferencia" class="requiredAlpha"/></td>
+							<td><input type="text" id="txtReferencia" class="required"/></td>
 						</tr>
 						<tr>
 							<td>Fecha:</td>

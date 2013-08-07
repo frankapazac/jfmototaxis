@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
 	<script type="text/javascript" src="js/jefra.validate.js"></script >
 	<script type="text/javascript" src="js/jefra.message.js"></script >
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	<script type="text/javascript" src="js/jsp/mantConductores.js"></script>
 	<script type="text/javascript" src="js/jsp/mantConductoresAsignar.js"></script>
 <title>Insert title here</title>
@@ -120,10 +121,12 @@
 			<ul>
 			</ul>
 			<div id="tabs1">
-				<input type="hidden" id="txtCodigo"/>
-				<input type="button" value="Asignar Mototaxi" id="btnAsignar" class="ui-button"/>
-				<input type="button" value="Cese" id="btnCese" class="ui-button"/>
-				<input type="button" id="btnCancelarFormulario" value="Cancelar" class="ui-button"/>
+				<center>
+					<input type="hidden" id="txtCodigo"/>
+					<input type="button" value="Asignar Mototaxi" id="btnAsignar" class="ui-button"/>
+					<input type="button" value="Cese" id="btnCese" class="ui-button"/>
+					<input type="button" id="btnCancelarFormulario" value="Cancelar" class="ui-button"/>
+				</center>
 				<div id="divBuscar">
 				<table>
 					<tr>
@@ -281,16 +284,16 @@
 			        	<table align="center">
 								<tr>
 									<td>Nombres:</td>
-									<td><input type="text" id="txtNombres" class="requiredText"/></td>
+									<td><input type="text" id="txtNombres" class="requiredText" tabindex="1"/></td>
 									<td>Dirección:</td>
-									<td><input type="text" id="txtDireccion" class="requiredAlpha"/></td>
+									<td><input type="text" id="txtDireccion" class="requiredAlpha" tabindex="10"/></td>
 								</tr>
 								<tr>
 									<td>Paterno:</td>
-									<td><input type="text" id="txtPaterno" class="requiredText"/></td>
+									<td><input type="text" id="txtPaterno" class="requiredText" tabindex="2"/></td>
 									<td>Departamento:</td>
 									<td>
-										<select id="sltDepartamentos" class="requiredSelect">
+										<select id="sltDepartamentos" class="requiredSelect" tabindex="11">
 											<option value="" selected="selected">Seleccione</option>
 											<c:forEach items="${departamentos}" var="departamento">
 												<option value="${departamento.idubigeo}">
@@ -302,34 +305,34 @@
 								</tr>
 								<tr>
 									<td>Materno:</td>
-									<td><input type="text" id="txtMaterno" class="requiredText"/></td>
+									<td><input type="text" id="txtMaterno" class="requiredText" tabindex="3"/></td>
 									<td>Provincia:</td>
 									<td>
-										<select id="sltProvincia" class="requiredSelect">
+										<select id="sltProvincia" class="requiredSelect" tabindex="12">
 											<option value="" selected="selected">Seleccione</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
 									<td>DNI</td>
-									<td><input type="text" id="txtDni" class="requiredNumber"/></td>
+									<td><input type="text" id="txtDni" class="requiredNumber" tabindex="4"/></td>
 									<td>Distrito:</td>
 									<td>
-										<select id="sltDistrito" class="requiredSelect">
+										<select id="sltDistrito" class="requiredSelect" tabindex="13">
 											<option value="" selected="selected">Seleccione</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
 									<td>Correo:</td>
-									<td><input type="text" id="txtCorreo" class="requiredEmail"/></td>
+									<td><input type="text" id="txtCorreo" class="requiredEmail" tabindex="5"/></td>
 									<td>Telefono:</td>
-									<td><input type="text" id="txtTelefono" class="requiredPhone"/></td>
+									<td><input type="text" id="txtTelefono" class="requiredPhone" tabindex="14"/></td>
 								</tr>
 								<tr>
 									<td>Estado Civil</td>
 									<td>
-										<select id="sltEstadoCivil" class="requiredSelect">
+										<select id="sltEstadoCivil" class="requiredSelect" tabindex="6">
 											<option value="S" selected="selected">Soltero</option>
 											<option value="C">Casado</option>
 											<option value="T">Conviviente</option>
@@ -338,29 +341,29 @@
 										</select>
 									</td>
 									<td>Cel. Movistar:</td>
-									<td><input type="text" id="txtMovistar" class="required"/></td>
+									<td><input type="text" id="txtMovistar" class="required" tabindex="15"/></td>
 								</tr>
 								<tr>
 									<td>Sexo</td>
 									<td>
-										<select id="sltSexo" class="requiredSelect">
+										<select id="sltSexo" class="requiredSelect" tabindex="7">
 											<option value="" selected="selected">Seleccione</option>
 											<option value="M">Masculino</option>
 											<option value="F">Femenino</option>
 										</select>
 									</td>
 									<td>Cel. Claro:</td>
-									<td><input type="text" id="txtClaro" class="required"/></td>
+									<td><input type="text" id="txtClaro" class="required" tabindex="16"/></td>
 								</tr>
 								<tr>
 									<td>Fecha Nacimiento</td>
-									<td><input type="text" id="dtNacimiento" class="requiredDate"/></td>
+									<td><input type="text" id="dtNacimiento" class="requiredDate" tabindex="8"/></td>
 									<td>Cel. Nextel:</td>
-									<td><input type="text" id="txtNextel" class="required"/></td>
+									<td><input type="text" id="txtNextel" class="required" tabindex="17"/></td>
 								</tr>
 								<tr>
 									<td>Fecha Inicio:</td>
-									<td><input type="text" id="txtFechaInicio" class="requiredDate"/></td>
+									<td><input type="text" id="txtFechaInicio" class="requiredDate" tabindex="9"/></td>
 								</tr>						
 						</table>
 			        </fieldset>
@@ -371,8 +374,8 @@
 						<img alt="Foto" id="imgFotoConductor" src="images/no_disponible.jpg"/>
 						<br/>
 						<form action="#" method="POST" enctype="multipart/form-data" accept-charset="utf-8" class="formFotoConductor">
-							<input type="file" name="fileFotoConductor" class="fileFotoConductor"/>
-							<input type="submit" value="Enviar"/>
+							<input type="file" name="fileFotoConductor" class="fileFotoConductor" tabindex="18"/>
+							<input type="submit" value="Enviar" tabindex="19"/>
 						</form>
 						<div id="progressFoto"></div>
 					</fieldset>
@@ -412,13 +415,15 @@
 						</table>
 						<div id="progressArchivo"></div>
 					</fieldset>
-					
-					<input type="button" id="btnGuardarCond" class="ui-button" value="Guardar"/>
+					<center>
+						<input type="button" id="btnGuardarCond" class="ui-button" value="Guardar"/>
+						<input type="button" id="btnCancelarCond" class="ui-button" value="Cancelar"/>
+					</center>
 				</div>
 	    </div>
 	    
 		<h4 align="center">
-		<img id="btnNuevoConductor" alt="Nuevo" src="images/new.png"/>
+		<img id="btnNuevoConductor" alt="Nuevo" src="images/Add.png"/>
 		</h4>
 </body>
 </html>

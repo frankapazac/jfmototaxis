@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-	//LISTADO GENERAL
 	$("#divNuevoOperativo").hide();
     $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
     
@@ -97,21 +96,12 @@ $(document).ready(function(){
 
 		$(".btnModificar").click(modificar);
     	$(".btnEliminar").click(eliminar);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
-	
-    function paginacion(){
-		$("#tblLista") 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
-	}
     
     //FIN LISTADO GENERAL
     
     //MOSTRAR NUEVO OPERATIVO
-    
-	$("#divNuevoOperativo").hide();
-    $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
     
     $(function(){
     	$('#txtHora').timepicker();//$('#fechaNueva').datetimepicker(); esto sirve para mostrar la hora
@@ -139,7 +129,7 @@ $(document).ready(function(){
     	   	listarInpectorxOperativo(data.opecodigoD);
     	   	//alert("txtcodigoOperativo : " + $("#txtCodigoOperativo").val());
        	}else{
-       		$("#txtCodigoOperativo").val(0);
+       		$("#txtCodigoOperativo").val("0");
        		$("#txtNombreOperativo").val("");
           	$("#sltZona").val("");
           	$("#sltAgregaInspector").empty();
@@ -151,8 +141,8 @@ $(document).ready(function(){
           	$("#txtHoraFin").val("");
        	}   
     	
-    	$("#divNuevoInformeDiario").show();
-    	$("#divNuevoInformeDiario").dialog({
+    	$("#divNuevoOperativo").show();
+    	$("#divNuevoOperativo").dialog({
     		title:"Operativo",
     		width:800,
     		//height: 550,
@@ -313,7 +303,7 @@ $(document).ready(function(){
     
     //OBTENER Y ACTUALIZAR DATOS PARA OPERATIVOS 
    function modificar(){ //para que funciones agregamos dentro de  llenarTabla(data) esto $(".btnModificar").click(modificar);
-	   	$.ajax({ 
+	   $.ajax({ 
 			data:{
 				codigo:$(this).attr("id").replace("mod","")
 			},
@@ -321,6 +311,7 @@ $(document).ready(function(){
 	        type: "GET", 
 	        url: "Operativos/Obtener.htm", 
 	        success: function(data){
+	        	//alert(JSON.stringify(data));
 	        	llenarFormulario(data);
 	        },error: function(jqXHR, textStatus, errorThrown){
 	        	$.message.Delete();

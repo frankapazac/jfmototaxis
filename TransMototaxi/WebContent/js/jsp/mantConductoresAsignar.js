@@ -14,14 +14,13 @@ $(document).ready(function(){
             type: "POST", 
             url: "PropUnidadEmpresa/Asignar.htm", 
             success: function(data){
-            	mensaje(data);
-            	//AGREGAR ACEPTADO
+            	$.message.Success();
+            	$("#divAsignarMototaxi").dialog('close');
             },error: function(jqXHR, textStatus, errorThrown){
             	mensajeError();
             }
     	});
-    	$("#divFormularioCese").dialog("close");
-    	buscarMototaxis($("#sltCriterioAsignado").val(),$("#txtTextoAsignado").val(),codigoConductor);
+    	//$("#divFormularioCese").dialog("close");
 	}
 	
 	function fncAsignarMotosCancelar(){
@@ -80,6 +79,7 @@ $(document).ready(function(){
     		asocodigo=$(this).attr("id").replace("prop_","");
     		fncPropietarioCambio('UNE.UNEPLACANRO_V', '', asocodigo);
     	});
+    	$("#tblListaAsociados").paginacion();
 	}
 	
 	function fncPropietarioCambio(criterio,texto,asocodigoD){

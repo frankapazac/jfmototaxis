@@ -22,6 +22,10 @@ $(document).ready(function(){
 		$("#divFormulario").dialog("close");
 	});
 	
+	$("#btnCancelarCond").click(function(){
+		$("#divNuevoCond").dialog("close");
+	});
+	
 	$("#btnAsignar").click(function(){
 		$("#divAsignarMototaxi").show();
 		$("#divAsignarMototaxi").dialog({
@@ -76,7 +80,6 @@ $(document).ready(function(){
 		$("#divFormulario").dialog({
     		title:"Conductores Mototaxis",
     		width:1100,
-    		height: 500,
     		modal: true
 		});
     });
@@ -107,19 +110,6 @@ $(document).ready(function(){
     		modal: true
     	});
     });
-    
-    function paginacionMotosAsignadas(){
-		$("#tblListaMotosAsignadas")
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pagerMotosAsignadas")}); 	
-	}
-    
-    function paginacion(){
-		$("#tblLista")
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
-	}
-    
         
 	function buscar(criterio,texto){
 		$.ajax({ 
@@ -186,7 +176,7 @@ $(document).ready(function(){
     	$(".trConductor").click(obtenerCodigoConductor);
     	$(".btnModificar").click(modificar);
     	$(".btnEliminar").click(eliminar);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
 	
     function modificar(){
@@ -283,7 +273,7 @@ $(document).ready(function(){
     		$("#tblListaMotosAsignadas tbody").append(txtHtml);
     	}
     	$(".trcodUndConductor").click(obtenerCodigoUnidadConductor);//nombre función
-    	paginacionMotosAsignadas();
+    	$("#tblListaMotosAsignadas").paginacionPager("#pagerMotosAsignadas");
     	//paginacion();
     	
     	/*$("#txttal").click(function(){

@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.tabs.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.dialog.js"></script>
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	<script type="text/javascript" src="js/jsp/mantParaderosTrans.js"></script>
 <title>Insert title here</title>
 </head>

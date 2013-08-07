@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.menu.js"></script>
+	<script type="text/javascript" src="js/jefra.util.js"></script >
 	<script type="text/javascript" src="js/jsp/mantMaestrosEmpresa.js"></script>
 	<title>Insert title here</title>
 	<style type="text/css">

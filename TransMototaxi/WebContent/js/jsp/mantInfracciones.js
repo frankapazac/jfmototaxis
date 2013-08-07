@@ -76,14 +76,8 @@ $(document).ready(function(){
 
 		$(".btnModificar").click(modificar);
     	$(".btnEliminar").click(eliminar);
-    	paginacion();
+    	$("#tblLista").paginacion();
     }
-	
-    function paginacion(){
-		$("#tblLista") 
-        .tablesorter({widthFixed: true, widgets: ['zebra']}) 
-        .tablesorterPager({container: $("#pager")}); 	
-	}
     
     $("#divNuevoInfraccion").hide();
     
