@@ -1,10 +1,8 @@
 package com.munichosica.myapp.dto;
 
-import java.util.Date;
-
 public class MotEmpresa {
 	protected Long empcodigoD;
-	protected Integer zoncodigoI;
+	protected MotZona zona;
 	protected String emprazonsocialV;
 	protected String empdireccionV;
 	protected String emprucV;
@@ -15,11 +13,12 @@ public class MotEmpresa {
 	protected String empcelularnexV;
 	protected String empmailV;
 	protected String emppagwebV;
-	protected Date empfechainioperacionF;
-	protected Date empfechaceseoperacionF;
+	protected String empfechainioperacionF;
+	protected String empfechaceseoperacionF;
 	protected String empresolucionV;
 	protected Integer empunidadesautorizadasI;
 	protected String empescriturapublicaV;
+	protected String empestadoC;
 	
 	protected MotUbigeo distrito;
 	protected MotUbigeo departamento;
@@ -29,11 +28,18 @@ public class MotEmpresa {
 	protected String banner;
 	
 	public MotEmpresa() {
+		zona=new MotZona();
 		distrito=new MotUbigeo();
 		departamento=new MotUbigeo();
 		provincia=new MotUbigeo();
 	}
 	
+	public void setEmpestadoC(String empestadoC) {
+		this.empestadoC = empestadoC;
+	}
+	public String getEmpestadoC() {
+		return empestadoC;
+	}
 	public String getFoto() {
 		return foto;
 	}
@@ -89,11 +95,11 @@ public class MotEmpresa {
 	public void setEmpcodigoD(Long empcodigoD) {
 		this.empcodigoD = empcodigoD;
 	}
-	public Integer getZoncodigoI() {
-		return zoncodigoI;
+	public void setZona(MotZona zona) {
+		this.zona = zona;
 	}
-	public void setZoncodigoI(Integer zoncodigoI) {
-		this.zoncodigoI = zoncodigoI;
+	public MotZona getZona() {
+		return zona;
 	}
 	public String getEmprazonsocialV() {
 		return emprazonsocialV;
@@ -134,6 +140,10 @@ public class MotEmpresa {
 	public String getEmpcelularnexV() {
 		return empcelularnexV;
 	}
+	public String getEmpfechainioperacionF() {
+		return empfechainioperacionF;
+	}
+
 	public void setEmpcelularnexV(String empcelularnexV) {
 		this.empcelularnexV = empcelularnexV;
 	}
@@ -148,19 +158,19 @@ public class MotEmpresa {
 	}
 	public void setEmppagwebV(String emppagwebV) {
 		this.emppagwebV = emppagwebV;
-	}
-	public Date getEmpfechainioperacionF() {
-		return empfechainioperacionF;
-	}
-	public void setEmpfechainioperacionF(Date empfechainioperacionF) {
-		this.empfechainioperacionF = empfechainioperacionF;
-	}
-	public Date getEmpfechaceseoperacionF() {
+	}	
+	public String getEmpfechaceseoperacionF() {
 		return empfechaceseoperacionF;
 	}
-	public void setEmpfechaceseoperacionF(Date empfechaceseoperacionF) {
+
+	public void setEmpfechaceseoperacionF(String empfechaceseoperacionF) {
 		this.empfechaceseoperacionF = empfechaceseoperacionF;
 	}
+
+	public void setEmpfechainioperacionF(String empfechainioperacionF) {
+		this.empfechainioperacionF = empfechainioperacionF;
+	}
+
 	public String getEmpresolucionV() {
 		return empresolucionV;
 	}
