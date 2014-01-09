@@ -247,9 +247,10 @@
 					</table>
 					<div id="progressArchivo"></div>
 				</fieldset>
-				
-				<input type="button" value="Guardar" id="btnProcesar" class="ui-button" tabindex="18"/>
-				<input type="button" value="Cancelar" id="btnCancelar" class="ui-button" tabindex="19"/>
+				<center>
+					<input type="button" value="Guardar" id="btnProcesar" class="ui-button" tabindex="18"/>
+					<input type="button" value="Cancelar" id="btnCancelar" class="ui-button" tabindex="19"/>
+				</center>
 			</div>
 	</div>
 </body>

@@ -10,6 +10,9 @@
 	.horizontal-nav {
 	    background: #efefef;
 	    border-radius: 6px;
+	    /*FRANK APAZA*/
+	    width: 1158px;
+		float: left;
 	}
 	.horizontal-nav ul {
 	    background: #608A12;
@@ -64,12 +67,5 @@
 			<li><a href="<c:out value="${pagina.pagurlV}"/>"><c:out value="${pagina.pagnombreV}"/></a></li>
 		</c:forEach>
 		<li><a href="<c:url value="j_spring_security_logout"/>" class="lnkSalir" >SALIR</a></li>
-        <!-- li><a href="Inicio.htm">INICIO</a></li>
-        <li><a href="Asociados.htm">ASOCIADOS</a></li>
-        <li><a href="Conductores.htm">CONDUCTORES</a></li>
-        <li><a href="Mototaxis.htm">MOTOTAXIS</a></li>
-        <li><a href="Paraderos.htm">PARADEROS</a></li>
-	    <li><a href="Documentacion.htm">DOCUMENTACION</a></li>
-	    <li><a href="Configuracion.htm">CONFIGURACION</a></li> -->
     </ul>
 </nav>

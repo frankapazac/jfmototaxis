@@ -34,6 +34,7 @@
 	</style>
 </head>
 <body>
+	<h1>Maestros</h1>
 	<div id="tabs" class="tabs-bottom">
 		<ul>
 			<li><a href="#tabs-1">INFRACCIONES</a></li>
@@ -148,7 +149,7 @@
 								<tr>	
 									<td>
 										<select multiple="multiple" id="sltMedidas"	style="width: 100%">
-							  			    <c:forEach var="tipoMedida" items="${tipoMedida}">
+							  			    <c:forEach var="tipoMedida" items="${tipoMedidas}">
 							  					<option value="${tipoMedida.tmecodigoI}"><c:out value="${tipoMedida.tmedescripcionV}"/></option>
 							  				</c:forEach>
 										</select>

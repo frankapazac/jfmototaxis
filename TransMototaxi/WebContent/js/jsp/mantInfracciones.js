@@ -275,7 +275,7 @@ $(document).ready(function(){
     });
     
     $('#btnLeft').click(function(e){
-    	alert($("#txtCodigoInfraccion").val());
+    	//alert($("#txtCodigoInfraccion").val());
     	
     	var selectedOpts = $('#sltAgregaMedidas option:selected');
     	if(selectedOpts.length == 0){
@@ -291,7 +291,7 @@ $(document).ready(function(){
     		},
            datatype:'json',
            type: "POST", 
-           url: "Infracciones/ActualizarEstadoInFMedida",
+           url: "Infracciones/ActualizarEstadoInFMedida.htm",
            success: function(data){
 				mensaje(data);
            },error: function(jqXHR, textStatus, errorThrown){
@@ -305,6 +305,7 @@ $(document).ready(function(){
     });
     
     function listarMedidaxInfraccion(codigo){
+    	//alert(codigo);
     	$.ajax({ 
     		data:{
     			codigo:codigo
@@ -337,7 +338,7 @@ $(document).ready(function(){
 			$.each(sel, function(key,value){
 				if(data[x].tipoMedida.tmecodigoI==value){
 					$("#sltMedidas").find("option[value='"+data[x].tipoMedida.tmecodigoI+"']").remove();
-					alert("option[value='"+data[x].tipoMedida.tmecodigoI+"']");
+					//alert("option[value='"+data[x].tipoMedida.tmecodigoI+"']");FRANK
 				}
 	        });
 		}

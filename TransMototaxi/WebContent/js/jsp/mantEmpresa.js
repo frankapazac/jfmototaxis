@@ -14,8 +14,10 @@ $(document).ready(function(){
     $("#sltProvincia").mouseup(provincia);
     $("#btnProcesar").click(procesar);
 	$("#btnUsuario").click(obtenerEmpresa);
+	$("#btnImprimirEmpresasUsuarios").click(imprimirEmpresasUsuarios);
     /**/
 	$("#btnRepProcesar").click(procesarUsuario);
+	$("#btnRepImprimir").click(imprimirUsuario);
 	$("#sltRepDepartamentos").change(rep_departamento);
     $("#sltRepProvincia").mouseup(rep_provincia);
 	/**/
@@ -89,6 +91,16 @@ $(document).ready(function(){
     	});
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	function imprimirUsuario(){
+		//var codigo=$("#txtRepCodigoUsuario").val();
+    	window.open("Empresas/ImprimirSobreUsuario.htm?codigo="+codigoEmpresa);
+	}
+	
+	function imprimirEmpresasUsuarios(){
+		window.open("Empresas/ImprimirEmpresasUsuarios.htm");
+	}
+	
 	function procesarUsuario(){
 		$("#divUsuario").validate();
 		$.ajax({
@@ -144,10 +156,10 @@ $(document).ready(function(){
 			+"<th class='header'>UNIDADES</th>"
 			+"<th class='header'>INICIO</th>"
 			+"<th class='header'>CESE</th>"
-			+"<th class='header'>ESTADO</th>"
-			+"<th class='header'>USUARIO</th>"
-			+"<th class='header'>EDITAR</th>"
-			+"<th class='header'>ELIMINAR</th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
 			+"</thead>"
 			+"<tfoot>"
 			+"<th>N°</th>"
@@ -159,10 +171,10 @@ $(document).ready(function(){
 			+"<th>UNIDADES</th>"
 			+"<th>INICIO</th>"
 			+"<th>CESE</th>"
-			+"<th>ESTADO</th>"
-			+"<th>USUARIO</th>"
-			+"<th>EDITAR</th>"
-			+"<th>ELIMINAR</th>"
+			+"<th></th>"
+			+"<th></th>"
+			+"<th></th>"
+			+"<th></th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
 			$("#tblLista").append(txtHtml);
@@ -204,6 +216,7 @@ $(document).ready(function(){
         		if(data!=""){
             		$("#txtRepCodigoUsuario").val(data.usucodigoI);
             		$("#txtRepUsuario").val(data.usuusuarioV);
+            		//$("#txtRepClave").val($.trim(data.pass).length<1?'123456':data.pass);
             		$("#txtRepClave").val(data.pass);
             		$("#txtRepCodigo").val(data.persona.percodigoD);
             		$("#txtRepDni").val(data.persona.perdniV);
@@ -228,7 +241,7 @@ $(document).ready(function(){
             		$("#txtRepCodigoUsuario").val("0");
             		$("#txtRepCodigo").val("0");
             		$("#txtRepUsuario").val("");
-            		$("#txtRepClave").val("");
+            		$("#txtRepClave").val("123456");
             		$("#txtRepDni").val("");
             		$("#txtRepNombres").val("");
             		$("#txtRepPaterno").val("");

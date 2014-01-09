@@ -190,10 +190,10 @@ $(document).ready(function(){
 	function llenarDatosMototaxi(data){
     	$("#tabs2").validateClean();
 		if(data!=""){
-			$("input[name='txtCodArchivo']").val("0");
-			$("input[name='txtNumDocumento']").val("");
-			$("input[name='txtFechaEmision']").val("");
-			$("input[name='txtFechaCaducidad']").val("");
+			$("divVehiculoArchivos input[name='txtCodArchivo']").val("0");
+			$("divVehiculoArchivos input[name='txtNumDocumento']").val("");
+			$("divVehiculoArchivos input[name='txtFechaEmision']").val("");
+			$("divVehiculoArchivos input[name='txtFechaCaducidad']").val("");
 			
 			$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
     		$("#txtCodigoVehiculo").val(data.unidadEmpresa.unecodigoD);
@@ -233,10 +233,10 @@ $(document).ready(function(){
 			}
 			$("#btnVehiculoProcesar").val("Modificar");
 		}else{
-			$("input[name='txtCodArchivo']").val("0");
-			$("input[name='txtNumDocumento']").val("");
-			$("input[name='txtFechaEmision']").val("");
-			$("input[name='txtFechaCaducidad']").val("");
+			$("divVehiculoArchivos input[name='txtCodArchivo']").val("0");
+			$("divVehiculoArchivos input[name='txtNumDocumento']").val("");
+			$("divVehiculoArchivos input[name='txtFechaEmision']").val("");
+			$("divVehiculoArchivos input[name='txtFechaCaducidad']").val("");
 			
 			$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
 			$("#txtCodigoVehiculo").val("");
