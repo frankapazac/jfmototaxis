@@ -96,7 +96,9 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 					unidad.setUnetituloV(rs.getString("TITULO"));
 					unidad.setUneclaseV(rs.getString("CLASE"));
 					unidad.getMarca().setMarcodigoI(rs.getInt("MARCA"));
+					unidad.getMarca().setMarnombreV(rs.getString("MARCA_NOMBRE"));
 					unidad.getModelo().setModcodigo_D(rs.getInt("MODELO"));
+					unidad.getModelo().setModnombre_V(rs.getString("MODELO_NOMBRE"));
 					unidad.setUneannoC(rs.getString("ANNO"));
 					unidad.setUnecolorV(rs.getString("COLOR"));
 					unidad.setUnecombustibleC(rs.getString("COMBUSTIBLE"));
@@ -111,6 +113,7 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 					unidad.setUnelongitudD(rs.getBigDecimal("LONGITUD"));
 					unidad.setUneanchoD(rs.getBigDecimal("ANCHO"));
 					unidad.setUnealtoD(rs.getBigDecimal("ALTO"));
+					unidad.getAsociado().setAsocodigoD(rs.getLong("ASOCIADO"));
 				}
 			}
 		} catch (SQLException e) {

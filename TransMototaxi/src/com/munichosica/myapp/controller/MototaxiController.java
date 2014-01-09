@@ -17,19 +17,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.dto.MotEmpadronamiento;
+import com.munichosica.myapp.dto.MotEmprAsociado;
 import com.munichosica.myapp.dto.MotOperFiscalizador;
+import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.RepPapeleta;
 import com.munichosica.myapp.dto.MotUnidDocumento;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
+import com.munichosica.myapp.exceptions.MotEmprAsociadoDaoException;
 import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.exceptions.ReportsDaoException;
 import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.factory.MotEmpadronamientoDaoFactory;
+import com.munichosica.myapp.factory.MotEmprAsociadoDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotUnidDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
@@ -87,6 +91,18 @@ protected final Logger logger=Logger.getLogger(MototaxiController.class);
 			logger.error(e.getMessage());
 		}
 		return mototaxi;
+	}
+	
+	@RequestMapping(value="ObtenerUnidad.htm", method=RequestMethod.GET)
+	public @ResponseBody MotUnidadEmpresa obtenerUnidad(HttpServletRequest request,@RequestParam("codigo") Long codigo){
+		MotUnidadEmpresa unidadEmpresa=null;
+		try {
+			unidadEmpresa=MotUnidadEmpresaDaoFactory.create().findByPrimaryKey(codigo);
+			unidadEmpresa.setAsociado(MotEmprAsociadoDaoFactory.create().findByPrimaryKey(unidadEmpresa.getAsociado().getAsocodigoD()));
+		} catch (MotUnidadEmpresaDaoException | MotEmprAsociadoDaoException e) {
+			logger.error(e.getMessage());
+		}
+		return unidadEmpresa;
 	}
 	
 	@RequestMapping(value="ObtenerInforme.htm", method=RequestMethod.GET)

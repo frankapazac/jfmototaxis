@@ -51,14 +51,10 @@ public class InfraccionController {
 		return list;
 	}
 	
-	
-
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
 	public @ResponseBody String procesar
-	(HttpServletRequest request , @RequestBody MotTipoMedidasList tipoMedidasList){
-		
+	(HttpServletRequest request , @RequestBody MotTipoMedidasList tipoMedidasList){		
 		logger.info("Ingreso a GuardarInfracciones/Procesar.htm");
-
 		try {
 			MotInfraccionDaoFactory.create().procesar(tipoMedidasList.getInfraccion());
 			for(MotTipoMedida tipoMedida:tipoMedidasList.getTipoMedidas()){	
@@ -70,10 +66,8 @@ public class InfraccionController {
 		} catch (MotInfrMedidaDaoException | MotInfraccionDaoException e) {
 			logger.error(e.getMessage());
 		}
-			
 		return "Success";
 	}
-	
 	
 	/*
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
