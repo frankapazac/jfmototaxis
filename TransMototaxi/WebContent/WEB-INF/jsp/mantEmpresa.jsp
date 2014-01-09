@@ -72,6 +72,7 @@
 	
 	<h4 align="center">
 		<img id="btnNuevo" alt="Nuevo" src="images/Add.png"/>
+		<img id="btnImprimirEmpresasUsuarios" alt="PDF" src="images/acroread.png"/>
 	</h4>
 	
 	<div id="divFormulario">
@@ -265,6 +266,7 @@
 		<center>
 			<input type="button" value="Guardar" id="btnRepProcesar" class="ui-button" tabindex="19"/>
 			<input type="button" value="Cancelar" id="btnRepCancelar" class="ui-button" tabindex="20"/>
+			<input type="button" value="Imprimir" id="btnRepImprimir" class="ui-button" tabindex="20"/>
 		</center>
 	</div>
 </body>

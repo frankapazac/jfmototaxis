@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 	#imgBanner{
-		width: 800px; 
+		width: 950px; 
 		height: 90px;
 		padding: 5px;
 	}

@@ -74,12 +74,24 @@
 		.imgFotosVehiculo{
 			height: 160px;
 		}
+		.txtCons{
+			width: 100px;
+		}
+		.txtConsNumero{
+			font-size: 30px !important;
+			height: 50px;
+			width: 150px;
+		}
+		.txtConsCodigo{
+			font-size: 15px !important;
+			width: 150px;
+		}
 	</style>
 	
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Asociados</h1>
+	<h1>AFILIADOS</h1>
 	<div id="divBuscar">
 		<table>
 			<tr>
@@ -388,7 +400,7 @@
 									<td>N° Documento</td>
 									<td>Fec. Emision</td>
 									<td>Fec. Caducidad</td>
-									<td>Porcentaje: <input type="text" id="txtCargandoUnidad" size="4"/>%</td>
+									<td></td>
 								</tr>
 					            <c:forEach var="docunidad" items="${documentosUnidad}" varStatus="status">
 									<form:form action="#" method="POST" enctype="multipart/form-data" acceptCharset="utf-8" cssClass="formDocumentoUnidad">
@@ -481,7 +493,96 @@
 	<h4 align="center">
 		<img id="btnNuevo" alt="Nuevo" src="images/Add.png"/>
 	</h4>
-	<div id="divMensaje"></div>
 	
+	<div id="divConstancia" align="center">
+		<fieldset>
+			<legend>Datos del Mototaxi</legend>
+			<table>
+				<tr>
+					<td>Seleccione Mototaxi</td>
+					<td>
+						<select id="sltMototaxi">
+							<option value="">Seleccione</option>
+						</select>
+					</td>
+					<td>Seleccione Conductor</td>
+					<td>
+						<select id="sltConductor">
+							<option value="">Seleccione</option>
+							<c:forEach items="${conductores}" var="conductor">
+								<option value="${conductor.ecocodigoD}">
+									<c:out value="${conductor.conductor.persona.pernombresV}"/> <c:out value="${conductor.conductor.persona.perpaternoV}"/> <c:out value="${conductor.conductor.persona.permaternoV}"/>
+								</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset style="background-color: #f0f0f0;">
+			<legend>Datos de la Constancia</legend>
+			<div id="divConstanciaPrincipal">
+				<div style="width: 60%;float: left;">
+					<h3><c:out value="${USUARIO.empresa.emprazonsocialV}"/></h3>
+					<table>
+						<tr>
+							<td>TOMO:</td>
+							<td><input type="text" class="txtCons" id="txtConsTomo"/></td>
+							<td>ASIENTO:</td>
+							<td><input type="text" class="txtCons" id="txtConsAsiento"/></td>
+							<td>FICHA:</td>
+							<td><input type="text" class="txtCons" id="txtConsFicha"/></td>
+						</tr>
+						<tr>
+							<td>RUC:</td>
+							<td><input type="text" class="txtCons" id="txtConsRuc" value="<c:out value="${USUARIO.empresa.emprucV}"/>"/></td>
+							<td>TELF:</td>
+							<td><input type="text" class="txtCons" id="txtConsTelefono"/></td>
+							<td>CEL:</td>
+							<td><input type="text" class="txtCons" id="txtConsCelular"/></td>
+						</tr>
+						<tr>
+							<td colspan="6"><c:out value="${USUARIO.empresa.empdireccionV}"/></td>
+						</tr>
+						<tr>
+							<td colspan="6">LURIGANCHO - CHOSICA</td>
+						</tr>
+					</table>
+				</div>
+				<div style="width: 35%; height:100%; float: left; background-color: #C0EDB6; padding: 20px">
+					<table>
+						<tr>
+							<td>N°</td>
+							<td><input type="text" class="txtConsNumero"/></td>
+						</tr>
+						<tr>
+							<td>Código:</td>
+							<td><input type="text" class="txtConsCodigo"/></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<h3>El Gerente General de la Empresa, el que suscribe, otorga la</h3>
+			<h1>CONSTANCIA DE AFILIACIÓN</h1>
+			<h2>A don(ña): <label id="txtConsPropietario">Propietario del Vehiculo</label> DNI: <label id="txtConsPropietarioDni">DNI</label></h2>
+			<p>Propietario del Vehiculo Menor con Placa de Rodaje: <label id="txtConsPlaca">Placa</label>, Marca <label id="txtConsMarca">Marca</label>, 
+			Motor: <label id="txtConsMotor">Motor</label>, Serie: <label id="txtConsSerie">Serie</label>, Color: <label id="txtConsColor">Color</label>, 
+			Modelo: <label id="txtConsModelo">Modelo</label>, Año de Fabricación: <label id="txtConsAno">Ano</label>, 
+			Combustible: <label id="txtConsCombustible">Combustible</label>, Pasajeros: <label id="txtConsPasajeros">Pasajeros</label>, 
+			CAT: <label id="txtConsCAT">CAT</label> con periodo de vigencia: <label id="txtConsCATInicio">CAT Inicio</label> hasta 
+			<label id="txtConsCATFin">CAT Fin</label>. CHOFER: <label id="txtConsChofer">Chofer</label>, DNI: <label id="txtConsChoferDNI">DNI</label>, 
+			Licencia de Conducir: <label id="txtConsLicencia">Licencia</label>, Fecha de Revalidación: <label id="txtConsFecha">Fecha</label>, 
+			domiciliado en <label id="txtConsDomicilio">Domicilio</label></p>
+			<center>
+				<input type="button" value="Guardar" id="btnGuardarConstancia" class="ui-button" tabindex="20"/>
+				<input type="button" value="Imprimir" id="btnImprimirConstancia" class="ui-button" tabindex="20"/>
+				<input type="button" value="Cancelar" id="btnCancelarConstancia" class="ui-button" tabindex="20"/>
+			</center>
+		</fieldset>
+	</div>
+	
+	<div id="divMensaje"></div>
 </body>
 </html>

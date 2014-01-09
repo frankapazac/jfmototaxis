@@ -152,7 +152,7 @@
 		var filter=null;
 		switch(tipo){
 			case 'texto': filter = /^[a-zA-Z áéíóúÁÉÍÓÚÑñ]+$/; break;
-			case 'alfanumerico': filter = /^[a-zA-Z0-9 áéíóúÁÉÍÓÚÑñ]+$/; break;
+			case 'alfanumerico': filter = /^[a-zA-Z0-9-_ áéíóúÁÉÍÓÚÑñ]+$/; break;
 			case 'enteros': filter = /^(?:\+|-)?\d+$/; break;
 			case 'decimales': filter= /^-?[0-9]+([,\.][0-9]*)?$/; break;
 			case 'telefono': filter = /^[0-9]{2,3}-? ?[0-9]{4,7}$/; break;

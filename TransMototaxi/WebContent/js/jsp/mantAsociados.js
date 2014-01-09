@@ -1,6 +1,7 @@
 $(document).ready(function(){       
     $("#divFormulario").hide();
     $("#divMensaje").hide();
+    $("#divConstancia").hide();
     $("#tabs").tabs();
     $("#dtNacimiento").datepicker({dateFormat:"dd/mm/yy"});
     $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
@@ -133,9 +134,10 @@ $(document).ready(function(){
 			+"<th class='header'>NACIMIENTO</th>"
 			+"<th class='header'>FIJO</th>"
 			+"<th class='header'>CORREO</th>"
-			+"<th class='header'>ESTADO</th>"
-			+"<th class='header'>MODIFICAR</th>"
-			+"<th class='header'>ELIMINAR</th>"
+			//+"<th class='header'></th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
 			+"</thead>"
 			+"<tfoot>"
 			+"<th>NUM</th>"
@@ -146,9 +148,10 @@ $(document).ready(function(){
 			+"<th>NACIMIENTO</th>"
 			+"<th>FIJO</th>"
 			+"<th>CORREO</th>"
-			+"<th>ESTADO</th>"
-			+"<th>MODIFICAR</th>"
-			+"<th>ELIMINAR</th>"
+			//+"<th></th>"
+			+"<th></th>"
+			+"<th></th>"
+			+"<th></th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
 			$("#tblLista").append(txtHtml);
@@ -163,12 +166,13 @@ $(document).ready(function(){
 			"<td>"+data[x].persona.perteleffijoV+"</td>"+
 			"<td>"+data[x].persona.peremailV+"</td>"+
 			"<td>"+data[x].asoestadoC+"</td>"+
+			//"<td><img alt='Constancia de Afiliación' class='btnConstancia' id='con"+data[x].asocodigoD+"' src='images/run_skip.png'></td>"+
 			"<td><img alt='Modificar' class='btnModificar' id='mod"+data[x].asocodigoD+"' src='images/edit.png'></td>"+
 			"<td><img alt='Eliminar' class='btnEliminar' id='del"+data[x].asocodigoD+"' src='images/delete.png'></td>"+
     				"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
-		
+    	//$(".btnConstancia").click(constancia);
     	$(".btnModificar").click(modificar);
     	$(".btnEliminar").click(eliminar);
     	$("#tblLista").paginacion();
@@ -267,9 +271,37 @@ $(document).ready(function(){
     	$("#divFormulario").dialog({
     		title:"Asociados",
     		width:1100,
-    		//height: 600,
+    		height: 600,
     		modal: true
     	});
+    }
+    
+    function constancia(){
+    	$.ajax({ 
+    		data:{
+    			codigo:$(this).attr("id").replace("con","")    	
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "UnidadEmpresa/ListarPorAsociado.htm", 
+            success: function(data){
+            	var htmlText="<option value=''>-Seleccione-</option>";
+            	for(var x=0;x<data.length;x++){
+            		htmlText+="<option value='"+data[x].unidadempresa.unecodigoD+"'>"+data[x].unidadempresa.uneplacanroV+"</option>";
+            	}
+            	$("#sltMototaxi").html(htmlText);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+    	
+    	
+    	$("#divConstancia").dialog({
+    		title:"Asociados",
+    		width:900,
+    		modal: true
+    	});
+    	
     }
     
     function modificar(){
@@ -384,4 +416,43 @@ $(document).ready(function(){
             $(this).ajaxSubmit(options);
             return false;
     });
+    
+    //CODIGO DE LA CONSTANCIA
+    $("#sltMototaxi").change(seleccionarMototaxi);
+    
+    function seleccionarMototaxi(){
+    	if($(this).val()!=null&&$(this).val()>0){
+    		$.ajax({ 
+        		data:{
+        			codigo:$(this).val()
+        		},
+                datatype:'json',
+                type: "GET", 
+                url: "Mototaxi/ObtenerUnidad.htm", 
+                success: function(data){
+                	alert(JSON.stringify(data));
+                	$("#txtConsPlaca").text(data.uneplacanroV);
+                	$("#txtConsMarca").text(data.marca.marnombreV);
+                	$("#txtConsMotor").text(data.unenromotorV);
+                	$("#txtConsSerie").text(data.unenroseriechasisV);
+                	$("#txtConsColor").text(data.unenroseriechasisV);
+                	$("#txtConsModelo").text(data.modelo.modnombre_V);
+                	$("#txtConsAno").text(data.uneannoC);
+                	$("#txtConsCombustible").text((data.unecombustibleC=='G')?'Gasolina':(data.unecombustibleC=='P')?'Petroleo':'');
+                	$("#txtConsPasajeros").text(data.unenropasajerosI);
+                	/*$("#txtConsCAT").text(data.unenroseriechasisV);
+                	$("#txtConsCATInicio").text(data.unenroseriechasisV);
+                	$("#txtConsCATFin").text(data.unenroseriechasisV);
+                	$("#txtConsChofer").text(data.unenroseriechasisV);
+                	$("#txtConsChoferDNI").text(data.unenroseriechasisV);
+                	$("#txtConsLicencia").text(data.unenroseriechasisV);
+                	$("#txtConsFecha").text(data.unenroseriechasisV);
+                	$("#txtConsDomicilio").text(data.unenroseriechasisV);*/
+                	$.message.Get();
+                },error: function(jqXHR, textStatus, errorThrown){
+                	$.message.Error();
+                }
+        	});
+    	}
+    }
 });

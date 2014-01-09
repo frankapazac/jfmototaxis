@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPapeleta" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f9f7de6-a828-40c6-b897-a21fe39844e2">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="432"/>
+	<property name="ireport.y" value="118"/>
 	<parameter name="papeleta" class="com.munichosica.myapp.dto.RepPapeleta"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -10,7 +10,7 @@
 	<title>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c2ec7eaf-9e40-4eb6-bbb4-84961d456681" x="509" y="0" width="63" height="20"/>
+				<reportElement x="509" y="0" width="63" height="20" uuid="c2ec7eaf-9e40-4eb6-bbb4-84961d456681"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$P{papeleta}.getPapcodigo()]]></textFieldExpression>
 			</textField>
@@ -19,7 +19,7 @@
 	<pageHeader>
 		<band height="103" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="d9acf55a-bd98-413c-93c5-08876ba25958" x="58" y="0" width="440" height="98"/>
+				<reportElement x="58" y="0" width="440" height="98" uuid="d9acf55a-bd98-413c-93c5-08876ba25958"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
@@ -31,12 +31,12 @@ TRANSPORTE DE PASAJEROS Y CARGA DEN VEHICULOS MENORES
 ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f79ad710-a0c8-467d-b7a3-1492cff0569c" x="58" y="82" width="440" height="20"/>
+				<reportElement x="58" y="82" width="440" height="20" uuid="f79ad710-a0c8-467d-b7a3-1492cff0569c"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[PUBLICADO EN EL DIARIO EL PERUANO EL 21-03-2012]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement uuid="dea1868e-8098-4d0c-b677-84ee7dfd3b4c" isPrintRepeatedValues="false" x="187" y="31" width="181" height="43"/>
+				<reportElement isPrintRepeatedValues="false" x="187" y="31" width="181" height="43" uuid="dea1868e-8098-4d0c-b677-84ee7dfd3b4c"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$P{papeleta}.getPapnumero()]]></jr:codeExpression>
 				</jr:barbecue>
@@ -46,7 +46,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 	<columnHeader>
 		<band height="678" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="66" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="66" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -59,7 +59,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="81" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="81" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -72,7 +72,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DOMICILIO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="66" width="385" height="15"/>
+				<reportElement x="136" y="66" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -85,7 +85,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getConddni()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="81" width="385" height="15"/>
+				<reportElement x="136" y="81" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -98,7 +98,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getConddomicilio()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="96" width="385" height="15"/>
+				<reportElement x="136" y="96" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -111,7 +111,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getConddepartamento()+" - "+$P{papeleta}.getCondprovincia()+" - "+$P{papeleta}.getConddistrito()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="115" width="240" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="115" width="240" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -124,7 +124,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[LICENCIA DE CONDUCIR]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="135" width="137" height="15"/>
+				<reportElement x="136" y="135" width="137" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -137,7 +137,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getLicenumero()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="150" width="137" height="15"/>
+				<reportElement x="136" y="150" width="137" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -150,7 +150,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getLiceemision()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="150" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="150" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -163,7 +163,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[F. EMISION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="135" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="135" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -176,7 +176,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[No LICENCIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="281" y="115" width="240" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="281" y="115" width="240" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -189,7 +189,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[FECHA DE INFRACCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="165" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="165" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -202,7 +202,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[F. CADUCIDAD]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="165" width="137" height="15"/>
+				<reportElement x="136" y="165" width="137" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -215,7 +215,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getLicecaducidad()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="281" y="135" width="240" height="30"/>
+				<reportElement x="281" y="135" width="240" height="30" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -228,7 +228,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getFechinfraccion()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="1" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="1" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -241,7 +241,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="184" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="184" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -254,7 +254,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DATOS DEL VEHICULO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="249" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="249" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -267,7 +267,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[COLORES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="234" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="234" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -280,7 +280,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[AÑO DE FAB.]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="204" width="139" height="30"/>
+				<reportElement x="136" y="204" width="139" height="30" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -293,7 +293,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidplaca()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="234" width="139" height="15"/>
+				<reportElement x="136" y="234" width="139" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -306,7 +306,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidanno()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="204" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="204" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -319,7 +319,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[No DE PLACA]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="249" width="385" height="15"/>
+				<reportElement x="136" y="249" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -332,7 +332,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidcolor()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="204" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="204" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -345,7 +345,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[MARCA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="219" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="219" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -358,7 +358,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[TIPO DE VEHICULO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="379" y="204" width="142" height="15"/>
+				<reportElement x="379" y="204" width="142" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -371,7 +371,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidmarca()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="378" y="219" width="143" height="15"/>
+				<reportElement x="378" y="219" width="143" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -384,7 +384,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidtipo()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="234" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="234" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -397,7 +397,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[No TJ PROPIEDAD]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="378" y="234" width="143" height="15"/>
+				<reportElement x="378" y="234" width="143" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -410,7 +410,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidtarjpropiedad()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="268" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="268" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -423,7 +423,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DATOS DEL PROPIETARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="303" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="303" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -436,7 +436,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[APELLIDO P.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="318" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="318" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -449,7 +449,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[APELLIDO M.]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="288" width="385" height="15"/>
+				<reportElement x="136" y="288" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -462,7 +462,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocrazonsocial()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="303" width="385" height="15"/>
+				<reportElement x="136" y="303" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -475,7 +475,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocpaterno()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="288" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="288" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -488,7 +488,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[RAZÓN SOCIAL]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="318" width="385" height="15"/>
+				<reportElement x="136" y="318" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -501,7 +501,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocmaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="333" width="385" height="15"/>
+				<reportElement x="136" y="333" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -514,7 +514,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocnombres()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="325" y="363" width="73" height="15"/>
+				<reportElement x="325" y="363" width="73" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -527,7 +527,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getEspropconductor()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="333" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="333" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -540,7 +540,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="348" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="348" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -553,7 +553,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="348" width="385" height="15"/>
+				<reportElement x="136" y="348" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -563,11 +563,10 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{papeleta}.getAsocdni()
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{papeleta}.getAsocdni()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="363" width="242" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="363" width="242" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -580,7 +579,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[ES PROPIETARIO - CONDUCTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="363" width="50" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="363" width="50" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -593,7 +592,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[SI]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="448" y="363" width="73" height="15"/>
+				<reportElement x="448" y="363" width="73" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -606,7 +605,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getNoespropconductor()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="398" y="363" width="50" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="398" y="363" width="50" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -619,7 +618,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[NO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="378" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="378" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -632,7 +631,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DOMICILIO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="378" width="385" height="15"/>
+				<reportElement x="136" y="378" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -645,7 +644,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocdomicilio()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="393" width="385" height="15"/>
+				<reportElement x="136" y="393" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -658,7 +657,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocdepartamento()+" - "+$P{papeleta}.getAsocprovincia()+" - "+$P{papeleta}.getAsocdistrito()]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame">
-				<reportElement uuid="ca190012-308f-43f0-8dbe-173f6bc09062" x="326" y="493" width="195" height="161"/>
+				<reportElement x="326" y="493" width="195" height="161" uuid="ca190012-308f-43f0-8dbe-173f6bc09062"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -669,7 +668,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage((byte[]) $P{papeleta}.getFilefoto())]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement uuid="cd3a8d00-1439-4b1a-b601-52a230a25cc6" x="326" y="654" width="195" height="19"/>
+				<reportElement x="326" y="654" width="195" height="19" uuid="cd3a8d00-1439-4b1a-b601-52a230a25cc6"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
@@ -683,7 +682,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA["FOTO: "+$P{papeleta}.getFilenombre()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="21" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="21" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -696,7 +695,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[APELLIDO P.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="36" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="36" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -709,7 +708,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[APELLIDO M.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="51" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="51" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -722,7 +721,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="21" width="385" height="15"/>
+				<reportElement x="136" y="21" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -735,7 +734,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getCondpaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="36" width="385" height="15"/>
+				<reportElement x="136" y="36" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -748,7 +747,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getCondmaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="51" width="385" height="15"/>
+				<reportElement x="136" y="51" width="385" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -761,7 +760,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getCondnombres()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="413" width="242" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="413" width="242" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -774,7 +773,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[SOBRE LA INFRACCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="413" width="247" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="413" width="247" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -787,7 +786,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DATOS DEL INSPECTOR / PNP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="448" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="448" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -800,7 +799,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[APELLIDO M.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="433" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="433" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -813,7 +812,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[APELLIDO P.]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="448" width="138" height="15"/>
+				<reportElement x="383" y="448" width="138" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -826,7 +825,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInspmaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="433" width="138" height="15"/>
+				<reportElement x="383" y="433" width="138" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -839,7 +838,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInsppaterno()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="463" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="463" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -852,7 +851,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[REFERENCIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="433" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="433" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -865,7 +864,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[UBICACIÓN]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="463" width="138" height="30"/>
+				<reportElement x="136" y="463" width="138" height="30" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -878,7 +877,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfrreferencia()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="433" width="138" height="30"/>
+				<reportElement x="136" y="433" width="138" height="30" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -891,7 +890,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfrdireccion()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="463" width="138" height="15"/>
+				<reportElement x="383" y="463" width="138" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -904,7 +903,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInspnombres()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="463" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="463" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -917,7 +916,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="478" width="138" height="15"/>
+				<reportElement x="383" y="478" width="138" height="15" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -930,7 +929,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInspdni()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="478" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="478" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -943,7 +942,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="493" width="103" height="16" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="493" width="103" height="16" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -956,7 +955,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[CODIGO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="493" width="190" height="16"/>
+				<reportElement x="136" y="493" width="190" height="16" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -969,7 +968,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfrcodigo()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="509" width="103" height="27" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="509" width="103" height="27" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -982,7 +981,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[INFRACCION]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="509" width="190" height="27"/>
+				<reportElement x="136" y="509" width="190" height="27" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -995,7 +994,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfraccion()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="618" width="190" height="55"/>
+				<reportElement x="136" y="618" width="190" height="55" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -1008,7 +1007,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getObseinfraccion()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="563" width="190" height="55"/>
+				<reportElement x="136" y="563" width="190" height="55" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -1021,7 +1020,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<textFieldExpression><![CDATA[$P{papeleta}.getObseinspector()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="563" width="103" height="55" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="563" width="103" height="55" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -1034,7 +1033,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[OBSERVACION DEL INSPECTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="618" width="103" height="55" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="618" width="103" height="55" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -1047,7 +1046,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[OBSERVACION SOBRE LA INFRACCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="536" width="103" height="27" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="536" width="103" height="27" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -1060,7 +1059,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<text><![CDATA[MEDIDA]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="536" width="190" height="27"/>
+				<reportElement x="136" y="536" width="190" height="27" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

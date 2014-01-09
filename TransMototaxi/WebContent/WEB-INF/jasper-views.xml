@@ -55,4 +55,15 @@
 		p:jdbcDataSource-ref="dataSource">
 	</bean>
 	
+	<bean id="reportSobreUsuario" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/reportSobreUsuario.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
+	<bean id="reportEmpresasUsuarios" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/reportEmpresasUsuarios.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
 </beans>

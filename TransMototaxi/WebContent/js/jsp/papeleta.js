@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	$("#divFormulario").hide();
-	$("#divFormularioVer").hide();     
+	$("#divFormularioVer").hide();  
+	$("#divAgregarConductor").hide();
 	$("#sltConductor").change(buscarConductorPorCodigo);
 	$("#txtConductorDNI").keyup(buscarConductorPorDNI);
 	$("#sltPlacas").change(buscarUnidadPorCodigo);
@@ -15,6 +16,72 @@ $(document).ready(function(){
 	$("#formFoto").submit(enviarFoto);
 	$("#btnNuevo").click(nuevaPapeleta);
 	$("#btnImprimir").click(imprimirPapeleta);
+	
+	/**/
+	$("#dtNacimiento").datepicker({dateFormat:"dd/mm/yy"});
+	$("#agregarConductor").click(function(){
+		$("#divAgregarConductor").dialog({
+    		title:"Nuevo Conductor",
+    		width: 950,
+    		//height: 700,
+    		modal: true
+    	});
+	});
+	
+	/*change*/
+    $("#sltDepartamentos").change(function(){
+    	$.ajax({ 
+    		data:{
+    			idubigeo:$("#sltDepartamentos").val()
+    		},
+            datatype:'json',
+            type: "POST", 
+            url: "Ubigeo/Provincia.htm", 
+            success: function(data){
+            	llenarComboProvincia(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+    });
+    
+    function llenarComboProvincia(data){
+    	$("#sltProvincia").empty();
+    	txtHtml="";
+    	for(var x=0;x<data.length;x++){
+    		txtHtml+="<option value='"+data[x].idubigeo+"'>"+data[x].nombubigeo+"</option>";
+    	}
+    	$("#sltProvincia").append(txtHtml);
+    }
+    
+    
+    $("#sltProvincia").click(function(){
+    	$.ajax({ 
+    		data:{
+    			idubigeo:$("#sltProvincia").val()
+    		},
+            datatype:'json',
+            type: "POST", 
+            url: "Ubigeo/Distrito.htm", 
+            success: function(data){
+            	llenarComboDistrito(data);
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+    });
+    
+    function llenarComboDistrito(data){
+    	$("#sltDistrito").empty();
+    	txtHtml="";
+    	for(var x=0;x<data.length;x++){
+    		txtHtml+="<option value='"+data[x].idubigeo+"'>"+data[x].nombubigeo+"</option>";
+    	}
+    	$("#sltDistrito").append(txtHtml);
+    }
+    
+	/**/
+	
 	$("#btnBuscar").click(function(){
 		buscar($("#sltCriterio").val(),$("#txtTexto").val());
 		$.message.Find();
@@ -394,25 +461,25 @@ $(document).ready(function(){
     	$("#tblLista").empty();
     	txtHtml="<thead>"
     		+"<th class='header'>N°</th>"
-			+"<th class='header'>Propietario</th>"
-			+"<th class='header'>Placa</th>"
-			+"<th class='header'>Conductor</th>"
-			+"<th class='header'>Licencia</th>"
-			+"<th class='header'>Fecha Infracción</th>"
-			+"<th class='header'>Ver</th>"
-			+"<th class='header'>Modificar</th>"
-			+"<th class='header'>Imprimir</th>"
+			+"<th class='header'>PROPIETARIO</th>"
+			+"<th class='header'>PLACA</th>"
+			+"<th class='header'>CONDUCTOR</th>"
+			+"<th class='header'>LICENCIA</th>"
+			+"<th class='header'>FECHA INFRACCIÓN</th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
 			+"</thead>"
 			+"<tfoot>"
     		+"<th>N°</th>"
-			+"<th>Propietario</th>"
-			+"<th>Placa</th>"
-			+"<th>Conductor</th>"
-			+"<th>Licencia</th>"
-			+"<th>Fecha Infracción</th>"
-			+"<th>Ver</th>"
-			+"<th>Modificar</th>"
-			+"<th>Imprimir</th>"
+			+"<th>PROPIETARIO</th>"
+			+"<th>PLACA</th>"
+			+"<th>CONDUCTOR</th>"
+			+"<th>LICENCIA</th>"
+			+"<th>FECHA INFRACCIÓN</th>"
+			+"<th></th>"
+			+"<th></th>"
+			+"<th></th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
 			$("#tblLista").append(txtHtml);
@@ -544,8 +611,8 @@ $(document).ready(function(){
 		}
 		$("#divFormulario").dialog({
     		title:"Papeleta",
-    		width: 900,
-    		//height: 600,
+    		width: 950,
+    		height: 650,
     		modal: true
     	});
 	}
@@ -588,7 +655,7 @@ $(document).ready(function(){
 			$("#verUnidadCaducidad").text(data.propUnidadEmpresa.unidadempresa.archivo.adjfechacaducidadF);
 			$("#verPropRazonSocial").text(data.propUnidadEmpresa.asociado.asorazonsocialV);
 			$("#verPropietario").text(data.propUnidadEmpresa.asociado.persona.perpaternoV+" "+
-					data.propUnidadEmpresa.asociado.persona.perpaternoV+", "+
+					data.propUnidadEmpresa.asociado.persona.permaternoV+", "+
 					data.propUnidadEmpresa.asociado.persona.pernombresV);
 			$("#verPropDni").text(data.propUnidadEmpresa.asociado.persona.perdniV);
 			$("#verPropDomicilio").text(data.propUnidadEmpresa.asociado.persona.perdomicilioV);

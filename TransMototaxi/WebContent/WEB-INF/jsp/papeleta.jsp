@@ -64,7 +64,7 @@
 		.ui-combobox-input {
 			margin: 0;
 			padding: 0.3em;
-			width: 200px;
+			width: 190px;
 		}
 		.ver{
 			background-color: #f0f0f0;
@@ -300,6 +300,7 @@
 					<td class="tdContenido"><input type="text" id="txtConductorDNI" class="txtText requiredNumber"/></td>
 					<td class="tdTitulo">Conductor</td>
 					<td class="tdContenido">
+						<img src="images/add_user.png" id="agregarConductor"/>
 						<select id="sltConductor" class="requiredSelect">
 							<option value="">-Seleccione-</option>
 							<c:forEach var="conductor" items="${conductores}">
@@ -330,7 +331,9 @@
 			<table>
 				<tr>
 					<td class="tdTitulo">N° Placa</td>
-					<td class="tdContenido"><select id="sltPlacas" class="requiredSelect">
+					<td class="tdContenido">
+						<img src="images/edit_add.png" id="agregarMoto"/>
+						<select id="sltPlacas" class="requiredSelect">
 							<option value="" selected="selected">-Seleccione-</option>
 							<c:forEach var="placa" items="${placas}">
 								<option value="${placa.unecodigoD}"><c:out value="${placa.uneplacanroV}"/></option>
@@ -420,6 +423,7 @@
 					<td class="tdContenido"><input id="txtCarnetPolicia" type="text" class="txtText required" /></td>
 					<td class="tdTitulo">Policia</td>
 					<td class="tdContenido">
+						<img src="images/add_user.png" id="agregarPolicia"/>
 						<select id="sltPolicia" class="required">
 							<option value="">-Seleccione-</option>
 							<c:forEach var="policia" items="${policias}">
@@ -625,5 +629,98 @@
 		</h4>
 	</div>
 	
+	<div id="divAgregarConductor">
+		<fieldset>
+			<legend>Nuevo Conductor</legend>
+			<input type="hidden" id="txtCodigoConductor" value="0"/>
+			<input type="hidden" id="txtCodigoPersona" value="0"/>        
+        	<table align="center">
+					<tr>
+						<td>Nombres:</td>
+						<td><input type="text" id="txtNombres" class="requiredText" tabindex="1"/></td>
+						<td>Dirección:</td>
+						<td><input type="text" id="txtDireccion" class="requiredAlpha" tabindex="10"/></td>
+					</tr>
+					<tr>
+						<td>Paterno:</td>
+						<td><input type="text" id="txtPaterno" class="requiredText" tabindex="2"/></td>
+						<td>Departamento:</td>
+						<td>
+							<select id="sltDepartamentos" class="requiredSelect" tabindex="11">
+								<option value="" selected="selected">Seleccione</option>
+								<c:forEach items="${departamentos}" var="departamento">
+									<option value="${departamento.idubigeo}">
+										<c:out value="${departamento.nombubigeo}"/>
+									</option>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Materno:</td>
+						<td><input type="text" id="txtMaterno" class="requiredText" tabindex="3"/></td>
+						<td>Provincia:</td>
+						<td>
+							<select id="sltProvincia" class="requiredSelect" tabindex="12">
+								<option value="" selected="selected">Seleccione</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>DNI</td>
+						<td><input type="text" id="txtDni" class="requiredNumber" tabindex="4"/></td>
+						<td>Distrito:</td>
+						<td>
+							<select id="sltDistrito" class="requiredSelect" tabindex="13">
+								<option value="" selected="selected">Seleccione</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Correo:</td>
+						<td><input type="text" id="txtCorreo" class="requiredEmail" tabindex="5"/></td>
+						<td>Telefono:</td>
+						<td><input type="text" id="txtTelefono" class="requiredPhone" tabindex="14"/></td>
+					</tr>
+					<tr>
+						<td>Estado Civil</td>
+						<td>
+							<select id="sltEstadoCivil" class="requiredSelect" tabindex="6">
+								<option value="S" selected="selected">Soltero</option>
+								<option value="C">Casado</option>
+								<option value="T">Conviviente</option>
+								<option value="V">Viudo</option>
+								<option value="D">Divorciado</option>
+							</select>
+						</td>
+						<td>Cel. Movistar:</td>
+						<td><input type="text" id="txtMovistar" class="required" tabindex="15"/></td>
+					</tr>
+					<tr>
+						<td>Sexo</td>
+						<td>
+							<select id="sltSexo" class="requiredSelect" tabindex="7">
+								<option value="" selected="selected">Seleccione</option>
+								<option value="M">Masculino</option>
+								<option value="F">Femenino</option>
+							</select>
+						</td>
+						<td>Cel. Claro:</td>
+						<td><input type="text" id="txtClaro" class="required" tabindex="16"/></td>
+					</tr>
+					<tr>
+						<td>Fecha Nacimiento</td>
+						<td><input type="text" id="dtNacimiento" class="requiredDate" tabindex="8"/></td>
+						<td>Cel. Nextel:</td>
+						<td><input type="text" id="txtNextel" class="required" tabindex="17"/></td>
+					</tr>					
+			</table>
+			
+			<center>
+				<input type="button" id="btnGuardarCond" class="ui-button" value="Guardar"/>
+				<input type="button" id="btnCancelarCond" class="ui-button" value="Cancelar"/>
+			</center>
+		</fieldset>
+	</div>
 </body>
 </html>

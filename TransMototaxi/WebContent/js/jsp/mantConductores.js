@@ -143,8 +143,8 @@ $(document).ready(function(){
 			+"<th class='header'>N° Motos Asignadas</th>"
 			+"<th class='header'>Fec. Inicio</th>"
 			+"<th class='header'>Fec. Cese</th>"
-			+"<th class='header'>Modificar</th>"
-			+"<th class='header'>Eliminar</th>"
+			+"<th class='header'></th>"
+			+"<th class='header'></th>"
 			+"</thead>"
 			+"<tfoot>"
     		+"<th>N°</th>"
@@ -153,8 +153,8 @@ $(document).ready(function(){
 			+"<th>N° Motos Asignadas</th>"
 			+"<th>Fec. Inicio</th>"
 			+"<th>Fec. Cese</th>"
-			+"<th>Modificar</th>"
-			+"<th>Eliminar</th>"
+			+"<th></th>"
+			+"<th></th>"
 			+"</tfoot>"
 			+"<tbody></tbody>";
 			$("#tblLista").append(txtHtml);
