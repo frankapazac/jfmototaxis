@@ -1,6 +1,9 @@
 package com.munichosica.myapp.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,16 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.munichosica.myapp.dto.MotEmpresa;
 import com.munichosica.myapp.dto.MotPersona;
+import com.munichosica.myapp.dto.RepPapeleta;
 import com.munichosica.myapp.dto.UsuEmp;
 import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotEmpresaDaoException;
 import com.munichosica.myapp.exceptions.MotPersonaDaoException;
+import com.munichosica.myapp.exceptions.ReportsDaoException;
 import com.munichosica.myapp.exceptions.UsuarioDaoException;
 import com.munichosica.myapp.factory.MotEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotPersonaDaoFactory;
+import com.munichosica.myapp.factory.ReportsDaoFactory;
 import com.munichosica.myapp.factory.UsuEmpDaoFactory;
 import com.munichosica.myapp.factory.UsuarioDaoFactory;
 
@@ -94,4 +101,43 @@ public class MotEmpresaController {
 		}
 		return String.valueOf(usuario.getUsucodigoI());
 	}
+	
+	@RequestMapping(value="ImprimirSobreUsuario.htm", method=RequestMethod.GET)
+	public ModelAndView imprimirSobreUsuario(Long codigo){
+		ModelAndView mav=null;
+		logger.info("Ingreso a ImprimirSobreUsuario.htm codigo:"+codigo);
+		try {
+			Map<String, Object> parameters=new HashMap<String, Object>();
+			Usuario usuario=UsuarioDaoFactory.create().obtenerUsuarioEmpresa(codigo);
+			logger.info("Usuario : " + usuario.getUsuusuarioV());
+			parameters.put("USUARIO", usuario);
+			logger.info("usuario=UsuarioDaoFactory.create().obtenerUsuarioEmpresa(codigo); Completed");
+
+			mav=new ModelAndView("reportSobreUsuario", parameters);
+		} catch (UsuarioDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value="ImprimirEmpresasUsuarios.htm", method=RequestMethod.GET)
+	public ModelAndView imprimirEmpresasUsuarios(){	
+		return new ModelAndView("reportEmpresasUsuarios");
+	}
+	
+	/*@RequestMapping(value="ImprimirPdf.htm", method=RequestMethod.GET)
+	public ModelAndView descargarPdf(Long codigo){
+		ModelAndView mav=null;
+		System.out.println("Ingreso a Papeletas/ImprimirPdf.htm Codigo:"+codigo);
+		Map<String, Object> parameters= new HashMap<String, Object>();
+		RepPapeleta papeleta=null;
+		try {
+			papeleta = ReportsDaoFactory.create().reportePapeleta(codigo);
+			parameters.put("papeleta", papeleta);
+			mav=new ModelAndView("reportPapeleta", parameters);
+		} catch (ReportsDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return mav;
+	}*/
 }

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.munichosica.myapp.dto.MotConductor;
+import com.munichosica.myapp.dto.MotEmpConductor;
 import com.munichosica.myapp.dto.MotEmpDocumento;
 import com.munichosica.myapp.dto.MotEmpRepresentante;
+import com.munichosica.myapp.dto.MotEmprAsociado;
 import com.munichosica.myapp.dto.MotInfraccion;
 import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotInteInventarioTipo;
@@ -49,8 +51,10 @@ import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.exceptions.MotUbigeoDaoException;
 import com.munichosica.myapp.exceptions.MotZonaDaoException;
+import com.munichosica.myapp.factory.MotEmpConductorDaoFactory;
 import com.munichosica.myapp.factory.MotEmpDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
+import com.munichosica.myapp.factory.MotEmprAsociadoDaoFactory;
 import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotInteInventarioTipoDaoFactory;
@@ -107,6 +111,15 @@ public class PageController {
 		List<MotOficinaRegistral> oficinas=null;
 		List<MotTipoDocumento> documentosUnidad=null;
 		List<MotTipoDocumento> documentosUnidadFotos=null;
+		List<MotEmpConductor> conductores=null;
+		
+		
+		
+		
+		
+		
+		
+		
 		try {
 			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
 			documentos=MotTipoDocumentoDaoFactory.create().findByTable("ADO");
@@ -115,6 +128,7 @@ public class PageController {
 			modelos=MotModeloDaoFactory.create().findAll();
 			marcas=MotMarcaDaoFactory.create().findAll();
 			oficinas=MotOficinaRegistralDaoFactory.create().findAll();
+			conductores=MotEmpConductorDaoFactory.create().findByCriterio("ECO.EMPCODIGO_D", "", usuario.getEmpresa().getEmpcodigoD());
 			model.addAttribute("departamentos", departamentos);
 			model.addAttribute("documentos", documentos);
 			model.addAttribute("documentosUnidad", documentosUnidad);
@@ -122,6 +136,7 @@ public class PageController {
 			model.addAttribute("modelos",modelos);
 			model.addAttribute("marcas",marcas);
 			model.addAttribute("oficinas", oficinas);
+			model.addAttribute("conductores", conductores);
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}
@@ -333,12 +348,15 @@ public class PageController {
 			List<MotInspector> inspectores=null;
 			List<MotInfraccion> infracciones=null;
 			List<MotPolicia> policias=null;
+			List<MotUbigeo> departamentos=null;
 			
 			conductores = MotConductorDaoFactory.create().findAll();
 			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacasByAsociado();
 			inspectores=MotInspectorDaoFactory.create().findAll();
 			infracciones=MotInfraccionDaoFactory.create().findAll();
 			policias=MotPoliciaDaoFactory.create().findAll();
+			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
+			model.addAttribute("departamentos", departamentos);
 			model.addAttribute("conductores", conductores);
 			model.addAttribute("placas", placas);
 			model.addAttribute("inspectores", inspectores);
@@ -346,7 +364,7 @@ public class PageController {
 			model.addAttribute("policias", policias);
 		} catch (MotConductorDaoException | MotUnidadEmpresaDaoException | 
 				MotInspectorDaoException | MotInfraccionDaoException | 
-				MotPoliciaDaoException e) {
+				MotPoliciaDaoException | MotUbigeoDaoException e) {
 			logger.error(e.getMessage());
 		}
 		model.addAttribute("usuario",usuario);
@@ -464,9 +482,12 @@ public class PageController {
 	
 		try {
 			List<MotZona> zona;
+			List<MotTipoMedida> tipoMedidas;
 			zona = MotZonaDaoFactory.create().findAll();
+			tipoMedidas=MotTipoMedidaDaoFactory.create().findAllTipoMedida();
 			model.addAttribute("zona", zona);
-		} catch (MotZonaDaoException e) {
+			model.addAttribute("tipoMedidas", tipoMedidas);
+		} catch (MotZonaDaoException | MotTipoMedidaDaoException e) {
 			e.printStackTrace();
 		}
 		model.addAttribute("usuario",usuario);

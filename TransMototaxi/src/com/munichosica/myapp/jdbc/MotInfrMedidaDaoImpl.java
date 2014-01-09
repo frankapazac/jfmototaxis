@@ -77,7 +77,7 @@ public class MotInfrMedidaDaoImpl implements MotInfrMedidaDao{
 		Connection conn = null;
 		CallableStatement stmt = null;
 		ResultSet rs = null;
-		
+		System.out.println(dto);
 		try {
 			conn = ResourceManager.getConnection();
 			stmt = conn.prepareCall("{call SP_MOT_ACTUALIZA_ESTADO_INFR_MEDIDA;1 (?,?,?)}");

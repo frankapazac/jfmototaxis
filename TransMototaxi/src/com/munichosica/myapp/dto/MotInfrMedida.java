@@ -29,5 +29,8 @@ public class MotInfrMedida {
 		this.tipoMedida = tipoMedida;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "MOTINFRMEDIDA: "+getImecodigoI()+"\t"+getInfraccion().getInfcodigoV()+"\t"+getTipoMedida().getLado();
+	}
 }
