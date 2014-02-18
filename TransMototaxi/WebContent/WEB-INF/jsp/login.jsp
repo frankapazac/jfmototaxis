@@ -42,8 +42,8 @@
 		float: left;
 	}
 	#divDerecho{
-		padding: 120px 0px 0px 0px;
-		width: 40%;
+		padding: 80px 0px 0px 0px;
+		width: 31%;
 		float: left;
 	}
 	input[type=text],input[type=password]{
@@ -61,6 +61,10 @@
 	h1{
 		color:#577b15;
 		margin: 10px;
+	}
+	#divIzquierdo img{
+		width: 80%;
+		height: 80%;
 	}
 </style>
 </head>

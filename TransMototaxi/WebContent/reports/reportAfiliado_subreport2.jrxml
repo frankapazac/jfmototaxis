@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportAfiliado_subreport2" pageWidth="487" pageHeight="802" columnWidth="487" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e85dc40c-5830-4339-abb2-6fbd29d295e1">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ASOCODIGO" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT ISNULL(UNE.UNEPLACANRO_V,'') AS PLACA,
+ISNULL(une.UNENROMOTOR_V,'') AS MOTOR,
+ISNULL(MAR.MARNOMBRE_V,'') AS MARCA,
+ISNULL(MDL.MODNOMBRE_V,'') AS MODELO,
+ISNULL(UNE.UNEANNO_C,'') AS ANNO,
+ISNULL(ADJ.ADJNUMERO_V,'') AS TARJPROPNUMERO,
+ISNULL(CONVERT(VARCHAR,ADJ.ADJFECHAEMISION_F,103),'') AS FECHAEMISION,
+ISNULL(CONVERT(VARCHAR,ADJ.ADJFECHACADUCIDAD_F,103),'') AS FECHACADUCIDAD,
+CASE WHEN GETDATE()<=ADJ.ADJFECHACADUCIDAD_F THEN 'ACTIVO'
+ELSE 'INACTIVO' END AS ESTADO,
+ISNULL(UNE.UNECOLOR_V,'') AS COLOR
+FROM MOT_UNIDAD_EMPRESA UNE
+LEFT JOIN MOT_MARCA MAR ON MAR.MARCODIGO_I=UNE.MARCODIGO_I
+LEFT JOIN MOT_MODELO MDL ON MDL.MODCODIGO_I=UNE.MODCODIGO_I
+LEFT JOIN MOT_PROP_UNIEMPRESA PUN ON PUN.UNECODIGO_D=UNE.UNECODIGO_D
+LEFT JOIN (SELECT ADJCODIGO_D,PMOCODIGO_D FROM MOT_UNID_DOCUMENTO WHERE MTDCODIGO_I=5) UDO
+	ON UDO.PMOCODIGO_D=PUN.PMOCODIGO_D
+LEFT JOIN MOT_ADJUNTAR_ARCHIVO ADJ ON ADJ.ADJCODIGO_D=UDO.ADJCODIGO_D
+LEFT JOIN MOT_EMPADRONAMIENTO EPD ON EPD.UNECODIGO_D=UNE.UNECODIGO_D
+INNER JOIN MOT_EMPRESA EMP ON EMP.EMPCODIGO_D=EPD.EMPCODIGO_D
+	WHERE PUN.ASOCODIGO_D=$P{ASOCODIGO}]]>
+	</queryString>
+	<field name="PLACA" class="java.lang.String"/>
+	<field name="MOTOR" class="java.lang.String"/>
+	<field name="MARCA" class="java.lang.String"/>
+	<field name="MODELO" class="java.lang.String"/>
+	<field name="ANNO" class="java.lang.String"/>
+	<field name="TARJPROPNUMERO" class="java.lang.String"/>
+	<field name="FECHAEMISION" class="java.lang.String"/>
+	<field name="FECHACADUCIDAD" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="COLOR" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="487" height="20" uuid="03d761d0-65f7-4c4a-b7d7-4bfa063c2ef0"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[MOTOTAXIS REGISTRADAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="121" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="40" width="487" height="20" backcolor="#608A12" uuid="c5bc35f5-7564-4d70-9648-feb38c6ea07a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="80" width="487" height="20" backcolor="#608A12" uuid="09479e7e-3034-4145-9d58-1570cf49c806"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="487" height="20" backcolor="#608A12" uuid="f9d8eccd-0665-4bea-8f00-92f11a479a41"/>
+			</rectangle>
+			<textField>
+				<reportElement x="3" y="20" width="197" height="20" uuid="ecfcb351-cfe9-4101-9d0b-5f7b96628f22"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLACA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="0" width="197" height="20" forecolor="#FFFFFF" uuid="bea3fbfb-0844-4204-8280-c0b1eb196850"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[PLACA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="203" y="20" width="140" height="20" uuid="0b82ca56-60c3-4a8a-9aae-dd5f61fdda27"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MOTOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="60" width="140" height="20" uuid="7e5017ce-8380-4f0a-8045-df1e41943f43"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MARCA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="203" y="40" width="140" height="20" forecolor="#FFFFFF" uuid="78abd576-c7c6-43c5-9a44-33597a9a760f"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[MARCA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="346" y="60" width="140" height="20" uuid="d6322619-098e-4dd4-9d2d-3e38dd283dab"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MODELO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="346" y="40" width="140" height="20" forecolor="#FFFFFF" uuid="e77a4268-df36-4514-99d1-5ce73df9ede8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[MODELO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="346" y="20" width="140" height="20" uuid="027d47d1-92f3-4087-8917-06cb2da8bc10"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ANNO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="346" y="0" width="140" height="20" forecolor="#FFFFFF" uuid="f5b655f9-0a92-4a9a-948d-0dd917b07fbf"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="40" width="197" height="20" forecolor="#FFFFFF" uuid="f118e800-0ce9-4c51-8ae3-0677d758878c"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[COLOR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="60" width="197" height="20" uuid="b4a08e30-302b-4b8e-9f23-df7157bf6e1d"/>
+				<textFieldExpression><![CDATA[$F{COLOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="203" y="0" width="140" height="20" forecolor="#FFFFFF" uuid="85e9b28d-2f2b-45a6-9ba2-8d24024afde8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[MOTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="80" width="117" height="20" forecolor="#FFFFFF" uuid="373b0fef-d228-4352-86d1-1d8482ae3e6f"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[TARJPROPNUMERO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="100" width="117" height="20" uuid="27548147-24a2-4e62-85bc-2fe04e83d29f"/>
+				<textFieldExpression><![CDATA[$F{TARJPROPNUMERO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="123" y="80" width="117" height="20" forecolor="#FFFFFF" uuid="a4df537b-b9c0-4868-a133-152f16f58c71"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[FECHAEMISION]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="100" width="117" height="20" uuid="649c48f4-c3e5-4c8d-8df1-580d70f81936"/>
+				<textFieldExpression><![CDATA[$F{FECHAEMISION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="243" y="80" width="117" height="20" forecolor="#FFFFFF" uuid="8403a7dc-e19b-4fae-884d-08100933c150"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[FECHACADUCIDAD]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="243" y="100" width="117" height="20" uuid="cb8756ce-ded8-439f-aaf0-4ef145667954"/>
+				<textFieldExpression><![CDATA[$F{FECHACADUCIDAD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="363" y="80" width="123" height="20" forecolor="#FFFFFF" uuid="239e23c4-98f0-4add-98c7-11334143e589"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="363" y="100" width="123" height="20" uuid="10d1deaa-d486-4b1d-8032-fc71b6177eb1"/>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="200" y="20" width="1" height="20" uuid="b68f6162-f0d0-4b9e-b938-b2a1c8ae1bdf"/>
+			</line>
+			<line>
+				<reportElement x="342" y="20" width="1" height="20" uuid="59513ad9-269c-4b74-be66-2d78cfd28d8c"/>
+			</line>
+			<line>
+				<reportElement x="200" y="60" width="1" height="20" uuid="709a1f53-1dee-41e8-8a6b-32270f2fcb29"/>
+			</line>
+			<line>
+				<reportElement x="341" y="60" width="1" height="20" uuid="613109b7-a859-41ce-b7f7-8f32b248763d"/>
+			</line>
+			<line>
+				<reportElement x="120" y="100" width="1" height="20" uuid="8b72afcf-d3f6-4e10-8245-c16696c812c7"/>
+			</line>
+			<line>
+				<reportElement x="240" y="100" width="1" height="20" uuid="269eff40-8f41-4b56-86f2-29812144bc2c"/>
+			</line>
+			<line>
+				<reportElement x="360" y="100" width="1" height="20" uuid="1b670d68-4d96-40c6-8d73-8a5991e4f297"/>
+			</line>
+			<line>
+				<reportElement x="0" y="20" width="1" height="100" uuid="0e9025f4-8b03-4ace-be79-9dbeceee5a1b"/>
+			</line>
+			<line>
+				<reportElement x="486" y="20" width="1" height="100" uuid="9349b215-bd28-402a-a48d-38ab7c378e3e"/>
+			</line>
+			<line>
+				<reportElement x="0" y="120" width="487" height="1" uuid="65842e6d-4710-4c26-a445-5d224b2fbdab"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

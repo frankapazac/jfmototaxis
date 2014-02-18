@@ -226,7 +226,7 @@ $(document).ready(function(){
 			"<td>"+data[x].unidadempresa.modelo.modnombre_V+"</td>"+
 			"<td>"+data[x].unidadempresa.uneannoC+"</td>"+
 			"<td>"+data[x].unidadempresa.unecolorV+"</td>"+
-			"<td><input type='button' class='btnEliminarMotoAsignar' id='eliMotAsig_"+data[x].pmocodigoD+"' value='Eliminar'/></td>"+
+			"<td><input type='button' class='btnEliminarMotoAsignar' id='eliMotAsig_"+data[x].pmocodigoD+"' value='Eliminar' class='ui-button'/></td>"+
 			"</tr>";
     		$("#tblListaMotosParaAsignar tbody").append(txtHtml);
     	}

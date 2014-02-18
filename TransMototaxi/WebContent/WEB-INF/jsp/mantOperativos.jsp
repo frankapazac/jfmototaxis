@@ -59,7 +59,7 @@
 						</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>
@@ -178,8 +178,8 @@
 							</td>	
 							
 							<td>
-								<input type="button" id="btnRight" value =' > '/>
-								<br/><input type="button" id="btnLeft" value =' < '/>
+								<input type="button" id="btnRight" value =' > ' class="ui-button"/>
+								<br/><input type="button" id="btnLeft" value =' < ' class="ui-button"/>
 							</td>
 						<td>
 								<select multiple="multiple" id="sltAgregaInspector" name="AgregaInspector" style="width: 100%"></select>
@@ -190,9 +190,11 @@
 
 				</table>
 			</fieldset>
-		
-			<input type="button" id="btnGuardar" value ='GUARDAR' align="middle"/>
-			<input type="button" id="btnCancelar" value ='CANCELAR' align="middle"/>	
+		<center>
+			<input type="button" id="btnGuardar" value ='GUARDAR' align="middle" class="ui-button"/>
+			<input type="button" id="btnCancelar" value ='CANCELAR' align="middle" class="ui-button"/>	
+		</center>
+			
 			
 		
 		</div>

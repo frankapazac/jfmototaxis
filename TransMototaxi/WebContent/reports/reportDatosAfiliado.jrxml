@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportDatosAfiliado" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7aee2a5-e213-4ba3-a27d-779ae7ef665c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT PER.PERDNI_V AS DNI,
+ISNULL(PER.PERNOMBRES_V,'')+ISNULL(' '+PER.PERPATERNO_V,'')+ISNULL(' '+PER.PERPATERNO_V,'') AS AFILIADO,
+--MOT.NRO_MOTOS AS UNIDADES,
+PER.PERDOMICILIO_V AS DIRECCION,
+CONVERT(VARCHAR,PER.PERNACIMIENTO_F,103) AS NACIMIENTO,
+PER.PERMOVILCLA_V AS CLARO,
+PER.PERMOVILMOV_V AS MOVISTAR,
+PER.PERMOVILNEX_V AS NEXTEL,
+PER.PERTELEFFIJO_V AS TELEFONO,
+PER.PEREMAIL_V AS EMAIL,
+ASO.ASORUC_V AS RUC,
+ASO.ASORAZONSOCIAL_V AS RAZON_SOCIAL,
+PER.PERESTADOCIVIL_C AS ESTADO_CIVIL,
+PER.PERSEXO_C AS SEXO,
+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PER.PERUBDPTO_V) AS DEPARTAMENTO,
+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PER.PERUBPROV_V) AS PROVINCIA,
+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PER.PERUBDIST_V) AS DISTRITO,
+CAST(ADJ.ADJARCHIVO_B AS varbinary(max)) AS FOTO
+FROM MOT_EMPR_ASOCIADO ASO
+INNER JOIN MOT_PERSONA PER ON PER.PERCODIGO_D=ASO.PERCODIGO_D
+LEFT JOIN (SELECT ASOCODIGO_D,COUNT(UNECODIGO_D) NRO_MOTOS
+	FROM MOT_PROP_UNIEMPRESA GROUP BY ASOCODIGO_D) MOT ON MOT.ASOCODIGO_D=ASO.ASOCODIGO_D
+LEFT JOIN MOT_ASOC_DOCUMENTO ADO ON (ADO.ASOCODIGO_D=ASO.ASOCODIGO_D AND ADO.MTDCODIGO_I=16 AND ADO.ADOESTADO_C='A')
+LEFT JOIN MOT_ADJUNTAR_ARCHIVO ADJ ON ADJ.ADJCODIGO_D=ADO.ADJCODIGO_D
+WHERE ADJ.ADJARCHIVO_B IS NOT NULL]]>
+	</queryString>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="AFILIADO" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="NACIMIENTO" class="java.lang.String"/>
+	<field name="CLARO" class="java.lang.String"/>
+	<field name="MOVISTAR" class="java.lang.String"/>
+	<field name="NEXTEL" class="java.lang.String"/>
+	<field name="TELEFONO" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="RUC" class="java.lang.String"/>
+	<field name="RAZON_SOCIAL" class="java.lang.String"/>
+	<field name="ESTADO_CIVIL" class="java.lang.String"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="DEPARTAMENTO" class="java.lang.String"/>
+	<field name="PROVINCIA" class="java.lang.String"/>
+	<field name="DISTRITO" class="java.lang.String"/>
+	<field name="FOTO" class="java.io.InputStream"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="124" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="271" splitType="Stretch">
+			<textField>
+				<reportElement x="299" y="13" width="100" height="20" uuid="d43c77ac-6d9e-4b9a-8415-e427464e19fb"/>
+				<textFieldExpression><![CDATA[$F{DNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="13" width="100" height="20" uuid="6e222b26-3aea-499f-b82c-9e3e8579ec1b"/>
+				<textFieldExpression><![CDATA[$F{AFILIADO}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement x="211" y="60" width="125" height="127" uuid="ef4f69d7-ffa3-42d4-b286-1650cc7a77f0"/>
+				<imageExpression><![CDATA[$F{FOTO}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

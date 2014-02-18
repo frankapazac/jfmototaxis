@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<link href="css/ui/smoothness/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css">
+	<!-- link href="css/ui/smoothness/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"> -->
+	<link href="css/ui/VerdeClaro/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css">
 	<link href="css/tablesorter/green/style.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="js/tablesorter/jquery-latest.js"></script>
@@ -17,8 +18,11 @@
 		background-color: #f0f0f0;
 	}
 	h1{
+		font-size: 1.5em;
 		color: #608A12;
-		margin: 10px 0px 0px 0px;
+		margin: 10px 0px 10px 0px;
+		border-bottom: solid 2px;
+}
 	}
 	h2{
 		font-size: 1em;//1.5em
@@ -29,18 +33,29 @@
 		font-size: 18px;
 		text-decoration: none;
 	}
+	table{
+		/*font-size: 0.9em;*/
+	}
+	.tblTablaEstilo{
+		background-color: white;
+	}
+	.tblTablaEstilo tr:hover{
+		background-color: #BCE948;
+	}
 	#divPrincipal{
 		margin: 2px;
 		border: 1px solid #000000;
-		width:1200px;
-		background-color: white;
+		/*width:1200px;*/
+		width:950px;
+		/*background-color: white;*/
+		background-color: #f5f3e5;
 	}
 	#divHeader,#divContent,#divFooter {
 		/*border: 1px solid #000000;*/
 		/*width:100%;*/
 	}
 	#divHeader{
-		height: 100px;
+		/*height: 100px;*/
 	}
 	#divContent{
 		margin: 20px;
@@ -54,7 +69,10 @@
 	#divBody{
 		width:100%;
 		height:100%;
-	}	
+	}
+	#divMenu{
+		height: 28px;
+	}
 </style>
 </head>
 <body>

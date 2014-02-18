@@ -1,5 +1,6 @@
 table.tablesorter {
-	font-size: 0.7em;//12px; Modificado por F.A.C.
+	font-size: 0.6em;
+	/*font-size: 0.7em;//12px; Modificado por F.A.C.*/
 	background-color: #CDCDCD;
 	width: 90%;
 	/*width: 1024px;*/
@@ -15,10 +16,13 @@ table.tablesorter td {
 	padding: 5px;
 }
 table.tablesorter .even {
-	background-color: #C0EDB6;
+	/*background-color: #C0EDB6;*/
+	background-color: #EBEBEB;
 }
 table.tablesorter .jfhover {
-	background-color: #00CCFF;/*Agregado por Frank Apaza C.*/
+	/*background-color: #00CCFF;Agregado por Frank Apaza C.*/
+	background-color: #BCE948;/*#E9E948;*/
+	font-weight: bolder;
 }
 table.tablesorter .odd {
 	background-color: white;

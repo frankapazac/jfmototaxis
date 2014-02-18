@@ -11,6 +11,24 @@
 		p:url="classpath:reports/reportInforme.jrxml"
 		p:jdbcDataSource-ref="dataSource">
 	</bean>
+	
+	<bean id="reportActaConformidad" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/reportActaConformidad.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
+	<bean id="reportAfiliados" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/reportAfiliados.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
+	
+	<bean id="reportAfiliado" 
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+		p:url="classpath:reports/reportAfiliado.jrxml"
+		p:jdbcDataSource-ref="dataSource">
+	</bean>
 		
 	<bean id="reportPapeleta" 
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"

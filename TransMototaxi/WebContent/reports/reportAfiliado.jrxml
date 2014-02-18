@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportAfiliado" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ede6ded2-4cd5-4a40-a2bf-903c63e39f71">
+	<property name="ireport.zoom" value="1.5799875258364797"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Afiliado" class="com.munichosica.myapp.dto.MotEmprAsociado"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\SpringResources\\projects\\TransMototaxi\\WebContent\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CONVERT(VARCHAR,GETDATE(),103) AS FECHA]]>
+	</queryString>
+	<field name="FECHA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="421" splitType="Stretch">
+			<rectangle>
+				<reportElement x="148" y="329" width="387" height="43" uuid="00064982-f5b2-4ad8-b581-8f0fa4fa7d2c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="402" y="372" width="133" height="40" uuid="d2ac7490-6952-4575-a8d8-43713bfedf32"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="148" y="372" width="152" height="40" uuid="d901b909-5d46-45d0-9139-aad5beef8b83"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="148" y="89" width="152" height="240" uuid="20a5c452-6a26-4ec6-8181-3ad0947963ca"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="300" y="372" width="102" height="40" backcolor="#608A12" uuid="250b1ec9-3819-4846-8ec7-d8f3a22cd1bc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="48" y="89" width="100" height="323" backcolor="#608A12" uuid="6ee4caba-cb05-48f1-a75d-bd8baae2573e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="300" y="89" width="235" height="240" uuid="10f645f1-2185-4b39-ac87-60a0d315d069"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="48" y="41" width="507" height="20" uuid="32003adf-42b6-4b4b-a394-dbaaaf781e29"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL AFILIADO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="48" y="24" width="29" height="52" uuid="c9fa4c5a-c31d-4942-8b01-1b06c8494d52"/>
+				<imageExpression><![CDATA["C:\\reports\\Imagenes\\LogoChosica.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="55" y="329" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="9d86b839-bb03-48d3-8a8d-8561cf5fd1d9"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="329" width="384" height="20" uuid="c09455f8-15e3-4b32-a777-ef2a33b35a41"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerdomicilioV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="268" width="93" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="20a9147b-c57f-4a91-8a89-68805f73fab2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="269" width="149" height="20" uuid="05075a65-9a60-4a3c-aec1-01861311a2bd"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerubdptonombreV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="289" width="82" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="7cb5ba4e-0826-40e3-a0f4-e735b9a36a00"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVINCIA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="289" width="149" height="20" uuid="c5630732-61ce-4a3f-81cd-27958a4c6fd2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerubprovnombreV()]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="306" y="92" width="222" height="220" uuid="86ba7cfc-320d-495d-95e7-2de305369613"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage((byte[]) $P{Afiliado}.getFoto().getAdjarchivoB())]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="300" y="314" width="235" height="15" forecolor="#FFFFFF" backcolor="#000000" uuid="48b5d905-77dc-4ca9-af03-b8c1edce9414"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Foto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="269" width="4" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="1d5d96f8-134b-4f65-8c39-721f5a222cac"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="329" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="f7c7726c-bdf5-4c07-b7bd-03f92c7f9154"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="289" width="4" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="303a55fc-c8c0-4803-b578-ac3da2ded54b"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="309" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="d3980dd6-0940-4242-a3dd-e6c2239023cd"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="309" width="82" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="664c9dc6-f5a7-4f90-b531-cb52194c60d0"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISTRITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="349" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="41b55fcd-cd25-4a93-b975-754fa33936f1"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="349" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="4f2acfcb-17c3-4d68-b809-179681f76040"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="372" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="fefa3aca-3a6d-4682-8955-1fff4ed64467"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="372" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="e7a7d5a5-15f2-4790-833f-b1136ba58310"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="392" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="ef7481b6-5b7f-45ba-8b7d-8cd3d973bfc8"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="392" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="a46417b8-e3f6-44b0-89f4-607f233ae2a6"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CEL. MOVISTAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="372" width="4" height="20" forecolor="#FFFFFF" uuid="8d16be7a-4800-44b1-a2f2-7bc2d52c2fa3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="372" width="82" height="20" forecolor="#FFFFFF" uuid="4e6aae96-c093-4017-968a-7d1c220515da"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CEL. CLARO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="392" width="4" height="20" forecolor="#FFFFFF" uuid="96c53000-7748-47ef-9914-487721646ed4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="392" width="82" height="20" forecolor="#FFFFFF" uuid="48541389-d811-4a53-a0f7-6024c6539233"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CEL. NEXTEL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="309" width="149" height="20" uuid="85e1a959-0f7b-4dd8-9ff9-3f75893104ef"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerubidistnombreV()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="349" width="384" height="23" uuid="ad64bdd8-e425-4d2e-bb5e-902d25f7c2ef"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPeremailV()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="372" width="149" height="20" uuid="6cb25ebe-1c61-4902-99c8-f7eb30e77a64"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerteleffijoV()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="392" width="149" height="20" uuid="475a0f04-75e7-4971-b899-dcf5f05d6df0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPermovilmovV()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="372" width="129" height="20" uuid="72de73cd-5c50-46f0-9e5c-5718d69b8cb3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPermovilclaV()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="392" width="129" height="20" uuid="85e98c37-0d5b-409c-9c8a-38ac0712a0d0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPermovilnexV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="249" width="82" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="fe00450b-56df-4e15-a529-c69b1ed4d08f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. NACIMIENTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="169" width="149" height="20" uuid="8cde85f2-61e5-4688-ace2-9f0bfa07f514"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getAsorucV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="89" width="82" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="9a7eab7c-5a93-4084-b030-c87c5a6d3d5a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="129" width="82" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="1d7cc704-9e83-41f7-b6a5-6bfac1f40911"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="249" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="5666fb85-8528-40ca-a8e1-3c53abfd821c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="149" width="82" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="15ba13c6-c8eb-4bec-91f4-4e28ed341224"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[D.N.I.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="229" width="149" height="20" uuid="e83a39e2-2a96-4aac-a336-4472c71dca86"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPersexoC()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="209" width="149" height="20" uuid="764c482b-25ca-40d4-8213-fa53099109c4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerestadocivilC()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="151" y="89" width="149" height="20" uuid="8fb88a5b-09c7-4ac1-893d-1f11c7a0367e"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPernombresV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="229" width="82" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="b7f5fa7f-548b-4c78-bea2-5f8a8d723b67"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEXO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="169" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="b1c3230b-aae7-4bb2-a2d3-ee0cab0628e4"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="109" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="367e9740-8ca1-4ce7-b886-879e3a3b18b4"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PATERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="209" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="ec64c6fc-bc15-4eca-97e4-b15717496768"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO CIVIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="189" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="cc954ee2-a5b0-436f-9ad4-f86071e0ca2c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RAZÓN SOCIAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="249" width="149" height="20" uuid="ad515db7-e45f-4827-a778-047a6ba810aa"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPernacimientoF()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="149" width="149" height="20" uuid="81c73bef-8cbc-4a09-a53d-abefeda1a60b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerdniV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="141" y="129" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="c92d6d34-fb18-4a43-b618-cfa9eccfa0e8"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="189" width="149" height="20" uuid="6cff7369-cd0e-49a3-a722-06cc9b15c0cb"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getAsorazonsocialV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="169" width="82" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="dcc720b7-40d0-46ac-877a-2ae8ee5cb8d9"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="149" width="4" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="a2e45d8b-3720-4b26-a830-18d4621e5d4b"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="209" width="4" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="8f4032c3-70c4-47ee-843a-c1b86c2366c6"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="109" width="149" height="20" uuid="4297e6b7-10a2-4985-9415-aa6efb042150"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPerpaternoV()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="129" width="149" height="20" uuid="470409b6-be22-44b1-8099-c7c2d38a914c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Afiliado}.getPersona().getPermaternoV()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="141" y="109" width="4" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="45c50108-06ea-4b34-a5ce-48ffdf2f7b96"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="89" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="b56d56d0-8df1-4b7d-8f05-2a02b273bab3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="229" width="4" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="59e685c2-b874-4df5-8044-8cfb4f586cfb"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="189" width="4" height="20" forecolor="#FFFFFF" backcolor="#3399FF" uuid="106a091e-a195-4620-a5e4-cbc2e6e9b2ae"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="148" y="108" width="152" height="1" uuid="667abc6b-1d83-4ac1-8427-35681a24a64e"/>
+			</line>
+			<line>
+				<reportElement x="148" y="129" width="152" height="1" uuid="4c036107-67a5-4abf-9327-7c9d4a2e53fc"/>
+			</line>
+			<line>
+				<reportElement x="148" y="149" width="152" height="1" uuid="6a89f641-4681-4271-96f1-109089997d13"/>
+			</line>
+			<line>
+				<reportElement x="148" y="168" width="152" height="1" uuid="ab025116-24c1-46fe-8ae5-6a824d0c1184"/>
+			</line>
+			<line>
+				<reportElement x="148" y="188" width="152" height="1" uuid="19864b64-9cfe-4607-9e8b-acce44d23a02"/>
+			</line>
+			<line>
+				<reportElement x="148" y="208" width="152" height="1" uuid="f8d1f072-aa7d-4dac-a1ba-af53d23fc8a2"/>
+			</line>
+			<line>
+				<reportElement x="148" y="228" width="152" height="1" uuid="3f219ee0-6404-4762-a504-2a8af9792034"/>
+			</line>
+			<line>
+				<reportElement x="148" y="248" width="152" height="1" uuid="f1825c34-ae54-4035-8119-c8753b63f0bc"/>
+			</line>
+			<line>
+				<reportElement x="148" y="268" width="152" height="1" uuid="e6a8d8ae-cffd-4b1b-91f9-a4d1a3cbab30"/>
+			</line>
+			<line>
+				<reportElement x="148" y="289" width="152" height="1" uuid="9f79bd41-7ddc-487d-bd2c-a706f48e34b1"/>
+			</line>
+			<line>
+				<reportElement x="148" y="309" width="152" height="1" uuid="cd802d4b-865c-456f-8301-66d31b72abd8"/>
+			</line>
+			<line>
+				<reportElement x="148" y="391" width="152" height="1" uuid="2a949740-5445-4803-a31f-ef88118527a9"/>
+			</line>
+			<line>
+				<reportElement x="148" y="349" width="387" height="1" uuid="6f12b87e-5616-4c5e-9f54-ccfc18660542"/>
+			</line>
+			<line>
+				<reportElement x="403" y="392" width="132" height="1" uuid="aa2b9945-66fb-4600-9cbe-f05cb587bd87"/>
+			</line>
+			<textField>
+				<reportElement x="14" y="343" width="19" height="6" forecolor="#FFFFFF" uuid="863eab17-e4e2-4456-b92f-9580baab0168"/>
+				<textElement>
+					<font size="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="7" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="59" splitType="Stretch">
+			<subreport>
+				<reportElement x="48" y="0" width="487" height="53" uuid="80db2135-e779-4c5b-bcf3-7ad6a5dd6671"/>
+				<subreportParameter name="ASOCODIGO">
+					<subreportParameterExpression><![CDATA[$P{Afiliado}.getAsocodigoD()]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reportAfiliado_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="57">
+			<subreport>
+				<reportElement x="48" y="0" width="487" height="51" uuid="d88baf53-5cb7-477a-8561-4b6b9b7ee73f"/>
+				<subreportParameter name="ASOCODIGO">
+					<subreportParameterExpression><![CDATA[$P{Afiliado}.getAsocodigoD()]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reportAfiliado_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="1" width="555" height="15" forecolor="#999999" backcolor="#999999" uuid="42873ef5-ae0a-42f1-b96f-8e2305f57bc1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="15" width="200" height="15" uuid="0d55f431-6c46-4ba5-bacb-371ce79e3520"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Sitio Web: www.munichosica.gob.pe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="15" forecolor="#FFFFFF" uuid="1e708112-d2da-42ac-8e65-d09a36d66334"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[TRUJILLO SUR N° 496 - LURIGANCHO - CHOSICA TELEF. 360-3078 FAX 360-2576]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="15" width="200" height="15" uuid="0a6be2e3-b1f0-4b9f-97fa-4aef26b91332"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[e-mail: transporte@munichosica.gob.pe]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

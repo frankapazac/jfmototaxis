@@ -64,7 +64,7 @@
 							<td><input type="password" id="txtpassConfirma"></td>
 					</tr>
 			</table>
-			 <input type="button" id="btnActualizarClave" value="Guardar" />
+			 <input type="button" id="btnActualizarClave" value="Guardar" class="ui-button"/>
 		</div>
 	</div>
 </body>

@@ -8,6 +8,55 @@ $(document).ready(function(){
 	$("#btnMotoNuevo").click(function(){llenarDatosMototaxi([]);});
 	var codigoMototaxi="0";
 	
+    $("#btnMotoCese").click(function(){
+    	$("#txtCodigoMotoCese").val("0");
+    	$("#txtFechaMotoCese").val("");
+    	$("#txtObservacionMoto").val("");
+    	
+    	$.ajax({ 
+    		data:{
+    			codigo:codigoMototaxi
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "Mototaxi/ObtenerCeseMoto.htm", 
+            success: function(data){
+            	//alert(JSON.stringify(data));
+            	$("#txtPlacaMoto").text(data.uneplacanroV);
+            	//llenarDatosMototaxi(data);
+            	$.message.Get();
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+    	
+    	$("#divFormularioMotoCese").show();
+    	$("#divFormularioMotoCese").dialog({
+    		title:"Cesar Unidad",
+    		width:500,
+    		modal: true
+    	});
+    });
+    
+    $("#btnGuardarMotoCese").click(function(){
+    	$.ajax({ 
+    		data:{
+    			"unidadempresa.unecodigoD":codigoMototaxi,
+    			"pmofechaceseV":$("#txtFechaMotoCese").val(),
+    			"pmoobservacionV":$("#txtObservacionMoto").val()
+    		},
+            datatype:'json',
+            type: "POST", 
+            url: "Mototaxi/GuardarCeseMoto.htm", 
+            success: function(data){
+            	llenarTablaMotos();
+            	$.message.Success();
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+    });
+	
 	//DOCUMENTO 
     function fncDocumentoUnidad(){
     	var options={
@@ -102,6 +151,8 @@ $(document).ready(function(){
             	$("#txtCodigoVehiculo").val(data.propUnidadEmpresa.unidadempresa.unecodigoD);
             	$("#txtCodigoEmpadronamiento").val(data.empadronamiento.epocodigoD);
             	llenarTablaMotos();
+            	$("#tabs2").validateClean();
+            	limpiarVehiculo();
             	$.message.Success();
             },error: function(jqXHR, textStatus, errorThrown){
             	$.message.Error();
@@ -112,7 +163,9 @@ $(document).ready(function(){
 	function fncSiguiente(){
 		if($("#txtCodigoAsociado").val()==0){
 			$.message.Info('Información','Guarde antes de continuar por favor');
+			evt.stopPropagation();
 			return;
+			
 		}
 		llenarTablaMotos();
 		llenarDatosMototaxi("");
@@ -179,6 +232,7 @@ $(document).ready(function(){
             type: "GET", 
             url: "Mototaxi/Obtener.htm", 
             success: function(data){
+            	//alert(JSON.stringify(data));
             	llenarDatosMototaxi(data);
             	$.message.Get();
             },error: function(jqXHR, textStatus, errorThrown){
@@ -188,16 +242,18 @@ $(document).ready(function(){
 	}
 	
 	function llenarDatosMototaxi(data){
+		//alert(JSON.stringify(data.unidadEmpresa));
     	$("#tabs2").validateClean();
 		if(data!=""){
 			$("divVehiculoArchivos input[name='txtCodArchivo']").val("0");
 			$("divVehiculoArchivos input[name='txtNumDocumento']").val("");
 			$("divVehiculoArchivos input[name='txtFechaEmision']").val("");
 			$("divVehiculoArchivos input[name='txtFechaCaducidad']").val("");
-			
+			//alert(123);
 			$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
     		$("#txtCodigoVehiculo").val(data.unidadEmpresa.unecodigoD);
-			$("#txtCodigoEmpadronamiento").val(data.empadronamiento.epocodigoD);
+			//alert(data.empadronamiento.empfechainicioF);
+    		$("#txtCodigoEmpadronamiento").val(data.empadronamiento.epocodigoD);
 			$("#txtEmpadFechaInicio").val(data.empadronamiento.empfechainicioF);
 			$("#txtEmpadFechaCese").val(data.empadronamiento.empfechaceseF);
 			$("#txtNroPlaca").val(data.unidadEmpresa.uneplacanroV);
@@ -216,7 +272,7 @@ $(document).ready(function(){
 			$("#txtNroPasajeros").val(data.unidadEmpresa.unenropasajerosI);
 			$("#sltModelo").val(data.unidadEmpresa.modelo.modcodigo_D);
 			$("#txtCargaUtil").val(data.unidadEmpresa.unecargautilD);
-			$("#txtAno").val(data.unidadEmpresa.uneannoC);
+			$("#txtAno").val($.trim(data.unidadEmpresa.uneannoC));
 			$("#txtLongitud").val(data.unidadEmpresa.unelongitudD);
 			$("#txtColor").val(data.unidadEmpresa.unecolorV);
 			$("#txtAncho").val(data.unidadEmpresa.uneanchoD);
@@ -233,43 +289,47 @@ $(document).ready(function(){
 			}
 			$("#btnVehiculoProcesar").val("Modificar");
 		}else{
-			$("divVehiculoArchivos input[name='txtCodArchivo']").val("0");
-			$("divVehiculoArchivos input[name='txtNumDocumento']").val("");
-			$("divVehiculoArchivos input[name='txtFechaEmision']").val("");
-			$("divVehiculoArchivos input[name='txtFechaCaducidad']").val("");
-			
-			$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
-			$("#txtCodigoVehiculo").val("");
-			$("#txtCodigoEmpadronamiento").val("");
-			$("#txtEmpadFechaInicio").val("");
-			$("#txtEmpadFechaCese").val("");
-			$("#txtNroPlaca").val("");
-			$("#sltCarroceria").val("");
-			$("#sltOfRegistral").val("");
-			$("#txtNroSerieChasis").val("");
-			$("#txtNroPadron").val("");
-			$("#txtNroMotor").val("");
-			$("#txtPartRegistral").val("");
-			$("#txtNroNiv").val("");
-			$("#txtTitulo").val("");
-			$("#txtRuedas").val("");
-			$("#txtClase").val("");
-			$("#txtNroAsientos").val("");
-			$("#sltMarca").val("");
-			$("#txtNroPasajeros").val("");
-			$("#sltModelo").val("");
-			$("#txtCargaUtil").val("");
-			$("#txtAno").val("");
-			$("#txtLongitud").val("");
-			$("#txtColor").val("");
-			$("#txtAncho").val("");
-			$("#sltCombustible").val("");
-			$("#txtAlto").val("");
-			$(".txtVehNumDocumento").val("");
-			$(".txtVehFecEmision").val("");
-			$(".txtVehFecCaducidad").val("");
-			$("#btnVehiculoProcesar").val("Insertar");
+			limpiarVehiculo();
 		}
+	}
+	
+	function limpiarVehiculo(){
+		$("divVehiculoArchivos input[name='txtCodArchivo']").val("0");
+		$("divVehiculoArchivos input[name='txtNumDocumento']").val("");
+		$("divVehiculoArchivos input[name='txtFechaEmision']").val("");
+		$("divVehiculoArchivos input[name='txtFechaCaducidad']").val("");
+		
+		$("img[class='imgFotosVehiculo']").attr("src","images/no_disponible.jpg");
+		$("#txtCodigoVehiculo").val("");
+		$("#txtCodigoEmpadronamiento").val("");
+		$("#txtEmpadFechaInicio").val("");
+		$("#txtEmpadFechaCese").val("");
+		$("#txtNroPlaca").val("");
+		$("#sltCarroceria").val("");
+		$("#sltOfRegistral").val("");
+		$("#txtNroSerieChasis").val("");
+		$("#txtNroPadron").val("");
+		$("#txtNroMotor").val("");
+		$("#txtPartRegistral").val("");
+		$("#txtNroNiv").val("");
+		$("#txtTitulo").val("");
+		$("#txtRuedas").val("");
+		$("#txtClase").val("");
+		$("#txtNroAsientos").val("");
+		$("#sltMarca").val("");
+		$("#txtNroPasajeros").val("");
+		$("#sltModelo").val("");
+		$("#txtCargaUtil").val("");
+		$("#txtAno").val("");
+		$("#txtLongitud").val("");
+		$("#txtColor").val("");
+		$("#txtAncho").val("");
+		$("#sltCombustible").val("");
+		$("#txtAlto").val("");
+		$(".txtVehNumDocumento").val("");
+		$(".txtVehFecEmision").val("");
+		$(".txtVehFecCaducidad").val("");
+		$("#btnVehiculoProcesar").val("Insertar");
 	}
 	
 	function fncCancelar(){

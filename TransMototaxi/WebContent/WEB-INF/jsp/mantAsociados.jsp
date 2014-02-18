@@ -19,17 +19,17 @@
 	<script type="text/javascript" src="js/ui/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.progressbar.js"></script>
 	<script type="text/javascript" src="js/ui/jquery.ui.tooltip.js"></script>
-	<script type="text/javascript" src="js/jefra.validate.js"></script >
-	<script type="text/javascript" src="js/jefra.message.js"></script >
-	<script type="text/javascript" src="js/jefra.util.js"></script >
+	<script type="text/javascript" src="js/jefra.validate.js"></script>
+	<script type="text/javascript" src="js/jefra.message.js"></script>
+	<script type="text/javascript" src="js/jefra.util.js"></script>
 	<script type="text/javascript" src="js/jsp/mantAsociados.js"></script>
-	<script type="text/javascript" src="js/jsp/mantAsocMototaxis.js"></script>
+	<!--script type="text/javascript" src="js/jsp/mantAsocMototaxis.js"></script-->
 	<style type="text/css">
 		#tabs{
-			height: 910px;
+			height: 660px;
 		}
 		.fileDocumento{
-			width: 300px;
+			width: 180px;
 		}
 		.txtNumeroDocumento{
 			width: 150px
@@ -38,7 +38,7 @@
 			width: 100px
 		}
 		#divRegistrarMoto{
-			width:1000px;
+			width:775px;
 			min-height:600px;
 		}
 		#divMotos{
@@ -66,13 +66,13 @@
 			width: 100%;
 		}
 		.fileFotoAsociado, #formFotoAsociado{
-			width: 265px;
+			width: 210px;
 		}
 		#imgFotoAsociado{
-			width: 250px;
+			width: 200px;
 		} 
 		.imgFotosVehiculo{
-			height: 160px;
+			width: 155px;
 		}
 		.txtCons{
 			width: 100px;
@@ -111,7 +111,7 @@
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>
@@ -243,7 +243,7 @@
 						<table id="tblDocumentos">
 							<tr>
 								<td>N°</td>
-								<td>Adjuntar</td>
+								<td>Adjuntar</td>	
 								<td>N° Documento</td>
 								<td>Fec. Emision</td>
 								<td>Fec. Caducidad</td>
@@ -284,11 +284,12 @@
 					<div id="divMotos">
 				    	<fieldset>
 				        	<legend>Motos</legend>
-				        	<table id="tblMotos" align="center" class="tablesorter" style="width: 280px;"></table>
+				        	<table id="tblMotos" align="center" class="tablesorter tblTablaEstilo" style="width: 220px;"></table>
 				        </fieldset>
 				        <div>
-				        	<input type="button" value="Nuevo" id="btnMotoNuevo" tabindex="24"/>
-				        	<input type="button" value="Editar" id="btnMotoEditar" tabindex="25"/>
+				        	<input type="button" value="Nuevo" id="btnMotoNuevo" tabindex="24" class="ui-button"/>
+				        	<input type="button" value="Editar" id="btnMotoEditar" tabindex="25" class="ui-button"/>
+				        	<input type="button" value="Cese" id="btnMotoCese" class="ui-button"/>
 				        </div>
 				    </div>
 				    <div id="divVehiculo">
@@ -453,19 +454,24 @@
 									</form:form>
 								</c:forEach>
 							</table>
-			
-							<div id="gallery" align="center">
+							<div id="gallery">
 								<c:forEach var="docunidadfoto" items="${documentosUnidadFotos}" varStatus="status">
-									<img alt="<c:out value="${docunidadfoto.mtdnombreV}"/>" id="imgFotoVehiculo_<c:out value="${docunidadfoto.mtdcodigoI}"/>" class="imgFotosVehiculo" src="images/no_disponible.jpg"/>
+									<div style="width: 187px; float: left;" align="center"> 
+										<div style="width: 158px; height: 130px">
+											<img alt="<c:out value="${docunidadfoto.mtdnombreV}"/>" id="imgFotoVehiculo_<c:out value="${docunidadfoto.mtdcodigoI}"/>" class="imgFotosVehiculo" src="images/no_disponible.jpg"/>
+										</div>
+										<p><c:out value="${docunidadfoto.mtdnombreV}"/></p>
+									</div>
 								</c:forEach>
 								<div id="progressVehiculo"></div>
 							</div>
-			
+					
+					
 				        </fieldset>
 				        <div>
 					        <center>
-					        	<input type="button" value="Agregar" id="btnVehiculoProcesar"/>
-				        		<input type="button" value="Cancelar" id="btnVehiculoCancelar"/>
+					        	<input type="button" value="Agregar" id="btnVehiculoProcesar" class="ui-button"/>
+				        		<input type="button" value="Cancelar" id="btnVehiculoCancelar" class="ui-button"/>
 					        </center>
 				        </div>
 					</div>
@@ -492,7 +498,36 @@
 	
 	<h4 align="center">
 		<img id="btnNuevo" alt="Nuevo" src="images/Add.png"/>
+		<img id="btnImprimirPdf" alt="Nuevo" src="images/acroread.png"/>
 	</h4>
+	
+	<div id="divFormularioCese">
+		<h1 id="txtNombreAsociado">NOMBRE DEL CONDUCTOR</h1>		
+		<input type="hidden" id="txtCodigoCese"/>
+		<p id="">Fecha</p><input type="text" id="txtFechaCese" class="dtFecha"/>
+		<p>Observaciones</p>
+		<textarea cols="50" rows=4 id="txtObservacion"></textarea>
+		<table>
+			<tr>
+				<td><input type="button" id="btnGuardarCese" value="Cese" class="ui-button"/></td>
+				<td><input type="button" id="btnCancelarCese" value="Cancelar" class="ui-button"/></td>
+			</tr>
+		</table>
+	</div>	
+	
+	<div id="divFormularioMotoCese">
+		<h1 id="txtPlacaMoto">PLACA DE LA MOTO</h1>		
+		<input type="hidden" id="txtCodigoMotoCese"/>
+		<p id="">Fecha</p><input type="text" id="txtFechaMotoCese" class="dtFecha"/>
+		<p>Observaciones</p>
+		<textarea cols="50" rows=4 id="txtObservacionMoto"></textarea>
+		<table>
+			<tr>
+				<td><input type="button" id="btnGuardarMotoCese" value="Cese" class="ui-button"/></td>
+				<td><input type="button" id="btnCancelarMotoCese" value="Cancelar" class="ui-button"/></td>
+			</tr>
+		</table>
+	</div>	
 	
 	<div id="divConstancia" align="center">
 		<fieldset>
@@ -576,9 +611,9 @@
 			Licencia de Conducir: <label id="txtConsLicencia">Licencia</label>, Fecha de Revalidación: <label id="txtConsFecha">Fecha</label>, 
 			domiciliado en <label id="txtConsDomicilio">Domicilio</label></p>
 			<center>
-				<input type="button" value="Guardar" id="btnGuardarConstancia" class="ui-button" tabindex="20"/>
-				<input type="button" value="Imprimir" id="btnImprimirConstancia" class="ui-button" tabindex="20"/>
-				<input type="button" value="Cancelar" id="btnCancelarConstancia" class="ui-button" tabindex="20"/>
+				<input type="button" value="Guardar" id="btnGuardarConstancia" class="ui-button" tabindex="20" class="ui-button"/>
+				<input type="button" value="Imprimir" id="btnImprimirConstancia" class="ui-button" tabindex="20" class="ui-button"/>
+				<input type="button" value="Cancelar" id="btnCancelarConstancia" class="ui-button" tabindex="20" class="ui-button"/>
 			</center>
 		</fieldset>
 	</div>

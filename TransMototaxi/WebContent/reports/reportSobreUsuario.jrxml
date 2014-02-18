@@ -59,7 +59,7 @@
 			</textField>
 			<image>
 				<reportElement x="3" y="94" width="29" height="52" uuid="dd3bc2b7-eaa0-46c5-992f-d30b7a844c54"/>
-				<imageExpression><![CDATA["E:\\SIGEM_13\\SIGEM_2013\\Proyecto2012\\Proyecto2012\\Resources\\LogoChosica.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\reports\\Imagenes\\LogoChosica.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="110" width="555" height="20" uuid="3a0997b4-98f8-41d9-a18f-0d4f30b84787"/>

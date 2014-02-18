@@ -1,8 +1,10 @@
 $(document).ready(function(){
 	updateTime();
 	setInterval(updateTime, 30000);
+	var actCodigo=0;
 	$("#divFormulario").hide();
 	$("#divFormularioVer").hide();
+	$("#divActaConformidad").hide();
 	$("#sltConductor").change(buscarConductorPorCodigo);
 	$("#txtConductorDNI").keyup(buscarConductorPorDNI);
 	$("#sltPlacas").change(buscarUnidadPorCodigo);
@@ -14,11 +16,37 @@ $(document).ready(function(){
 		$.message.Find();
 	});
 	$("#btnNuevo").click(function(){llenarDatos("");});
+	$("#btnConfAceptar").click(insertarActaConformidad);
 	$("#btnAceptarVer").click(function(){
 		$("#divFormularioVer").dialog('close');
 	});
+	$("#btnConfImprimir").click(imprimirConformidad);
 	
 	buscar('ITE.INTCODIGO_D','');
+	
+	function imprimirConformidad(){
+		var codigo=$("#sltPropConductor").val();
+    	window.open("ActaConformidad/ImprimirPdf.htm?intCodigo="+actCodigo+"&perCodigo="+codigo);
+	}
+	
+	function insertarActaConformidad(){
+		$.ajax({ 
+			data: {
+				acocodigoD:actCodigo,
+				acodescripcionV:$("#txtObservaciones").val()
+			},
+            datatype:'json',
+            type: "POST", 
+            url: "ActaConformidad/Insertar.htm", 
+            success: function(data){
+            	buscar($("#sltCriterio").val(),$("#txtTexto").val());
+            	$.message.Success();
+            	//$("#divFormularioVer").dialog('close');
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+	}
 	
 	function buscar(criterio, texto){
 		$.ajax({ 
@@ -45,33 +73,35 @@ $(document).ready(function(){
     	var txtHtml="";
     	$("#tblLista").empty();
     	txtHtml="<thead>"
-			+"<th class='header'>NUM</th>"
+			+"<th class='header'></th>"
 			+"<th class='header'>INGRESO</th>"
+			+"<th class='header'>INTERNAMIENTO</th>"
 			+"<th class='header'>PAPELETA</th>"
 			+"<th class='header'>PLACA</th>"
 			+"<th class='header'>CONDUCTOR</th>"
-			+"<th class='header'>C. DNI</th>"
+			//+"<th class='header'>DNI</th>"
 			+"<th class='header'>PROPIETARIO</th>"
-			+"<th class='header'>P. DNI</th>"
-			+"<th class='header'>PAP.</th>"
-			+"<th class='header'>BOL. INTER.</th>"
-			+"<th class='header'>ACT. CONFO.</th>"
+			//+"<th class='header'>DNI</th>"
+			//+"<th class='header'>PAP.</th>"
+			+"<th class='header'>CONFORMIDAD</th>"
+			+"<th class='header'></th>"
 			+"<th class='header'></th>"
 			+"<th class='header'></th>"
 			+"<th class='header'></th>"
 			+"</thead>"
 			+"<tfoot>"
-			+"<th>NUM</th>"
+			+"<th></th>"
 			+"<th>INGRESO</th>"
+			+"<th>INTERNAMIENTO</th>"
 			+"<th>PAPELETA</th>"
 			+"<th>PLACA</th>"
 			+"<th>CONDUCTOR</th>"
-			+"<th>COND. DNI</th>"
+			//+"<th>DNI</th>"
 			+"<th>PROPIETARIO</th>"
-			+"<th>PROP. DNI</th>"
-			+"<th>PAP.</th>"
-			+"<th>BOL. INTER.</th>"
-			+"<th>ACT. CONFO.</th>"
+			//+"<th>DNI</th>"
+			//+"<th>PAP.</th>"
+			+"<th>CONFORMIDAD</th>"
+			+"<th></th>"
 			+"<th></th>"
 			+"<th></th>"
 			+"<th></th>"
@@ -82,18 +112,19 @@ $(document).ready(function(){
     		txtHtml="<tr>"+
 			"<td>"+(x+1)+"</td>"+
 			"<td>"+data[x].intfechaingresoF+"</td>"+
+			"<td>"+data[x].boletaInternamiento.binnumeroV+"</td>"+
 			"<td>"+data[x].papeleta.papnumeroV+"</td>"+
 			"<td>"+data[x].propUnidadEmpresa.unidadempresa.uneplacanroV+"</td>"+
 			"<td>"+data[x].conductor.persona.pernombresV+"</td>"+
-			"<td>"+data[x].conductor.persona.perdniV+"</td>"+
+			//"<td>"+data[x].conductor.persona.perdniV+"</td>"+
 			"<td>"+data[x].propUnidadEmpresa.asociado.persona.pernombresV+"</td>"+
-			"<td>"+data[x].propUnidadEmpresa.asociado.persona.perdniV+"</td>"+
-			"<td>"+data[x].papeleta.papcodigoD+"</td>"+
-			"<td>"+data[x].boletaInternamiento.bincodigoD+"</td>"+
-			"<td>"+data[x].actaConformidad.acocodigoD+"</td>"+
+			//"<td>"+data[x].propUnidadEmpresa.asociado.persona.perdniV+"</td>"+
+			//"<td>"+data[x].papeleta.papcodigoD+"</td>"+
+			"<td>"+(data[x].actaConformidad.acocodigoD>0?"VERIFICADO":"SIN VERIFICAR")+"</td>"+
 			"<td><img alt='Ver' class='btnVer' id='ver"+data[x].intcodigoD+"' src='images/ver.png'></td>"+
 			"<td><img alt='Modificar' class='btnObtener' id='mod"+data[x].intcodigoD+"' src='images/edit.png'></td>"+
 			"<td><img alt='Imprimir' class='btnImprimir' id='imp"+data[x].intcodigoD+"' src='images/printer.png'></td>"+
+			"<td><img alt='Acta Conformidad' class='btnActa' id='act"+data[x].intcodigoD+"' src='images/button_ok.png'></td>"+
 			"</tr>";
     		$("#tblLista tbody").append(txtHtml);
     	}
@@ -101,8 +132,48 @@ $(document).ready(function(){
     	$(".btnObtener").click(obtener);
     	$(".btnVer").click(ver);
     	$(".btnImprimir").click(printInternamiento);
+    	$(".btnActa").click(actaConformidad);
     	$("#tblLista").paginacion();
     }
+	
+	$("#btnConfCancelar").click(function(){
+		$("#divActaConformidad").dialog('close');
+	});
+	
+	function actaConformidad(){
+		$("#sltPropConductor").empty();
+		$("#txtActaNombres").val("");
+		$("#txtObservaciones").val("");
+		actCodigo=$(this).attr("id").replace('act','');
+		$.ajax({ 
+			data: {
+				codigo:actCodigo
+			},
+            datatype:'json',
+            type: "GET", 
+            url: "Internamientos/ObtenerPropietario.htm", 
+            success: function(data){
+            	$("#txtActaNombres").text(data.propUnidadEmpresa.asociado.persona.pernombresV);
+            	$("#txtObservaciones").text(data.actaConformidad.acodescripcionV);
+            	var htmlText="";
+            	for(var x=0;x<data.personas.length;x++){            		
+            		htmlText+="<option value='"+data.personas[x].percodigoD+"'>"+data.personas[x].pernombresV+"</option>";
+            	}
+            	$("#sltPropConductor").append(htmlText);
+            	$.message.Get();
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+		
+		$("#divActaConformidad").dialog({
+			title:"Acta de Conformidad",
+			width:600,
+			//height: 280,
+			modal: true
+		});
+	}
+	
 	function printInternamiento(){
     	var codigo=$(this).attr("id").replace("imp","");
     	window.open("Internamientos/ImprimirPdf.htm?codigo="+codigo);
@@ -188,12 +259,14 @@ $(document).ready(function(){
 		$("#divFormularioVer").dialog({
 			title:"Internamiento Mototaxis",
 			width:1000,
-			//height: 600,
+			height: 600,
 			modal: true
 		});
 	}
 	
 	function llenarDatos(data){
+		$("#sltConductor").hide();
+		$("#sltPlacas").hide();
 		if(data!=""){
 			$(".divPartes input[value='N']").attr('checked',true);
 			$("#btnProcesar").val("Modificar");
@@ -273,9 +346,12 @@ $(document).ready(function(){
 		});
 	}
 	
+	$("#btnCancelar").click(function(){
+		$("#divFormulario").dialog('close');
+	});
+	
 	function procesar(){
 		$("#divFormulario").validate();
-		
 		var internamiento=new Object();
 		internamiento.conductor=new Object();
 		internamiento.papeleta=new Object();
@@ -305,7 +381,6 @@ $(document).ready(function(){
 			internamiento.inventarios[cont++]=inventario;
         });
 		//alert(partes.length);
-		//alert(JSON.stringify(internamiento));
 		
 		if($("#btnProcesar").val()=="Guardar"){
 			$.ajax({ 
@@ -433,6 +508,8 @@ $(document).ready(function(){
 	
 	function llenarDatosPapeleta(data){
 		if(data!=""){
+			//alert(data.conductor.concodigoD);
+			//alert(data.conductor.persona.perpaternoV+' '+data.conductor.persona.permaternoV+', '+data.conductor.persona.pernombresV);
 			$('#sltConductor').combobox('autocomplete',data.conductor.concodigoD,data.conductor.persona.perpaternoV+' '+data.conductor.persona.permaternoV+', '+data.conductor.persona.pernombresV);
 			$("#txtPapCodigo").val(data.papcodigoD);
 			//$("#txtConductorNroLicencia").val(data.conductor.archivo.adjnumeroV);

@@ -13,7 +13,7 @@ $(document).ready(function(){
     $("#btnNuevo").click(function(){
     	$("#divFormulario").dialog({
     		title:"Nuevo paradero",
-    		width:700,
+    		width:750,
     		//height: 350,
     		modal: true
     	});

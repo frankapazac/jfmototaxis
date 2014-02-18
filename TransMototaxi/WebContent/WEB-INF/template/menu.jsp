@@ -4,6 +4,14 @@
 <script type="text/javascript">
 	$(document).ready(function(){ 
 		$('.full-width').horizontalNav({});
+		$("#menuJF").find('li').each(
+			function(){
+				var current=$(this).find('a');
+				if(document.URL.toLowerCase().indexOf(current.attr('href').toLowerCase())!=-1){
+					current.css({'background': '#f0f0f0','color': '#608A12','font-size': '1em'})
+				}
+			}		
+		);
 	});
 </script>
 <style type="text/css">
@@ -11,8 +19,11 @@
 	    background: #efefef;
 	    border-radius: 6px;
 	    /*FRANK APAZA*/
-	    width: 1158px;
+	    /*width: 1158px;*/
+	    /*width: 950px;*/
+	    width: 908px;
 		float: left;
+		font-size: 11.5px
 	}
 	.horizontal-nav ul {
 	    background: #608A12;
@@ -61,11 +72,12 @@
 	    color: red !important;
 	}
 </style>
-<nav class="horizontal-nav full-width horizontalNav-notprocessed">
+<nav class="horizontal-nav full-width horizontalNav-notprocessed" id="menuJF">
 	<ul>
 		<c:forEach var="pagina" items="${paginas}">
 			<li><a href="<c:out value="${pagina.pagurlV}"/>"><c:out value="${pagina.pagnombreV}"/></a></li>
 		</c:forEach>
+		<!-- li><a href="#"><img src="images/mail.png" width="11" height="11"/></a-->
 		<li><a href="<c:url value="j_spring_security_logout"/>" class="lnkSalir" >SALIR</a></li>
     </ul>
 </nav>

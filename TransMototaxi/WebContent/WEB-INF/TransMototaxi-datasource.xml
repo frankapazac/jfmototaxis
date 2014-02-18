@@ -6,10 +6,10 @@
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-		<!-- property name="url" value="jdbc:sqlserver://192.168.3.5;databaseName=BDTRANSPORTE"/--> 
-		<property name="url" value="jdbc:sqlserver://192.168.3.5;databaseName=BDTRANSPORTE"/>
+		<property name="url" value="jdbc:sqlserver://192.168.3.5;databaseName=BDTRANSPORTE"/> 
+		<!-- property name="url" value="jdbc:sqlserver://192.168.3.4;databaseName=BDTRANSPORTE"/> -->
 		<property name="username" value="sa"/>
-		<!-- property name="password" value="Delta_1574"/-->
+		<!-- property name="password" value="sa_2012"/>  -->
 		<property name="password" value="Delta@9731"/>
 	</bean>
 </beans>
