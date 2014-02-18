@@ -6,12 +6,46 @@ public class MotPropUnidadEmpresa {
 	protected MotEmprAsociado asociado;
 	protected MotUnidadEmpresa unidadempresa;
 	protected String pmoestadoC;
+	protected String pmofechainicioV;
+	protected String pmofechaceseV;
+	protected String pmoobservacionV;
 	
 	public MotPropUnidadEmpresa() {
 		asociado=new MotEmprAsociado();
 		unidadempresa=new MotUnidadEmpresa();
 	}
 	
+	
+	public String getPmofechainicioV() {
+		return pmofechainicioV;
+	}
+
+
+	public void setPmofechainicioV(String pmofechainicioV) {
+		this.pmofechainicioV = pmofechainicioV;
+	}
+
+
+	public String getPmofechaceseV() {
+		return pmofechaceseV;
+	}
+
+
+	public void setPmofechaceseV(String pmofechaceseV) {
+		this.pmofechaceseV = pmofechaceseV;
+	}
+
+
+	public String getPmoobservacionV() {
+		return pmoobservacionV;
+	}
+
+
+	public void setPmoobservacionV(String pmoobservacionV) {
+		this.pmoobservacionV = pmoobservacionV;
+	}
+
+
 	public String getPmoestadoC() {
 		return pmoestadoC;
 	}

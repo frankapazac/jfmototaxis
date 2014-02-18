@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,16 @@ import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotOperativo;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotOperativoDaoException;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotOperativoDaoFactory;
+import com.munichosica.myapp.util.IpUtils;
 
 @Controller
 @RequestMapping("/Operativos")
@@ -77,21 +82,30 @@ public class OperativoController {
 
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
 	public @ResponseBody String procesar 
-	(@RequestBody MotInspectorList inspectorList){
-		
+	(HttpServletRequest request ,@RequestBody MotInspectorList inspectorList){
 		logger.info("Ingreso a GuardarOperativo/Procesar.htm");
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
 			
 		try {
 			MotOperativoDaoFactory.create().insert(inspectorList.getOperativo());
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_OPERATIVO", inspectorList.getOperativo().getOpecodigoD(),"SP_MOT_INS_OPERATIVO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			for(MotInspector inspector:inspectorList.getInspectores()){
 				MotOperFiscalizador operFiscalizador=new MotOperFiscalizador();
 				operFiscalizador.setOperativo(inspectorList.getOperativo());
 				operFiscalizador.setFiscalizador(inspector);
 				MotOperFiscalizadorDaoFactory.create().insert(operFiscalizador);
+				MotAuditoriaDaoFactory.create().Insert(
+						"MOT_OPER_INSPECTOR", operFiscalizador.getOperativo().getOpecodigoD(),"SP_MOT_INS_OPER_INSPECTOR",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			}
 			System.out.println("actualizo correctamente el detalle operativo fiscalizador");
 			
-		} catch (MotOperativoDaoException | MotOperFiscalizadorDaoException e) {
+		} catch (MotOperativoDaoException | MotOperFiscalizadorDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 			
@@ -131,23 +145,35 @@ public class OperativoController {
 	}
 
 	@RequestMapping(value="Eliminar.htm",method=RequestMethod.GET)
-	public String eliminar(@RequestParam("codigo") Long codigo){
+	public String eliminar(HttpServletRequest request,@RequestParam("codigo") Long codigo){
+		logger.info("Eliminar Operativo/Eliminar.htm");
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
 		try {
-			logger.info("Eliminar Operativo/Eliminar.htm");
 			MotOperativo operativo=new MotOperativo();
 			operativo.setOpecodigoD(codigo);
 			MotOperativoDaoFactory.create().delete(operativo);
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_OPERATIVO", operativo.getOpecodigoD(),"SP_MOT_UPD_ESTADO_MOT_OPERATIVO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			logger.info("MotOperativoDaoFactory.create().delete(paradero); Complete");
-		} catch (MotOperativoDaoException e) {
+		} catch (MotOperativoDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";
 	}
 	
 	@RequestMapping(value="ActualizarEstadoIns.htm", method=RequestMethod.POST)
-	public String actualizaEstado(Long codigo,Integer codins, String lado){
-
-		System.out.println(codigo+" "+codins+" "+lado);
+	public String actualizaEstado(HttpServletRequest request,Long codigo,Integer codins, String lado){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			logger.info("actualizaEstado/ActualizarEstadoIns.htm");
 			MotOperFiscalizador operFiscalizador= new MotOperFiscalizador(); 
@@ -155,8 +181,10 @@ public class OperativoController {
 			operFiscalizador.getFiscalizador().setInscodigoI(codins);
 			operFiscalizador.getFiscalizador().setLado(lado);
 			MotOperFiscalizadorDaoFactory.create().actualizaEstado(operFiscalizador);
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_OPER_INSPECTOR", operFiscalizador.getOperativo().getOpecodigoD(),"SP_MOT_ACTUALIZA_ESTADO_INSP_OPERATIVO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			logger.info("MotOperFiscalizadorDaoFactory.create().actualizaEstado(operFiscalizador); Complete");
-		} catch (MotOperFiscalizadorDaoException e) {
+		} catch (MotOperFiscalizadorDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";
@@ -197,10 +225,17 @@ public class OperativoController {
 		
 	@RequestMapping(value="Actualizar.htm", method=RequestMethod.POST)
 	public  String actualizar (HttpServletRequest request, MotOperativo operativo){
-		
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			MotOperativoDaoFactory.create().updateObs(operativo);
-		} catch (MotOperativoDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+				"MOT_OPERATIVO", operativo.getOpecodigoD(),"SP_MOT_UPD_OBSERVACIONES_OPERATIVOS",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotOperativoDaoException | MotAuditoriaDaoException e) {
 			e.printStackTrace();
 		}			
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.munichosica.myapp.dto.MotAdjuntarArchivo;
+import com.munichosica.myapp.dto.MotCondDocumento;
 import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.dto.MotInfrMedida;
 import com.munichosica.myapp.dto.MotInfraccion;
@@ -25,9 +27,13 @@ import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotPapeleta;
 import com.munichosica.myapp.dto.MotPolicia;
 import com.munichosica.myapp.dto.MotUnidConductor;
+import com.munichosica.myapp.dto.MotUnidDocumento;
 import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.RepPapeleta;
+import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
+import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotInfrMedidaDaoException;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
@@ -35,9 +41,12 @@ import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotPapeletaDaoException;
 import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
 import com.munichosica.myapp.exceptions.MotUnidConductorDaoException;
+import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.exceptions.ReportsDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
+import com.munichosica.myapp.factory.MotCondDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.factory.MotInfrMedidaDaoFactory;
 import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
@@ -45,9 +54,11 @@ import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotPapeletaDaoFactory;
 import com.munichosica.myapp.factory.MotPoliciaDaoFactory;
 import com.munichosica.myapp.factory.MotUnidConductorDaoFactory;
+import com.munichosica.myapp.factory.MotUnidDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.ReportsDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
+import com.munichosica.myapp.util.IpUtils;
 
 @Controller
 @RequestMapping("/Papeletas")
@@ -59,6 +70,28 @@ public class PapeletaController {
 	public @ResponseBody MotConductor buscarConductor(@RequestParam("codigo") Long codigo){
 		MotConductor conductor=null;
 		return conductor;
+	}
+	
+	@RequestMapping(value="MensajesConductor.htm", method=RequestMethod.GET)
+	public @ResponseBody List<MotCondDocumento> mensajesConductor(Long codigo){
+		List<MotCondDocumento> documentos=null;
+		try {
+			documentos = MotCondDocumentoDaoFactory.create().findMensajesIdConductor(codigo);
+		} catch (MotCondDocumentoDaoException e) {
+			logger.error(e.getMessage(),e );
+		}
+		return documentos;
+	}
+	
+	@RequestMapping(value="MensajesUnidad.htm", method=RequestMethod.GET)
+	public @ResponseBody List<MotUnidDocumento> mensajesUnidad(String placa){
+		List<MotUnidDocumento> documentos=null;
+		try {
+			documentos = MotUnidDocumentoDaoFactory.create().findMensajesPlaca(placa);
+		} catch (MotUnidDocumentoDaoException e) {
+			logger.error(e.getMessage(),e);
+		}
+		return documentos;
 	}
 	
 	@RequestMapping(value="BuscarConductorPorDNI.htm", method=RequestMethod.GET)
@@ -94,7 +127,18 @@ public class PapeletaController {
 		return operFiscalizador;
 	}
 	
-	@RequestMapping(value="BuscarUnidadPorCodigo.htm", method=RequestMethod.GET)
+	@RequestMapping(value="BuscarUnidadPorPlaca.htm", method=RequestMethod.GET)
+	public @ResponseBody MotUnidadEmpresa buscarUnidadPorPlaca(@RequestParam("placa") String placa){
+		MotUnidadEmpresa unidadEmpresa=null;
+		try {
+			unidadEmpresa=MotUnidadEmpresaDaoFactory.create().findPmoCodigoByPlaca(placa);
+		} catch (MotUnidadEmpresaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return unidadEmpresa;
+	}
+	
+	/*@RequestMapping(value="BuscarUnidadPorCodigo.htm", method=RequestMethod.GET)
 	public @ResponseBody MotUnidadEmpresa buscarUnidadPorPlaca(@RequestParam("codigo") Long codigo){
 		MotUnidadEmpresa unidadEmpresa=null;
 		try {
@@ -103,7 +147,7 @@ public class PapeletaController {
 			logger.error(e.getMessage(), e);
 		}
 		return unidadEmpresa;
-	}
+	}*/
 
 	@RequestMapping(value="BuscarInspectorPorDni.htm", method=RequestMethod.GET)
 	public @ResponseBody MotOperFiscalizador buscarInspectorPorDni(@RequestParam("dni") String dni){
@@ -163,6 +207,11 @@ public class PapeletaController {
 	@RequestMapping(value="InsertarPapeleta.htm", method=RequestMethod.POST)
 	public @ResponseBody MotPapeleta insertarPapeleta(HttpServletRequest request,MotPapeleta papeleta){
 		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
 		MotAdjuntarArchivo archivo=(MotAdjuntarArchivo) session.getAttribute("FOTO_PAPELETA");
 		try {
 			logger.info("Ingreso a insertarPapeleta.htm");
@@ -170,9 +219,13 @@ public class PapeletaController {
 			if(archivo!=null){
 				papeleta.setArchivo(archivo);
 				MotAdjuntarArchivoDaoFactory.create().insert(papeleta.getArchivo());
+				MotAuditoriaDaoFactory.create().Insert(
+						"MOT_ADJUNTAR_ARCHIVO", papeleta.getArchivo().getAdjcodigoD(),"SP_MOT_INS_ADJUNTARARCHIVO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			}
 			MotPapeletaDaoFactory.create().insert(papeleta);
-		} catch (MotPapeletaDaoException | MotAdjuntarArchivoDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_PAPELETA", papeleta.getPapcodigoD(),"SP_MOT_INS_PAPELETA",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotPapeletaDaoException | MotAdjuntarArchivoDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage(), e);
 		}
 		return papeleta;

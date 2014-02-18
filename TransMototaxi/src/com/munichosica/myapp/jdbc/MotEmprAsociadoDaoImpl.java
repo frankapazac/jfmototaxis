@@ -264,4 +264,110 @@ public class MotEmprAsociadoDaoImpl implements MotEmprAsociadoDao{
 		return list;
 	}
 
+	@Override
+	public List<MotEmprAsociado> ExisteAsociadoPorDNI(String dni) throws MotEmprAsociadoDaoException {
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<MotEmprAsociado> list=new ArrayList<MotEmprAsociado>();
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall( "{call SP_MOT_GET_EMP_ASOCIADOS_EXISTE_DNI;1(?)}" );
+			stmt.setString(1, dni);
+			
+			boolean results=stmt.execute();
+            if(results){
+                rs=stmt.getResultSet();
+                MotEmprAsociado asociado=null;
+                while(rs.next()){
+                	asociado=new MotEmprAsociado();
+                	asociado.getEmpresa().setEmprazonsocialV(rs.getString("RAZON_SOCIAL"));
+                	asociado.getEmpresa().setEmpcelularmovV(rs.getString("MOVISTAR"));
+                	asociado.getEmpresa().setEmpcelularclaV(rs.getString("CLARO"));
+                	asociado.getEmpresa().setEmpcelularnexV(rs.getString("NEXTEL"));
+                	asociado.getEmpresa().setEmptelefono1V(rs.getString("TELEFONO"));
+                	asociado.setAsoestadoC(rs.getString("ESTADO"));
+                	asociado.setAsofechainicioF(rs.getString("INICIO"));
+                	asociado.setAsofechaceseF(rs.getString("CESE"));
+                	asociado.setAsoobservacionV(rs.getString("OBSERVACION"));
+                	asociado.getEmpresa().setEmpestadoC(rs.getString("ACTIVO"));
+                	list.add(asociado);
+                }
+            }
+		}
+		catch (Exception ex) {
+			logger.error( "Exception: " + ex.getMessage(), ex );
+			throw new MotEmprAsociadoDaoException( "Exception: " + ex.getMessage(), ex );
+		}
+		finally {
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
+
+	@Override
+	public MotEmprAsociado obtenerAsociadoCesar(Long codigo)
+			throws MotEmprAsociadoDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		
+		MotEmprAsociado asociado=null;
+		try{
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_GET_EMP_ASOCIADO_CESE;1(?)}");
+			stmt.setLong(1, codigo);
+			
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					asociado=new MotEmprAsociado();
+					asociado.getPersona().setPernombresV(rs.getString("NOMBRES"));
+					asociado.setAsoobservacionV(rs.getString("OBSERVACION"));
+					asociado.setAsofechaceseF(rs.getString("CESE"));
+				}
+			}
+		}
+		catch (Exception ex) {
+			logger.error( "Exception: " + ex.getMessage(), ex );
+			throw new MotEmprAsociadoDaoException( "Exception: " + ex.getMessage(), ex );
+		}
+		finally {
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return asociado;
+	}
+
+	@Override
+	public void guardarCese(MotEmprAsociado dto)
+			throws MotEmprAsociadoDaoException {
+		Connection conn = null;
+		CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = ResourceManager.getConnection();
+			stmt = conn.prepareCall( "{call SP_UPD_EMP_ASOCIADO_CESE;1(?,?,?)}" );
+			stmt.setLong(1, dto.getAsocodigoD());
+			stmt.setString(2,dto.getAsofechaceseF());
+			stmt.setString(3, dto.getAsoobservacionV());
+			stmt.execute();
+		}
+		catch (Exception ex) {
+			logger.error( "Exception: " + ex.getMessage(), ex );
+			throw new MotEmprAsociadoDaoException( "Exception: " + ex.getMessage(), ex );
+		}
+		finally {
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+	}
+
 }

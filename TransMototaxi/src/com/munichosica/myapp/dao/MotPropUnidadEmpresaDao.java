@@ -11,4 +11,7 @@ public interface MotPropUnidadEmpresaDao {
 	public List<MotPropUnidadEmpresa> findByAsociado(Long asocodigoD) throws MotPropUnidadEmpresaDaoException;
 	public List<MotPropUnidadEmpresa> findByAsociado(String criterio, String texto, Long asocodigoD)throws MotPropUnidadEmpresaDaoException;
 	public MotPropUnidadEmpresa findByPrimaryKey(Long codigo)throws MotPropUnidadEmpresaDaoException;
+	List<MotPropUnidadEmpresa> buscarExisteNroPlaca(String placa)
+			throws MotPropUnidadEmpresaDaoException;
+	public void cesarMototaxi(MotPropUnidadEmpresa unidadEmpresa) throws MotPropUnidadEmpresaDaoException;
 }

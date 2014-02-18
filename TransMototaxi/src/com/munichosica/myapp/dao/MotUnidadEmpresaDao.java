@@ -22,4 +22,8 @@ public interface MotUnidadEmpresaDao {
 			throws MotUnidadEmpresaDaoException;
 	public MotUnidadEmpresa findPmoCodigo(Long codigo)
 			throws MotUnidadEmpresaDaoException;
+	MotUnidadEmpresa findPmoCodigoByPlaca(String placa)
+			throws MotUnidadEmpresaDaoException;
+	MotUnidadEmpresa findUnidadByPlaca(String placa)
+			throws MotUnidadEmpresaDaoException;
 }

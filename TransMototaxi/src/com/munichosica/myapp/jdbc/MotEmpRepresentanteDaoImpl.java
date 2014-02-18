@@ -5,8 +5,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 
 import com.munichosica.myapp.dao.MotEmpRepresentanteDao;
-import com.munichosica.myapp.dto.MotEmpProp;
 import com.munichosica.myapp.dto.MotEmpPropietario;
+import com.munichosica.myapp.dto.MotEmpPropietarioDelete;
 import com.munichosica.myapp.dto.MotEmpRepresentante;
 import com.munichosica.myapp.dto.MotEmpresa;
 import com.munichosica.myapp.dto.MotPersona;
@@ -24,14 +24,6 @@ public class MotEmpRepresentanteDaoImpl implements MotEmpRepresentanteDao {
 		ResultSet rs = null;
 		
 		MotEmpRepresentante empRepresentate = null;
-		MotUbigeo distrito = null;
-		MotUbigeo provincia = null;
-		MotUbigeo departamento = null;
-		MotPersona persona = null;
-		MotEmpPropietario empPropietario = null;
-		MotEmpProp empProp = null;
-		MotEmpresa empresa = null;
-		
 		try {
 			conn = ResourceManager.getConnection();
 			stmt = conn.prepareCall("{call SP_TRA_GET_DATOS_EMPRESA;1(?)}");
@@ -40,43 +32,21 @@ public class MotEmpRepresentanteDaoImpl implements MotEmpRepresentanteDao {
 			if(results){
 				rs = stmt.getResultSet();
 				while(rs.next()){
-					persona = new MotPersona();
-					persona.setPernombresV(rs.getString("Nombres"));
-					persona.setPerpaternoV(rs.getString("Paterno"));
-					persona.setPermaternoV(rs.getString("Materno"));
-					
-					empPropietario = new MotEmpPropietario();
-					empPropietario.setPersona(persona);
-					
-					empresa = new MotEmpresa();
-					empresa.setEmpcodigoD(rs.getLong("Codigo"));
-					empresa.setEmpdireccionV(rs.getString("Direccion"));
-					empresa.setEmprucV(rs.getString("RUC"));
-					empresa.setEmptelefono1V(rs.getString("Telefono1"));
-					empresa.setEmptelefono2V(rs.getString("Telefono2"));
-					empresa.setEmpcelularclaV(rs.getString("Claro"));
-					empresa.setEmpcelularmovV(rs.getString("Movistar"));
-					empresa.setEmpcelularnexV(rs.getString("Nextel"));
-					empresa.setEmpmailV(rs.getString("Email"));
-					empresa.setEmppagwebV(rs.getString("PagWeb"));
-					
-					distrito = new MotUbigeo();
-					provincia = new MotUbigeo();
-					departamento = new MotUbigeo();
-					departamento.setNombubigeo(rs.getString("Departamento"));
-					provincia.setNombubigeo(rs.getString("Provincia"));
-					distrito.setNombubigeo(rs.getString("Distrito"));
-					empresa.setDepartamento(departamento);
-					empresa.setDistrito(distrito);
-					empresa.setProvincia(provincia);
-					
-					empProp = new MotEmpProp();
-					empProp.setEmpPropietario(empPropietario);
-					empProp.setEmpresa(empresa);
-
-					empRepresentate = new MotEmpRepresentante();
-					empRepresentate.setEmpProp(empProp);
-
+					empRepresentate=new MotEmpRepresentante();
+					empRepresentate.getEmpresa().setEmpcodigoD(rs.getLong("Codigo"));
+					empRepresentate.getEmpresa().setEmpdireccionV(rs.getString("Direccion"));
+					empRepresentate.getEmpresa().setEmprucV(rs.getString("RUC"));
+					empRepresentate.getEmpresa().setEmptelefono1V(rs.getString("Telefono1"));
+					empRepresentate.getEmpresa().setEmptelefono2V(rs.getString("Telefono2"));
+					empRepresentate.getEmpresa().setEmpcelularclaV(rs.getString("Claro"));
+					empRepresentate.getEmpresa().setEmpcelularmovV(rs.getString("Movistar"));
+					empRepresentate.getEmpresa().setEmpcelularnexV(rs.getString("Nextel"));
+					empRepresentate.getEmpresa().setEmpmailV(rs.getString("Email"));
+					empRepresentate.getEmpresa().setEmppagwebV(rs.getString("PagWeb"));
+					empRepresentate.getEmpresa().getDepartamento().setNombubigeo(rs.getString("Departamento"));
+					empRepresentate.getEmpresa().getProvincia().setNombubigeo(rs.getString("Provincia"));
+					empRepresentate.getEmpresa().getDistrito().setNombubigeo(rs.getString("Distrito"));
+					empRepresentate.getEmpProp().getPersona().setPercodigoD(rs.getLong("PERCODIGO"));
 				}
 			}
 			

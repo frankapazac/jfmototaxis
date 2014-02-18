@@ -9,4 +9,5 @@ public interface MotUnidDocumentoDao {
 	public void insert(MotUnidDocumento dto)throws MotUnidDocumentoDaoException;
 	public List<MotUnidDocumento> findDocumentosByIdUnidad(Long codigo)throws MotUnidDocumentoDaoException;
 	public List<MotUnidDocumento> findFotosByIdUnidad(Long codigo)throws MotUnidDocumentoDaoException;
+	public List<MotUnidDocumento> findMensajesPlaca(String placa)throws MotUnidDocumentoDaoException;
 }

@@ -11,4 +11,7 @@ public interface MotEmprAsociadoDao {
 	public MotEmprAsociado findByPrimaryKey(Long codigo) throws MotEmprAsociadoDaoException;
 	public List<MotEmprAsociado> findByCriterio(String criterio, String texto, Long empcodigoD) throws MotEmprAsociadoDaoException;
 	public List<MotEmprAsociado> findByCriterio(String criterio, String texto) throws MotEmprAsociadoDaoException;
+	public List<MotEmprAsociado> ExisteAsociadoPorDNI(String dni) throws MotEmprAsociadoDaoException;
+	public MotEmprAsociado obtenerAsociadoCesar(Long codigo)throws MotEmprAsociadoDaoException;
+	public void guardarCese(MotEmprAsociado asociado)throws MotEmprAsociadoDaoException;
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,13 +19,17 @@ import com.munichosica.myapp.dto.MotAdjuntarArchivo;
 import com.munichosica.myapp.dto.MotInspDocumento;
 import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotTipoDocumento;
+import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotInspDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotInspDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
+import com.munichosica.myapp.util.IpUtils;
 import com.munichosica.myapp.util.UTFEncodingUtil;
 
 @Controller
@@ -32,15 +37,27 @@ import com.munichosica.myapp.util.UTFEncodingUtil;
 public class InspectorController {
 	
 	protected static final Logger logger=Logger.getLogger(InspectorController.class);
+
+	/*protected IRequestCycleProcessor newRequestCycleProcessor(){
+		
+	}*/
 	
 	@RequestMapping(value="Procesar.htm",method=RequestMethod.POST)
 	public @ResponseBody MotInspector procesar(HttpServletRequest request,MotInspector inspector){
 		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
+		
 		DocumentoInspectorSession documentos=(DocumentoInspectorSession) session.getAttribute("DOC_INSPECTOR");
 		DocumentoInspectorSession foto=(DocumentoInspectorSession) session.getAttribute("FOTO_INSPECTOR");
 		try {
 			UTFEncodingUtil.decodeObjectUTF(inspector.getPersona());
 			MotInspectorDaoFactory.create().procesar(inspector);
+			MotAuditoriaDaoFactory.create().Insert(
+				"MOT_INSPECTOR", new Long(inspector.getInscodigoI().toString()),"SP_MOT_INS_INSPECTOR",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			logger.info("MotInspectorDaoFactory.create().procesar(inspector); Completed codigo: "+inspector.getInscodigoI());
 			
 			if(documentos!=null){
@@ -49,6 +66,8 @@ public class InspectorController {
 						docum.setInspector(inspector);
 						MotAdjuntarArchivoDaoFactory.create().insert(docum.getArchivo());
 						MotInspDocumentoDaoFactory.create().insert(docum);
+						MotAuditoriaDaoFactory.create().Insert(
+								"MOT_INSP_DOCUMENTO", docum.getIdocodigoD(),"SP_MOT_INS_INSPDOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 						logger.info("MotInspDocumentoDaoFactory.create().insert(docum); Complete codigo: "+docum.getIdocodigoD());
 					}
 				}
@@ -60,11 +79,13 @@ public class InspectorController {
 						docum.setInspector(inspector);
 						MotAdjuntarArchivoDaoFactory.create().insert(docum.getArchivo());
 						MotInspDocumentoDaoFactory.create().insert(docum);
+						MotAuditoriaDaoFactory.create().Insert(
+								"MOT_INSP_DOCUMENTO", docum.getIdocodigoD(),"SP_MOT_INS_INSPDOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 						logger.info("MotAsocDocumentoDaoFactory.create().insert(docum); Complete codigo: "+docum.getIdocodigoD());
 					}
 				}
 			}
-		} catch (MotInspectorDaoException | MotAdjuntarArchivoDaoException | MotInspDocumentoDaoException e) {
+		} catch (MotInspectorDaoException | MotAdjuntarArchivoDaoException | MotInspDocumentoDaoException | NumberFormatException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return inspector;
@@ -85,11 +106,19 @@ public class InspectorController {
 	}
 	
 	@RequestMapping(value="Eliminar.htm",method=RequestMethod.GET)
-	public String eliminar(int codigo){
+	public String eliminar(HttpServletRequest request, int codigo){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
 		try {
 			MotInspectorDaoFactory.create().delete(codigo);
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_INSPECTOR", new Long(String.valueOf(codigo)),"SP_MOT_DEL_INSPECTOR",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			logger.info("MotInspectorDaoFactory.create().delete(codigo);");
-		} catch (MotInspectorDaoException e) {
+		} catch (MotInspectorDaoException | NumberFormatException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";

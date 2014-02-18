@@ -18,6 +18,7 @@ public class MotPapeleta {
 	protected String papobservinfraccionV;
 	protected String papobservinspectorV;
 	protected String papestadoC;
+	protected Float monto;
 	
 
 	public MotPapeleta() {
@@ -27,6 +28,14 @@ public class MotPapeleta {
 		inspector=new MotInspector();
 		propUnidadEmpresa=new MotPropUnidadEmpresa();
 		conductor=new MotConductor();
+	}
+	
+	public Float getMonto() {
+		return monto;
+	}
+	
+	public void setMonto(Float monto) {
+		this.monto = monto;
 	}
 	
 	public Long getPapcodigoD() {

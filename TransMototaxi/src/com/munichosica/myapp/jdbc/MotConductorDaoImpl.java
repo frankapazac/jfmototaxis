@@ -6,6 +6,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.DataFormatException;
@@ -24,7 +25,23 @@ public class MotConductorDaoImpl implements MotConductorDao {
 	
 	@Override
 	public void insert(MotConductor dto) throws MotConductorDaoException {
-			
+		Connection conn=null;
+		CallableStatement stmt=null;		
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{ call SP_MOT_INS_CONDUCTOR;1(?,?,?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setLong(1, dto.getConcodigoD());
+			stmt.setLong(2, dto.getPersona().getPercodigoD());
+			stmt.setString(3, dto.getConestadoC());
+			stmt.execute();
+			Long codigo=stmt.getLong(1);
+			if(codigo!=null){
+				dto.setConcodigoD(codigo);
+			}
+		} catch (SQLException e) {
+			throw new MotConductorDaoException("ERROR: "+e.getMessage());
+		}
 	}
 
 	@Override

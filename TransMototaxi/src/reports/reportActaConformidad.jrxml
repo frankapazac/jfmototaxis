@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportActaConformidad" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b489e59f-b08d-4173-8877-053e1f46f11e">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<parameter name="PERCODIGO_D" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="INTCODIGO_D" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT INTCODIGO_D AS CODIGO,
+BOL.BINNUMERO_V AS NUMERO,
+CASE WHEN PERP.PERCODIGO_D IS NOT NULL THEN LTRIM(RTRIM(ISNULL(PERP.PERNOMBRES_V,'')+ISNULL(' '+PERP.PERPATERNO_V,'')+ISNULL(' '+PERP.PERMATERNO_V,'')))
+WHEN PERC.PERCODIGO_D IS NOT NULL THEN LTRIM(RTRIM(ISNULL(PERC.PERNOMBRES_V,'')+ISNULL(' '+PERC.PERPATERNO_V,'')+ISNULL(' '+PERC.PERMATERNO_V,'')))
+ELSE '' END AS NOMBRES,
+CASE WHEN PERP.PERCODIGO_D IS NOT NULL THEN 'PROPIETARIO'
+WHEN PERC.PERCODIGO_D IS NOT NULL THEN 'CONDUCTOR'
+ELSE '' END AS TIPO,
+CASE WHEN PERP.PERCODIGO_D IS NOT NULL THEN PERP.PERDNI_V
+WHEN PERC.PERCODIGO_D IS NOT NULL THEN PERC.PERDNI_V
+ELSE '' END AS DOCUMENTO,
+CASE WHEN PERP.PERCODIGO_D IS NOT NULL THEN PERP.PERDOMICILIO_V+' '+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PERP.PERUBDPTO_V)+'-'+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PERP.PERUBPROV_V)+'-'+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PERP.PERUBDIST_V)
+WHEN PERC.PERCODIGO_D IS NOT NULL THEN PERC.PERDOMICILIO_V+' '+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PERC.PERUBDPTO_V)+'-'+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PERC.PERUBPROV_V)+'-'+DBO.FNC_GEN_NOMB_UBIGEO_BY_ID(PERC.PERUBDIST_V)
+ELSE '' END AS DIRECCION,
+UNEPLACANRO_V AS PLACA,
+MAR.MARNOMBRE_V AS MARCA,
+UNE.UNECOLOR_V AS COLOR,
+ISNULL(CON.ACODESCRIPCION_V,'') AS DESCRIPCION
+FROM MOT_INTERNAMIENTO ITE
+LEFT JOIN MOT_BOLETA_INTERNAMIENTO BOL ON BOL.BINCODIGO_D=ITE.BINCODIGO_D
+LEFT JOIN MOT_ACTA_CONFORMIDAD CON ON CON.ACOCODIGO_D=ITE.ACOCODIGO_D
+LEFT JOIN MOT_CONDUCTOR COND  ON COND.CONDCODIGO_I=ITE.CONDCODIGO_I
+LEFT JOIN MOT_PERSONA PERC ON PERC.PERCODIGO_D=COND.PERCODIGO_D
+LEFT JOIN MOT_PROP_UNIEMPRESA PMO ON PMO.PMOCODIGO_D=ITE.PMOCODIGO_D
+LEFT JOIN MOT_UNIDAD_EMPRESA UNE ON UNE.UNECODIGO_D=PMO.UNECODIGO_D
+LEFT JOIN MOT_MARCA MAR ON MAR.MARCODIGO_I=UNE.MARCODIGO_I
+LEFT JOIN MOT_EMPR_ASOCIADO ASO ON ASO.ASOCODIGO_D=PMO.ASOCODIGO_D
+LEFT JOIN MOT_PERSONA PERP ON PERP.PERCODIGO_D=ASO.PERCODIGO_D
+WHERE (PERC.PERCODIGO_D=$P{PERCODIGO_D} OR PERP.PERCODIGO_D=$P{PERCODIGO_D}) and ITE.INTCODIGO_D=$P{INTCODIGO_D}]]>
+	</queryString>
+	<field name="CODIGO" class="java.math.BigDecimal"/>
+	<field name="NUMERO" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="DOCUMENTO" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="PLACA" class="java.lang.String"/>
+	<field name="MARCA" class="java.lang.String"/>
+	<field name="COLOR" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement x="38" y="32" width="488" height="51" uuid="dbde5819-7447-4a10-81c0-54ed7bad2681"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACTA DE CONFORMIDAD]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement isPrintRepeatedValues="false" x="222" y="56" width="124" height="27" uuid="7d96e021-faf9-473a-a58b-48dfa0ba7243"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{NUMERO}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="38" y="74" width="75" height="20" uuid="f4975ba7-6ffb-4eaa-ad1e-dea90c6a11db"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="4"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DISTRITAL
+DE LURIGANCHO - CHOSICA
+SUB GERENCIA DE TRANSPORTES Y E.M.I.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="61" y="22" width="29" height="52" uuid="2ae82dac-3e89-4a78-95dc-1570f02f86e9"/>
+				<imageExpression><![CDATA["C:\\reports\\Imagenes\\LogoChosica.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement positionType="Float" x="38" y="0" width="488" height="40" uuid="43a60362-376f-4fa8-a9fb-3c9dcdc38e45"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Yo "+$F{NOMBRES}+" identificado con DNI N° "+$F{DOCUMENTO}+" y domiciliado en "+$F{DIRECCION}+", siendo "+$F{TIPO}+" de la unidad "+$F{MARCA}+", color "+$F{COLOR}+" de placa N° "+$F{PLACA}+". "]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="45">
+			<textField>
+				<reportElement positionType="Float" x="38" y="0" width="488" height="39" uuid="4ba91bf9-def8-40ba-9920-2f80c12c548b"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}+". "]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="185">
+			<textField>
+				<reportElement x="38" y="0" width="488" height="13" uuid="5f737a78-92c2-40bb-9fcd-d4d37db10273"/>
+				<textFieldExpression><![CDATA["Caso contrario se me aplicarán las sanciones correspondientes a ley."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="132" width="486" height="20" uuid="251ea6ce-59cf-42c0-9760-292f60e34f7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="152" width="486" height="20" uuid="7e46e6f3-c3da-4172-b068-3f51b1611314"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["DNI: "+$F{DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="192" y="131" width="193" height="1" uuid="ac517877-26fe-48cc-89d1-5e8e80460cb1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="56" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="42" y="16" width="488" height="15" forecolor="#999999" backcolor="#999999" uuid="b3833bd6-8617-4718-8ea7-27e835420201"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="42" y="31" width="200" height="15" uuid="afa4dc7a-68c9-42b8-aef2-8338cd73548a"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Sitio Web: www.munichosica.gob.pe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="16" width="486" height="15" forecolor="#FFFFFF" uuid="416dedb6-7f3b-4ddd-b22c-af62febc6c66"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[ESTADIO MUNICIPAL "SOLÍS GARCÍA" - AV. ENRIQUE GUZMÁN Y VALLE CDRA. 7 S/N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="31" width="200" height="15" uuid="a5013b05-4067-43bb-a231-5e369ea6c6bc"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[e-mail: transporte@munichosica.gob.pe]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="11" splitType="Stretch"/>
+	</summary>
+</jasperReport>

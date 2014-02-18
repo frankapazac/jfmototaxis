@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +19,15 @@ import com.munichosica.myapp.dto.MotEmpresa;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotEmpDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotEmpresaDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotEmpDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotEmpresaDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
+import com.munichosica.myapp.util.IpUtils;
 
 @Controller
 @RequestMapping("/Configuracion")
@@ -33,10 +37,8 @@ public class EmpresaController{
 	protected final Logger logger= Logger.getLogger(EmpresaController.class);
 	
 	public @ResponseBody MotEmpresa obtener(@RequestParam("codigo") long codigo){
-		
 		logger.info("Ingreso a listado de Empresas/Obtener.htm");
 		MotEmpresa empresa = null;
-		
 		try {
 			empresa=MotEmpresaDaoFactory.create().findByEmpresa(codigo);
 			logger.info("MotEmpresaDaoFactory.create().findByEmpresa(codigo);Completed");
@@ -51,9 +53,15 @@ public class EmpresaController{
 		try {
 			HttpSession session=request.getSession(true);
 			Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+			if(usuario==null){
+				SecurityContextHolder.getContext().setAuthentication(null);
+				return "Error";
+			}
 			DocumentoEmpresaSession documentos=(DocumentoEmpresaSession) session.getAttribute("FOTO_EMPRESA");
 			logger.info("Ingreso a Configuracion/Actualizar.htm");
 			MotEmpresaDaoFactory.create().update(empresa);
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_EMPRESA", empresa.getEmpcodigoD(),"SP_MOT_UPD_DATOS_EMPRESA",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			logger.info("MotEmpresaDaoFactory.create().update(empresa); Completed codigo: "+empresa.getEmpcodigoD());
 			if(documentos!=null){
 				if(documentos.getList()!=null&&documentos.getList().size()>0){
@@ -61,13 +69,14 @@ public class EmpresaController{
 						documento.setEmpresa(usuario.getEmpresa());
 						MotAdjuntarArchivoDaoFactory.create().insert(documento.getAdjuntarArchivo());
 						MotEmpDocumentoDaoFactory.create().insert(documento);
+						MotAuditoriaDaoFactory.create().Insert(
+								"MOT_EMP_DOCUMENTO", documento.getAdjuntarArchivo().getAdjcodigoD(),"SP_INS_MOT_EMP_DOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 					}
 				}
 			}
-		} catch (MotEmpresaDaoException | MotAdjuntarArchivoDaoException | MotEmpDocumentoDaoException e) {
+		} catch (MotEmpresaDaoException | MotAdjuntarArchivoDaoException | MotEmpDocumentoDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
-		
 		return "Success";
 	}
 	

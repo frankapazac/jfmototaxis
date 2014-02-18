@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,10 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.munichosica.myapp.dto.MotOperativo;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotOperativoDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotOperativoDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
+import com.munichosica.myapp.util.IpUtils;
 
 @Controller
 @RequestMapping("/TipoDocumento")
@@ -60,21 +65,37 @@ public class MotTipoDocumentoController {
 	
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
 	public String agregar(HttpServletRequest request,MotTipoDocumento tipoDocumento){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			MotTipoDocumentoDaoFactory.create().insert(tipoDocumento);
-		} catch (MotTipoDocumentoDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_TIPO_DOCUMENTO", Long.parseLong(String.valueOf(tipoDocumento.getMtdcodigoI())),"SP_MOT_INS_TIPO_DOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotTipoDocumentoDaoException | NumberFormatException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";
-	}
+	} 
 	
 	@RequestMapping(value="Eliminar.htm",method=RequestMethod.GET)
-	public String eliminar(@RequestParam("codigo") Integer codigo){
+	public String eliminar(HttpServletRequest request, @RequestParam("codigo") Integer codigo){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			MotTipoDocumento tipoDoc=new MotTipoDocumento();
 			tipoDoc.setMtdcodigoI(codigo);
 			MotTipoDocumentoDaoFactory.create().delete(codigo);
-		} catch (MotTipoDocumentoDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_TIPO_DOCUMENTO", Long.parseLong(String.valueOf(codigo)),"SP_MOT_DEL_TIPO_DOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotTipoDocumentoDaoException | NumberFormatException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";

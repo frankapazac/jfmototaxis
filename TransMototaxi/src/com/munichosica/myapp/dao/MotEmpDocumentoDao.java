@@ -10,6 +10,7 @@ public interface MotEmpDocumentoDao {
 	public void insert(MotEmpDocumento dto) throws MotEmpDocumentoDaoException;
 
 	public List<MotEmpDocumento> findImagesByEmpresa(Long empcodigoD) throws MotEmpDocumentoDaoException;
-	
-	
+
+	public MotEmpDocumento findImageByEmpresa(Long empcodigoD) throws MotEmpDocumentoDaoException;
+		
 }

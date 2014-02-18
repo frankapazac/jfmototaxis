@@ -3,7 +3,9 @@ package com.munichosica.myapp.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotTipoMedida;
+import com.munichosica.myapp.dto.Usuario;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotTipoMedidaDaoException;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotTipoMedidaDaoFactory;
+import com.munichosica.myapp.util.IpUtils;
 
 @Controller
 @RequestMapping("/TipoMedida")
@@ -46,21 +52,37 @@ public class MotTipoMedidaController {
 	
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
 	public String agregar(HttpServletRequest request,MotTipoMedida medida){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			MotTipoMedidaDaoFactory.create().insert(medida);
-		} catch (MotTipoMedidaDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_TIPO_MEDIDA", Long.parseLong(String.valueOf(medida.getTmecodigoI())),"SP_MOT_INS_TIPO_MEDIDA",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotTipoMedidaDaoException | NumberFormatException | MotAuditoriaDaoException e) {
 
 		}
 		return "Success";
 	}
 	
 	@RequestMapping(value="Eliminar.htm",method=RequestMethod.GET)
-	public String eliminar(@RequestParam("codigo") Integer codigo){
+	public String eliminar(HttpServletRequest request,@RequestParam("codigo") Integer codigo){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			MotTipoMedida medida=new MotTipoMedida();
 			medida.setTmecodigoI(codigo);
 			MotTipoMedidaDaoFactory.create().delete(codigo);
-		} catch (MotTipoMedidaDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_TIPO_MEDIDA", Long.parseLong(String.valueOf(codigo)),"SP_MOT_DEL_TIPO_MEDIDA",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotTipoMedidaDaoException | NumberFormatException | MotAuditoriaDaoException e) {
 
 		}
 		return "Success";

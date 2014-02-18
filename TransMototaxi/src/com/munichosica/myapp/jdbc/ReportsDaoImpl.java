@@ -26,12 +26,11 @@ public class ReportsDaoImpl implements ReportsDao{
 			stmt.setLong(1, codigo);
 			boolean results=stmt.execute();
 			if(results){
-				System.out.println("INGRESO");
 				papeleta=new RepPapeleta();
 				rs=stmt.getResultSet();
 				if(rs.next()){
-					System.out.println(rs.getString("PAPNUMERO"));
 					papeleta.setPapcodigo(codigo);
+					papeleta.setPaprecnumero(rs.getString("PAPCODIGO"));
 					papeleta.setPapnumero(rs.getString("PAPNUMERO"));
 					papeleta.setCondnombres(rs.getString("CONDNOMBRES"));
 					papeleta.setCondpaterno(rs.getString("CONDPATERNO"));
@@ -77,6 +76,9 @@ public class ReportsDaoImpl implements ReportsDao{
 					papeleta.setObseinfraccion(rs.getString("OBSEINFRACCION"));
 					papeleta.setObseinspector(rs.getString("OBSEINSPECTOR"));
 					papeleta.setFilenombre(rs.getString("FILENOMBRE"));
+					papeleta.setMonto(rs.getString("MONTO"));
+					papeleta.setFechaDesc(rs.getString("FECHA_DESC"));
+					papeleta.setMontoDesc(rs.getString("MONTO_DESC"));
 					papeleta.setFilefoto(rs.getBytes("FILEFOTO")!=null?FileUtil.deCompress(rs.getBytes("FILEFOTO")):null);
 				}
 			}

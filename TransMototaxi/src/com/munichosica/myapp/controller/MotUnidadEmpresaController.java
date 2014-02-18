@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,19 +20,23 @@ import com.munichosica.myapp.dto.MotEmpadronamiento;
 import com.munichosica.myapp.dto.MotPropUnidadEmpresa;
 import com.munichosica.myapp.dto.MotTipoDocumento;
 import com.munichosica.myapp.dto.MotUnidDocumento;
+import com.munichosica.myapp.dto.MotUnidadEmpresa;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotEmpadronamientoDaoException;
 import com.munichosica.myapp.exceptions.MotPropUnidadEmpresaDaoException;
 import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidadEmpresaDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotEmpadronamientoDaoFactory;
 import com.munichosica.myapp.factory.MotPropUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotUnidDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotUnidadEmpresaDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
+import com.munichosica.myapp.util.IpUtils;
 
 @Controller
 @RequestMapping("/UnidadEmpresa")
@@ -39,12 +44,38 @@ public class MotUnidadEmpresaController {
 	
 	Logger logger=Logger.getLogger(MotUnidadEmpresaController.class);
 	
+	@RequestMapping(value="Obtener.htm", method=RequestMethod.GET)
+	public @ResponseBody MotUnidadEmpresa obtener(String placa){
+		MotUnidadEmpresa unidadEmpresa=null;
+		try {
+			unidadEmpresa = MotUnidadEmpresaDaoFactory.create().findUnidadByPlaca(placa);
+		} catch (MotUnidadEmpresaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return unidadEmpresa;
+	}
+	
+	@RequestMapping(value="Insertar.htm", method=RequestMethod.POST)
+	public @ResponseBody MotUnidadEmpresa insertar(MotUnidadEmpresa unidadEmpresa){
+		try {
+			logger.info("Ingreso a UnidadEmpresa/Insertar.htm");
+			MotUnidadEmpresaDaoFactory.create().insert(unidadEmpresa);
+		} catch (MotUnidadEmpresaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return unidadEmpresa;
+	}
+	
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
 	public @ResponseBody EmpadronamientoUtil procesar(HttpServletRequest request,
 			EmpadronamientoUtil empadronamientoUtil){
 		logger.info("Ingreso a /UnidadEmpresa/Procesar.htm");
 		HttpSession session=request.getSession(true);
 		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
 		MotUnidDocumentoSession documentosUnidad=(MotUnidDocumentoSession) session.getAttribute("UNIDAD_DOCUMENTOS");
 		MotUnidDocumentoSession documentosFoto=(MotUnidDocumentoSession) session.getAttribute("UNIDAD_DOCUMENTOS_FOTO");
 		try {
@@ -59,12 +90,22 @@ public class MotUnidadEmpresaController {
 			MotPropUnidadEmpresaDaoFactory.create().insert(empadronamientoUtil.getPropUnidadEmpresa());
 			logger.info("MotPropUnidadEmpresaDaoFactory.create().insert(empadronamientoUtil.getPropUnidadEmpresa());Completed codigo:"+
 							empadronamientoUtil.getPropUnidadEmpresa().getUnidadempresa().getUnecodigoD());
+			
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_UNIDAD_EMPRESA", empadronamientoUtil.getPropUnidadEmpresa().getUnidadempresa().getUnecodigoD(),"SP_MOT_INS_UNIDADEMPRESA",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_EMPADRONAMIENTO", empadronamientoUtil.getEmpadronamiento().getEpocodigoD(),"SP_MOT_INS_EMPADRONAMIENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_PROP_UNIEMPRESA", empadronamientoUtil.getPropUnidadEmpresa().getPmocodigoD(),"SP_MOT_INS_PROPUNIEMPRESA",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+			
 			if(documentosUnidad!=null){
 				if(documentosUnidad.getList()!=null&&documentosUnidad.getList().size()>0){
 					for(MotUnidDocumento documento:documentosUnidad.getList()){
 						documento.setUnidadEmpresa(empadronamientoUtil.getPropUnidadEmpresa());
 						MotAdjuntarArchivoDaoFactory.create().insert(documento.getAdjuntarArchivo());
 						MotUnidDocumentoDaoFactory.create().insert(documento);
+						MotAuditoriaDaoFactory.create().Insert(
+								"MOT_UNID_DOCUMENTO", documento.getPtdcodigoD(),"SP_MOT_INS_UNDDOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 						logger.info("MotUnidDocumentoDaoFactory.create().insert(documento);Complete codigo: "+documento.getPtdcodigoD());
 					}
 				}
@@ -75,12 +116,14 @@ public class MotUnidadEmpresaController {
 						documento.setUnidadEmpresa(empadronamientoUtil.getPropUnidadEmpresa());
 						MotAdjuntarArchivoDaoFactory.create().insert(documento.getAdjuntarArchivo());
 						MotUnidDocumentoDaoFactory.create().insert(documento);
+						MotAuditoriaDaoFactory.create().Insert(
+								"MOT_UNID_DOCUMENTO", documento.getPtdcodigoD(),"SP_MOT_INS_UNDDOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 						logger.info("MotUnidDocumentoDaoFactory.create().insert(documento);Complete codigo: "+documento.getPtdcodigoD());
 					}
 				}
 			}
 			
-		} catch (MotUnidadEmpresaDaoException | MotEmpadronamientoDaoException | MotPropUnidadEmpresaDaoException | MotAdjuntarArchivoDaoException | MotUnidDocumentoDaoException e) {
+		} catch (MotUnidadEmpresaDaoException | MotEmpadronamientoDaoException | MotPropUnidadEmpresaDaoException | MotAdjuntarArchivoDaoException | MotUnidDocumentoDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return empadronamientoUtil;

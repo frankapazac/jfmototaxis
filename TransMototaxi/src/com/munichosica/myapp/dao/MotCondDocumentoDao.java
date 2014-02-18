@@ -15,6 +15,5 @@ public interface MotCondDocumentoDao {
 	public MotCondDocumento findByPrimaryKey(Long codigo) throws MotCondDocumentoDaoException;
 	List<MotCondDocumento> findByIdConductor(Long codigo)throws MotCondDocumentoDaoException;
 	public MotCondDocumento findByFechas(String fecha1, String fecha2) throws MotCondDocumentoDaoException;
-
-	
+	public List<MotCondDocumento> findMensajesIdConductor(Long codigo)throws MotCondDocumentoDaoException;	
 }

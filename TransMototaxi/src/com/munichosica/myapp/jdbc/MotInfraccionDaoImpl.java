@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.munichosica.myapp.dao.MotInfraccionDao;
 import com.munichosica.myapp.dto.MotInfraccion;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 
 public class MotInfraccionDaoImpl implements MotInfraccionDao {
 
@@ -20,7 +21,6 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 	@Override
 	public List<MotInfraccion> findByCriterio(String criterio, String texto)
 			throws MotInfraccionDaoException {
-		System.out.println("entro a daoimpl");
 		Connection conn =null;
 		CallableStatement stmt = null;
 		ResultSet rs = null;
@@ -67,7 +67,6 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 		Connection conn = null;
 		CallableStatement stmt = null;
 		ResultSet rs = null;
-		System.out.println("ENTRO A INSERTAR O ACTUALIZAR INFRACCION");
 		try {
 			conn = ResourceManager.getConnection();
 			stmt = conn.prepareCall("{call SP_MOT_INS_INFRACCION;1 (?,?,?,?,?,?,?)}");
@@ -79,23 +78,12 @@ public class MotInfraccionDaoImpl implements MotInfraccionDao {
 			stmt.setString(5, dto.getInftipopersonaC());
 			stmt.setString(6, dto.getInfmedidasAccV());
 			stmt.setInt(7, dto.getInfnrouitI());
-			
-			
 			stmt.execute();
 			
 			Long codigo=stmt.getLong(1);
 			if(codigo!=null){
 				dto.setInfcodigoD(codigo);
 			}
-			//System.out.println("CODIGO INFRACCION : " + codigo);
-			System.out.println(codigo);
-			System.out.println(dto.getInfcodigoV());
-			System.out.println(dto.getInfinfraccionV());
-			System.out.println(dto.getInftipoC());
-			System.out.println(dto.getInftipopersonaC());
-			System.out.println(dto.getInfmedidasAccV());
-			System.out.println(dto.getInfnrouitI());
-								
 		} catch (SQLException e) {
 			throw new MotInfraccionDaoException(e.getMessage(), e);
 		}finally{
