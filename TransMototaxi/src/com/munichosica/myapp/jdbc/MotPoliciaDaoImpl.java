@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,31 @@ import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
 
 public class MotPoliciaDaoImpl implements MotPoliciaDao{
 
+	public void procesar(MotPolicia policia) throws MotPoliciaDaoException{
+		Connection conn=null;
+		CallableStatement stmt=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_INS_POLICIA;1(?,?,?,?,?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setInt(1, policia.getPolcodigoI());
+			stmt.setString(2, policia.getPolcarnetidentV());
+			stmt.setString(3, policia.getPolnombresV());
+			stmt.setString(4, policia.getPolpaternoV());
+			stmt.setString(5, policia.getPolmaternoV());
+			stmt.execute();
+			Integer codigo=stmt.getInt(1);
+			if(codigo!=null){
+				policia.setPolcodigoI(codigo);
+			}
+		} catch (SQLException e) {
+			throw new MotPoliciaDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+	}
+	
 	@Override
 	public List<MotPolicia> findAll() throws MotPoliciaDaoException {
 		Connection conn=null;

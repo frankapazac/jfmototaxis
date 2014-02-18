@@ -2,15 +2,24 @@ package com.munichosica.myapp.dto;
 
 public class MotEmpRepresentante {
 	protected Long repcodigoI;
-	protected MotEmpProp empProp;
+	protected MotEmpPropietario empProp;
 	protected MotEmpresa empresa;
 	protected String repdescripcionV;
 	protected String repfechainicioF;
 	protected String repfechaceseF;
 	protected String repobservaciones;
+	protected String repestadoC;
 	
+	public String getRepestadoC() {
+		return repestadoC;
+	}
+
+	public void setRepestadoC(String repestadoC) {
+		this.repestadoC = repestadoC;
+	}
+
 	public MotEmpRepresentante() {
-		empProp=new MotEmpProp();
+		empProp=new MotEmpPropietario();
 		empresa=new MotEmpresa();
 	}
 	
@@ -20,10 +29,10 @@ public class MotEmpRepresentante {
 	public void setRepcodigoI(Long repcodigoI) {
 		this.repcodigoI = repcodigoI;
 	}
-	public MotEmpProp getEmpProp() {
+	public MotEmpPropietario getEmpProp() {
 		return empProp;
 	}
-	public void setEmpProp(MotEmpProp empProp) {
+	public void setEmpProp(MotEmpPropietario empProp) {
 		this.empProp = empProp;
 	}
 	public MotEmpresa getEmpresa() {

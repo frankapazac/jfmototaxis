@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.zip.DataFormatException;
 
 import com.munichosica.myapp.dao.MotUnidDocumentoDao;
+import com.munichosica.myapp.dto.MotCondDocumento;
 import com.munichosica.myapp.dto.MotUnidDocumento;
+import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotUnidDocumentoDaoException;
 import com.munichosica.myapp.util.FileUtil;
 
@@ -114,6 +116,42 @@ public class MotUnidDocumentoDaoImpl implements MotUnidDocumentoDao{
 				}
 			}
 		} catch (Exception e) {
+			throw new MotUnidDocumentoDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
+
+	@Override
+	public List<MotUnidDocumento> findMensajesPlaca(String placa)
+			throws MotUnidDocumentoDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotUnidDocumento> list=null;
+		try {
+			conn=ResourceManager.getConnection();
+			list=new ArrayList<MotUnidDocumento>();
+			stmt=conn.prepareCall("{call SP_MOT_GET_PAPELETA_MENSAJES_UNIDAD;1(?)}");
+			stmt.setString(1, placa);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				MotUnidDocumento documento=null;
+				while(rs.next()){
+					documento=new MotUnidDocumento();
+					documento.getTipoDocumento().setMtdnombreV(rs.getString("NOMBRE"));
+					documento.getAdjuntarArchivo().setAdjnumeroV(rs.getString("NUMERO"));
+					documento.getAdjuntarArchivo().setAdjfechaemisionF(rs.getString("EMISION"));
+					documento.getAdjuntarArchivo().setAdjfechacaducidadF(rs.getString("CADUCIDAD"));
+					documento.getAdjuntarArchivo().setAdjestadoV(rs.getString("ESTADO"));
+					list.add(documento);
+				}
+			}
+		} catch (SQLException e) {
 			throw new MotUnidDocumentoDaoException(e.getMessage(), e);
 		} finally{
 			ResourceManager.close(rs);

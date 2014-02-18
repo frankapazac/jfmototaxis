@@ -224,6 +224,42 @@ public class MotCondDocumentoDaoImpl implements MotCondDocumentoDao {
 		
 		return condDocumento;
 	}
+
+	@Override
+	public List<MotCondDocumento> findMensajesIdConductor(Long codigo)
+			throws MotCondDocumentoDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotCondDocumento> list=null;
+		try {
+			conn=ResourceManager.getConnection();
+			list=new ArrayList<MotCondDocumento>();
+			stmt=conn.prepareCall("{call SP_MOT_GET_PAPELETA_MENSAJES_CONDUCTOR;1(?)}");
+			stmt.setLong(1, codigo);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				MotCondDocumento documento=null;
+				while(rs.next()){
+					documento=new MotCondDocumento();
+					documento.getTipoDocumento().setMtdnombreV(rs.getString("NOMBRE"));
+					documento.getAdjuntarArchivo().setAdjnumeroV(rs.getString("NUMERO"));
+					documento.getAdjuntarArchivo().setAdjfechaemisionF(rs.getString("EMISION"));
+					documento.getAdjuntarArchivo().setAdjfechacaducidadF(rs.getString("CADUCIDAD"));
+					documento.getAdjuntarArchivo().setAdjestadoV(rs.getString("ESTADO"));
+					list.add(documento);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotCondDocumentoDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
 	
 	
 }

@@ -9,4 +9,6 @@ public interface MotInternamientoDao {
 	public void procesar(MotInternamiento internamiento)throws MotInternamientoDaoException;
 	public List<MotInternamiento> listarPorCriterio(String criterio, String texto)throws MotInternamientoDaoException;
 	public MotInternamiento get(Long codigo)throws MotInternamientoDaoException;
+	MotInternamiento getPropietarioInternamiento(Long codigo)
+			throws MotInternamientoDaoException;
 }

@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPapeleta" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f9f7de6-a828-40c6-b897-a21fe39844e2">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="328"/>
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="58"/>
+	<property name="ireport.y" value="1213"/>
 	<parameter name="papeleta" class="com.munichosica.myapp.dto.RepPapeleta"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="21" splitType="Stretch">
-			<textField>
-				<reportElement uuid="c2ec7eaf-9e40-4eb6-bbb4-84961d456681" x="509" y="0" width="63" height="20"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$P{papeleta}.getPapcodigo()]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="21" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="103" splitType="Stretch">
+		<band height="88" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="d9acf55a-bd98-413c-93c5-08876ba25958" x="58" y="0" width="440" height="98"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+				<reportElement x="58" y="1" width="440" height="65" uuid="d9acf55a-bd98-413c-93c5-08876ba25958"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PAPELETA DE INFRACCIÓN AL REGLAMENTO DEL SERVICIO ESPECIAL DE
 TRANSPORTE DE PASAJEROS Y CARGA DEN VEHICULOS MENORES
 
 
 
-ORDENANZA MUNICIPAL No. 168-MDL]]></text>
+ORDENANZA MUNICIPAL No. 063-2005-MDLCH]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f79ad710-a0c8-467d-b7a3-1492cff0569c" x="58" y="82" width="440" height="20"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="58" y="66" width="440" height="20" uuid="f79ad710-a0c8-467d-b7a3-1492cff0569c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[PUBLICADO EN EL DIARIO EL PERUANO EL 21-03-2012]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement uuid="dea1868e-8098-4d0c-b677-84ee7dfd3b4c" isPrintRepeatedValues="false" x="187" y="31" width="181" height="43"/>
+				<reportElement isPrintRepeatedValues="false" x="215" y="25" width="124" height="27" uuid="dea1868e-8098-4d0c-b677-84ee7dfd3b4c"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$P{papeleta}.getPapnumero()]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
+			<image>
+				<reportElement x="58" y="0" width="29" height="52" uuid="bb2b72a3-5bb4-4109-98c8-9732cec3c01f"/>
+				<imageExpression><![CDATA["C:\\reports\\Imagenes\\LogoChosica.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="35" y="52" width="75" height="20" uuid="fe9387ef-b5b1-4828-903c-c6c25e974dd5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="4"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DISTRITAL
+DE LURIGANCHO - CHOSICA
+SUB GERENCIA DE TRANSPORTES Y E.M.I.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="66" width="131" height="20" uuid="b27507d1-7efe-4c10-8145-58bebbd324b3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["N° "+$P{papeleta}.getPaprecnumero()]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="678" splitType="Stretch">
+		<band height="648" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="66" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="50" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -54,12 +68,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="81" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="62" width="103" height="24" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -67,12 +81,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DOMICILIO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="66" width="385" height="15"/>
+				<reportElement x="136" y="50" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -80,12 +94,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getConddni()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="81" width="385" height="15"/>
+				<reportElement x="136" y="62" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -93,12 +108,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getConddomicilio()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="96" width="385" height="15"/>
+				<reportElement x="136" y="74" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -106,25 +122,27 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getConddepartamento()+" - "+$P{papeleta}.getCondprovincia()+" - "+$P{papeleta}.getConddistrito()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="115" width="240" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				<reportElement mode="Opaque" x="33" y="90" width="240" height="14" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[LICENCIA DE CONDUCIR]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="135" width="137" height="15"/>
+				<reportElement x="136" y="104" width="137" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -132,12 +150,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getLicenumero()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="150" width="137" height="15"/>
+				<reportElement x="136" y="116" width="137" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -145,12 +164,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getLiceemision()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="150" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="116" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -158,12 +178,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[F. EMISION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="135" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="104" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -171,25 +191,26 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No LICENCIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="281" y="115" width="240" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				<reportElement mode="Opaque" x="281" y="90" width="240" height="14" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FECHA DE INFRACCIÓN]]></text>
+				<text><![CDATA[MONTO DE INFRACCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="165" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="128" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -197,12 +218,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[F. CADUCIDAD]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="165" width="137" height="15"/>
+				<reportElement x="136" y="128" width="137" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -210,12 +231,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getLicecaducidad()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="281" y="135" width="240" height="30"/>
+				<reportElement x="378" y="128" width="143" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -223,38 +245,39 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="16"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getFechinfraccion()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="1" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="0" width="488" height="14" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="184" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				<reportElement mode="Opaque" x="33" y="144" width="488" height="14" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATOS DEL VEHICULO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="249" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="194" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -262,12 +285,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[COLORES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="234" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="182" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -275,12 +298,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[AÑO DE FAB.]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="204" width="139" height="30"/>
+				<reportElement x="136" y="158" width="139" height="24" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -288,12 +311,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="16" isBold="true"/>
+					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidplaca()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="234" width="139" height="15"/>
+				<reportElement x="136" y="182" width="139" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -301,12 +324,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidanno()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="204" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="158" width="103" height="24" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -314,12 +338,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No DE PLACA]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="249" width="385" height="15"/>
+				<reportElement x="136" y="194" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -327,12 +351,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidcolor()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="204" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="158" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -340,12 +365,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MARCA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="219" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="170" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -353,12 +378,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TIPO DE VEHICULO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="379" y="204" width="142" height="15"/>
+				<reportElement x="378" y="158" width="143" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -366,12 +391,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidmarca()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="378" y="219" width="143" height="15"/>
+				<reportElement x="378" y="170" width="143" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -379,12 +405,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidtipo()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="234" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="182" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -392,12 +419,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No TJ PROPIEDAD]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="378" y="234" width="143" height="15"/>
+				<reportElement x="378" y="182" width="143" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -405,25 +432,27 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getUnidtarjpropiedad()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="268" width="488" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				<reportElement mode="Opaque" x="33" y="210" width="488" height="14" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATOS DEL PROPIETARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="303" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="236" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -431,12 +460,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO P.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="318" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="248" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -444,12 +473,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO M.]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="288" width="385" height="15"/>
+				<reportElement x="136" y="224" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -457,12 +486,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocrazonsocial()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="303" width="385" height="15"/>
+				<reportElement x="136" y="236" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -470,12 +500,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocpaterno()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="288" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="224" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -483,12 +514,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RAZÓN SOCIAL]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="318" width="385" height="15"/>
+				<reportElement x="136" y="248" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -496,12 +527,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocmaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="333" width="385" height="15"/>
+				<reportElement x="136" y="260" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -509,25 +541,26 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocnombres()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="325" y="363" width="73" height="15"/>
+				<reportElement x="325" y="284" width="73" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getEspropconductor()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="333" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="260" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -535,12 +568,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="348" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="272" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -548,12 +581,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="348" width="385" height="15"/>
+				<reportElement x="136" y="272" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -561,25 +594,26 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocdni()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="363" width="242" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="284" width="242" height="12" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ES PROPIETARIO - CONDUCTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="275" y="363" width="50" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="275" y="284" width="50" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -587,25 +621,25 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SI]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="448" y="363" width="73" height="15"/>
+				<reportElement x="448" y="284" width="73" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getNoespropconductor()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="398" y="363" width="50" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="398" y="284" width="50" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -613,12 +647,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="378" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="296" width="103" height="24" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -626,12 +660,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DOMICILIO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="378" width="385" height="15"/>
+				<reportElement x="136" y="296" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -639,12 +673,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocdomicilio()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="393" width="385" height="15"/>
+				<reportElement x="136" y="308" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -652,12 +687,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getAsocdepartamento()+" - "+$P{papeleta}.getAsocprovincia()+" - "+$P{papeleta}.getAsocdistrito()]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame">
-				<reportElement uuid="ca190012-308f-43f0-8dbe-173f6bc09062" x="326" y="493" width="195" height="161"/>
+				<reportElement x="326" y="382" width="195" height="155" uuid="ca190012-308f-43f0-8dbe-173f6bc09062"/>
 				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -668,21 +704,21 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage((byte[]) $P{papeleta}.getFilefoto())]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement uuid="cd3a8d00-1439-4b1a-b601-52a230a25cc6" x="326" y="654" width="195" height="19"/>
+				<reportElement mode="Opaque" x="326" y="537" width="195" height="13" forecolor="#FFFFFF" backcolor="#999999" uuid="cd3a8d00-1439-4b1a-b601-52a230a25cc6"/>
 				<box>
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["FOTO: "+$P{papeleta}.getFilenombre()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="21" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="14" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -690,12 +726,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO P.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="36" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="26" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -703,12 +739,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO M.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="51" width="103" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="38" width="103" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -716,12 +752,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="21" width="385" height="15"/>
+				<reportElement x="136" y="14" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -729,12 +765,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getCondpaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="36" width="385" height="15"/>
+				<reportElement x="136" y="26" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -742,12 +779,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getCondmaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="51" width="385" height="15"/>
+				<reportElement x="136" y="38" width="385" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -755,38 +793,41 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getCondnombres()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="413" width="242" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				<reportElement mode="Opaque" x="33" y="320" width="242" height="14" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SOBRE LA INFRACCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="413" width="247" height="20" forecolor="#333333" backcolor="#FFFFFF"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				<reportElement mode="Opaque" x="274" y="320" width="247" height="14" forecolor="#FFFFFF" backcolor="#999999" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#333333"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#333333"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#333333"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#333333"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATOS DEL INSPECTOR / PNP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="448" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="346" width="109" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -794,12 +835,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO M.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="433" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="334" width="109" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -807,12 +848,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO P.]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="448" width="138" height="15"/>
+				<reportElement x="383" y="346" width="138" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -820,12 +861,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInspmaterno()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="433" width="138" height="15"/>
+				<reportElement x="383" y="334" width="138" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -833,12 +875,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInsppaterno()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="463" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="358" width="103" height="24" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -846,12 +889,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[REFERENCIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="433" width="103" height="30" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="334" width="103" height="24" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -859,12 +902,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[UBICACIÓN]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="463" width="138" height="30"/>
+				<reportElement x="136" y="358" width="138" height="24" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -872,12 +915,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfrreferencia()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="433" width="138" height="30"/>
+				<reportElement x="136" y="334" width="138" height="24" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -885,12 +929,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfrdireccion()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="463" width="138" height="15"/>
+				<reportElement x="383" y="358" width="138" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -898,12 +943,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInspnombres()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="463" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="358" width="109" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -911,12 +957,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="383" y="478" width="138" height="15"/>
+				<reportElement x="383" y="370" width="138" height="12" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -924,12 +970,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInspdni()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="274" y="478" width="109" height="15" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="274" y="370" width="109" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -937,38 +984,26 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DNI]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="493" width="103" height="16" forecolor="#333333" backcolor="#FFFFFF"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CODIGO]]></text>
-			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="493" width="190" height="16"/>
+				<reportElement x="136" y="382" width="190" height="28" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfrcodigo()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="509" width="103" height="27" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="410" width="103" height="25" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -976,12 +1011,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INFRACCION]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="509" width="190" height="27"/>
+				<reportElement x="136" y="410" width="190" height="25" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -989,12 +1024,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getInfraccion()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="618" width="190" height="55"/>
+				<reportElement x="136" y="505" width="190" height="45" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -1002,12 +1038,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getObseinfraccion()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="563" width="190" height="55"/>
+				<reportElement x="136" y="460" width="190" height="45" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -1015,12 +1052,13 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getObseinspector()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="563" width="103" height="55" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="460" width="103" height="45" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -1028,12 +1066,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBSERVACION DEL INSPECTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="618" width="103" height="55" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="505" width="103" height="45" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -1041,12 +1079,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBSERVACION SOBRE LA INFRACCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8" mode="Opaque" x="33" y="536" width="103" height="27" forecolor="#333333" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="33" y="435" width="103" height="25" forecolor="#333333" backcolor="#FFFFFF" uuid="bc9a91c2-8869-4033-971a-d62d03dcb8b8"/>
 				<box leftPadding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid"/>
@@ -1054,12 +1092,12 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MEDIDA]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b" x="136" y="536" width="190" height="27"/>
+				<reportElement x="136" y="435" width="190" height="25" uuid="6ee4c1c0-4a16-4032-a5c5-815e98991e7b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -1067,10 +1105,148 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getMedida()]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="9" y="606" width="24" height="16" uuid="c2ec7eaf-9e40-4eb6-bbb4-84961d456681"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{papeleta}.getPapcodigo()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="33" y="550" width="163" height="59" uuid="77394a04-11de-43d8-92ba-b2df6d17d6d6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="358" y="550" width="163" height="59" uuid="a40a0d2b-48e0-41e3-a153-6c27a2a96878"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="196" y="550" width="162" height="59" uuid="2b4f9b6e-30b9-4d81-824f-067badd5de12"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="358" y="609" width="163" height="12" forecolor="#FFFFFF" backcolor="#999999" uuid="a0d47b8a-cbe8-4692-b46b-6d9158eb3fb5"/>
+				<box leftPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA EFECTIVO PNP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="33" y="609" width="163" height="12" forecolor="#FFFFFF" backcolor="#999999" uuid="d31bb779-36a5-4fdb-b5ef-84693e6d1781"/>
+				<box leftPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA INFRACTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="196" y="609" width="162" height="12" forecolor="#FFFFFF" backcolor="#999999" uuid="11c01c9a-5bd7-4704-a2d8-eca886c6ac48"/>
+				<box leftPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA INSPECTOR DE TRANSPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="33" y="382" width="103" height="28" forecolor="#FFFFFF" backcolor="#999999" uuid="7f632e46-9b0c-4f59-8b40-aa5a0b66472f"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="281" y="128" width="97" height="12" forecolor="#333333" backcolor="#FFFFFF" uuid="8dd5d9e6-874f-4452-8fd6-45e414f938ed"/>
+				<box leftPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE INFRACCIÓN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="281" y="104" width="240" height="24" uuid="f294008c-0a24-4e9e-a091-ca806513ffcc"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["S/. "+$P{papeleta}.getMonto()+"  *"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="33" y="622" width="488" height="12" uuid="d37cdec6-a8f5-4b3e-967c-56642b094c17"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["* Pago antes del " + $P{papeleta}.getFechaDesc()+". Usted solo paga S/."+$P{papeleta}.getMontoDesc()]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
+	<summary>
+		<band height="34">
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="33" y="0" width="488" height="15" forecolor="#999999" backcolor="#999999" uuid="55add5a9-86e0-430d-8ebc-4311075f4c32"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="35" y="0" width="486" height="15" forecolor="#FFFFFF" uuid="b8ad608a-d1a1-402b-9c07-7d5a43503923"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[ESTADIO MUNICIPAL "SOLÍS GARCÍA" - AV. ENRIQUE GUZMÁN Y VALLE CDRA. 7 S/N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="15" width="200" height="15" uuid="bed3be3f-a0b2-4da8-ad69-fd3c6d28d20a"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[e-mail: transporte@munichosica.gob.pe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="15" width="200" height="15" uuid="f315862d-259e-43ff-bc02-81cc925b72c7"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Sitio Web: www.munichosica.gob.pe]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>

@@ -13,6 +13,9 @@ public class MotEmprAsociado {
 	protected String asorazonsocialV;
 	protected MotEmpresa empresa;
 	protected String asoestadoC;
+	protected String asofechainicioF;
+	protected String asofechaceseF;
+	protected String asoobservacionV;
 	protected MotAdjuntarArchivo foto;
 	
 	public MotEmprAsociado() {
@@ -20,6 +23,38 @@ public class MotEmprAsociado {
 		foto=new MotAdjuntarArchivo();
 		empresa=new MotEmpresa();
 	}
+	
+	
+	public String getAsofechainicioF() {
+		return asofechainicioF;
+	}
+
+
+	public void setAsofechainicioF(String asofechainicioF) {
+		this.asofechainicioF = asofechainicioF;
+	}
+
+
+	public String getAsofechaceseF() {
+		return asofechaceseF;
+	}
+
+
+	public void setAsofechaceseF(String asofechaceseF) {
+		this.asofechaceseF = asofechaceseF;
+	}
+
+
+	public String getAsoobservacionV() {
+		return asoobservacionV;
+	}
+
+
+	public void setAsoobservacionV(String asoobservacionV) {
+		this.asoobservacionV = asoobservacionV;
+	}
+
+
 	public void setFoto(MotAdjuntarArchivo foto) {
 		this.foto = foto;
 	}

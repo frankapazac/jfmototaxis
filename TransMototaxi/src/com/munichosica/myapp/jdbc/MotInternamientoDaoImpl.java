@@ -82,6 +82,7 @@ public class MotInternamientoDaoImpl implements MotInternamientoDao{
 					internamiento.getPapeleta().setPapcodigoD(rs.getLong("PAPCODIGO"));
 					internamiento.getBoletaInternamiento().setBincodigoD(rs.getLong("BOLETA_INTERNAMIENTO"));
 					internamiento.getActaConformidad().setAcocodigoD(rs.getLong("ACTA_CONFORMIDAD"));
+					internamiento.getBoletaInternamiento().setBinnumeroV(rs.getString("BOL_NUMERO"));
 					list.add(internamiento);
 				}
 			}
@@ -111,8 +112,6 @@ public class MotInternamientoDaoImpl implements MotInternamientoDao{
 			if(results){
 				rs=stmt.getResultSet();
 				if(rs.next()){
-					System.out.println("CODIGO: "+rs.getLong("BINCODIGO"));
-					System.out.println("MOVITO: "+rs.getString("MOTIVO"));
 					internamiento=new MotInternamiento();
 					internamiento.setIntcodigoD(rs.getLong("INTCODIGO"));
 					internamiento.getPapeleta().setPapcodigoD(rs.getLong("PAPCODIGO"));
@@ -145,6 +144,37 @@ public class MotInternamientoDaoImpl implements MotInternamientoDao{
 					internamiento.getPropUnidadEmpresa().getAsociado().getEmpresa().setEmpdireccionV(rs.getString("EMPR_DIRECCION"));
 					internamiento.getPropUnidadEmpresa().getAsociado().getEmpresa().setEmptelefono1V(rs.getString("EMPR_TELEFONO"));
 					internamiento.getPropUnidadEmpresa().getAsociado().getEmpresa().setEmpcelularmovV(rs.getString("EMPR_CELULAR"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotInternamientoDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return internamiento;
+	}
+	
+	@Override
+	public MotInternamiento getPropietarioInternamiento(Long codigo)
+			throws MotInternamientoDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotInternamiento internamiento=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_PROPIETARIO_INTERNAMIENTO;1(?)}");
+			stmt.setLong(1, codigo);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					internamiento=new MotInternamiento();
+					internamiento.setIntcodigoD(rs.getLong("INTCODIGO"));	
+					internamiento.getPropUnidadEmpresa().getAsociado().getPersona().setPernombresV(rs.getString("PROP_NOMBRES"));
+					internamiento.getActaConformidad().setAcodescripcionV(rs.getString("DESCRIPCION"));
 				}
 			}
 		} catch (SQLException e) {

@@ -13,6 +13,7 @@ public class MotInternamiento {
 	protected String intfechaingresoF;
 	protected String intfechasalidaF;
 	protected List<MotInteInventario> inventarios;
+	protected List<MotPersona> personas;
 	
 	public MotInternamiento() {
 		actaConformidad=new MotActaConformidad();
@@ -21,6 +22,14 @@ public class MotInternamiento {
 		papeleta=new MotPapeleta();
 		propUnidadEmpresa=new MotPropUnidadEmpresa();
 		inventarios=new ArrayList<MotInteInventario>();
+	}
+	
+	public List<MotPersona> getPersonas() {
+		return personas;
+	}
+	
+	public void setPersonas(List<MotPersona> personas) {
+		this.personas = personas;
 	}
 	
 	public void setInventarios(List<MotInteInventario> inventarios) {

@@ -41,9 +41,13 @@ import com.munichosica.myapp.exceptions.MotEmpRepresentanteDaoException;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotInspectorDaoException;
 import com.munichosica.myapp.exceptions.MotInteInventarioTipoDaoException;
+import com.munichosica.myapp.exceptions.MotMarcaDaoException;
+import com.munichosica.myapp.exceptions.MotModeloDaoException;
+import com.munichosica.myapp.exceptions.MotOficinaRegistralDaoException;
 import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotOperativoDaoException;
 import com.munichosica.myapp.exceptions.MotParaderoDaoException;
+import com.munichosica.myapp.exceptions.MotPersonaDaoException;
 import com.munichosica.myapp.exceptions.MotPoliciaDaoException;
 import com.munichosica.myapp.exceptions.MotTipoDocumentoDaoException;
 import com.munichosica.myapp.exceptions.MotTipoMedidaDaoException;
@@ -55,6 +59,7 @@ import com.munichosica.myapp.factory.MotEmpConductorDaoFactory;
 import com.munichosica.myapp.factory.MotEmpDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotEmpRepresentanteDaoFactory;
 import com.munichosica.myapp.factory.MotEmprAsociadoDaoFactory;
+import com.munichosica.myapp.factory.MotEmpresaDaoFactory;
 import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
 import com.munichosica.myapp.factory.MotInspectorDaoFactory;
 import com.munichosica.myapp.factory.MotInteInventarioTipoDaoFactory;
@@ -64,6 +69,7 @@ import com.munichosica.myapp.factory.MotOficinaRegistralDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotOperativoDaoFactory;
 import com.munichosica.myapp.factory.MotParaderoDaoFactory;
+import com.munichosica.myapp.factory.MotPersonaDaoFactory;
 import com.munichosica.myapp.factory.MotPoliciaDaoFactory;
 import com.munichosica.myapp.factory.MotTipoDocumentoDaoFactory;
 import com.munichosica.myapp.factory.MotTipoMedidaDaoFactory;
@@ -89,6 +95,38 @@ public class PageController {
 			usuario=new UserSecurity().getUsuarioByUser(request);
 			session.setAttribute("USUARIO", usuario);
 		}
+		
+		if(usuario.getEmpresa().getEmpcodigoD()!=null&&usuario.getEmpresa().getEmpcodigoD()>0){
+			MotEmpRepresentante emprepresentante=null;
+			try {
+				emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(
+						usuario.getEmpresa().getEmpcodigoD());
+	
+				if(emprepresentante!=null){
+					emprepresentante.getEmpProp().setPersona(MotPersonaDaoFactory.create().obtener(
+							emprepresentante.getEmpProp().getPersona().getPercodigoD()));
+				}
+				model.addAttribute("emprepresentante", emprepresentante);
+			} catch (MotEmpRepresentanteDaoException | MotPersonaDaoException e) {
+				logger.error(e.getMessage(), e);
+			}
+			
+			MotEmpDocumento imagen;
+			try {
+				imagen = MotEmpDocumentoDaoFactory.create().findImageByEmpresa(usuario.getEmpresa().getEmpcodigoD());
+				String nombreArchivo=null;
+				if(imagen.getAdjuntarArchivo()!=null&&imagen.getAdjuntarArchivo().getAdjarchivoB()!=null)
+					nombreArchivo="temp/"+FileUtil.createTempFile(request, imagen.getAdjuntarArchivo().getAdjnombreV(),imagen.getAdjuntarArchivo().getAdjarchivoB());
+				else
+					nombreArchivo="images/no_disponible_m.jpg";
+				
+				imagen.getAdjuntarArchivo().setAdjnombreV(nombreArchivo);
+				model.addAttribute("imagen", imagen);
+			} catch (MotEmpDocumentoDaoException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		
 		model.addAttribute("usuario",usuario);
 		model.addAttribute("paginas",usuario.getRol().getPaginas());
 		return "tilesBienvenido";
@@ -112,13 +150,6 @@ public class PageController {
 		List<MotTipoDocumento> documentosUnidad=null;
 		List<MotTipoDocumento> documentosUnidadFotos=null;
 		List<MotEmpConductor> conductores=null;
-		
-		
-		
-		
-		
-		
-		
 		
 		try {
 			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
@@ -255,7 +286,12 @@ public class PageController {
 			MotEmpRepresentante emprepresentante=null;
 			emprepresentante = MotEmpRepresentanteDaoFactory.create().findByEmpresa(
 					usuario.getEmpresa().getEmpcodigoD());
+			if(emprepresentante!=null){
+				emprepresentante.getEmpProp().setPersona(MotPersonaDaoFactory.create().obtener(
+						emprepresentante.getEmpProp().getPersona().getPercodigoD()));
+			}
 			//List<MotTipoDocumento> fotos = MotTipoDocumentoDaoFactory.create().findByTable("EMP");
+			logger.info("usuario.getEmpresa().getEmpcodigoD= "+usuario.getEmpresa().getEmpcodigoD());
 			List<MotEmpDocumento> imagenes=MotEmpDocumentoDaoFactory.create().findImagesByEmpresa(usuario.getEmpresa().getEmpcodigoD());
 			String nombreArchivo=null;
 			for(MotEmpDocumento images:imagenes){
@@ -270,13 +306,12 @@ public class PageController {
 			model.addAttribute("emprepresentante", emprepresentante);//para enviar datos a esta pagina
 			//model.addAttribute("fotos", fotos);
 			model.addAttribute("imagenes", imagenes);
-			System.out.println(imagenes.size());
-		} catch (MotEmpRepresentanteDaoException | MotEmpDocumentoDaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("usuario",usuario);
+			model.addAttribute("paginas",usuario.getRol().getPaginas());
+			System.out.println("Cant imagenes: "+imagenes.size());
+		} catch (MotEmpRepresentanteDaoException | MotEmpDocumentoDaoException | MotPersonaDaoException e) {
+			logger.error(e.getMessage(), e);
 		}
-		model.addAttribute("usuario",usuario);
-		model.addAttribute("paginas",usuario.getRol().getPaginas());
 		return "tilesConfiguracion";
 	}
 	
@@ -349,6 +384,9 @@ public class PageController {
 			List<MotInfraccion> infracciones=null;
 			List<MotPolicia> policias=null;
 			List<MotUbigeo> departamentos=null;
+			List<MotModelo> modelos=null;
+			List<MotMarca> marcas=null;
+			List<MotOficinaRegistral> oficinas=null;
 			
 			conductores = MotConductorDaoFactory.create().findAll();
 			placas=MotUnidadEmpresaDaoFactory.create().findAllPlacasByAsociado();
@@ -356,15 +394,21 @@ public class PageController {
 			infracciones=MotInfraccionDaoFactory.create().findAll();
 			policias=MotPoliciaDaoFactory.create().findAll();
 			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
+			modelos=MotModeloDaoFactory.create().findAll();
+			marcas=MotMarcaDaoFactory.create().findAll();
+			oficinas=MotOficinaRegistralDaoFactory.create().findAll();
 			model.addAttribute("departamentos", departamentos);
 			model.addAttribute("conductores", conductores);
 			model.addAttribute("placas", placas);
 			model.addAttribute("inspectores", inspectores);
 			model.addAttribute("infracciones", infracciones);
 			model.addAttribute("policias", policias);
+			model.addAttribute("modelos",modelos);
+			model.addAttribute("marcas",marcas);
+			model.addAttribute("oficinas", oficinas);
 		} catch (MotConductorDaoException | MotUnidadEmpresaDaoException | 
 				MotInspectorDaoException | MotInfraccionDaoException | 
-				MotPoliciaDaoException | MotUbigeoDaoException e) {
+				MotPoliciaDaoException | MotUbigeoDaoException | MotModeloDaoException | MotMarcaDaoException | MotOficinaRegistralDaoException e) {
 			logger.error(e.getMessage());
 		}
 		model.addAttribute("usuario",usuario);
@@ -510,7 +554,6 @@ public class PageController {
 		try {
 			zonas=MotZonaDaoFactory.create().findAll();
 			departamentos = MotUbigeoDaoFactory.create().findAllDepartamentos();
-			
 			model.addAttribute("zonas", zonas);
 			model.addAttribute("departamentos",departamentos);
 		} catch (MotZonaDaoException | MotUbigeoDaoException e) {

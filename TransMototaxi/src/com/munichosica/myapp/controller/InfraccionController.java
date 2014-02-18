@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,14 +20,19 @@ import com.munichosica.myapp.dto.MotInspector;
 import com.munichosica.myapp.dto.MotOperFiscalizador;
 import com.munichosica.myapp.dto.MotTipoMedida;
 import com.munichosica.myapp.dto.Rol;
+import com.munichosica.myapp.dto.Usuario;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotInfrMedidaDaoException;
 import com.munichosica.myapp.exceptions.MotInfraccionDaoException;
 import com.munichosica.myapp.exceptions.MotOperFiscalizadorDaoException;
 import com.munichosica.myapp.exceptions.MotOperativoDaoException;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotInfrMedidaDaoFactory;
 import com.munichosica.myapp.factory.MotInfraccionDaoFactory;
 import com.munichosica.myapp.factory.MotOperFiscalizadorDaoFactory;
 import com.munichosica.myapp.factory.MotOperativoDaoFactory;
+import com.munichosica.myapp.util.IpUtils;
+import com.munichosica.myapp.util.UserSecurity;
 
 @Controller
 @RequestMapping("/Infracciones")
@@ -53,17 +59,29 @@ public class InfraccionController {
 	
 	@RequestMapping(value="Procesar.htm", method=RequestMethod.POST)
 	public @ResponseBody String procesar
-	(HttpServletRequest request , @RequestBody MotTipoMedidasList tipoMedidasList){		
+	(HttpServletRequest request , @RequestBody MotTipoMedidasList tipoMedidasList){	
 		logger.info("Ingreso a GuardarInfracciones/Procesar.htm");
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
+		
 		try {
 			MotInfraccionDaoFactory.create().procesar(tipoMedidasList.getInfraccion());
+			System.out.println("MOT_INFRACCION");
+			System.out.println(IpUtils.getIpFromRequest(request));
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_INFRACCION",tipoMedidasList.getInfraccion().getInfcodigoD(),"SP_MOT_INS_AUDITORIA",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			for(MotTipoMedida tipoMedida:tipoMedidasList.getTipoMedidas()){	
 				MotInfrMedida infraMedida = new MotInfrMedida();
 				infraMedida.setTipoMedida(tipoMedida);
 				infraMedida.setInfraccion(tipoMedidasList.getInfraccion());
 				MotInfrMedidaDaoFactory.create().insert(infraMedida);
+				
 			}
-		} catch (MotInfrMedidaDaoException | MotInfraccionDaoException e) {
+		} catch (MotInfrMedidaDaoException | MotInfraccionDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";
@@ -101,15 +119,22 @@ public class InfraccionController {
 	}
 	
 	@RequestMapping(value="Eliminar.htm", method=RequestMethod.GET)
-	public @ResponseBody String eliminar (@RequestParam("codigo") Long codigo){
-		
+	public @ResponseBody String eliminar (HttpServletRequest request,@RequestParam("codigo") Long codigo){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			logger.info("Ingreso a EliminarInfraccion/Eliminar.htm");
 			MotInfraccion infraccion = new MotInfraccion();	
 			infraccion.setInfcodigoD(codigo);
 			MotInfraccionDaoFactory.create().delete(infraccion);
 			logger.info("MotInfraccionDaoFactory.create().delete(infraccion); Complete");
-		} catch (MotInfraccionDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_INFRACCION",codigo,"SP_MOT_UPD_ESTADO_INFRACCION",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotInfraccionDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 			

@@ -123,6 +123,56 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 	}
 
 	@Override
+	public MotUnidadEmpresa findUnidadByPlaca(String placa)
+			throws MotUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotUnidadEmpresa unidad=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_UNIDADEMPRESA_BY_PLACA;1(?)}");
+			stmt.setString(1, placa);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					unidad=new MotUnidadEmpresa();
+					unidad.setUnecodigoD(rs.getLong("CODIGO"));
+					unidad.setUneplacanroV(rs.getString("PLACA"));
+					unidad.getOficina().setOficodigoI(rs.getInt("OFICINA"));
+					unidad.setUnenropadronV(rs.getString("PADRON"));
+					unidad.setUnenropartidaregistralV(rs.getString("PARTIDAREGISTRAL"));
+					unidad.setUnetituloV(rs.getString("TITULO"));
+					unidad.setUneclaseV(rs.getString("CLASE"));
+					unidad.getMarca().setMarcodigoI(rs.getInt("MARCA"));
+					unidad.getMarca().setMarnombreV(rs.getString("MARCA_NOMBRE"));
+					unidad.getModelo().setModcodigo_D(rs.getInt("MODELO"));
+					unidad.getModelo().setModnombre_V(rs.getString("MODELO_NOMBRE"));
+					unidad.setUneannoC(rs.getString("ANNO"));
+					unidad.setUnecolorV(rs.getString("COLOR"));
+					unidad.setUnecombustibleC(rs.getString("COMBUSTIBLE"));
+					unidad.setUnecarroceriaC(rs.getString("CARROCERIA"));
+					unidad.setUnenroseriechasisV(rs.getString("CHASIS"));
+					unidad.setUnenromotorV(rs.getString("MOTOR"));
+					unidad.setUnenroidentificacionV(rs.getString("NIV"));
+					unidad.setUnenroruedasI(rs.getInt("RUEDAS"));
+					unidad.setUnenroasientosI(rs.getInt("ASIENTOS"));
+					unidad.setUnenropasajerosI(rs.getInt("PASAJEROS"));
+					unidad.setUnecargautilD(rs.getBigDecimal("CARGAUTIL"));
+					unidad.setUnelongitudD(rs.getBigDecimal("LONGITUD"));
+					unidad.setUneanchoD(rs.getBigDecimal("ANCHO"));
+					unidad.setUnealtoD(rs.getBigDecimal("ALTO"));
+					unidad.getAsociado().setAsocodigoD(rs.getLong("ASOCIADO"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidadEmpresaDaoException(e.getMessage(), e);
+		}
+		return unidad;
+	}
+
+	@Override
 	public List<MotUnidadEmpresa> findByCriterio(String criterio, String texto,
 			Long modcodigo_D) throws MotUnidadEmpresaDaoException {
 		return null;
@@ -310,6 +360,60 @@ public class MotUnidadEmpresaDaoImpl implements MotUnidadEmpresaDao {
 					unidadEmpresa.getAsociado().getEmpresa().setEmpcelularmovV(rs.getString("EMPCELULAR"));
 					
 					unidadEmpresa.getArchivo().setAdjestadoV(rs.getString("ESTADO"));
+					
+					unidadEmpresa.setMensaje(rs.getString("MENSAJE"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotUnidadEmpresaDaoException(e.getMessage(),e);
+		}
+		return unidadEmpresa;
+	}
+	
+	@Override
+	public MotUnidadEmpresa findPmoCodigoByPlaca(String placa)
+			throws MotUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		MotUnidadEmpresa unidadEmpresa=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_UNIDEMPRESABYPLACA;1(?)}");
+			stmt.setString(1, placa);
+			boolean results=stmt.execute();
+			if(results){
+				rs=stmt.getResultSet();
+				if(rs.next()){
+					unidadEmpresa=new MotUnidadEmpresa();
+					unidadEmpresa.setUneplacanroV(rs.getString("PLACA"));
+					unidadEmpresa.getMarca().setMarnombreV(rs.getString("MARCA"));
+					unidadEmpresa.getModelo().setModnombre_V(rs.getString("MODELO"));
+					//unidadEmpresa.setUnenromotorV(rs.getString("MOTOR"));
+					unidadEmpresa.setUneannoC(rs.getString("ANNO"));
+					unidadEmpresa.getArchivo().setAdjnumeroV(rs.getString("TARJPROPNUMERO"));
+					unidadEmpresa.getArchivo().setAdjfechaemisionF(rs.getString("FECHAEMISION"));
+					unidadEmpresa.getArchivo().setAdjfechacaducidadF(rs.getString("FECHACADUCIDAD"));
+					unidadEmpresa.setUnecolorV(rs.getString("COLOR"));
+					
+					/*unidadEmpresa.getAsociado().setAsorazonsocialV(rs.getString("ASORAZONSOCIAL"));
+					unidadEmpresa.getAsociado().setAsocodigoD(rs.getLong("ASOCODIGO"));
+					unidadEmpresa.getAsociado().getPersona().setPernombresV(rs.getString("ASONOMBRES"));
+					unidadEmpresa.getAsociado().getPersona().setPerpaternoV(rs.getString("ASOPATERNO"));
+					unidadEmpresa.getAsociado().getPersona().setPermaternoV(rs.getString("ASOMATERNO"));
+					unidadEmpresa.getAsociado().getPersona().setPerdniV(rs.getString("ASODNI"));
+					unidadEmpresa.getAsociado().getPersona().setPerdomicilioV(rs.getString("ASODOMICILIO"));
+					unidadEmpresa.getAsociado().getPersona().setPerteleffijoV(rs.getString("ASOTELEFONO"));
+					unidadEmpresa.getAsociado().getPersona().setPermovilmovV(rs.getString("ASOCELULAR"));
+
+					unidadEmpresa.getAsociado().getEmpresa().setEmprazonsocialV(rs.getString("EMPRESA"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmpdireccionV(rs.getString("EMPDIRECCION"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmptelefono1V(rs.getString("EMPTELEFONO"));
+					unidadEmpresa.getAsociado().getEmpresa().setEmpcelularmovV(rs.getString("EMPCELULAR"));*/
+					
+					unidadEmpresa.getArchivo().setAdjestadoV(rs.getString("ESTADO"));
+					
+					unidadEmpresa.setMensaje(rs.getString("MENSAJE"));
 				}
 			}
 		} catch (SQLException e) {

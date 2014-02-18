@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportAfiliado_subreport1" pageWidth="487" pageHeight="802" columnWidth="487" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2ca70e37-9b21-427a-ad8b-371203780c99">
+	<property name="ireport.zoom" value="2.253944402704733"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ASOCODIGO" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT MTDNOMBRE_V AS DOCUMENTO,
+CONVERT(VARCHAR,ADJ.ADJFECHAEMISION_F,103) AS EMISION,
+CONVERT(VARCHAR,ADJ.ADJFECHACADUCIDAD_F,103) AS CADUCIDAD,
+CASE WHEN ADJ.ADJFECHACADUCIDAD_F>GETDATE() THEN 'ACTIVO' ELSE 'INACTIVO' END AS ESTADO
+FROM MOT_ASOC_DOCUMENTO ADO
+INNER JOIN MOT_ADJUNTAR_ARCHIVO ADJ ON ADJ.ADJCODIGO_D=ADO.ADJCODIGO_D
+INNER JOIN MOT_TIPO_DOCUMENTO TDO ON TDO.MTDCODIGO_I=ADO.MTDCODIGO_I
+WHERE ADO.ASOCODIGO_D=$P{ASOCODIGO}]]>
+	</queryString>
+	<field name="DOCUMENTO" class="java.lang.String"/>
+	<field name="EMISION" class="java.lang.String"/>
+	<field name="CADUCIDAD" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="487" height="20" uuid="e4e8874f-e3c4-481a-8c08-79650b051384"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTOS ADJUNTADOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="2" width="487" height="20" backcolor="#608A12" uuid="8d332753-9c44-4daf-b996-e2a1bbf8ad5c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="5" width="255" height="15" forecolor="#FFFFFF" uuid="71727cdd-3519-465b-be79-ec6950954ffb"/>
+				<text><![CDATA[DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="4" width="59" height="15" forecolor="#FFFFFF" uuid="58ae6799-c5d4-490f-a4a3-c0f627c33cc0"/>
+				<text><![CDATA[EMISION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="5" width="57" height="15" forecolor="#FFFFFF" uuid="94ca7f44-abe3-4d97-9b53-627ca6997e2c"/>
+				<text><![CDATA[CADUCIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="5" width="55" height="15" forecolor="#FFFFFF" uuid="ec075643-1b3e-4654-b829-bf6692da8e99"/>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="271" y="2" width="1" height="20" uuid="37cf9b03-037c-4495-a46d-bd8f4b9cfa9f"/>
+			</line>
+			<line>
+				<reportElement x="342" y="2" width="1" height="20" uuid="dd872a86-b18d-4124-8101-66bdfe6011b3"/>
+			</line>
+			<line>
+				<reportElement x="412" y="2" width="1" height="20" uuid="ec4ac7e8-9e30-4e11-b0a1-5e9a7c133e33"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="0" width="267" height="20" uuid="9d14b8e9-a023-4636-a9bc-31f5c08ba292"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="0" width="67" height="20" uuid="d7dfd57f-ee08-434d-b6e8-5e78e22e68e2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EMISION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="347" y="0" width="65" height="20" uuid="cb9f7f33-5e22-4991-a248-43c3da65c462"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CADUCIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="0" width="71" height="20" uuid="b0192ff2-bc4f-4afa-8a88-1cbc45c21336"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="487" height="1" uuid="6798ff34-530d-4a41-951a-7a1da676bbfa"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" uuid="77e3244b-3ad4-4286-a05e-e381982febbe"/>
+			</line>
+			<line>
+				<reportElement x="271" y="0" width="1" height="20" uuid="2847f272-aee9-44ba-a0b8-6560cb9b5de2"/>
+			</line>
+			<line>
+				<reportElement x="342" y="0" width="1" height="20" uuid="bfe89ca0-0354-4d07-8900-4106dae33ea1"/>
+			</line>
+			<line>
+				<reportElement x="413" y="0" width="1" height="20" uuid="d428a7c7-5a98-46b2-9409-c435999b4313"/>
+			</line>
+			<line>
+				<reportElement x="486" y="0" width="1" height="20" uuid="a550ca5d-68a3-4c6b-8cc7-3c2cbb3a9281"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

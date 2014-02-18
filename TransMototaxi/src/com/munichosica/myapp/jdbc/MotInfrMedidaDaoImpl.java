@@ -57,8 +57,6 @@ public class MotInfrMedidaDaoImpl implements MotInfrMedidaDao{
 			stmt = conn.prepareCall("{call SP_MOT_INS_INFRA_MEDIDAS;1 (?,?)}");
 			stmt.setLong(1,dto.getTipoMedida().getTmecodigoI());
 			stmt.setLong(2, dto.getInfraccion().getInfcodigoD());	
-			System.out.println("codigo tmedida " + dto.getTipoMedida().getTmecodigoI());
-			System.out.println("codigo infraccion " + dto.getInfraccion().getInfcodigoD());
 			stmt.execute();
 								
 		} catch (SQLException e) {

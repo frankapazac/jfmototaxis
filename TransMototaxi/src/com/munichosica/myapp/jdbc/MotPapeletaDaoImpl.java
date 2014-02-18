@@ -16,13 +16,11 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 
 	@Override
 	public void insert(MotPapeleta papeleta) throws MotPapeletaDaoException {
-		System.out.println("INGRESO ACA");
 		Connection conn=null;
-		CallableStatement stmt=null;
-		System.out.println("INSPECTOR "+papeleta.getInspector().getInscodigoI());
+		CallableStatement stmt=null;		
 		try {
 			conn=ResourceManager.getConnection();
-			stmt=conn.prepareCall("{call SP_MOT_INS_PAPELETA;1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			stmt=conn.prepareCall("{call SP_MOT_INS_PAPELETA;1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			stmt.registerOutParameter(1, Types.DECIMAL);
 			stmt.setLong(1, papeleta.getPapcodigoD());
 			stmt.registerOutParameter(2, Types.VARCHAR);
@@ -34,7 +32,11 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 			if(papeleta.getInspector().getInscodigoI()!=null)
 				stmt.setInt(6, papeleta.getInspector().getInscodigoI());
 			else stmt.setNull(6, Types.INTEGER);
-			stmt.setLong(7, papeleta.getPropUnidadEmpresa().getPmocodigoD());
+			System.out.println("PAPELETA "+papeleta.getPropUnidadEmpresa().getPmocodigoD().toString());
+			if(papeleta.getPropUnidadEmpresa().getPmocodigoD()!=null || 
+					papeleta.getPropUnidadEmpresa().getPmocodigoD()!=0){
+				stmt.setLong(7, papeleta.getPropUnidadEmpresa().getPmocodigoD());}
+			else stmt.setNull(7, Types.DECIMAL);
 			stmt.setLong(8, papeleta.getConductor().getConcodigoD());
 			stmt.setString(9, papeleta.getPapfechainfraccionF());
 			stmt.setString(10, papeleta.getPaphorainfraccionF());
@@ -43,6 +45,7 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 			stmt.setString(13, papeleta.getPappropietarioC());
 			stmt.setString(14, papeleta.getPapobservinfraccionV());
 			stmt.setString(15, papeleta.getPapobservinspectorV());
+			stmt.setString(16, papeleta.getPropUnidadEmpresa().getUnidadempresa().getUneplacanroV());
 			stmt.execute();
 			Long codigo=stmt.getLong(1);
 			String numero=stmt.getString(2);
@@ -81,6 +84,7 @@ public class MotPapeletaDaoImpl implements MotPapeletaDao{
 				while(rs.next()){
 					papeleta=new MotPapeleta();
 					papeleta.setPapcodigoD(rs.getLong("PAPCODIGO"));
+					papeleta.setPapnumeroV(rs.getString("PAPNUMERO"));
 					papeleta.getConductor().setConcodigoD(rs.getLong("CONDCODIGO"));
 					papeleta.getPropUnidadEmpresa().setPmocodigoD(rs.getLong("PMOCODIGO"));
 					papeleta.getPropUnidadEmpresa().getUnidadempresa().setUneplacanroV(rs.getString("PMOPLACANRO"));

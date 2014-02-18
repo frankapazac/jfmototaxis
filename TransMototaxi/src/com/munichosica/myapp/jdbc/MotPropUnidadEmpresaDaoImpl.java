@@ -162,4 +162,64 @@ public class MotPropUnidadEmpresaDaoImpl implements MotPropUnidadEmpresaDao{
 		return propUnidadEmpresa;
 	}
 
+	@Override
+	public List<MotPropUnidadEmpresa> buscarExisteNroPlaca(String placa)
+			throws MotPropUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		ResultSet rs=null;
+		List<MotPropUnidadEmpresa> list=null;
+		try {
+			list=new ArrayList<MotPropUnidadEmpresa>();
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_GET_PRO_UNIEMPRESA_EXISTE_PLACA;1(?)}");
+			stmt.setString(1, placa);
+			boolean results=stmt.execute();
+			if(results){
+				MotPropUnidadEmpresa unidadEmpresa=null;
+				rs=stmt.getResultSet();
+				while(rs.next()){
+					unidadEmpresa=new MotPropUnidadEmpresa();
+					unidadEmpresa.getAsociado().getEmpresa().setEmprazonsocialV(rs.getString("EMPRESA"));
+					unidadEmpresa.getUnidadempresa().setUnenropadronV(rs.getString("PADRON"));
+					unidadEmpresa.getUnidadempresa().setUnenropartidaregistralV(rs.getString("PARTIDA"));
+					unidadEmpresa.getUnidadempresa().setUnenroseriechasisV(rs.getString("SERIE"));
+					unidadEmpresa.getUnidadempresa().setUnenromotorV(rs.getString("MOTOR"));
+					unidadEmpresa.getUnidadempresa().setUnecolorV(rs.getString("COLOR"));
+					unidadEmpresa.setPmofechainicioV(rs.getString("INICIO"));
+					unidadEmpresa.setPmofechaceseV(rs.getString("FIN"));
+					unidadEmpresa.setPmoobservacionV(rs.getString("OBSERVACION"));
+					list.add(unidadEmpresa);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MotPropUnidadEmpresaDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(rs);
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+		return list;
+	}
+
+	@Override
+	public void cesarMototaxi(MotPropUnidadEmpresa unidadEmpresa)
+			throws MotPropUnidadEmpresaDaoException {
+		Connection conn=null;
+		CallableStatement stmt=null;
+		try {
+			conn=ResourceManager.getConnection();
+			stmt=conn.prepareCall("{call SP_MOT_UPD_PROP_UNIEMPRESA;1(?,?,?)}");
+			stmt.setLong(1, unidadEmpresa.getUnidadempresa().getUnecodigoD());
+			stmt.setString(2, unidadEmpresa.getPmofechaceseV());
+			stmt.setString(3, unidadEmpresa.getPmoobservacionV());
+			stmt.execute();
+		} catch (SQLException e) {
+			throw new MotPropUnidadEmpresaDaoException(e.getMessage(), e);
+		} finally{
+			ResourceManager.close(stmt);
+			ResourceManager.close(conn);
+		}
+	}
+
 }

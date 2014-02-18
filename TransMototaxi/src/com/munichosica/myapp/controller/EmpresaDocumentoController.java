@@ -55,15 +55,12 @@ public class EmpresaDocumentoController {
 				documento.setAdjuntarArchivo(archivo);
 				documento.setTipoDocumento(tipoDocumento);
 				documentoSession.add(documento);
-				System.out.println("Documentos subidos en total: "+documentoSession.getList().size());
+				//System.out.println("Documentos subidos en total: "+documentoSession.getList().size());
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "Success";

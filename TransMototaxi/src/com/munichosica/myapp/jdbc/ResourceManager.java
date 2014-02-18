@@ -5,12 +5,12 @@ import java.sql.*;
 public class ResourceManager
 {
     private static String JDBC_DRIVER   = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    //private static String JDBC_URL      = "jdbc:sqlserver://192.168.3.4;databaseName=BDTRANSPORTE";
     private static String JDBC_URL      = "jdbc:sqlserver://192.168.3.5;databaseName=BDTRANSPORTE";
-    //private static String JDBC_URL      = "jdbc:sqlserver://192.168.3.5;databaseName=BDTRANSPORTE";
 
     private static String JDBC_USER     = "sa";
+    //private static String JDBC_PASSWORD = "sa_2012";
     private static String JDBC_PASSWORD = "Delta@9731";
-    //private static String JDBC_PASSWORD = "Delta_1574";
 
     private static Driver driver = null;
 

@@ -9,4 +9,5 @@ public interface MotPoliciaDao {
 	public List<MotPolicia> findAll() throws MotPoliciaDaoException;
 	public MotPolicia findByCarnet(String carnet) throws MotPoliciaDaoException;
 	public MotPolicia findByCodigo(int codigo) throws MotPoliciaDaoException;
+	public void procesar(MotPolicia policia) throws MotPoliciaDaoException;
 }

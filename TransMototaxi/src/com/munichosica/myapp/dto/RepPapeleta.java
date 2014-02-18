@@ -2,6 +2,7 @@ package com.munichosica.myapp.dto;
 
 public class RepPapeleta {
 	protected Long papcodigo;
+	protected String paprecnumero;
 	protected String papnumero;
 	protected String condnombres;
 	protected String condpaterno;
@@ -47,7 +48,41 @@ public class RepPapeleta {
 	protected String obseinfraccion;
 	protected String obseinspector;
 	protected String filenombre;
+	protected String monto;
+	protected String montoDesc;
+	protected String fechaDesc;
 	protected byte[] filefoto;
+	
+	public void setFechaDesc(String fechaDesc) {
+		this.fechaDesc = fechaDesc;
+	}
+	
+	public void setMontoDesc(String montoDesc) {
+		this.montoDesc = montoDesc;
+	}
+	
+	public String getFechaDesc() {
+		return fechaDesc;
+	}
+	
+	public String getMontoDesc() {
+		return montoDesc;
+	}
+	
+	public void setMonto(String monto) {
+		this.monto = monto;
+	}
+	
+	public String getMonto() {
+		return monto;
+	}
+	
+	public void setPaprecnumero(String paprecnumero) {
+		this.paprecnumero = paprecnumero;
+	}
+	public String getPaprecnumero() {
+		return paprecnumero;
+	}
 	public void setPapcodigo(Long papcodigo) {
 		this.papcodigo = papcodigo;
 	}

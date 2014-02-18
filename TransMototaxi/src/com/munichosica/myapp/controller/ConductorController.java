@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.munichosica.myapp.dto.MotAdjuntarArchivo;
 import com.munichosica.myapp.dto.MotCondDocumento;
+import com.munichosica.myapp.dto.MotConductor;
 import com.munichosica.myapp.dto.MotEmpConductor;
 import com.munichosica.myapp.dto.MotInspDocumento;
 import com.munichosica.myapp.dto.MotTipoDocumento;
@@ -24,15 +26,22 @@ import com.munichosica.myapp.dto.MotUnidConductor;
 import com.munichosica.myapp.dto.Rol;
 import com.munichosica.myapp.dto.Usuario;
 import com.munichosica.myapp.exceptions.MotAdjuntarArchivoDaoException;
+import com.munichosica.myapp.exceptions.MotAuditoriaDaoException;
 import com.munichosica.myapp.exceptions.MotCondDocumentoDaoException;
+import com.munichosica.myapp.exceptions.MotConductorDaoException;
 import com.munichosica.myapp.exceptions.MotEmpConductorDaoException;
+import com.munichosica.myapp.exceptions.MotPersonaDaoException;
 import com.munichosica.myapp.exceptions.MotUnidConductorDaoException;
 import com.munichosica.myapp.factory.MotAdjuntarArchivoDaoFactory;
+import com.munichosica.myapp.factory.MotAuditoriaDaoFactory;
 import com.munichosica.myapp.factory.MotCondDocumentoDaoFactory;
+import com.munichosica.myapp.factory.MotConductorDaoFactory;
 import com.munichosica.myapp.factory.MotEmpConductorDaoFactory;
 import com.munichosica.myapp.factory.MotInspDocumentoDaoFactory;
+import com.munichosica.myapp.factory.MotPersonaDaoFactory;
 import com.munichosica.myapp.factory.MotUnidConductorDaoFactory;
 import com.munichosica.myapp.util.FileUtil;
+import com.munichosica.myapp.util.IpUtils;
 import com.munichosica.myapp.util.UTFEncodingUtil;
 
 @Controller
@@ -56,7 +65,6 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 			logger.error(e.getMessage());
 		}
 		return list;
-
 	}
 	
 	@RequestMapping(value="ListarMotosAsignadas.htm", method=RequestMethod.POST)
@@ -96,13 +104,20 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 	}
 	
 	@RequestMapping(value="CesarConductor.htm", method=RequestMethod.POST)
-	public String CesarConductor(MotUnidConductor unidadConductor){
+	public String CesarConductor(HttpServletRequest request ,MotUnidConductor unidadConductor){
 		logger.info("Ingreso a Conductores/CesarConductor.htm");
-		System.out.println("CODIGO: "+unidadConductor.getUcocodigoD());
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "Error";
+		}
 		try {
 			MotUnidConductorDaoFactory.create().insert(unidadConductor);
 			logger.info("MotUnidConductorDaoFactory.create().insert(unidadConductor);Completed");
-		} catch (MotUnidConductorDaoException e) {
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_UNID_CONDUCTOR", unidadConductor.getUcocodigoD(),"SP_MOT_INS_CESE_CONDUCTOR_MOTOTAXI",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotUnidConductorDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";
@@ -116,6 +131,10 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 		
 		HttpSession session=request.getSession(true);
 		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
 		DocumentoConductorSession documentos = (DocumentoConductorSession)
 				session.getAttribute("DOC_CONDUCTOR");
 		DocumentoConductorSession foto=(DocumentoConductorSession) session.getAttribute("FOTO_CONDUCTOR");
@@ -123,15 +142,17 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 		UTFEncodingUtil.decodeObjectUTF(conductor);
 		UTFEncodingUtil.decodeObjectUTF(conductor.getConductor().getPersona());
 		try {
-			System.out.println("entro a procesar");
 			MotEmpConductorDaoFactory.create().procesar(conductor);
-			System.out.println("salio a procesar");
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_CONDUCTOR", conductor.getEcocodigoD(),"SP_MOT_INS_PERSONA_CONDUCTOR",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			if(documentos!=null){
 				if(documentos.getList()!=null && documentos.getList().size()>0){
 					for(MotCondDocumento docum:documentos.getList()){
 						docum.setConductor(conductor.getConductor());
 						MotAdjuntarArchivoDaoFactory.create().insert(docum.getAdjuntarArchivo());
 						MotCondDocumentoDaoFactory.create().insert(docum);
+						MotAuditoriaDaoFactory.create().Insert(
+								"MOT_COND_DOCUMENTO", docum.getCdocodigoD(),"SP_MOT_INS_COND_DOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 					}
 				}
 			}
@@ -142,12 +163,14 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 						docum.setConductor(conductor.getConductor());
 						MotAdjuntarArchivoDaoFactory.create().insert(docum.getAdjuntarArchivo());
 						MotCondDocumentoDaoFactory.create().insert(docum);
+						MotAuditoriaDaoFactory.create().Insert(
+								"MOT_COND_DOCUMENTO", docum.getCdocodigoD(),"SP_MOT_INS_COND_DOCUMENTO",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 						logger.info("MotCondDocumentoDaoFactory.create().insert(docum); Complete codigo: "+docum.getCdocodigoD());
 					}
 				}
 			}
 			
-		} catch (MotEmpConductorDaoException | MotAdjuntarArchivoDaoException | MotCondDocumentoDaoException e) {
+		} catch (MotEmpConductorDaoException | MotAdjuntarArchivoDaoException | MotCondDocumentoDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 			
@@ -272,18 +295,43 @@ protected final Logger logger=Logger.getLogger(ConductorController.class);
 		return conductor;
 	}
 	
+	@RequestMapping(value="Insertar.htm", method=RequestMethod.POST)
+	public @ResponseBody MotConductor insertar(HttpServletRequest request, MotConductor conductor) {
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
+		try {
+			MotPersonaDaoFactory.create().insertar(conductor.getPersona());
+			MotConductorDaoFactory.create().insert(conductor);
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_CONDUCTOR", conductor.getConcodigoD(),"SP_MOT_INS_CONDUCTOR",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
+		} catch (MotPersonaDaoException | MotConductorDaoException | MotAuditoriaDaoException e) {
+			logger.error(e.getMessage(), e);
+		}
+		return conductor;
+	}
 		
 	@RequestMapping(value="Eliminar.htm",method=RequestMethod.GET)
-	public String eliminar(@RequestParam("codigo") Long codigo){
-		System.out.println("paso");
+	public String eliminar(HttpServletRequest request,@RequestParam("codigo") Long codigo){
+		HttpSession session=request.getSession(true);
+		Usuario usuario=(Usuario) session.getAttribute("USUARIO");
+		if(usuario==null){
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return null;
+		}
 		try {
 			logger.info("Eliminar Conductor/Eliminar.htm");
 			MotCondDocumento conductor=new MotCondDocumento();
 			conductor.getConductor().setConcodigoD(codigo);
 			
 			MotCondDocumentoDaoFactory.create().delete(conductor);
+			MotAuditoriaDaoFactory.create().Insert(
+					"MOT_CONDUCTOR", conductor.getCdocodigoD(),"SP_UPD_ESTADO_MOT_CONDUCTOR",usuario.getUsuusuarioV(),IpUtils.getIpFromRequest(request));
 			logger.info("MotConductorDaoFactory.create().delete(paradero); Complete");
-		} catch (MotCondDocumentoDaoException e) {
+		} catch (MotCondDocumentoDaoException | MotAuditoriaDaoException e) {
 			logger.error(e.getMessage());
 		}
 		return "Success";
