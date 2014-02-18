@@ -33,7 +33,10 @@
 <title>Insert title here</title>
 <style type="text/css">
 		.tdTitulo{
-			width: 200px;
+			width: 140px;
+			background-color: #608A12;
+			color: white;
+			padding: 0px 5px;
 		}
 		.tdContenido{
 			width: 250px;
@@ -249,7 +252,7 @@
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>
@@ -285,14 +288,14 @@
         	<input type="hidden" id="txtCodigo" value="0"/>
         	<table>
                 <tr>
-                    <td>Papeleta</td>
+                    <td class="tdTitulo">Papeleta</td>
                     <td colspan="3">
                     	<input type="text" id="txtPapeleta" class="txtText required"/>
                     	<input type="hidden" id="txtPapCodigo"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>Motivo</td>
+                    <td class="tdTitulo">Motivo</td>
                     <td colspan="3">
                     	<textarea id="txtMotivo" class="txtTextCompleted requiredText" rows="3"></textarea>
                     </td>
@@ -353,8 +356,8 @@
                 <tr>
 					<td class="tdTitulo">N° Placa</td>
                     <td class="tdContenido">
-                        <select id="sltPlacas" class="requiredSelect">
-                            <option value="0" selected="selected">-Seleccione-</option>
+                        <select id="sltPlacas" class="required">
+							<option value="0">-SIN PLACA-</option>
 							<c:forEach var="placa" items="${placas}">
 								<option value="${placa.unecodigoD}"><c:out value="${placa.uneplacanroV}"/></option>
 							</c:forEach>
@@ -529,8 +532,8 @@
 		</fieldset>
 		
 		<h4 align="center">
-			<input type="button" value="Guardar" id="btnProcesar"/>
-			<input type="button" value="Cerrar" id="btnCancelar"/>
+			<input type="button" value="Guardar" id="btnProcesar" class="ui-button"/>
+			<input type="button" value="Cerrar" id="btnCancelar" class="ui-button"/>
 		</h4>
     </div>
     
@@ -541,13 +544,13 @@
         	<input type="hidden" id="lblCodigo" value="0"/>
         	<table>
                 <tr>
-                    <td>Papeleta</td>
+                    <td class="tdTitulo">Papeleta</td>
                     <td colspan="3">
                     	<label id="lblPapeleta"></label>
                     </td>
                 </tr>
                 <tr>
-                    <td>Motivo</td>
+                    <td class="tdTitulo">Motivo</td>
                     <td colspan="3">
                     	<label id="lblMotivo"></label>
                     </td>
@@ -774,8 +777,32 @@
 		</fieldset>
 		
 		<h4 align="center">
-			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
-			<input type="button" value="Aceptar" id="btnAceptarVer"/>
+			<input type="button" value="Aceptar" id="btnAceptarVer" class="ui-button"/>
+			<input type="button" value="Imprimir" id="btnImprimir" class="ui-button"/>
+		</h4>
+    </div>
+    
+    <div id="divActaConformidad">
+    	<h1><label id="txtActaNombres"></label></h1>
+    	<table>
+    		<tr>
+    			<td>Propietario / Conductor</td>
+    		</tr>
+    		<tr>
+    			<td><select id="sltPropConductor"></select></td>
+    		</tr>
+    		<tr>
+    			<td>Observaciones</td>
+    		</tr>
+    		<tr>
+    			<td><textarea id="txtObservaciones" cols="66" rows="5"></textarea></td>
+    		</tr>
+    	</table>
+		
+		<h4 align="center">
+			<input type="button" value="Aceptar" id="btnConfAceptar" class="ui-button"/>
+			<input type="button" value="Imprimir" id="btnConfImprimir" class="ui-button"/>
+			<input type="button" value="Cancelar" id="btnConfCancelar" class="ui-button"/>
 		</h4>
     </div>
 </body>

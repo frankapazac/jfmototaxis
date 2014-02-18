@@ -27,7 +27,7 @@
 	<title>Insert title here</title>
 	<style type="text/css">
 		.fileDocumento{
-			width: 300px;
+			width: 250px;
 		}
 		.txtNumeroDocumento{
 			width: 150px
@@ -48,10 +48,12 @@
 			width: 100%;
 		}
 		.fileFotoInspector, #formFotoInspector{
-			width: 265px;
+			/*width: 265px;*/
+			width: 220px;
 		}
 		#imgFotoInspector{
-			width: 250px;
+			/*width: 250px;*/
+			width: 200px;
 		}
 		.ui-progressbar .ui-progressbar-value { background-image: url(images/pbar-ani.gif); }
 	</style>
@@ -77,7 +79,7 @@
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>

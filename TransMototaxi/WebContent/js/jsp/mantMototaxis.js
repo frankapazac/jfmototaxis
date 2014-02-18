@@ -157,7 +157,7 @@ $(document).ready(function(){
 	    	$("#divInformeMotoTaxi").show();
 	    	$("#divInformeMotoTaxi").dialog({
 	    		title:"Informe",
-	    		width:1200,
+	    		width:900,
 	    		//height: 800,
 	    		modal: true	
 	    	});

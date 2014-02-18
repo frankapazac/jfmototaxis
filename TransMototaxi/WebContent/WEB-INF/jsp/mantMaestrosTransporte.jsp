@@ -26,6 +26,7 @@
 	
 	<title>Insert title here</title>
 	<style type="text/css">
+		a{font-size: 13px;}
 		/*#tabs {margin:20px; }
 		#tabs .tabs-spacer { float: left; height: 200px; }
 		.tabs-bottom .ui-tabs-nav { clear: left; padding: 0 .2em .2em .2em; }
@@ -66,7 +67,7 @@
 								</select>
 							</td>
 							<td><input type="text" id="txtTexto" /></td>
-							<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+							<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 						</tr>		
 				</table>
 			</div>
@@ -156,8 +157,8 @@
 									</td>	
 									
 									<td>
-										<input type="button" id="btnRight" value =' > '/>
-										<br/><input type="button" id="btnLeft" value =' < '/>
+										<input type="button" id="btnRight" value =' > ' class="ui-button"/>
+										<br/><input type="button" id="btnLeft" value =' < ' class="ui-button"/>
 									</td>
 								<td>
 										<select multiple="multiple" id="sltAgregaMedidas" name="AgregaMedidas" style="width: 100%"></select>
@@ -166,8 +167,8 @@
 							 	</tr>	
 						</table>
 					</fieldset>
-					<input type="button" id="btnGuardar" value ='GUARDAR' align="middle"/>
-					<input type="button" id="btnCancelar" value ='CANCELAR' align="middle"/>	
+					<input type="button" id="btnGuardar" value ='GUARDAR' align="middle" class="ui-button"/>
+					<input type="button" id="btnCancelar" value ='CANCELAR' align="middle" class="ui-button"/>	
 			</div>
 		</div>
 		<div id="tabs-2">
@@ -187,7 +188,7 @@
 								</select>
 							</td>
 							<td><input type="text" id="txtTextoTipDoc" /></td>
-							<td><input type="button" id="btnBuscarTipDoc" value="Buscar"/></td>
+							<td><input type="button" id="btnBuscarTipDoc" value="Buscar" class="ui-button"/></td>
 						</tr>		
 				</table>
 			</div>
@@ -243,8 +244,8 @@
 			</table>	
 			</fieldset>
 			
-			<input type="button" id="btnGuardarTipDoc" value ='GUARDAR' align="middle"/>
-			<input type="button" id="btnCancelarTipDoc" value ='CANCELAR' align="middle"/>	
+			<input type="button" id="btnGuardarTipDoc" value ='GUARDAR' align="middle" class="ui-button"/>
+			<input type="button" id="btnCancelarTipDoc" value ='CANCELAR' align="middle" class="ui-button"/>	
 			
 		
 		</div>
@@ -268,7 +269,7 @@
 								</select>
 							</td>
 							<td><input type="text" id="txtTextoParadero" /></td>
-							<td><input type="button" id="btnBuscarParadero" value="Buscar"/></td>
+							<td><input type="button" id="btnBuscarParadero" value="Buscar" class="ui-button"/></td>
 						</tr>
 					</table>
 				</div>	

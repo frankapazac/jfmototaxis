@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="js/jsp/mantMototaxis.js"></script>
 	<style type="text/css">
 		.odd{ background-color: #C0EDB6;}
+		.tdTitulo{ background-color: #5D8A00; color: white; padding-left: 10px;}
 	</style>
 <title>Insert title here</title>
 </head>
@@ -42,7 +43,7 @@
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>
@@ -76,44 +77,44 @@
 	    	<fieldset>
 	        	<legend>DATOS DEL PROPIETARIO</legend>     
 	        	<input type="hidden" id="txtcodigoMototaxi" value="0"/>        
-	        	<table align="center" width="900px">
-	        			<tr class="odd">
-							<td>Nombres:</td>
+	        	<table align="center" width="800px" style="border: solid 1px black; background-color: #f0f0f0;">
+	        			<tr>
+							<td class="tdTitulo">NOMBRES</td>
 							<!-- td><input type="text" id="txtNombresPropietario"/></td> -->
 							<td><label id="txtNombresPropietario"></label></td> 
-							<td>DNI:</td>
+							<td class="tdTitulo">DNI</td>
 							<td><label id="txtdni"></label></td> 
 						</tr>
 						<tr>
-							<td>Dirección:</td>
+							<td class="tdTitulo">DIRECCIÓN</td>
 							<!--td colspan="3"><input type="text" id="txtdireccion" style="width: 580px"/></td-->
 							<td colspan="3"><label id="txtdireccion" style="width: 580px"></label></td> 
 						</tr>
 						
-						<tr class="odd">
-							<td>Distrito:</td>
+						<tr>
+							<td class="tdTitulo">DISTRITO</td>
 							<td><label id="txtDistrito"></label></td> 
-							<td>Teléfono:</td>
+							<td class="tdTitulo">TELÉFONO</td>
 							<td><label id="txtTeléfono"></label></td> 
 						</tr>
 						
 						<tr>
-							<td>Provincia:</td>
+							<td class="tdTitulo">PROVINCIA</td>
 							<td><label id="txtprovincia"></label></td> 
-							<td>Celular Claro :</td>
+							<td class="tdTitulo">CEL. CLARO</td>
 							<td><label id="txtmovClaro"></label></td>
 						</tr>
 						
-						<tr class="odd">
-							<td>Departamento:</td>
+						<tr>
+							<td class="tdTitulo">DEPARTAMENTO</td>
 							<td><label id="txtdepartamento"></label></td>
-							<td>Celular Nextel :</td>
+							<td class="tdTitulo">CEL. NEXTEL</td>
 							<td><label id="txtmovNextel"></label></td>
 						</tr>
 						<tr>
-							<td>Correo:</td>
+							<td class="tdTitulo">CORREO</td>
 							<td><label id="txtCorreo"></label></td>
-							<td>Celular Movistar :</td>
+							<td class="tdTitulo">CEL. MOVISTAR</td>
 							<td><label id="txtmovMovistar"></label></td> 
 						</tr>	
 						<tr>
@@ -125,56 +126,56 @@
 			<fieldset>
 	        	<legend>DATOS DEL MOTOTAXI</legend>     
 	        	<!--  input type="hidden" id="txtcodigoMototaxi" value="0"/>-->        
-	        	<table align="center" width="900px">
-	        			<tr class="odd">
-							<td>N° Placa:</td>
+	        	<table align="center" width="800px" style="border: solid 1px black; background-color: #f0f0f0;">
+	        			<tr>
+							<td class="tdTitulo">N° PLACA</td>
 							<td><label id="txtplaca"></label></td>
-							<td>N° Titulo:</td>
+							<td class="tdTitulo">N° TITULO</td>
 							<td><label id="txttitulo"></label></td>
-							<td>Clase:</td>
+							<td class="tdTitulo">CLASE</td>
 							<td><label id="txtclase"></label></td>
 						</tr>
 						<tr>
-							<td>Marca:</td>
+							<td class="tdTitulo">MARCA</td>
 							<td><label id="txtmarca"></label></td>
-							<td>Modelo:</td>
+							<td class="tdTitulo">MODELO</td>
 							<td><label id="txtmodelo"></label></td>
-							<td>Año:</td>
+							<td class="tdTitulo">AÑO</td>
 							<td><label id="txtanno"></label></td>
 						</tr>						
-						<tr class="odd">
-							<td>Color :</td>
+						<tr>
+							<td class="tdTitulo">COLOR</td>
 							<td><label id="txtcolor"></label></td>
-							<td>Combustible:</td>
+							<td class="tdTitulo">COMBUSTIBLE</td>
 							<td><label id="txtcombustible"></label></td>
-							<td>Carroceria :</td>
+							<td class="tdTitulo">CARROCERIA</td>
 							<td><label id="txtcarroceria"></label></td>
 						</tr>
 
 						<tr>
-							<td>N° Serie/Chasis:</td>
+							<td class="tdTitulo">N° SERIE / CHASIS</td>
 							<td><label id="txtnroserie"></label></td>
-							<td>N° Motor :</td>
+							<td class="tdTitulo">N° MOTOR</td>
 							<td><label id="txtnromotor"></label></td>
-							<td>Carga Útil:</td>
+							<td class="tdTitulo">CARGA ÚTIL</td>
 							<td><label id="txtcargautil"></label></td>
 						</tr>	
 			
-						<tr class="odd">
-							<td>Longitud :</td>
+						<tr>
+							<td class="tdTitulo">LONGITUD</td>
 							<td><label id="txtlongitud"></label></td>
-							<td>Ancho :</td>
+							<td class="tdTitulo">ANCHO</td>
 							<td><label id="txtancho"></label></td>
-							<td>Alto :</td>
+							<td class="tdTitulo">ALTO</td>
 							<td><label id="txtalto"></label></td>
 						</tr>	
 						
 						<tr>
-							<td>N° Asientos:</td>
+							<td class="tdTitulo">N° ASIENTOS</td>
 							<td><label id="txtnroasientos"></label></td>
-							<td>N° Pasajeros :</td>
+							<td class="tdTitulo">N° PASAJEROS</td>
 							<td><label id="txtnropasajeros"></label></td>
-							<td>N° Ruedas :</td>
+							<td class="tdTitulo">N° RUEDAS</td>
 							<td><label id="txtnroRuedas"></label></td>
 						</tr>
 									
@@ -225,9 +226,10 @@
 				</div>
 
 		 	</fieldset>
-				
-			<input type="button" id="btnImprimir" value ='IMPRIMIR' align="middle"/>
-			<input type="button" id="btnCerrar" value ='CERRAR' align="middle"/>			
+			<center>
+				<input type="button" id="btnImprimir" value ='IMPRIMIR' align="middle" class="ui-button"/>
+				<input type="button" id="btnCerrar" value ='CERRAR' align="middle" class="ui-button"/>
+			</center>			
 		</div>
 		
 		

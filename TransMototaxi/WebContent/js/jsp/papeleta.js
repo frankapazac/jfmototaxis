@@ -1,9 +1,13 @@
 $(document).ready(function(){
+	var asocodigo_d=null;
+	var uneplaca_v=null;
+	
 	$("#divFormulario").hide();
 	$("#divFormularioVer").hide();  
 	$("#divAgregarConductor").hide();
 	$("#sltConductor").change(buscarConductorPorCodigo);
 	$("#txtConductorDNI").keyup(buscarConductorPorDNI);
+	//$("#sltPlacas").change(buscarUnidadPorCodigo);
 	$("#sltPlacas").change(buscarUnidadPorCodigo);
 	$("#sltInfraccion").change(buscarPorInfraccion);
 	$("#txtDniInspector").keyup(buscarInspectorPorDni);
@@ -13,17 +17,328 @@ $(document).ready(function(){
 	$("#rdPropietarioSi").change(radioPropietarioSi);
 	$("#rdPropietarioNo").change(radioPropietarioNo);
 	$("#btnGuardar").click(insertarPapeleta);
+	$("#btnGuardarCond").click(guardarConductor);
 	$("#formFoto").submit(enviarFoto);
 	$("#btnNuevo").click(nuevaPapeleta);
 	$("#btnImprimir").click(imprimirPapeleta);
+	$("#imgMensajeConductor").click(conductorMensajes);
+	$("#imgMensajeUnidad").click(unidadMensajes);
+	$("#btnGuardarMoto").click(guardarMoto);
+	$("#divVehiculo").hide();
+	$("#divPolicia").hide();
+	$("#agregarPolicia").click(agregarPolicia);
+	$("#btnGuardarPol").click(guardarPolicia);
+	
+	$("#btnCancelarMoto").click(function(){
+    	$("#divVehiculo").dialog("close");
+	});
+	
+	function guardarPolicia(){
+		$.ajax({ 
+    		data:{
+    			'polcodigoI':$("#txtCodigoVehiculo").val(),
+    			'polcarnetidentV':$("#txtPolCarnet").val(),
+    			'polnombresV':$("#txtPolNombre").val(),
+    			'polpaternoV':$("#txtPolPaterno").val(),
+    			'polmaternoV':$("#txtPolMaterno").val()
+    		},
+            datatype:'json',
+            type: "POST", 
+            url: "Policia/Procesar.htm", 
+            success: function(data){
+            	$("#txtCodigoPolicia").val(data.unecodigoD);
+            	$("#sltPolicia").append("<option value='"+data.polcodigoI+"'>"+data.polpaternoV+" "+data.polmaternoV+", "+data.polnombresV+"</option>");
+            	$('#sltPolicia').combobox('autocomplete',data.polcodigoI,data.polpaternoV+" "+data.polmaternoV+", "+data.polnombresV);
+            	$("#txtCarnetPolicia").val(data.polcarnetidentV);
+            	$("#divPolicia").dialog("close");
+            	$.message.Success();
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+	}
+
+	function agregarPolicia(){
+		$("#txtCodigoPolicia").val("0");
+		$("#txtPolCarnet").val("");
+		$("#txtPolNombre").val("");
+		$("#txtPolPaterno").val("");
+		$("#txtPolMaterno").val("");
+		
+		$("#divPolicia").dialog({
+    		title:"Nuevo Policia",
+    		width: 850,
+    		modal: true
+    	});
+	}
+	
+	$("#btnCancelarPol").click(function(){
+		$("#divPolicia").dialog('close');
+	});
+	
+	function guardarMoto(){
+		$("#divVehiculo").validate();
+		$.ajax({ 
+    		data:{
+    			//'propUnidadEmpresa.asociado.asocodigoD':$("#txtCodigoAsociado").val(),
+    			//'empadronamiento.epocodigoD':$("#txtCodigoEmpadronamiento").val(),
+    			'unecodigoD':$("#txtCodigoVehiculo").val(),
+    			'uneplacanroV':$("#txtNroPlaca").val(),
+    			'oficina.oficodigoI':$("#sltOfRegistral").val(),
+    			'unenropadronV':$("#txtNroPadron").val(),
+    			'unenropartidaregistralV':$("#txtPartRegistral").val(),
+    			'unetituloV':$("#txtTitulo").val(),
+    			'uneclaseV':$("#txtClase").val(),
+    			'marca.marcodigoI':$("#sltMarca").val(),
+    			'modelo.modcodigo_D':$("#sltModelo").val(),
+    			'uneannoC':$("#txtAno").val(),
+    			'unecolorV':$("#txtMotColor").val(),
+    			'unecombustibleC':$("#sltCombustible").val(),
+    			'unecarroceriaC':$("#sltCarroceria").val(),
+    			'unenroseriechasisV':$("#txtNroSerieChasis").val(),
+    			'unenromotorV':$("#txtNroMotor").val(),
+    			'unenroidentificacionV':$("#txtNroNiv").val(),
+    			'unenroruedasI':$("#txtRuedas").val(),
+    			'unenroasientosI':$("#txtNroAsientos").val(),
+    			'unenropasajerosI':$("#txtNroPasajeros").val(),
+    			'unecargautilD':$("#txtCargaUtil").val(),
+    			'unelongitudD':$("#txtLongitud").val(),
+    			'uneanchoD':$("#txtAncho").val(),
+    			'unealtoD':$("#txtAlto").val()
+    		},
+            datatype:'json',
+            type: "POST", 
+            url: "UnidadEmpresa/Insertar.htm", 
+            success: function(data){
+            	$("#txtCodigoVehiculo").val(data.unecodigoD);
+            	//$("#sltPlacas").append("<option value='"+data.unecodigoD+"'>"+data.uneplacanroV+"</option>");
+            	$("#sltPlacas").append("<option value='0'>"+data.uneplacanroV+"</option>");
+            	//$('#sltPlacas').combobox('autocomplete',data.unecodigoD,data.uneplacanroV);
+            	$('#sltPlacas').combobox('autocomplete',0,data.uneplacanroV);
+            	$("#divVehiculo").dialog("close");
+            	$.message.Success();
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+	}
+	
+	function guardarConductor(){
+		$("#divAgregarConductor").validate();
+		$.ajax({ 
+			data:{
+				'concodigoD':$("#txtCodigoConductor").val(),
+				'conestadoC':'A',
+				'persona.percodigoD':$("#txtCodigoPersona").val(),
+				'persona.perdniV':$("#txtDni").val(),
+				'persona.perdomicilioV':$("#txtDireccion").val(),
+				'persona.peremailV':$("#txtCorreo").val(),
+				'persona.perestadocivilC':$("#sltEstadoCivil").val(),
+				'persona.permaternoV':$("#txtMaterno").val(),
+				'persona.permovilclaV':$("#txtClaro").val(),
+				'persona.permovilmovV':$("#txtMovistar").val(),
+				'persona.permovilnexV':$("#txtNextel").val(),
+				'persona.pernacimientoF':$("#dtNacimiento").val(),
+				'persona.pernombresV':$("#txtNombres").val(),
+				'persona.perpaternoV':$("#txtPaterno").val(),
+				'persona.persexoC':$("#sltSexo").val(),
+				'persona.perteleffijoV':$("#txtTelefono").val(),
+				'persona.perubdptoV':$("#sltDepartamentos").val(),
+				'persona.perubidistV':$("#sltDistrito").val(),
+				'persona.perubprovV':$("#sltProvincia").val()
+			},
+		    datatype:'json',
+	        type: "POST", 
+	        url: "Conductores/Insertar.htm", 
+	        success: function(data){
+	        	//$("#sltConductor").empty();
+	        	$("#sltConductor").append("<option value='"+data.concodigoD+"'>"+data.persona.perpaternoV+" "+data.persona.permaternoV+", "+data.persona.pernombresV+"</option>");
+	        	$('#sltConductor').combobox('autocomplete',data.concodigoD,data.persona.perpaternoV+' '+data.persona.permaternoV+', '+data.persona.pernombresV);
+	        	//$("#sltConductor").val(data.concodigoD);
+	        	$("#txtConductorDNI").val(data.persona.perdniV);
+	        	$("#divAgregarConductor").dialog("close");
+	        	$.message.Success();
+	        },error: function(jqXHR, textStatus, errorThrown){
+	        	$.message.Error();
+	        }
+		});
+	}
+	
+	$("#btnCancelarCond").click(function(){
+    	$("#divAgregarConductor").dialog("close");
+	});
+	
+	function unidadMensajes(){
+		$.ajax({ 
+    		data:{
+    			placa:$.trim($("#sltPlacas option:selected").text())
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "Papeletas/MensajesUnidad.htm", 
+            success: function(data){
+            	if(data.length>0){
+            		$("body #divMenssage").remove();
+        			var htmlText="<div id='divMenssage' class='ui-widget-content ui-corner-all'>" +
+        					"<table class='tblTablaEstilo'>";
+        			htmlText+="<thead><tr style='background-color:gainsboro'><th class='header'>DOCUMENTOS DE LA UNIDAD</th>" +
+        					"<th class='header'>NUMERO</th>" +
+        					"<th class='header'>F. EMISION</th>" +
+        					"<th class='header'>F. CADUCIDAD</th>" +
+        					"<th class='header'>ESTADO</th></tr><thead>";
+					for(var x=0;x<data.length;x++){
+						htmlText+="<tbody><tr><td>"+data[x].tipoDocumento.mtdnombreV+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjnumeroV+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjfechaemisionF+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjfechacaducidadF+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjestadoV+"</td>" +
+										"</tr></tbody>";
+					}
+					htmlText+="</table>" +
+        					"<p>NOTA: La unidad tiene documentos sin regularizar.</p>" +
+        					"<img src='images/Error32x32.png'>"+
+        					"<input type='button' id='btnErrorAceptar' value='Aceptar' class='ui-button'/>"+
+        					"</div>";
+					$("body").append(htmlText);
+        			$("body #divMenssage").css({'width': '830px', 'height': 'auto'});
+        			$("body #divMenssage img").css({'padding-bottom': '10px','padding-right': '10px','float': 'right'});
+        			$("body #divMenssage").dialog({
+        				open: function(event, ui) { $(".ui-dialog-titlebar-close").click(function(){
+        					$("body #divMenssage").dialog("close");
+            				//$("#divFormulario").dialog('close');
+        				}); },
+        				width: 850,
+        				title:"Informe de la unidad",
+        				closeOnEscape: false,
+        	    		modal: true
+        	    	});
+        			$("body #divMenssage #btnErrorAceptar").click(function(){
+        				$("body #divMenssage").dialog("close");
+        				//$("#divFormulario").dialog('close');
+        			});
+            	}
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+	}
+	
+	function conductorMensajes(){
+		$.ajax({ 
+    		data:{
+    			codigo:$("#sltConductor").val()
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "Papeletas/MensajesConductor.htm", 
+            success: function(data){
+            	if(data.length>0){
+            		$("body #divMenssage").remove();
+        			var htmlText="<div id='divMenssage' class='ui-widget-content ui-corner-all'>" +
+        					"<table class='tblTablaEstilo'>";
+        			htmlText+="<thead><tr style='background-color:gainsboro'><th class='header'>DOCUMENTOS DEL CONDUCTOR</th>" +
+        					"<th class='header'>NUMERO</th>" +
+        					"<th class='header'>F. EMISION</th>" +
+        					"<th class='header'>F. CADUCIDAD</th>" +
+        					"<th class='header'>ESTADO</th></tr><thead>";
+					for(var x=0;x<data.length;x++){
+						htmlText+="<tbody><tr><td>"+data[x].tipoDocumento.mtdnombreV+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjnumeroV+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjfechaemisionF+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjfechacaducidadF+"</td>" +
+								"<td>"+data[x].adjuntarArchivo.adjestadoV+"</td>" +
+										"</tr></tbody>";
+					}
+					htmlText+="</table>" +
+        					"<p>NOTA: El conductor tiene documentos sin regularizar.</p>" +
+        					"<img src='images/Error32x32.png'>"+
+        					"<input type='button' id='btnErrorAceptar' value='Aceptar' class='ui-button'/>"+
+        					"</div>";
+					$("body").append(htmlText);
+        			$("body #divMenssage").css({'width': '830px', 'height': 'auto'});
+        			$("body #divMenssage img").css({'padding-bottom': '10px','padding-right': '10px','float': 'right'});
+        			$("body #divMenssage").dialog({
+        				open: function(event, ui) { $(".ui-dialog-titlebar-close").click(function(){
+        					$("body #divMenssage").dialog("close");
+            				//$("#divFormulario").dialog('close');
+        				}); },
+        				width: 850,
+        				title:"Informe del Conductor",
+        				closeOnEscape: false,
+        	    		modal: true
+        	    	});
+        			$("body #divMenssage #btnErrorAceptar").click(function(){
+        				$("body #divMenssage").dialog("close");
+        				//$("#divFormulario").dialog('close');
+        			});
+            	}
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+	}
 	
 	/**/
 	$("#dtNacimiento").datepicker({dateFormat:"dd/mm/yy"});
+	
 	$("#agregarConductor").click(function(){
+
+		$("#txtCodigoConductor").val("0");
+		$("#txtCodigoPersona").val("0");
+		$("#txtDni").val("");
+		$("#txtDireccion").val("");
+		$("#txtCorreo").val("");
+		$("#sltEstadoCivil").val("S");
+		$("#txtMaterno").val("");
+		$("#txtClaro").val("");
+		$("#txtMovistar").val("");
+		$("#txtNextel").val("");
+		$("#dtNacimiento").val("");
+		$("#txtNombres").val("");
+		$("#txtPaterno").val("");
+		$("#sltSexo").val("M");
+		$("#txtTelefono").val("");
+		$("#sltDepartamentos").val("");
+		$("#sltDistrito").empty();
+		$("#sltDistrito").append("<option>-Seleccione-</option>");
+		$("#sltProvincia").empty();
+		$("#sltProvincia").append("<option>-Seleccione-</option>");
+		
 		$("#divAgregarConductor").dialog({
     		title:"Nuevo Conductor",
-    		width: 950,
+    		width: 850,
     		//height: 700,
+    		modal: true
+    	});
+	});
+	
+	$("#agregarMoto").click(function(){
+		$("#txtCodigoVehiculo").val("0");
+		$("#txtNroPlaca").val("");
+		$("#txtNroPadron").val("");
+		$("#txtPartRegistral").val("");
+		$("#txtTitulo").val("");
+		$("#txtClase").val("");
+		$("#sltMarca").val("1");
+		$("#sltModelo").val("1");
+		$("#txtAno").val("");
+		$("#txtMotColor").val("");
+		$("#sltCombustible").val("G");
+		$("#sltCarroceria").val("T");
+		$("#txtNroSerieChasis").val("");
+		$("#txtNroMotor").val("");
+		$("#txtNroNiv").val("");
+		$("#txtRuedas").val("0");
+		$("#txtNroAsientos").val("0");
+		$("#txtNroPasajeros").val("0");
+		$("#txtCargaUtil").val("0");
+		$("#txtLongitud").val("0");
+		$("#txtAncho").val("0");
+		$("#txtAlto").val("0");
+		$("#sltOfRegistral").val("1");
+		$("#divVehiculo").dialog({
+    		title:"Nuevo Mototaxi",
+    		width: 850,
     		modal: true
     	});
 	});
@@ -55,7 +370,7 @@ $(document).ready(function(){
     }
     
     
-    $("#sltProvincia").click(function(){
+    $("#sltProvincia").bind("click focus change",function(){
     	$.ajax({ 
     		data:{
     			idubigeo:$("#sltProvincia").val()
@@ -163,6 +478,7 @@ $(document).ready(function(){
     			'infrMedida.imecodigoI':$("#sltSancion").val(),
     			'inspector.inscodigoI':$("#sltInspector").val(),
     			'propUnidadEmpresa.pmocodigoD':$("#sltPlacas").val(),
+    			'propUnidadEmpresa.unidadempresa.uneplacanroV':$.trim($("#sltPlacas option:selected").text()),
     			'conductor.concodigoD':$("#sltConductor").val(),
     			'papfechainfraccionF':$("#txtFecha").val(),
     			'paphorainfraccionF':$("#txtFecha").val(),
@@ -300,7 +616,25 @@ $(document).ready(function(){
 	}
 	
 	function buscarUnidadPorCodigo(){
-		//alert(this.value);
+		$.ajax({ 
+    		data:{
+    			placa:$.trim($("#sltPlacas option:selected").text())
+    		},
+            datatype:'json',
+            type: "GET", 
+            url: "Papeletas/BuscarUnidadPorPlaca.htm", 
+            success: function(data){
+            	llenarDatosUnidad(data);          	
+            },error: function(jqXHR, textStatus, errorThrown){
+            	$.message.Error();
+            }
+    	});
+	}
+	
+	/*function buscarUnidadPorCodigo(){
+		if(this.value==0){
+			$.message.Error();
+		}
 		$.ajax({ 
     		data:{
     			codigo:this.value
@@ -309,12 +643,12 @@ $(document).ready(function(){
             type: "GET", 
             url: "Papeletas/BuscarUnidadPorCodigo.htm", 
             success: function(data){
-            	llenarDatosUnidad(data);
+            	llenarDatosUnidad(data);          	
             },error: function(jqXHR, textStatus, errorThrown){
             	$.message.Error();
             }
     	});
-	}
+	}*/
 
 	function buscarConductorPorDNI(){
 		if($(this).val().length==8){
@@ -416,6 +750,7 @@ $(document).ready(function(){
 	function llenarDatosUnidad(data){
 		if(data!=""){
 			asocodigo_d=data.asociado.asocodigoD;
+			uneplaca_v=data.uneplacanroV;
 			$("#txtEstadoUnidad").text(data.archivo.adjestadoV);
 			$("#txtAnno").val(data.uneannoC);
 			$("#txtTarjPropiedad").val(data.archivo.adjnumeroV);
@@ -438,7 +773,6 @@ $(document).ready(function(){
 			//TODO LLENAR COMBO INFRACCION
 		}else{
 			asocodigo_d="0";
-			
 		}
 	}
 	
@@ -461,6 +795,7 @@ $(document).ready(function(){
     	$("#tblLista").empty();
     	txtHtml="<thead>"
     		+"<th class='header'>N°</th>"
+			+"<th class='header'>NUMERO</th>"
 			+"<th class='header'>PROPIETARIO</th>"
 			+"<th class='header'>PLACA</th>"
 			+"<th class='header'>CONDUCTOR</th>"
@@ -472,6 +807,7 @@ $(document).ready(function(){
 			+"</thead>"
 			+"<tfoot>"
     		+"<th>N°</th>"
+    		+"<th>NUMERO</th>"
 			+"<th>PROPIETARIO</th>"
 			+"<th>PLACA</th>"
 			+"<th>CONDUCTOR</th>"
@@ -486,6 +822,7 @@ $(document).ready(function(){
     	for(var x=0;x<data.length;x++){
     		txtHtml="<tr>"+
 			"<td>"+(x+1)+"</td>"+
+			"<td>"+data[x].papnumeroV+"</td>"+
 			"<td>"+data[x].propUnidadEmpresa.asociado.persona.pernombresV+"</td>"+
 			"<td>"+data[x].propUnidadEmpresa.unidadempresa.uneplacanroV+"</td>"+
 			"<td>"+data[x].conductor.persona.pernombresV+"</td>"+
@@ -527,6 +864,13 @@ $(document).ready(function(){
 	}
 	
 	function llenarPapeleta(data){
+		//alert(data.propUnidadEmpresa.pmocodigoD);
+    	$("#sltConductor").hide();
+    	$("#sltPlacas").hide();
+    	$("#sltInspector").hide();
+    	$("#sltPolicia").hide();
+    	$("#sltInfraccion").hide();
+    	$("#sltSancion").hide();
 		if(data!=""){
 			$("#txtNumeroPapeleta").val(data.papcodigoD);
 			$("#txtNumeroPap").val(data.papnumeroV);
@@ -611,7 +955,7 @@ $(document).ready(function(){
 		}
 		$("#divFormulario").dialog({
     		title:"Papeleta",
-    		width: 950,
+    		width: 850,
     		height: 650,
     		modal: true
     	});

@@ -49,27 +49,32 @@
 		<field name="ESTADO" class="java.lang.String"/>
 	</subDataset>
 	<queryString>
-		<![CDATA[SELECT EMP.EMPCODIGO_D AS CODIGO,
-	ISNULL(EMP.EMPRAZONSOCIAL_V,'') AS EMPRESA,
-	ISNULL(EMP.EMPESCRITURAPUBLICA_V,'') AS ESCRITURA_PUBLICA,
-	ISNULL(EMP.EMPRUC_V,'') AS RUC,
-	ISNULL(EMP.EMPRESOLUCION_V,'') AS RESOLUCION,
-	ISNULL(USU.USUUSUARIO_V,'') AS USUARIO,
-	ISNULL(USU.USUCLAVE_V,'') AS CLAVE,
-	ISNULL(USU.USUHABILITADO_C,'') AS ESTADO
-	FROM MOT_EMPRESA EMP
-	LEFT JOIN USU_EMPR UEM ON UEM.EMPCODIGO_D=EMP.EMPCODIGO_D
-	LEFT JOIN USUARIO USU ON USU.USUCODIGO_I=UEM.USUCODIGO_I
-	WHERE EMP.EMPESTADO_C!='I']]>
+		<![CDATA[SELECT PER.PERDNI_V AS DNI,
+ISNULL(PER.PERNOMBRES_V,'')+ISNULL(' '+PER.PERPATERNO_V,'')+ISNULL(' '+PER.PERPATERNO_V,'') AS AFILIADO,
+MOT.NRO_MOTOS AS UNIDADES,
+PER.PERDOMICILIO_V AS DIRECCION,
+PER.PERNACIMIENTO_F AS NACIMIENTO,
+PER.PERMOVILCLA_V AS CLARO,
+PER.PERMOVILMOV_V AS MOVISTAR,
+PER.PERMOVILNEX_V AS NEXTEL,
+PER.PERTELEFFIJO_V AS TELEFONO,
+PER.PEREMAIL_V AS EMAIL
+FROM MOT_EMPR_ASOCIADO ASO
+INNER JOIN MOT_PERSONA PER ON PER.PERCODIGO_D=ASO.PERCODIGO_D
+INNER JOIN (SELECT ASOCODIGO_D,COUNT(UNECODIGO_D) NRO_MOTOS
+	FROM MOT_PROP_UNIEMPRESA GROUP BY ASOCODIGO_D) MOT ON MOT.ASOCODIGO_D=ASO.ASOCODIGO_D
+WHERE ASO.ASOESTADO_C!='I']]>
 	</queryString>
-	<field name="CODIGO" class="java.math.BigDecimal"/>
-	<field name="EMPRESA" class="java.lang.String"/>
-	<field name="ESCRITURA_PUBLICA" class="java.lang.String"/>
-	<field name="RUC" class="java.lang.String"/>
-	<field name="RESOLUCION" class="java.lang.String"/>
-	<field name="USUARIO" class="java.lang.String"/>
-	<field name="CLAVE" class="java.lang.String"/>
-	<field name="ESTADO" class="java.lang.String"/>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="AFILIADO" class="java.lang.String"/>
+	<field name="UNIDADES" class="java.lang.Integer"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="NACIMIENTO" class="java.sql.Timestamp"/>
+	<field name="CLARO" class="java.lang.String"/>
+	<field name="MOVISTAR" class="java.lang.String"/>
+	<field name="NEXTEL" class="java.lang.String"/>
+	<field name="TELEFONO" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -77,7 +82,7 @@
 		<band height="79" splitType="Stretch">
 			<image>
 				<reportElement x="24" y="27" width="29" height="52" uuid="395307b6-dfa9-449e-afca-711bf9b6c792"/>
-				<imageExpression><![CDATA["E:\\SIGEM_13\\SIGEM_2013\\Proyecto2012\\Proyecto2012\\Resources\\LogoChosica.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\reports\\Imagenes\\LogoChosica.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="72" y="43" width="693" height="20" uuid="c727a49f-56fd-4e04-8a9d-be397cf90669"/>

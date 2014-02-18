@@ -28,7 +28,7 @@
 </head>
 <style type="text/css">
 	.fileDocumento{
-		width: 300px;
+		width: 210px;
 	}
 	.txtNumeroDocumento{
 		width: 150px
@@ -37,11 +37,11 @@
 		width: 100px
 	}	
 	#divAsignarIzq{
-		width:50%;
+		width:38%;
 		float:left;
 	}
 	#divAsignarDer{
-		width:50%;
+		width:58%;
 		float:right;
 	}
 	#divAsignarAba{
@@ -61,10 +61,10 @@
 		width: 100%;
 	}
 	.fileFotoConductor, #formFotoConductor{
-		width: 265px;
+		width: 215px;
 	}
 	#imgFotoConductor{
-		width: 250px;
+		width: 188px;
 	}
 </style>
 <body>
@@ -86,8 +86,8 @@
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
-				<td><input type="button" id="btnAsignarMoto" value="Mototaxi Asignar/Cese"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
+				<td><input type="button" id="btnAsignarMoto" value="Mototaxi Asignar/Cese" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>
@@ -121,13 +121,7 @@
 			<ul>
 			</ul>
 			<div id="tabs1">
-				<center>
-					<input type="hidden" id="txtCodigo"/>
-					<input type="button" value="Asignar Mototaxi" id="btnAsignar" class="ui-button"/>
-					<input type="button" value="Cese" id="btnCese" class="ui-button"/>
-					<input type="button" id="btnCancelarFormulario" value="Cancelar" class="ui-button"/>
-				</center>
-				<div id="divBuscar">
+				<div id="divBuscar" align="center">
 				<table>
 					<tr>
 						<td>Criterio</td>
@@ -149,10 +143,10 @@
 							</select>
 						</td>
 						<td><input type="text" id="txtTextoAsignado" /></td>
-						<td><input type="button" id="btnBuscarAsignado" value="Buscar"/></td>
+						<td><input type="button" id="btnBuscarAsignado" value="Buscar" class="ui-button"/></td>
 					</tr>
 				</table>
-				</div>
+				</div>				
 			</div>
 		</div>
 
@@ -176,19 +170,28 @@
 				</form>
 			</div>
 		</div>
+		
+		<div style="margin: 10px 0px;">
+			<center>
+				<input type="hidden" id="txtCodigo"/>
+				<input type="button" value="Asignar Mototaxi" id="btnAsignar" class="ui-button"/>
+				<input type="button" value="Cese" id="btnCese" class="ui-button"/>
+				<input type="button" id="btnCancelarFormulario" value="Cancelar" class="ui-button"/>
+			</center>
+		</div>				
 	</div>
 	
 	<div id="divFormularioCese">
+		<h1 id="txtNombreConductorCese">NOMBRE DEL CONDUCTOR</h1>		
+		<input type="hidden" id="txtCodigoCese"/>
 		<input type="hidden" id="txtOcultoCodigoUndConductor"/>
 		<p id="">Fecha</p><input type="text" id="txtFechaCese"/>
 		<p>Observaciones</p>
-		<p id="txtNombreConductorCese">NOMBRE DEL CONDUCTOR</p>		
-		<input type="hidden" id="txtCodigoCese"/>
 		<textarea cols="50" rows=4 id="txtObservacion"></textarea>
 		<table>
 			<tr>
-				<td><input type="button" id="btnGuardarCese" value="Cese"/></td>
-				<td><input type="button" id="btnCancelarCese" value="Cancelar"/></td>
+				<td><input type="button" id="btnGuardarCese" value="Cese" class="ui-button"/></td>
+				<td><input type="button" id="btnCancelarCese" value="Cancelar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>	
@@ -215,7 +218,7 @@
 	                                </select>
 	                            </td>
 	                            <td><input type="text" id="txtTextoPropietario" /></td>
-	                            <td><input type="button" id="btnBuscarPropietarios" value="Buscar"/></td>
+	                            <td><input type="button" id="btnBuscarPropietarios" value="Buscar" class="ui-button"/></td>
 	                        </tr>
 	                    </table>
 	                </div>
@@ -246,7 +249,7 @@
 	                                </select>
 	                            </td>
 	                            <td><input type="text" id="txtTextoMototaxi" /></td>
-	                            <td><input type="button" id="btnBuscarMototaxi" value="Buscar"/></td>
+	                            <td><input type="button" id="btnBuscarMototaxi" value="Buscar" class="ui-button"/></td>
 	                        </tr>
 	                    </table>
 	                </div>
@@ -265,9 +268,10 @@
 	                <table align="center" class="tablesorter" id="tblListaMotosParaAsignar">		
 	                </table>
 	            </div>
-	            
-                <input type="button" id="btnMotosAsignar" value="Asignar Mototaxi"/>
-                <input type="button" id="btnMotosAsignarCancelar" value="Cancelar"/>
+	            <center>
+	            	<input type="button" id="btnMotosAsignar" value="Asignar Mototaxi" class="ui-button"/>
+                	<input type="button" id="btnMotosAsignarCancelar" value="Cancelar" class="ui-button"/>
+	            </center>
 	        </fieldset>
 	    </div>
 	</div>

@@ -33,7 +33,7 @@
 <body>
 	<h1>Documentación</h1>
 	
-	<div id="divdocumentacion">
+	<div id="divdocumentacion" style="font-size: 0.7em;">
 			
 		<div>
 			<fieldset>
@@ -46,7 +46,7 @@
 							<td><input type="text" id="txtfecha1" class="requiredDate txtfecha"/></td>
 							<td>FECHA 2</td>
 							<td><input type="text" id="txtfecha2" class="requiredDate txtfecha"/></td>
-							<td><input type="button" id="btnImprimir" value="Visualizar"/></td>
+							<td><input type="button" id="btnImprimir" value="Visualizar" class="ui-button"/></td>
 													
 					</tr>
 					<tr>
@@ -56,7 +56,7 @@
 							<td><input type="text" id="txtfecha1a" class="requiredDate txtfecha" /></td>
 							<td>FECHA 2</td>
 							<td><input type="text" id="txtfecha2a" class="requiredDate txtfecha"/></td>
-							<td><input type="button" id="btnImprimirAlta" value="Visualizar"/></td>						
+							<td><input type="button" id="btnImprimirAlta" value="Visualizar" class="ui-button"/></td>						
 					</tr>
 							
 					<tr>
@@ -66,7 +66,7 @@
 							<td><input type="text" id="txtfecha1b" class="requiredDate txtfecha"/></td>
 							<td>FECHA 2</td>
 							<td><input type="text" id="txtfecha2b" class="requiredDate txtfecha"/></td>
-							<td><input type="button" id="btnImprimirBaja" value="Visualizar"/></td>
+							<td><input type="button" id="btnImprimirBaja" value="Visualizar" class="ui-button"/></td>
 					</tr>
 			 </table>
 			 </fieldset>

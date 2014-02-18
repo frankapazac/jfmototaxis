@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPapeleta" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f9f7de6-a828-40c6-b897-a21fe39844e2">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="118"/>
+	<property name="ireport.y" value="598"/>
 	<parameter name="papeleta" class="com.munichosica.myapp.dto.RepPapeleta"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -730,6 +730,7 @@ ORDENANZA MUNICIPAL No. 168-MDL]]></text>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{papeleta}.getCondpaterno()]]></textFieldExpression>
 			</textField>

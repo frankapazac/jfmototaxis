@@ -40,7 +40,7 @@
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>

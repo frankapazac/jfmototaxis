@@ -33,7 +33,10 @@
 	<title>Insert title here</title>
 	<style type="text/css">
 		.tdTitulo{
-			width: 200px;
+			width: 140px;
+			background-color: #608A12;
+			color: white;
+			padding: 0px 5px;
 		}
 		.tdContenido{
 			width: 250px;
@@ -42,10 +45,10 @@
 			width: 245px;
 		}
 		.txtText{
-			width: 245px;
+			width: 200px;
 		}
 		.txtTextCompleted{
-			width: 703px;
+			width: 594px;
 		}
 		.ui-combobox {
 			position: relative;
@@ -68,6 +71,12 @@
 		}
 		.ver{
 			background-color: #f0f0f0;
+		} 
+		a{
+			font-size: 12px;
+		}
+		.tblTablaEstilo{
+			width: 100%;
 		}
 	</style>
 	<script>
@@ -246,7 +255,7 @@
 					</select>
 				</td>
 				<td><input type="text" id="txtTexto" /></td>
-				<td><input type="button" id="btnBuscar" value="Buscar"/></td>
+				<td><input type="button" id="btnBuscar" value="Buscar" class="ui-button"/></td>
 			</tr>
 		</table>
 	</div>
@@ -283,11 +292,11 @@
 			<legend>PAPELETA</legend>
 			<table>
 				<tr>
-					<td class="tdTitulo">Número</td>
-					<td class="tdContenido"><input type="text" id="txtNumeroPap" class="txtText" disabled="disabled"/>
+					<td class="tdTitulo" width="140px">Número</td>
+					<td class="tdContenido" width="250px"><input type="text" id="txtNumeroPap" class="txtText" disabled="disabled"/>
 					<input type="hidden" id="txtNumeroPapeleta" class="txtText" disabled="disabled"/></td>
-					<td class="tdTitulo">Fecha</td>
-					<td class="tdContenido"><input type="text" id="txtFecha" class="required"/></td>
+					<td class="tdTitulo" width="140px">Fecha</td>
+					<td class="tdContenido" width="250px"><input type="text" id="txtFecha" class="required"/></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -296,10 +305,10 @@
 			<legend>DATOS DEL CONDUCTOR</legend>
 			<table>
 				<tr>
-					<td class="tdTitulo">DNI N°</td>
-					<td class="tdContenido"><input type="text" id="txtConductorDNI" class="txtText requiredNumber"/></td>
-					<td class="tdTitulo">Conductor</td>
-					<td class="tdContenido">
+					<td class="tdTitulo" width="140px">DNI N°</td>
+					<td class="tdContenido" width="250px"><input type="text" id="txtConductorDNI" class="txtText requiredNumber"/></td>
+					<td class="tdTitulo" width="140px">Conductor</td>
+					<td class="tdContenido" width="250px">
 						<img src="images/add_user.png" id="agregarConductor"/>
 						<select id="sltConductor" class="requiredSelect">
 							<option value="">-Seleccione-</option>
@@ -330,18 +339,18 @@
 			<legend>DATOS DEL VEHICULO</legend>
 			<table>
 				<tr>
-					<td class="tdTitulo">N° Placa</td>
-					<td class="tdContenido">
+					<td class="tdTitulo" width="140px">N° Placa</td>
+					<td class="tdContenido" width="250px">
 						<img src="images/edit_add.png" id="agregarMoto"/>
-						<select id="sltPlacas" class="requiredSelect">
-							<option value="" selected="selected">-Seleccione-</option>
+						<select id="sltPlacas" class="required">
+							<option value="0">-SIN PLACA-</option>
 							<c:forEach var="placa" items="${placas}">
 								<option value="${placa.unecodigoD}"><c:out value="${placa.uneplacanroV}"/></option>
 							</c:forEach>
 						</select>
 					</td>
-					<td class="tdTitulo">Año de Fabricación</td>
-					<td class="tdContenido"><input id="txtAnno" type="text" class="txtText" disabled="disabled"/></td>
+					<td class="tdTitulo" width="140px">Año de Fabricación</td>
+					<td class="tdContenido" width="250px"><input id="txtAnno" type="text" class="txtText" disabled="disabled"/></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Marca</td>
@@ -378,10 +387,10 @@
 					<td colspan="3"><input id="txtPropRazonSocial" type="text" class="txtText" disabled="disabled" /></td>
 				</tr>
 				<tr>
-					<td class="tdTitulo">Propietario</td>
-					<td class="tdContenido"><input id="txtPropietario" type="text" class="txtText" disabled="disabled" /></td>
-					<td class="tdTitulo">DNI N°</td>
-					<td class="tdContenido"><input id="txtPropDni" type="text" class="txtText" disabled="disabled" /></td>
+					<td class="tdTitulo" width="140px">Propietario</td>
+					<td class="tdContenido" width="250px"><input id="txtPropietario" type="text" class="txtText" disabled="disabled" /></td>
+					<td class="tdTitulo" width="140px">DNI N°</td>
+					<td class="tdContenido" width="250px"><input id="txtPropDni" type="text" class="txtText" disabled="disabled" /></td>
 					
 				</tr>
 				<tr>
@@ -408,15 +417,15 @@
 				</tr>
 				<tr>
 					<td class="tdTitulo">Lugar de Infracción</td>
-					<td colspan="3"><input id="txtInfraccionLugar" type="text" class="txtTextCompleted requiredText" /></td>
+					<td colspan="3"><input id="txtInfraccionLugar" type="text" class="txtTextCompleted requiredAlpha" /></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Referencia</td>
-					<td colspan="3"><input id="txtInfraccionReferencia" type="text" class="txtTextCompleted requiredText" /></td>
+					<td colspan="3"><input id="txtInfraccionReferencia" type="text" class="txtTextCompleted requiredAlpha" /></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Observacion del Inspector</td>
-					<td colspan="3"><textarea id="txaObserInspector" rows="3" cols="98" class="requiredText"></textarea></td>
+					<td colspan="3"><textarea id="txaObserInspector" rows="3" cols="70" class="requiredAlpha"></textarea></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Carnet Ident N°</td>
@@ -466,17 +475,17 @@
 				</tr>
 				<tr>
 					<td class="tdTitulo">Descripción</td>
-					<td colspan="3"><textarea id="txaDescripcion" rows="3" cols="98" disabled="disabled"></textarea></td>
+					<td colspan="3"><textarea id="txaDescripcion" rows="3" cols="70" disabled="disabled"></textarea></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Observacion sobre la Infracción</td>
-					<td colspan="3"><textarea id="txaObserInfraccion" rows="3" cols="98" class="required"></textarea></td>
+					<td colspan="3"><textarea id="txaObserInfraccion" rows="3" cols="70" class="required"></textarea></td>
 				</tr>
 			</table>
 		</fieldset>
 		<h4 align="center">
-			<input type="button" value="Guardar" id="btnGuardar"/>
-			<input type="button" value="Cancelar" id="btnCancelar"/>
+			<input type="button" value="Guardar" id="btnGuardar" class="ui-button"/>
+			<input type="button" value="Cancelar" id="btnCancelar" class="ui-button"/>
 		</h4>
 	</div>
 	
@@ -624,8 +633,8 @@
 			</table>
 		</fieldset>
 		<h4 align="center">
-			<img id="btnImprimir" alt="Imprimir" src="images/pdf.png">
-			<input type="button" value="Aceptar" id="btnAceptar"/>
+			<input type="button" value="Imprimir" id="btnImprimir" class="ui-button"/>
+			<input type="button" value="Aceptar" id="btnAceptar" class="ui-button"/>
 		</h4>
 	</div>
 	
@@ -678,14 +687,14 @@
 					</tr>
 					<tr>
 						<td>Correo:</td>
-						<td><input type="text" id="txtCorreo" class="requiredEmail" tabindex="5"/></td>
+						<td><input type="text" id="txtCorreo" class="required" tabindex="5"/></td>
 						<td>Telefono:</td>
-						<td><input type="text" id="txtTelefono" class="requiredPhone" tabindex="14"/></td>
+						<td><input type="text" id="txtTelefono" class="required" tabindex="14"/></td>
 					</tr>
 					<tr>
 						<td>Estado Civil</td>
 						<td>
-							<select id="sltEstadoCivil" class="requiredSelect" tabindex="6">
+							<select id="sltEstadoCivil" class="required" tabindex="6">
 								<option value="S" selected="selected">Soltero</option>
 								<option value="C">Casado</option>
 								<option value="T">Conviviente</option>
@@ -699,7 +708,7 @@
 					<tr>
 						<td>Sexo</td>
 						<td>
-							<select id="sltSexo" class="requiredSelect" tabindex="7">
+							<select id="sltSexo" class="required" tabindex="7">
 								<option value="" selected="selected">Seleccione</option>
 								<option value="M">Masculino</option>
 								<option value="F">Femenino</option>
@@ -710,7 +719,7 @@
 					</tr>
 					<tr>
 						<td>Fecha Nacimiento</td>
-						<td><input type="text" id="dtNacimiento" class="requiredDate" tabindex="8"/></td>
+						<td><input type="text" id="dtNacimiento" class="required" tabindex="8"/></td>
 						<td>Cel. Nextel:</td>
 						<td><input type="text" id="txtNextel" class="required" tabindex="17"/></td>
 					</tr>					
@@ -722,5 +731,143 @@
 			</center>
 		</fieldset>
 	</div>
+	
+	<div id="divVehiculo">
+    	<input type="hidden" id="txtCodigoVehiculo" value="0"/>
+    	<input type="hidden" id="txtCodigoEmpadronamiento" value="0"/>
+    	<fieldset>
+        	<legend>DATOS VEHICULO</legend>
+            <table align="center">
+            	<tr>
+                	<td>N° Placa</td>
+                	<td><input type="text" id="txtNroPlaca" class="requiredAlpha" tabindex="26"/></td>
+                	<td>Carroceria</td>
+                	<td><select id="sltCarroceria" class="required" tabindex="37">
+                    		<option value="" selected="selected">Seleccione</option>
+                    		<option value="T">TRIMOVIL DE PASAJEROS</option>
+                    	</select>
+                    </td>
+                </tr>
+            	<tr>
+                	<td>Of. Registral</td>
+                	<td><select id="sltOfRegistral" class="required" tabindex="27">
+                    		<option value="">Seleccione</option>
+                    		<c:forEach var="oficina" items="${oficinas}">
+                    			<option value="${oficina.oficodigoI}"><c:out value="${oficina.ofinombreV}"/></option>
+                    		</c:forEach>
+                    	</select>
+					</td>
+                	<td>N° Serie/Chasis</td>
+                	<td><input type="text" id="txtNroSerieChasis" class="required" tabindex="38"/></td>
+                </tr>
+            	<tr>
+                	<td>N° Padrón</td>
+                	<td><input type="text" id="txtNroPadron" class="required" tabindex="28"/></td>
+                	<td>N° Motor</td>
+                	<td><input type="text" id="txtNroMotor" class="required" tabindex="39"/></td>
+                </tr>
+            	<tr>
+                	<td>Part. Registral</td>
+                	<td><input type="text" id="txtPartRegistral" class="required" tabindex="29"/></td>
+                	<td>N° NIV</td>
+                	<td><input type="text" id="txtNroNiv" class="required" tabindex="40"/></td>
+                </tr>
+            	<tr>
+                	<td>Titulo</td>
+                	<td><input type="text" id="txtTitulo" class="required" tabindex="30"/></td>
+                	<td>Ruedas</td>
+                	<td><input type="text" id="txtRuedas" class="required" tabindex="41"/></td>
+                </tr>
+            	<tr>
+                	<td>Clase</td>
+                	<td><input type="text" id="txtClase" class="required" tabindex="31"/></td>
+                	<td>N° Asientos</td>
+                	<td><input type="text" id="txtNroAsientos" class="required" tabindex="42"/></td>
+                </tr>
+            	<tr>
+                	<td>Marca</td>
+                	<td><select id="sltMarca" class="requiredSelect" tabindex="32">
+                    		<option value="" selected="selected">Seleccione</option>
+                    		<c:forEach var="marca" items="${marcas}">
+                    			<option value="${marca.marcodigoI}"><c:out value="${marca.marnombreV }"/></option>
+                    		</c:forEach>
+                    	</select></td>
+                	<td>N° Pasajeros</td>
+                	<td><input type="text" id="txtNroPasajeros" class="required" tabindex="43"/></td>
+                </tr>
+            	<tr>
+                	<td>Modelo</td>
+                	<td><select id="sltModelo" class="requiredSelect" tabindex="33">
+                    		<option value="" selected="selected">Seleccione</option>
+                    		<c:forEach var="modelo" items="${modelos}">
+                    			<option value="${modelo.modcodigo_D }"><c:out value="${modelo.modnombre_V }" /></option>
+                    		</c:forEach>
+                    	</select></td>
+                	<td>Carga Util</td>
+                	<td><input type="text" id="txtCargaUtil" class="required" tabindex="44"/>Kg.</td>
+                </tr>
+            	<tr>
+                	<td>Año</td>
+                	<td><input type="text" id="txtAno" class="requiredNumber" tabindex="34"/></td>
+                	<td>Longitud</td>
+                	<td><input type="text" id="txtLongitud" class="required" tabindex="45"/>Mts.</td>
+                </tr>
+            	<tr>
+                	<td>Color</td>
+                	<td><input type="text" id="txtMotColor" class="required" tabindex="35"/></td>
+                	<td>Ancho</td>
+                	<td><input type="text" id="txtAncho" class="required" tabindex="46"/>Mts.</td>
+                </tr>
+            	<tr>
+                	<td>Combustible</td>
+                	<td><select id="sltCombustible" class="required" tabindex="36">
+                    		<option value="" selected="selected">Seleccione</option>
+                    		<option value="P">PETROLEO</option>
+                    		<option value="G">GASOLINA</option>
+                    	</select></td>
+                	<td>Alto</td>
+                	<td><input type="text" id="txtAlto" class="required" tabindex="47"/>Mts.</td>
+                </tr>
+            </table>
+            
+			<center>
+				<input type="button" id="btnGuardarMoto" class="ui-button" value="Guardar"/>
+				<input type="button" id="btnCancelarMoto" class="ui-button" value="Cancelar"/>
+			</center>
+        </fieldset>
+    </div>
+	
+	<div id="divPolicia">
+    	<input type="hidden" id="txtCodigoPolicia" value="0"/>
+    	<fieldset>
+        	<legend>DATOS POLICIA</legend>
+            <table align="center">
+            	<tr>
+                	<td>N° Carnet Identidad</td>
+                	<td><input type="text" id="txtPolCarnet" class="requiredAlpha" tabindex="26"/></td>
+                	<td>Nombre</td>
+                	<td><input type="text" id="txtPolNombre" class="requiredAlpha" tabindex="38"/>
+                    </td>
+                </tr>
+            	<tr>
+                	<td></td>
+                	<td></td>
+                	<td>Paterno</td>
+                	<td><input type="text" id="txtPolPaterno" class="requiredAlpha" tabindex="38"/></td>
+                </tr>
+            	<tr>
+                	<td></td>
+                	<td></td>
+                	<td>Materno</td>
+                	<td><input type="text" id="txtPolMaterno" class="requiredAlpha" tabindex="39"/></td>
+                </tr>
+            </table>
+            
+			<center>
+				<input type="button" id="btnGuardarPol" class="ui-button" value="Guardar"/>
+				<input type="button" id="btnCancelarPol" class="ui-button" value="Cancelar"/>
+			</center>
+        </fieldset>
+    </div>
 </body>
 </html>

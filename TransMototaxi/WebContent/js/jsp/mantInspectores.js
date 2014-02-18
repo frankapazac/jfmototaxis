@@ -185,7 +185,7 @@ $(document).ready(function(){
     	//$("#divFormulario").dialog("open");
     	$("#divFormulario").dialog({
     		title:"Inspector",
-    		width:1100,
+    		width:850,
     		//height: 600,
     		modal: true
     	});

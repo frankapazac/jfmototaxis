@@ -36,13 +36,12 @@
 			
 		<div>
 			<fieldset>
-	        <legend>REPORTES</legend>  
+	        <legend>REPORTES</legend>
 			 <table>
-			 
 					<tr>
 							<td>CONDUCTORES CON ALTA ROTACIÓN</td>
-							<td></td>						
-							<td><input type="button" id="btnImprimirRotacion" value="Visualizar"/></td>
+							<td></td>
+							<td><input type="button" id="btnImprimirRotacion" value="Visualizar" class="ui-button"/></td>
 					</tr>
 			 </table>
 			 </fieldset>
@@ -55,7 +54,7 @@
 					<tr>
 							<td>HOJA DE INFORME DIARIO Y ACTA DE INTERVENCIÓN</td>
 							<td></td>						
-							<td><input type="button" id="btnImprimirINFDIARIO" value="Elaborar"/></td>
+							<td><input type="button" id="btnImprimirINFDIARIO" value="Elaborar" class="ui-button"/></td>
 					</tr>
 			 </table>
 			 </fieldset>
@@ -105,9 +104,9 @@
 						</tr>
 						
 				</table>
-				<input type="button" id="btnImprimirVistaPrevia" value ='VISTA PREVIA' align="middle"/>
-				<input type="button" id="btnImprimirInfDiarioActa" value ='IMPRIMIR' align="middle"/>
-				<input type="button" id="btnCancelar" value ='CANCELAR' align="middle"/>	
+				<input type="button" id="btnImprimirVistaPrevia" value ='VISTA PREVIA' align="middle" class="ui-button"/>
+				<input type="button" id="btnImprimirInfDiarioActa" value ='IMPRIMIR' align="middle" class="ui-button"/>
+				<input type="button" id="btnCancelar" value ='CANCELAR' align="middle" class="ui-button"/>	
 			</fieldset>
 		</div>
 

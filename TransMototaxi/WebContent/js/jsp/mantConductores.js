@@ -5,6 +5,7 @@ $(document).ready(function(){
 	$("#divAsignarMototaxi").hide();
 	$("#txtFechaInicio").datepicker({dateFormat:"dd/mm/yy"});
 	$("#dtNacimiento").datepicker({dateFormat:"dd/mm/yy"});
+    $(".dtFecha").datepicker({dateFormat:"dd/mm/yy"});
 	
 	var codigoConductor=0;
 	var conductores=[];//Todo los conductores
@@ -30,8 +31,8 @@ $(document).ready(function(){
 		$("#divAsignarMototaxi").show();
 		$("#divAsignarMototaxi").dialog({
     		title:"Asignar mototaxi",
-    		width:1100,
-    		height: 500,
+    		width:900,
+    		//height: 500,
     		modal: true
 		});
 	});
@@ -79,7 +80,7 @@ $(document).ready(function(){
 		}
 		$("#divFormulario").dialog({
     		title:"Conductores Mototaxis",
-    		width:1100,
+    		width:850,
     		modal: true
 		});
     });
@@ -328,6 +329,63 @@ $(document).ready(function(){
     	llenarFormulario("");
     });
     
+    $("#txtDni").keyup(function(){
+    	/*$("#txtCodigoPersona").val("0");
+		$("#txtNombres").val("");
+		$("#txtPaterno").val("");
+		$("#txtMaterno").val("");
+		$("#txtNacimiento").val("");
+		$("#sltSexo").val("M");
+		$("#sltEstadoCivil").val("S");
+		$("#txtClaro").val("");
+		$("#txtMovistar").val("");
+		$("#txtNextel").val("");
+		$("#txtTelefono").val("");
+		$("#txtCorreo").val("");
+		$("#txtDireccion").val("");
+		$("#sltDepartamentos").val("15");
+		$("#sltProvincia").empty();
+		$("#sltDistrito").empty();
+		$("#sltProvincia").append("<option value=''>-Seleccione-</option>");
+		$("#sltDistrito").append("<option value=''>-Seleccione-</option>");*/
+    	if($.trim($(this).val()).length>=8){
+    		$.ajax({
+        		data:{
+        			dni:$.trim($(this).val())
+        		},
+                datatype:'json',
+                type: "GET", 
+                url: "Persona/ObtenerPorDni.htm", 
+                success: function(data){
+                	if(data.percodigoD!=null){
+                		$("#txtCodigoPersona").val(data.percodigoD);
+                		$("#txtDni").val(data.perdniV);
+                		$("#txtNombres").val(data.pernombresV);
+                		$("#txtPaterno").val(data.perpaternoV);
+                		$("#txtMaterno").val(data.permaternoV);
+                		$("#dtNacimiento").val(data.pernacimientoF);
+                		$("#sltSexo").val(data.persexoC);
+                		$("#sltEstadoCivil").val(data.perestadocivilC);
+                		$("#txtClaro").val(data.permovilclaV);
+                		$("#txtMovistar").val(data.permovilmovV);
+                		$("#txtNextel").val(data.permovilnexV);
+                		$("#txtTelefono").val(data.perteleffijoV);
+                		$("#txtCorreo").val(data.peremailV);
+                		$("#txtDireccion").val(data.perdomicilioV);
+                		$("#sltDepartamentos").val(data.perubdptoV);
+                		$("#sltProvincia").append("<option value='"+data.perubprovV+"'>"+data.perubprovnombreV+"</option>");
+                		$("#sltDistrito").append("<option value='"+data.perubidistV+"'>"+data.perubidistnombreV+"</option>");
+                		$("#sltProvincia").val(data.perubprovV);
+                		$("#sltDistrito").val(data.perubidistV);
+                    	$.message.Success();
+                	}
+                },error: function(jqXHR, textStatus, errorThrown){
+                	$.message.Error();
+                }
+        	});
+    	}
+    });
+    
     function llenarFormulario(data){
     	if(data!=""){
     		$(".error").remove();
@@ -399,8 +457,8 @@ $(document).ready(function(){
     	}
     	$("#divNuevoCond").show();
     	$("#divNuevoCond").dialog({
-    		title:"Persona",
-    		width:1100,
+    		title:"Conductor",
+    		width:850,
     		//height: 600,
     		modal: true
     	});
@@ -432,7 +490,7 @@ $(document).ready(function(){
     }
     
     
-    $("#sltProvincia").click(function(){
+    $("#sltProvincia").bind("click focus change",function(){
     	$.ajax({ 
     		data:{
     			idubigeo:$("#sltProvincia").val()
