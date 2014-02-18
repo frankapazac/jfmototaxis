@@ -26,4 +26,6 @@ public interface MotUnidadEmpresaDao {
 			throws MotUnidadEmpresaDaoException;
 	MotUnidadEmpresa findUnidadByPlaca(String placa)
 			throws MotUnidadEmpresaDaoException;
+	MotUnidadEmpresa findPmoCodigoByPlaca_Papeleta(String placa)
+			throws MotUnidadEmpresaDaoException;
 }
