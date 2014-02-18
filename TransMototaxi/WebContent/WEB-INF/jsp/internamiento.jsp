@@ -680,21 +680,21 @@
 								<td><c:out value="${parteExterior.bitnombreV}"/></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteExterior.bitcodigoI}"/>"
 									value="N" checked="checked" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteExterior.bitcodigoI}"/>"
 									value="B" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteExterior.bitcodigoI}"/>"
 									value="R" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteExterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteExterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteExterior.bitcodigoI}"/>"
 									value="M" disabled="disabled"></td>
-								<td><input id="cant_<c:out value="${parteExterior.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
+								<td><input id="ocant_<c:out value="${parteExterior.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -717,21 +717,21 @@
 								<td><c:out value="${parteInterior.bitnombreV}"/></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteInterior.bitcodigoI}"/>"
 									value="N" checked="checked" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteInterior.bitcodigoI}"/>"
 									value="B" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteInterior.bitcodigoI}"/>"
 									value="R" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteInterior.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteInterior.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteInterior.bitcodigoI}"/>"
 									value="M" disabled="disabled"></td>
-								<td><input id="cant_<c:out value="${parteInterior.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
+								<td><input id="ocant_<c:out value="${parteInterior.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -754,21 +754,21 @@
 								<td><c:out value="${parteMotor.bitnombreV}"/></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteMotor.bitcodigoI}"/>"
 									value="N" checked="checked" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteMotor.bitcodigoI}"/>"
 									value="B" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteMotor.bitcodigoI}"/>"
 									value="R" disabled="disabled"></td>
 								<td><input type="radio" 
 									name="rdPartev_<c:out value="${parteMotor.bitcodigoI}"/>"
-									class="rdParte_<c:out value="${parteMotor.bitcodigoI}"/>"
+									class="ordParte_<c:out value="${parteMotor.bitcodigoI}"/>"
 									value="M" disabled="disabled"></td>
-								<td><input id="cant_<c:out value="${parteMotor.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
+								<td><input id="ocant_<c:out value="${parteMotor.bitcodigoI}"/>" type="text" value="1" size="3" disabled="disabled"/></td>
 							</tr>
 						</c:forEach>
 					</table>
