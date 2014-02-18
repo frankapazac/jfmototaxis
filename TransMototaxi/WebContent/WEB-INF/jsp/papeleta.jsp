@@ -417,15 +417,15 @@
 				</tr>
 				<tr>
 					<td class="tdTitulo">Lugar de Infracción</td>
-					<td colspan="3"><input id="txtInfraccionLugar" type="text" class="txtTextCompleted requiredAlpha" /></td>
+					<td colspan="3"><input id="txtInfraccionLugar" type="text" class="txtTextCompleted required" /></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Referencia</td>
-					<td colspan="3"><input id="txtInfraccionReferencia" type="text" class="txtTextCompleted requiredAlpha" /></td>
+					<td colspan="3"><input id="txtInfraccionReferencia" type="text" class="txtTextCompleted required" /></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Observacion del Inspector</td>
-					<td colspan="3"><textarea id="txaObserInspector" rows="3" cols="70" class="requiredAlpha"></textarea></td>
+					<td colspan="3"><textarea id="txaObserInspector" rows="3" cols="70" class="required"></textarea></td>
 				</tr>
 				<tr>
 					<td class="tdTitulo">Carnet Ident N°</td>

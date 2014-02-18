@@ -253,7 +253,8 @@ $(document).ready(function(){
 			$("#lblEmprTelefono").text(data.propUnidadEmpresa.asociado.empresa.emptelefono1V);
 			$("#lblEmprCelular").text(data.propUnidadEmpresa.asociado.empresa.empcelularmovV);
 			for(var x=0;x<data.inventarios.length;x++){
-				$(".rdParte_"+data.inventarios[x].inventarioTipo.bitcodigoI+"[value="+data.inventarios[x].bivestadoC+"]").attr('checked',true);
+				$(".ordParte_"+data.inventarios[x].inventarioTipo.bitcodigoI+"[value="+data.inventarios[x].bivestadoC+"]").attr('checked',true);
+				$("#ocant_"+data.inventarios[x].inventarioTipo.bitcodigoI).attr('value',data.inventarios[x].bivcantidadI);			
 			}
 		}
 		$("#divFormularioVer").dialog({
@@ -303,6 +304,7 @@ $(document).ready(function(){
 			$("#txtEmprCelular").val(data.propUnidadEmpresa.asociado.empresa.empcelularmovV);
 			for(var x=0;x<data.inventarios.length;x++){
 				$(".rdParte_"+data.inventarios[x].inventarioTipo.bitcodigoI+"[value="+data.inventarios[x].bivestadoC+"]").attr('checked',true);
+				$("#cant_"+data.inventarios[x].inventarioTipo.bitcodigoI).attr('value',data.inventarios[x].bivcantidadI);	
 			}
 		}else{
 			updateTime();
@@ -380,8 +382,7 @@ $(document).ready(function(){
 			inventario.bivcantidadI=$("#cant_"+codigo).val();
 			internamiento.inventarios[cont++]=inventario;
         });
-		//alert(partes.length);
-		
+			
 		if($("#btnProcesar").val()=="Guardar"){
 			$.ajax({ 
 				data: JSON.stringify(internamiento),
